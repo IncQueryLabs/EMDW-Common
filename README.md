@@ -5,5 +5,5 @@ Repository for the EMDW common materials and test cases
 
 ### User Guides
 
-* [EMDW Model Executor](https://github.com/IncQueryLabs/EMDW-Common/wiki/EMDW-Model-Executor-User-Guide)
-* [EMDW Model Compiler](https://github.com/IncQueryLabs/EMDW-Common/wiki/EMDW-Model-Compiler-User-Guide)
+* [Model Executor](https://github.com/IncQueryLabs/EMDW-Common/wiki/EMDW-Model-Executor-User-Guide)
+* [Model Compiler](https://github.com/IncQueryLabs/EMDW-Common/wiki/EMDW-Model-Compiler-User-Guide)
