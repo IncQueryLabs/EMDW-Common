@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.incquerylabs.emdw</groupId>
+	<artifactId>com.incquerylabs.emdw.common</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<modules>
+		
+		<!-- Papyrus integration -->
+		<module>../../plugins/com.incquerylabs.uml.papyrus</module>
+		
+		<!-- Examples -->
+		<module>../../examples/com.incquerylabs.emdw.examples</module>
+
+		<!-- Project -->
+		
+		<!-- rALF Language -->
+		<!-- 
+		<module>../../plugins/com.incquerylabs.uml.ralf</module>
+		<module>../../plugins/com.incquerylabs.uml.ralf.languagegenerator</module>
+		<module>../../plugins/com.incquerylabs.uml.ralf.papyrus.ui</module>
+		<module>../../plugins/com.incquerylabs.uml.ralf.ui</module>
+		<module>../../tests/com.incquerylabs.uml.ralf.tests</module>
+		<module>../../tests/com.incquerylabs.uml.ralf.tests.examples</module>
+		-->
+		
+		<!-- Releng -->
+		<!--
+		<module>../com.incquerylabs.emdw.common.project.feature</module>
+		<module>../com.incquerylabs.uml.ralf.feature</module>
+		-->
+		<module>../com.incquerylabs.emdw.examples.feature</module>
+		<module>../com.incquerylabs.uml.papyrus.feature</module>		
+		<module>../com.incquerylabs.emdw.common.update</module>
+
+	</modules>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<tycho.version>0.21.0</tycho.version>
+		<mars.repo.url>http://download.eclipse.org/releases/mars</mars.repo.url>
+		<viatra.repository.url>http://download.eclipse.org/viatra2/emf/updates/release</viatra.repository.url>
+		<incquery.repository.url>http://download.eclipse.org/incquery/updates-extra/release</incquery.repository.url>
+		<papyrus.repo.url>http://download.eclipse.org/modeling/mdt/papyrus/updates/releases/mars</papyrus.repo.url>
+		<org.eclipse.papyrusrt.version>1.0.0-SNAPSHOT</org.eclipse.papyrusrt.version>
+		<incquery.version>1.0.0</incquery.version>
+	</properties>
+
+	<repositories>
+		<repository>
+			<id>mars</id>
+			<url>${mars.repo.url}</url>
+			<layout>p2</layout>
+		</repository>
+		<repository>
+			<id>papyrus</id>
+			<url>${papyrus.repo.url}</url>
+			<layout>p2</layout>
+		</repository>
+		<repository>
+			<id>emf-incquery</id>
+			<url>${incquery.repository.url}</url>
+			<layout>p2</layout>
+		</repository>
+		<repository>
+			<id>viatra.update</id>
+			<layout>p2</layout>
+			<url>${viatra.repository.url}</url>
+		</repository>
+		<repository>
+			<id>xtext</id>
+			<layout>p2</layout>
+			<url>http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/</url>
+		</repository>
+		<repository>
+			<id>orbit</id>
+			<layout>p2</layout>
+			<url>http://download.eclipse.org/tools/orbit/downloads/drops/R20150519210750/repository/</url>
+		</repository>
+		<repository>
+			<id>xsemantics</id>
+			<layout>p2</layout>
+			<url>http://master.dl.sourceforge.net/project/xsemantics/updates/releases/1.8/</url>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+        <pluginRepository>
+            <id>incquery</id>
+            <url>https://repo.eclipse.org/content/groups/emf-incquery/</url>
+        </pluginRepository>
+		<pluginRepository>
+			<id>emdw-p2-mirror</id>
+			<url>https://build.inf.mit.bme.hu/nexus/content/repositories/emdw-p2-mirrors/</url>
+		</pluginRepository>
+	</pluginRepositories>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-maven-plugin</artifactId>
+				<version>${tycho.version}</version>
+				<extensions>true</extensions>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>target-platform-configuration</artifactId>
+				<version>${tycho.version}</version>
+				<configuration>
+					<environments>
+						<environment>
+							<os>linux</os>
+							<ws>gtk</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>linux</os>
+							<ws>gtk</ws>
+							<arch>x86_64</arch>
+						</environment>
+						<environment>
+							<os>win32</os>
+							<ws>win32</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>win32</os>
+							<ws>win32</ws>
+							<arch>x86_64</arch>
+						</environment>
+						<environment>
+							<os>macosx</os>
+							<ws>cocoa</ws>
+							<arch>x86_64</arch>
+						</environment>
+					</environments>
+				</configuration>
+			</plugin>
+		</plugins>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-clean-plugin</artifactId>
+					<version>2.5</version>
+				</plugin>
+				<plugin>
+					<groupId>org.eclipse.xtend</groupId>
+					<artifactId>xtend-maven-plugin</artifactId>
+					<version>2.8.0</version>
+					<executions>
+						<execution>
+							<phase>generate-sources</phase>
+							<goals>
+								<goal>compile</goal>
+								<goal>testCompile</goal>
+							</goals>
+							<configuration>
+								<outputDirectory>${basedir}/xtend-gen</outputDirectory>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+</project>
