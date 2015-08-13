@@ -6,5 +6,8 @@
    <feature url="features/com.incquerylabs.emdw.examples.feature_1.0.0.qualifier.jar" id="com.incquerylabs.emdw.examples.feature" version="1.0.0.qualifier">
       <category name="com.incquerylabs.emdw.update"/>
    </feature>
+   <feature url="features/com.incquerylabs.emdw.common.project.feature_1.0.0.qualifier.jar" id="com.incquerylabs.emdw.common.project.feature" version="1.0.0.qualifier">
+      <category name="com.incquerylabs.emdw.update"/>
+   </feature>
    <category-def name="com.incquerylabs.emdw.update" label="xUML-RT Model Compiler"/>
 </site>

@@ -13,10 +13,11 @@
 		<!-- Papyrus integration -->
 		<module>../../plugins/com.incquerylabs.uml.papyrus</module>
 		
+		<!-- Project nature -->
+		<module>../../plugins/com.incquerylabs.emdw.common.nature</module>
+
 		<!-- Examples -->
 		<module>../../examples/com.incquerylabs.emdw.examples</module>
-
-		<!-- Project -->
 		
 		<!-- rALF Language -->
 		<!-- 
@@ -30,9 +31,9 @@
 		
 		<!-- Releng -->
 		<!--
-		<module>../com.incquerylabs.emdw.common.project.feature</module>
 		<module>../com.incquerylabs.uml.ralf.feature</module>
 		-->
+		<module>../com.incquerylabs.emdw.common.project.feature</module>
 		<module>../com.incquerylabs.emdw.examples.feature</module>
 		<module>../com.incquerylabs.uml.papyrus.feature</module>		
 		<module>../com.incquerylabs.emdw.common.update</module>
