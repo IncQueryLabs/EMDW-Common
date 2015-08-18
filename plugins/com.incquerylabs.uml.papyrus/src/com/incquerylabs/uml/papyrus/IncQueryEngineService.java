@@ -29,17 +29,12 @@ public class IncQueryEngineService implements IService {
 	public static IncQueryEngineService getOrStartService(ModelSet modelSet) {
 		try {
 			ServicesRegistry serviceRegistry = ServiceUtilsForResourceSet.getInstance().getServiceRegistry(modelSet);
-			try {
-				return serviceRegistry.getService(IncQueryEngineService.class);
-			} catch (ServiceException e) {
-				IncQueryEngineService service = new IncQueryEngineService();
-				serviceRegistry.add(IncQueryEngineService.class, 1, service);
-				return service;
-			}
+			serviceRegistry.startServicesByClassKeys(IncQueryEngineService.class);
+			return serviceRegistry.getService(IncQueryEngineService.class);
 		} catch (ServiceException e) {
-			e.printStackTrace();
+			String message = "Service " + IncQueryEngineService.class.getCanonicalName() + " is not accessible.";
+			throw new RuntimeException(message, e);
 		}
-		return null;
 	}
 
 	@Override
