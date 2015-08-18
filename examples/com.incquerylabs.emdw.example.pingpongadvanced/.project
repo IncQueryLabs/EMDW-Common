@@ -7,5 +7,6 @@
 	<buildSpec>
 	</buildSpec>
 	<natures>
+		<nature>com.incquerylabs.emdw.common.nature</nature>
 	</natures>
 </projectDescription>
