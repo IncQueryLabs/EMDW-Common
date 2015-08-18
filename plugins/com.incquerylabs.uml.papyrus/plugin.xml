@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         id="com.incquerylabs.uml.papyrus.incqueryengine"
+         name="EMF-IncQuery Engine Service for Papyrus"
+         point="org.eclipse.papyrus.infra.core.service">
+      <service
+            classname="com.incquerylabs.uml.papyrus.IncQueryEngineService"
+            description="This service shares IncQueryEngine instances associated with a Papyrus ModelSet."
+            priority="1"
+            startKind="lazy">
+      </service>
+   </extension>
+
+</plugin>
