@@ -15,7 +15,7 @@ Workflow {
     bean = StandaloneSetup {
     	scanClassPath = true
     	platformUri = "${runtimeProject}/.."
-    	        uriMap = {
+    	uriMap = {
             from = "platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.genmodel"
             to = "platform:/resource/org.eclipse.emf.codegen.ecore/model/GenModel.genmodel"
         }
@@ -80,14 +80,9 @@ Workflow {
     	directory = "${runtimeProject}.ui/src-gen"
     }
     
-    component = DirectoryCleaner {
-    	directory = "${runtimeProject}.tests/src-gen"
-    }
-    
     component = languagegenerator.RAlfLanguageGenerator {
     	pathRtProject = runtimeProject
     	pathUiProject = "${runtimeProject}.ui"
-    	pathTestProject = "../../tests/${projectName}.tests"
     	projectNameRt = projectName
     	projectNameUi = "${projectName}.ui"
     	encoding = encoding
@@ -156,7 +151,7 @@ Workflow {
     		}
     
     		// generates junit test support classes into Generator#pathTestProject
-    		fragment = junit.Junit4Fragment auto-inject {}
+    		//fragment = junit.Junit4Fragment auto-inject {}
     
     		// rename refactoring
     		fragment = refactoring.RefactorElementNameFragment auto-inject {}
