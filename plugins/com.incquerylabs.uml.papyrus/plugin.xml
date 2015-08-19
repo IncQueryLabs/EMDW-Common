@@ -10,6 +10,10 @@
             description="This service shares IncQueryEngine instances associated with a Papyrus ModelSet."
             priority="1"
             startKind="lazy">
+         <dependsOn
+               description="ModelSet is required to access IncQueryEngine"
+               serviceKeyRef="org.eclipse.papyrus.infra.core.resource.ModelSet">
+         </dependsOn>
       </service>
    </extension>
 
