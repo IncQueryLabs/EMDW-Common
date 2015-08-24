@@ -15,14 +15,24 @@ pattern superClass(sub : Class, sup : Class) {
     Generalization.target(gen, sup);
 }
 
-pattern attributesOfClass(cl : Class, attribute : Property) {
+pattern superSignal(sub : Signal, sup : Signal) {
+    Generalization.general(gen, sub);
+    Generalization.target(gen, sup);
+}
+
+pattern attributesOfClassifier(cl : Classifier, attribute : Property) {
     Class.ownedAttribute(cl, attribute);
 } or {
     find superClass+(cl, sup);
     Class.ownedAttribute(sup, attribute);
+} or {
+    Signal.ownedAttribute(cl, attribute);
+} or {
+    find superSignal+(cl, sup);
+    Signal.ownedAttribute(sup, attribute);
 }
 
-pattern associationsOfClass(cl : Class, association : Property) {
+pattern associationsOfClassifier(cl : Classifier, association : Property) {
     find xtAssociation(_, sourceEnd, association);
     Property.type(sourceEnd, cl);
 } or {
@@ -41,4 +51,18 @@ pattern operationsOfClass(cl : Class, op : Operation) {
 pattern staticOperations(op : Operation) {
     find operation(_, op);
     Operation.isStatic(op, true);
+}
+
+pattern triggerSignalOfBehavior(behavior, signal : Signal) {
+    OpaqueBehavior(behavior);
+    find stateEntryBehavior(state, behavior);
+    find transition(transition, _, state);
+    find xtEventTrigger(transition, trigger);
+    find triggerSignal(trigger, signal);
+} or {
+    OpaqueExpression(behavior);
+    find transition(transition, _, _);
+    Transition.guard.specification(transition, behavior);
+    find xtEventTrigger(transition, trigger);
+    find triggerSignal(trigger, signal);
 }

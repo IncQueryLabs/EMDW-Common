@@ -16,8 +16,12 @@ import org.eclipse.incquery.runtime.emf.EMFScope;
 import org.eclipse.incquery.runtime.exception.IncQueryException;
 import org.eclipse.uml2.uml.Association;
 import org.eclipse.uml2.uml.Class;
+import org.eclipse.uml2.uml.Classifier;
+import org.eclipse.uml2.uml.OpaqueBehavior;
+import org.eclipse.uml2.uml.OpaqueExpression;
 import org.eclipse.uml2.uml.Operation;
 import org.eclipse.uml2.uml.Package;
+import org.eclipse.uml2.uml.PackageableElement;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Signal;
 import org.eclipse.uml2.uml.Type;
@@ -26,11 +30,12 @@ import org.eclipse.uml2.uml.resource.UMLResource;
 
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Sets;
-import com.incquerylabs.emdw.umlintegration.queries.AssociationsOfClassMatcher;
-import com.incquerylabs.emdw.umlintegration.queries.AttributesOfClassMatcher;
+import com.incquerylabs.emdw.umlintegration.queries.AssociationsOfClassifierMatcher;
+import com.incquerylabs.emdw.umlintegration.queries.AttributesOfClassifierMatcher;
 import com.incquerylabs.emdw.umlintegration.queries.OperationsOfClassMatcher;
 import com.incquerylabs.emdw.umlintegration.queries.SignalsMatcher;
 import com.incquerylabs.emdw.umlintegration.queries.StaticOperationsMatcher;
+import com.incquerylabs.emdw.umlintegration.queries.TriggerSignalOfBehaviorMatcher;
 import com.incquerylabs.emdw.umlintegration.queries.UmlTypesMatcher;
 import com.incquerylabs.emdw.umlintegration.queries.XtClassMatcher;
 
@@ -42,12 +47,13 @@ public abstract class UMLContextProvider extends AbstractUMLContextProvider {
 			engine = doGetEngine();
 			IQueryGroup queries = GenericPatternGroup.of(
 					XtClassMatcher.querySpecification(),
-					AssociationsOfClassMatcher.querySpecification(),
-					AttributesOfClassMatcher.querySpecification(),
+					AssociationsOfClassifierMatcher.querySpecification(),
+					AttributesOfClassifierMatcher.querySpecification(),
 					SignalsMatcher.querySpecification(),
 					UmlTypesMatcher.querySpecification(),
 					OperationsOfClassMatcher.querySpecification(),
-					StaticOperationsMatcher.querySpecification()
+					StaticOperationsMatcher.querySpecification(),
+					TriggerSignalOfBehaviorMatcher.querySpecification()
 					);
 			queries.prepare(engine);			
 		}
@@ -99,9 +105,8 @@ public abstract class UMLContextProvider extends AbstractUMLContextProvider {
 	
 	@Override
 	public Set<Signal> getKnownSignals() {
-		SignalsMatcher matcher;
 		try {
-			matcher = SignalsMatcher.on(getEngine());
+			SignalsMatcher matcher = SignalsMatcher.on(getEngine());
 			return matcher.getAllValuesOfsig();
 		} catch (IncQueryException e) {
 			// TODO Auto-generated catch block
@@ -122,10 +127,9 @@ public abstract class UMLContextProvider extends AbstractUMLContextProvider {
 	}
 
 	@Override
-	public Set<Property> getPropertiesOfClass(Class cl) {
-		AttributesOfClassMatcher matcher;
+	public Set<Property> getPropertiesOfClass(Classifier cl) {
 		try {
-			matcher = AttributesOfClassMatcher.on(getEngine());
+			AttributesOfClassifierMatcher matcher = AttributesOfClassifierMatcher.on(getEngine());
 			return matcher.getAllValuesOfattribute(cl);
 		} catch (IncQueryException e) {
 			// TODO Auto-generated catch block
@@ -135,10 +139,9 @@ public abstract class UMLContextProvider extends AbstractUMLContextProvider {
 	}
 	
 	@Override
-	public Set<Property> getAssociationsOfClass(Class cl) {
-		AssociationsOfClassMatcher matcher;
+	public Set<Property> getAssociationsOfClass(Classifier cl) {
 		try {
-			matcher = AssociationsOfClassMatcher.on(getEngine());
+			AssociationsOfClassifierMatcher matcher = AssociationsOfClassifierMatcher.on(getEngine());
 			return matcher.getAllValuesOfassociation(cl);
 		} catch (IncQueryException e) {
 			// TODO Auto-generated catch block
@@ -148,8 +151,13 @@ public abstract class UMLContextProvider extends AbstractUMLContextProvider {
 	}
 
 	@Override
-	public Set<Operation> getOperationsOfClass(Class cl) {
-		return getOperationsOfClass(cl, false);
+	public Set<Operation> getOperationsOfClass(Classifier cl) {
+		if (cl instanceof Class) {
+			return getOperationsOfClass((Class) cl, false);
+		} else {
+			//This is the case e.g. for Signals
+			return Sets.newHashSet();
+		}
 	}
 
 	@Override
@@ -166,9 +174,8 @@ public abstract class UMLContextProvider extends AbstractUMLContextProvider {
 	}
 
 	public Set<Operation> getOperationsOfClass(Class cl, final boolean staticClass) {
-		OperationsOfClassMatcher matcher;
 		try {
-			matcher = OperationsOfClassMatcher.on(getEngine());
+			OperationsOfClassMatcher matcher = OperationsOfClassMatcher.on(getEngine());
 			return Sets.filter(matcher.getAllValuesOfop(cl), (Operation op) -> op.isStatic() == staticClass);
 		} catch (IncQueryException e) {
 			// TODO Auto-generated catch block
@@ -176,4 +183,25 @@ public abstract class UMLContextProvider extends AbstractUMLContextProvider {
 		}
 		return Sets.newHashSet();
 	}
+
+	@Override
+	public Signal getIncomingSignalType() {
+		try {
+			EObject ctx = getContextObject();
+			if (ctx instanceof OpaqueBehavior || ctx instanceof OpaqueExpression) {
+				TriggerSignalOfBehaviorMatcher matcher = TriggerSignalOfBehaviorMatcher.on(getEngine());
+				Set<Signal> signalTypes = matcher.getAllValuesOfsignal((PackageableElement)ctx);
+				if (!signalTypes.isEmpty()) {
+					// TODO calculate common ancestor here
+					return signalTypes.iterator().next();
+				}
+			}
+		} catch (IncQueryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return super.getIncomingSignalType();
+	}
+	
+	
 }

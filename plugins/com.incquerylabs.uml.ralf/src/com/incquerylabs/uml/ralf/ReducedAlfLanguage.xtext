@@ -79,6 +79,7 @@ BaseExpression returns Expression :
     InstanceInitializationExpression |
     CollectionLiteralExpression |
     ThisExpression |
+    SignalDataExpression |
     SuperInvocationExpression |
     FeatureExpression |
     NullExpression |
@@ -120,6 +121,11 @@ ThisExpression returns Expression :
     'this'
 //    ({FeatureInvocationExpression} -> (tuple = Tuple) | 
     {ThisExpression}//)
+;
+
+SignalDataExpression returns Expression:
+    'sigdata'
+    {SignalDataExpression}
 ;
 
 /* PARENTHESIZED EXPRESSIONS */

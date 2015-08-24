@@ -24,4 +24,7 @@ abstract class AbstractUMLContextProvider implements IUMLContextProvider {
         operation.class_
     }
     
+    override getIncomingSignalType() {
+        return null
+    }
 }

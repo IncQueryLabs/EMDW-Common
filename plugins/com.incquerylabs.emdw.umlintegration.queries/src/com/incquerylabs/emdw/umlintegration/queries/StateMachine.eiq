@@ -242,7 +242,7 @@ private pattern subregion(parent: Region, child: Region) {
 	State.region(state, child);
 }
 
-private pattern triggerSignal(trigger: Trigger, signal: Signal){
+pattern triggerSignal(trigger: Trigger, signal: Signal){
 	Trigger.event(trigger, event);
 	SignalEvent.signal(event, signal);
 }

@@ -70,6 +70,7 @@ import com.incquerylabs.uml.ralf.reducedAlfLanguage.StaticFeatureInvocationExpre
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.IfClause
 import org.eclipse.uml2.uml.Property
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.LeftHandSide
+import com.incquerylabs.uml.ralf.reducedAlfLanguage.SignalDataExpression
 
 inject extension IUMLContextProvider umlContext
 inject extension TypeFactory typeFactory
@@ -488,6 +489,17 @@ from {
         result = anyType
     } else {
         result = umlContext.thisType.typeReference
+    }
+}
+
+rule SignalDataExpression
+derives G |- SignalDataExpression ex : IUMLTypeReference result
+from {
+    val signalType = umlContext.incomingSignalType
+    if (signalType == null || signalType.eIsProxy) {
+        fail "No incoming signal available in current context"
+    } else {
+        result = signalType.typeReference        
     }
 }
 

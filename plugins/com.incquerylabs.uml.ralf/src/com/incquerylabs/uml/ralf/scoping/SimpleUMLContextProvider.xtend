@@ -1,19 +1,19 @@
 package com.incquerylabs.uml.ralf.scoping
 
 import com.google.inject.Singleton
-import com.incquerylabs.uml.ralf.scoping.AbstractUMLContextProvider
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import org.eclipse.emf.ecore.util.EcoreUtil
+import org.eclipse.uml2.uml.Association
+import org.eclipse.uml2.uml.Class
+import org.eclipse.uml2.uml.Classifier
 import org.eclipse.uml2.uml.Package
+import org.eclipse.uml2.uml.Signal
+import org.eclipse.uml2.uml.Type
 import org.eclipse.uml2.uml.UMLPackage
 import org.eclipse.uml2.uml.resource.UMLResource
 import org.eclipse.uml2.uml.resources.util.UMLResourcesUtil
-import org.eclipse.uml2.uml.Class
-import org.eclipse.uml2.uml.Type
-import org.eclipse.uml2.uml.Signal
-import org.eclipse.uml2.uml.Association
 
 /**
  * Simplified UML context, where only primitive types are available from UML model.
@@ -34,15 +34,15 @@ class SimpleUMLContextProvider extends AbstractUMLContextProvider {
     }
     
 
-    override getPropertiesOfClass(Class cl) {
+    override getPropertiesOfClass(Classifier cl) {
         return newArrayList
     }
 
-    override getAssociationsOfClass(Class cl) {
+    override getAssociationsOfClass(Classifier cl) {
         return newArrayList
     }
     
-    override getOperationsOfClass(Class cl) {
+    override getOperationsOfClass(Classifier cl) {
         return newArrayList
     }
     

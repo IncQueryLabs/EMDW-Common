@@ -42,6 +42,7 @@ import com.incquerylabs.uml.ralf.reducedAlfLanguage.RelationalExpression;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.ReturnStatement;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.SendSignalStatement;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.ShiftExpression;
+import com.incquerylabs.uml.ralf.reducedAlfLanguage.SignalDataExpression;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.StaticFeatureInvocationExpression;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.StringLiteralExpression;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.SwitchClause;
@@ -168,6 +169,8 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
   public final static String INSTANCEDELETIONEXPRESSION = "com.incquerylabs.uml.ralf.InstanceDeletionExpression";
   
   public final static String THISEXPRESSION = "com.incquerylabs.uml.ralf.ThisExpression";
+  
+  public final static String SIGNALDATAEXPRESSION = "com.incquerylabs.uml.ralf.SignalDataExpression";
   
   public final static String ASSOCIATIONACCESSEXPRESSION = "com.incquerylabs.uml.ralf.AssociationAccessExpression";
   
@@ -2761,6 +2764,47 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
     } else {
       org.eclipse.uml2.uml.Class _thisType_1 = this.umlContext.getThisType();
       IUMLTypeReference _typeReference = this.typeFactory.typeReference(_thisType_1);
+      result = _typeReference;
+    }
+    return new Result<IUMLTypeReference>(result);
+  }
+  
+  protected Result<IUMLTypeReference> typeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final SignalDataExpression ex) throws RuleFailedException {
+    try {
+    	final RuleApplicationTrace _subtrace_ = newTrace(_trace_);
+    	final Result<IUMLTypeReference> _result_ = applyRuleSignalDataExpression(G, _subtrace_, ex);
+    	addToTrace(_trace_, new Provider<Object>() {
+    		public Object get() {
+    			return ruleName("SignalDataExpression") + stringRepForEnv(G) + " |- " + stringRep(ex) + " : " + stringRep(_result_.getFirst());
+    		}
+    	});
+    	addAsSubtrace(_trace_, _subtrace_);
+    	return _result_;
+    } catch (Exception e_applyRuleSignalDataExpression) {
+    	typeThrowException(ruleName("SignalDataExpression") + stringRepForEnv(G) + " |- " + stringRep(ex) + " : " + "IUMLTypeReference",
+    		SIGNALDATAEXPRESSION,
+    		e_applyRuleSignalDataExpression, ex, new ErrorInformation[] {new ErrorInformation(ex)});
+    	return null;
+    }
+  }
+  
+  protected Result<IUMLTypeReference> applyRuleSignalDataExpression(final RuleEnvironment G, final RuleApplicationTrace _trace_, final SignalDataExpression ex) throws RuleFailedException {
+    IUMLTypeReference result = null; // output parameter
+    final Signal signalType = this.umlContext.getIncomingSignalType();
+    boolean _or = false;
+    boolean _equals = Objects.equal(signalType, null);
+    if (_equals) {
+      _or = true;
+    } else {
+      boolean _eIsProxy = signalType.eIsProxy();
+      _or = _eIsProxy;
+    }
+    if (_or) {
+      /* fail */
+      throwForExplicitFail();
+      /* "No incoming signal available in current context" */
+    } else {
+      IUMLTypeReference _typeReference = this.typeFactory.typeReference(signalType);
       result = _typeReference;
     }
     return new Result<IUMLTypeReference>(result);

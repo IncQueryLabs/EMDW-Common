@@ -2,6 +2,7 @@ package com.incquerylabs.uml.ralf.scoping;
 
 import org.eclipse.uml2.uml.Association;
 import org.eclipse.uml2.uml.Class;
+import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.Operation;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Signal;
@@ -22,9 +23,9 @@ public interface IUMLContextProvider {
 
 	Type getPrimitiveType(String name);
 	
-	Iterable<Property> getPropertiesOfClass(Class cl);
-	Iterable<Property> getAssociationsOfClass(Class cl);
-	Iterable<Operation> getOperationsOfClass(Class cl);
+	Iterable<Property> getPropertiesOfClass(Classifier cl);
+	Iterable<Property> getAssociationsOfClass(Classifier cl);
+	Iterable<Operation> getOperationsOfClass(Classifier cl);
 	Iterable<Operation> getStaticOperations();
 	
 	/**
@@ -34,6 +35,17 @@ public interface IUMLContextProvider {
 	 */
 	Class getThisType();
 	
+	/**
+	 * Returns the operation whose specification is currently defined. If the parsed text does not correspond to any operations, the returned value is null.
+	 * @return
+	 */
 	Operation getDefinedOperation();
+	
+	/**
+	 * Returns the incoming signal type. Its value can be accessed via the sigdata expression. If no incoming signal can be added, the returned value is null.
+	 * @return
+	 */
+	Signal getIncomingSignalType();
+	
 	void setDefinedOperation(Operation behavior);
 }
