@@ -26,14 +26,13 @@ public class IncQueryEngineService implements IService {
 
 	private Map<ModelSet, IncQueryEngine> engines = Maps.newHashMap();
 
-	public static IncQueryEngineService getOrStartService(ModelSet modelSet) {
+	public static IncQueryEngine getOrCreateEngineCheckingService(ModelSet resource) throws IncQueryException {
 		try {
-			ServicesRegistry serviceRegistry = ServiceUtilsForResourceSet.getInstance().getServiceRegistry(modelSet);
+			ServicesRegistry serviceRegistry = ServiceUtilsForResourceSet.getInstance().getServiceRegistry(resource);
 			serviceRegistry.startServicesByClassKeys(IncQueryEngineService.class);
-			return serviceRegistry.getService(IncQueryEngineService.class);
+			return serviceRegistry.getService(IncQueryEngineService.class).getEngine(resource);
 		} catch (ServiceException e) {
-			String message = "Service " + IncQueryEngineService.class.getCanonicalName() + " is not accessible.";
-			throw new RuntimeException(message, e);
+			return new IncQueryEngineService().initializeEngine(resource);
 		}
 	}
 
@@ -51,7 +50,7 @@ public class IncQueryEngineService implements IService {
 
 	public IncQueryEngine initializeEngine(ModelSet set) throws IncQueryException {
 		Preconditions.checkArgument(!engines.containsKey(set),
-				"IncQueryEngine already initialized for model " + set.getURIWithoutExtension().toString());
+				"IncQueryEngine already initialized for model " + set);
 		BaseIndexOptions options = new BaseIndexOptions()
 				.withResourceFilterConfiguration(new IBaseIndexResourceFilter() {
 
