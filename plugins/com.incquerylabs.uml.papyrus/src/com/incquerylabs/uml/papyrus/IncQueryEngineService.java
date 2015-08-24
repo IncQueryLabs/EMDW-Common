@@ -26,13 +26,34 @@ public class IncQueryEngineService implements IService {
 
 	private Map<ModelSet, IncQueryEngine> engines = Maps.newHashMap();
 
-	public static IncQueryEngine getOrCreateEngineCheckingService(ModelSet resource) throws IncQueryException {
+	public static IncQueryEngineService getOrStartService(ModelSet modelSet) {
 		try {
-			ServicesRegistry serviceRegistry = ServiceUtilsForResourceSet.getInstance().getServiceRegistry(resource);
-			serviceRegistry.startServicesByClassKeys(IncQueryEngineService.class);
-			return serviceRegistry.getService(IncQueryEngineService.class).getEngine(resource);
+			return getOrStartServiceInternal(modelSet);
 		} catch (ServiceException e) {
-			return new IncQueryEngineService().initializeEngine(resource);
+			String message = "Service " + IncQueryEngineService.class.getCanonicalName() + " is not accessible.";
+			throw new RuntimeException(message, e);
+		}
+	}
+
+	private static IncQueryEngineService getOrStartServiceInternal(ModelSet modelSet) throws ServiceException {
+		ServicesRegistry serviceRegistry = ServiceUtilsForResourceSet.getInstance().getServiceRegistry(modelSet);
+		serviceRegistry.startServicesByClassKeys(IncQueryEngineService.class);
+		return serviceRegistry.getService(IncQueryEngineService.class);
+	}
+	
+	public static IncQueryEngine getOrCreateEngineCheckingService(ModelSet resourceSet) throws IncQueryException {
+		try {
+			return getOrStartServiceInternal(resourceSet).getEngine(resourceSet);
+		} catch (ServiceException e) {
+			try {
+				// add service by hand instead of registering it when extensions are not supported
+				ServicesRegistry serviceRegistry = ServiceUtilsForResourceSet.getInstance().getServiceRegistry(resourceSet);
+				IncQueryEngineService service = new IncQueryEngineService();
+				serviceRegistry.add(IncQueryEngineService.class, 1, service);
+				return service.initializeEngine(resourceSet);
+			} catch (ServiceException e1) {
+				throw new IllegalStateException("Model set must have service registry, but could not access it!", e1);
+			}
 		}
 	}
 
