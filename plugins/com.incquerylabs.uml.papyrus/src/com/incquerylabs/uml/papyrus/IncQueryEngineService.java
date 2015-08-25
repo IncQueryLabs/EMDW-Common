@@ -56,6 +56,14 @@ public class IncQueryEngineService implements IService {
 			}
 		}
 	}
+	
+	public static IncQueryEngine getOrCreateEngineEvenIfModelIsClosed(ModelSet resourceSet) throws IncQueryException {
+		try {
+			return getOrStartServiceInternal(resourceSet).getEngine(resourceSet);
+		} catch (ServiceException e) {
+			return new IncQueryEngineService().initializeEngine(resourceSet);
+		}
+	}
 
 	@Override
 	public void init(ServicesRegistry servicesRegistry) throws ServiceException {
