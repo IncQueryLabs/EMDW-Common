@@ -779,7 +779,11 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
   
   protected Result<Boolean> returnStatementInternal(final RuleApplicationTrace _trace_, final ReturnStatement st) throws RuleFailedException {
     Operation _definedOperation = this.umlContext.getDefinedOperation();
-    final Parameter returnValue = this.scopeHelper.getReturnParameter(_definedOperation);
+    Parameter _returnParameter = null;
+    if (_definedOperation!=null) {
+      _returnParameter=this.scopeHelper.getReturnParameter(_definedOperation);
+    }
+    final Parameter returnValue = _returnParameter;
     /* { returnValue == null st.expression == null } or { returnValue != null st.expression != null empty |- st.expression : var IUMLTypeReference exprType val returnType = returnValue.type.typeReference empty |- returnType <: exprType } or { returnValue == null st.expression != null fail error "Unexpected return value " + st.expression.stringRep source st.expression } */
     {
       RuleFailedException previousFailure = null;

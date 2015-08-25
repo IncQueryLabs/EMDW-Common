@@ -62,8 +62,6 @@ public abstract class UMLContextProvider extends AbstractUMLContextProvider {
 	
 	protected abstract IncQueryEngine doGetEngine();
 	
-	protected abstract EObject getContextObject();
-	
 	@Override
 	protected Package getPrimitivePackage() {
 		ResourceSet set = getContextObject().eResource().getResourceSet();

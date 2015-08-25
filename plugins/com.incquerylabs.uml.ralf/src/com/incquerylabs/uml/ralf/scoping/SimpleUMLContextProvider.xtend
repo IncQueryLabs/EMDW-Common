@@ -66,4 +66,12 @@ class SimpleUMLContextProvider extends AbstractUMLContextProvider {
         containerResource.allContents.filter(typeof(Association)).toSet
     }
     
+    override protected getContextObject() {
+        null
+    }
+    
+    override getDefinedOperation() {
+        null
+    }
+    
 }

@@ -701,7 +701,7 @@ from {
 checkrule ReturnStatement for
     ReturnStatement st
 from {
-    val returnValue = definedOperation.returnParameter
+    val returnValue = definedOperation?.returnParameter
     {
         returnValue == null    
         st.expression == null

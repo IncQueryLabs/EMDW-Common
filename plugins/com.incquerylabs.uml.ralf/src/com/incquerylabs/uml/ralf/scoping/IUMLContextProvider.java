@@ -47,5 +47,4 @@ public interface IUMLContextProvider {
 	 */
 	Signal getIncomingSignalType();
 	
-	void setDefinedOperation(Operation behavior);
 }
