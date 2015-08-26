@@ -243,17 +243,17 @@ pattern xtGeneralization(subClass: Class, generalization: Generalization) {
 // Events
 
 pattern xtClassEvent(umlClass: Class, signal: Signal) {
+	find xtClass(umlClass);
 	Class.nestedClassifier(umlClass, signal);
 	SignalEvent.signal(_, signal);
-	
 }
 
 pattern xtClassEventGeneralization(
 	signal: Signal,
 	superSignal: Signal
 ) {
-	Class.nestedClassifier(_class1, signal);
-	Class.nestedClassifier(_class2, superSignal);
+	find xtClassEvent(_, signal);
+	find xtClassEvent(_, superSignal);
 	Signal.generalization(signal, generalization);
 	Generalization.general(generalization, superSignal);
 }
