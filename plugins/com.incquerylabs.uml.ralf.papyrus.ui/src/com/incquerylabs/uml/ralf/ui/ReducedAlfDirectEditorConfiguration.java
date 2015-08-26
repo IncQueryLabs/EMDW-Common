@@ -15,6 +15,7 @@ import org.eclipse.gmf.runtime.common.core.command.CommandResult;
 import org.eclipse.gmf.runtime.common.core.command.ICommand;
 import org.eclipse.gmf.runtime.emf.commands.core.command.AbstractTransactionalCommand;
 import org.eclipse.incquery.runtime.api.IncQueryEngine;
+import org.eclipse.incquery.runtime.exception.IncQueryException;
 import org.eclipse.papyrus.infra.core.resource.ModelSet;
 import org.eclipse.papyrus.infra.core.services.ServiceException;
 import org.eclipse.papyrus.infra.core.services.ServicesRegistry;
@@ -103,8 +104,8 @@ public class ReducedAlfDirectEditorConfiguration extends DefaultXtextDirectEdito
 				ServicesRegistry registry;
 				registry = ServiceUtilsForResourceSet.getInstance().getServiceRegistry(modelSet);
 				IncQueryEngineService service = registry.getService(IncQueryEngineService.class);
-				return service.getEngine(modelSet);
-			} catch (ServiceException e) {
+				return service.getOrCreateEngine(modelSet);
+			} catch (ServiceException | IncQueryException e) {
 				throw new RuntimeException("Error loading model: " + e.getMessage(), e);
 			}
 		}
