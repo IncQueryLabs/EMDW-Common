@@ -1,11 +1,13 @@
 package com.incquerylabs.uml.ralf.scoping
 
-import org.eclipse.uml2.uml.Package
-import org.eclipse.uml2.uml.OpaqueBehavior
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.uml2.uml.Class
+import org.eclipse.uml2.uml.Element
+import org.eclipse.uml2.uml.OpaqueBehavior
 import org.eclipse.uml2.uml.OpaqueExpression
 import org.eclipse.uml2.uml.Operation
+import org.eclipse.uml2.uml.Package
+import java.util.Set
 
 abstract class AbstractUMLContextProvider implements IUMLContextProvider {
 
@@ -17,6 +19,12 @@ abstract class AbstractUMLContextProvider implements IUMLContextProvider {
      * Returns the object used as context for this provider. Several different UML classes are supported, such as OpaqueBehavior, OpaqueExpression and Operation as well.
      */
     def protected abstract EObject getContextObject();
+    
+    def protected abstract Set<Class> getKnownClassesSet();
+
+    override getKnownClasses() {
+        knownClassesSet
+    }
 
     override getPrimitiveType(String name) {
         if (primitivePackage == null) {
@@ -25,11 +33,20 @@ abstract class AbstractUMLContextProvider implements IUMLContextProvider {
         primitivePackage.getOwnedType(name)
     }
 
+    private def Class getOwnerClass(Element el) {
+        var candidate = el
+        val classes = knownClassesSet
+        while (candidate != null && !classes.contains(candidate)) {
+            candidate = candidate.owner
+        }
+        candidate as Class
+    }
+
     override getThisType() {
         val ctx = contextObject
         switch ctx {
-            OpaqueBehavior: ctx.owner as Class // TODO is this correct?
-            OpaqueExpression: ctx.owner as Class // TODO is this correct?
+            OpaqueBehavior: getOwnerClass(ctx)
+            OpaqueExpression: getOwnerClass(ctx)
             Operation: ctx.class_
             default: null
         }

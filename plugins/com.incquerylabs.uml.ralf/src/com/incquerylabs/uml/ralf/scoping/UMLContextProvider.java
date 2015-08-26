@@ -79,7 +79,7 @@ public abstract class UMLContextProvider extends AbstractUMLContextProvider {
 	}
 	
 	@Override
-	public Set<Class> getKnownClasses() {
+	public Set<Class> getKnownClassesSet() {
 		try {
 			XtClassMatcher matcher = XtClassMatcher.on(getEngine());
 			return matcher.getAllValuesOfumlClass();

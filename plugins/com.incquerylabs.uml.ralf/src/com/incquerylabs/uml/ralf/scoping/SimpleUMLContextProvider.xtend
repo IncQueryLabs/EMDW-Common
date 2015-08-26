@@ -54,7 +54,7 @@ class SimpleUMLContextProvider extends AbstractUMLContextProvider {
         containerResource.allContents.filter(typeof(Type)).toSet
     }
 
-    override getKnownClasses() {
+    override getKnownClassesSet() {
         containerResource.allContents.filter(typeof(Class)).toSet
     }
 
