@@ -2,5 +2,12 @@
   <extension point="org.eclipse.emf.ecore.generated_package">
     <package class="com.incquerylabs.uml.ralf.reducedAlfLanguage.ReducedAlfLanguagePackage" genModel="model/generated/ReducedAlfLanguage.genmodel" uri="http://www.incquerylabs.com/uml/ralf/ReducedAlfLanguage"/>
   </extension>
+  <extension
+        point="org.eclipse.emf.ecore.uri_mapping">
+     <mapping
+           source="pathmap:/RALF/library"
+           target="platform:/plugin/com.incquerylabs.uml.ralf/model/collections/collections.uml">
+     </mapping>
+  </extension>
 
 </plugin>

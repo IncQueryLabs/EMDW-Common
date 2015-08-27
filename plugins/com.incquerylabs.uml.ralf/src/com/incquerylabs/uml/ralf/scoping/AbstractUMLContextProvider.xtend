@@ -8,10 +8,17 @@ import org.eclipse.uml2.uml.OpaqueExpression
 import org.eclipse.uml2.uml.Operation
 import org.eclipse.uml2.uml.Package
 import java.util.Set
+import org.eclipse.emf.ecore.resource.Resource
+import org.eclipse.emf.common.util.URI
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
+import org.eclipse.emf.ecore.resource.ResourceSet
+import com.incquerylabs.uml.ralf.reducedAlfLanguage.CollectionType
+import org.eclipse.uml2.uml.Model
 
 abstract class AbstractUMLContextProvider implements IUMLContextProvider {
 
     var Package primitivePackage
+    var Model libraryModel
 
     def protected abstract Package getPrimitivePackage();
 
@@ -24,6 +31,26 @@ abstract class AbstractUMLContextProvider implements IUMLContextProvider {
 
     override getKnownClasses() {
         knownClassesSet
+    }
+    
+    def protected Model getLibraryModel() {
+        if (libraryModel == null) {
+            val ResourceSet set = new ResourceSetImpl();
+            val libraryPackage = set.getResource(URI.createURI(LIBRARY_URI), true);
+            libraryModel = libraryPackage.contents.get(0) as Model
+        }
+        libraryModel
+    }
+
+    override getCollectionType(CollectionType typeDescriptor) {
+        switch typeDescriptor {
+            case SET : libraryModel.getOwnedType("Set") as Class
+            default: throw new UnsupportedOperationException
+        }
+    }
+    
+    override getGenericCollectionParameterType() {
+        (libraryModel.getOwnedType("Collection") as Class).ownedTemplateSignature.ownedParameters.get(0).ownedElements.get(0) as Class 
     }
 
     override getPrimitiveType(String name) {
