@@ -8,6 +8,7 @@ import com.incquerylabs.uml.ralf.reducedAlfLanguage.AssignmentExpression;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.AssociationAccessExpression;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.BooleanLiteralExpression;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.BooleanUnaryExpression;
+import com.incquerylabs.uml.ralf.reducedAlfLanguage.ClassExtentExpression;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.CollectionType;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.ConditionalLogicalExpression;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.ConditionalTestExpression;
@@ -183,6 +184,8 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
   public final static String STATICFEATUREINVOCATIONEXPRESSION = "com.incquerylabs.uml.ralf.StaticFeatureInvocationExpression";
   
   public final static String OPERATION = "com.incquerylabs.uml.ralf.Operation";
+  
+  public final static String CLASSEXTENTEXPRESSION = "com.incquerylabs.uml.ralf.ClassExtentExpression";
   
   public final static String FEATURELEFTHANDSIDE = "com.incquerylabs.uml.ralf.FeatureLeftHandSide";
   
@@ -3158,6 +3161,39 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
         result = _typeReference;
       }
     }
+    return new Result<IUMLTypeReference>(result);
+  }
+  
+  protected Result<IUMLTypeReference> typeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final ClassExtentExpression ex) throws RuleFailedException {
+    try {
+    	final RuleApplicationTrace _subtrace_ = newTrace(_trace_);
+    	final Result<IUMLTypeReference> _result_ = applyRuleClassExtentExpression(G, _subtrace_, ex);
+    	addToTrace(_trace_, new Provider<Object>() {
+    		public Object get() {
+    			return ruleName("ClassExtentExpression") + stringRepForEnv(G) + " |- " + stringRep(ex) + " : " + stringRep(_result_.getFirst());
+    		}
+    	});
+    	addAsSubtrace(_trace_, _subtrace_);
+    	return _result_;
+    } catch (Exception e_applyRuleClassExtentExpression) {
+    	typeThrowException(ruleName("ClassExtentExpression") + stringRepForEnv(G) + " |- " + stringRep(ex) + " : " + "IUMLTypeReference",
+    		CLASSEXTENTEXPRESSION,
+    		e_applyRuleClassExtentExpression, ex, new ErrorInformation[] {new ErrorInformation(ex)});
+    	return null;
+    }
+  }
+  
+  protected Result<IUMLTypeReference> applyRuleClassExtentExpression(final RuleEnvironment G, final RuleApplicationTrace _trace_, final ClassExtentExpression ex) throws RuleFailedException {
+    IUMLTypeReference result = null; // output parameter
+    /* G |- ex.class_ : var IUMLTypeReference classType */
+    NameExpression _class_ = ex.getClass_();
+    IUMLTypeReference classType = null;
+    Result<IUMLTypeReference> result_1 = typeInternal(G, _trace_, _class_);
+    checkAssignableTo(result_1.getFirst(), IUMLTypeReference.class);
+    classType = (IUMLTypeReference) result_1.getFirst();
+    
+    CollectionTypeReference _setOf = this.typeFactory.setOf(classType);
+    result = _setOf;
     return new Result<IUMLTypeReference>(result);
   }
   

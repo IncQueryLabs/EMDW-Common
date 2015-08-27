@@ -71,6 +71,7 @@ import com.incquerylabs.uml.ralf.reducedAlfLanguage.IfClause
 import org.eclipse.uml2.uml.Property
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.LeftHandSide
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.SignalDataExpression
+import com.incquerylabs.uml.ralf.reducedAlfLanguage.ClassExtentExpression
 
 inject extension IUMLContextProvider umlContext
 inject extension TypeFactory typeFactory
@@ -583,6 +584,13 @@ from {
     } or {
         result = op.getType.typeReference
     }
+}
+
+rule ClassExtentExpression
+    derives G |- ClassExtentExpression ex : IUMLTypeReference result
+from {
+    G |- ex.class_ : var IUMLTypeReference classType
+    result = setOf(classType)
 }
 
 //Non-expression types
