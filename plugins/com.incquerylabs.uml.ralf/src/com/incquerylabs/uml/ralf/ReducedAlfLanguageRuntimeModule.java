@@ -3,6 +3,7 @@
  */
 package com.incquerylabs.uml.ralf;
 
+import org.eclipse.xtext.conversion.IValueConverterService;
 import org.eclipse.xtext.resource.IDefaultResourceDescriptionStrategy;
 
 import com.incquerylabs.uml.ralf.scoping.ReducedAlfLanguageResourceDescriptionStrategy;
@@ -15,4 +16,9 @@ public class ReducedAlfLanguageRuntimeModule extends com.incquerylabs.uml.ralf.A
     public Class<? extends IDefaultResourceDescriptionStrategy> bindIDefaultResourceDescriptionStrategy() {
         return ReducedAlfLanguageResourceDescriptionStrategy.class;
     }
+    
+    @Override
+    public Class<? extends IValueConverterService> bindIValueConverterService() {
+		return ReducedAlfLanguageValueConverters.class;
+	}
 }
