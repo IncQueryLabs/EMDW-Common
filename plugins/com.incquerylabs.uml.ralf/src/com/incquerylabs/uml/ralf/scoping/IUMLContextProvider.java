@@ -8,12 +8,15 @@ import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Signal;
 import org.eclipse.uml2.uml.Type;
 
+import com.incquerylabs.uml.ralf.reducedAlfLanguage.CollectionType;
+
 public interface IUMLContextProvider {
 
 	public static final String REAL_TYPE = "Real";
 	public static final String INTEGER_TYPE = "Integer";
 	public static final String STRING_TYPE = "String";
 	public static final String BOOLEAN_TYPE = "Boolean";
+	public static final String LIBRARY_URI = "pathmap:/RALF/library";
 	
 	
 	Iterable<Type> getKnownTypes();
@@ -22,6 +25,8 @@ public interface IUMLContextProvider {
 	Iterable<Association> getKnownAssociations();
 
 	Type getPrimitiveType(String name);
+	Class getCollectionType(CollectionType typeDescriptor);
+	Class getGenericCollectionParameterType();
 	
 	Iterable<Property> getPropertiesOfClass(Classifier cl);
 	Iterable<Property> getAssociationsOfClass(Classifier cl);

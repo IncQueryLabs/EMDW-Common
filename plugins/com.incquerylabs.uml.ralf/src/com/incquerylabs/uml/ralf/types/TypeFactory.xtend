@@ -9,10 +9,12 @@ import com.incquerylabs.uml.ralf.reducedAlfLanguage.CollectionType
 import org.eclipse.uml2.uml.PrimitiveType
 import java.util.Map
 import com.incquerylabs.uml.ralf.types.IUMLTypeReference.VoidTypeReference
+import com.google.inject.Injector
 
 class TypeFactory {
     
     @Inject extension IUMLContextProvider umlContext
+    @Inject var Injector injector
     Map<String, PrimitiveTypeReference> primitiveTypeMap = newHashMap()
     
     def IUMLTypeReference typeReference(Type type) {
@@ -51,34 +53,36 @@ class TypeFactory {
     }
     
     def CollectionTypeReference collectionOf(Type valueType, CollectionType collectionType) {
-        new CollectionTypeReference(collectionType, typeReference(valueType))
+        collectionOf(typeReference(valueType), collectionType)
     }
     
     def CollectionTypeReference collectionOf(IUMLTypeReference valueType, CollectionType collectionType) {
-        new CollectionTypeReference(collectionType, valueType)
+        val ref = new CollectionTypeReference(collectionType, valueType)
+        injector.injectMembers(ref)
+        ref
     }
     
     def CollectionTypeReference setOf(Type valueType) {
-        new CollectionTypeReference(CollectionType.SET, typeReference(valueType))
+        collectionOf(typeReference(valueType), CollectionType.SET)
     }
     
     def CollectionTypeReference setOf(IUMLTypeReference valueType) {
-        new CollectionTypeReference(CollectionType.SET, valueType)
+        collectionOf(valueType, CollectionType.SET)
     }
     
     def CollectionTypeReference bagOf(Type valueType) {
-        new CollectionTypeReference(CollectionType.BAG, typeReference(valueType))
+        collectionOf(typeReference(valueType), CollectionType.BAG)
     }
     
     def CollectionTypeReference bagOf(IUMLTypeReference valueType) {
-        new CollectionTypeReference(CollectionType.BAG, valueType)
+        collectionOf(valueType, CollectionType.BAG)
     }
     
     def CollectionTypeReference sequenceOf(Type valueType) {
-        new CollectionTypeReference(CollectionType.SEQUENCE, typeReference(valueType))
+        collectionOf(typeReference(valueType), CollectionType.SEQUENCE)
     }
     
     def CollectionTypeReference sequenceOf(IUMLTypeReference valueType) {
-        new CollectionTypeReference(CollectionType.SEQUENCE, valueType)
+        collectionOf(valueType, CollectionType.SEQUENCE)
     }
 }

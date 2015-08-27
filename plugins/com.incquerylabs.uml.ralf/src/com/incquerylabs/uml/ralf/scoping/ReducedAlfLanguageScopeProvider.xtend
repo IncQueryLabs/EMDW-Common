@@ -165,8 +165,8 @@ class ReducedAlfLanguageScopeProvider extends AbstractDeclarativeScopeProvider {
         if (typeResult.failed) {
             return null
         }
-        val type = typeResult.value.classifierFromTypeReference
-        if (type != null) {
+        val type = typeResult.value.umlType
+        if (type instanceof Classifier) {
             Scopes.scopeFor(umlContext.getPropertiesOfClass(type),
                 Scopes.scopeFor(umlContext.getOperationsOfClass(type))
             )
