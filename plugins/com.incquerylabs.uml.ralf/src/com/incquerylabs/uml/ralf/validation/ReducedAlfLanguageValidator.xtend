@@ -4,6 +4,7 @@
 package com.incquerylabs.uml.ralf.validation
 
 import com.google.inject.Inject
+import com.incquerylabs.uml.ralf.reducedAlfLanguage.AssignmentExpression
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.BlockStatement
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.BreakStatement
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.DoStatement
@@ -13,6 +14,7 @@ import com.incquerylabs.uml.ralf.reducedAlfLanguage.ForStatement
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.LinkOperationExpression
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.LocalNameDeclarationStatement
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.LoopVariable
+import com.incquerylabs.uml.ralf.reducedAlfLanguage.NameExpression
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.ReducedAlfLanguagePackage
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.Statements
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.SwitchClause
@@ -25,9 +27,6 @@ import org.eclipse.uml2.uml.Property
 import org.eclipse.uml2.uml.UMLPackage
 import org.eclipse.xtext.naming.QualifiedName
 import org.eclipse.xtext.validation.Check
-import com.incquerylabs.uml.ralf.reducedAlfLanguage.LeftHandSide
-import com.incquerylabs.uml.ralf.reducedAlfLanguage.NameExpression
-import com.incquerylabs.uml.ralf.reducedAlfLanguage.AssignmentExpression
 
 //import org.eclipse.xtext.validation.Check
 
@@ -94,7 +93,8 @@ class ReducedAlfLanguageValidator extends ReducedAlfSystemValidator {
 	
 	@Check
 	def checkLinkOperation(LinkOperationExpression ex) {
-	    if (!(ex.association instanceof Association)) {
+	    val typeResult = xsemanticsSystem.type(ex.association)
+	    if (!typeResult.failed && !(typeResult.value.umlType instanceof Association)) {
 	        error('''«ex.linkOperation.getName» can only be executed on associations''', ex, ReducedAlfLanguagePackage.Literals.LINK_OPERATION_EXPRESSION__ASSOCIATION, CODE_INVALID_ASSOCIATION)
 	    }
 	}
