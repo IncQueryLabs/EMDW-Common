@@ -546,7 +546,15 @@ rule FeatureInvocationExpression
 from {
     {
         ex.^feature instanceof Operation
+        G |- ex.^feature : var IUMLTypeReference opType
+        opType.umlType == genericCollectionParameterType
+        G |- ex.context : var CollectionTypeReference collType
+        result = collType.valueType
+        // TODO parameter typing
+    } or {
+        ex.^feature instanceof Operation
         G |- ex.^feature : result
+        
         // TODO parameter typing
     } or {
         ex.^feature instanceof Property

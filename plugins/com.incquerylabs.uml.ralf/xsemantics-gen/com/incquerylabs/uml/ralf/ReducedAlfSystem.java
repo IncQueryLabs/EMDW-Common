@@ -2964,7 +2964,7 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
   
   protected Result<IUMLTypeReference> applyRuleFeatureInvocationExpression(final RuleEnvironment G, final RuleApplicationTrace _trace_, final FeatureInvocationExpression ex) throws RuleFailedException {
     IUMLTypeReference result = null; // output parameter
-    /* { ex.^feature instanceof Operation G |- ex.^feature : result } or { ex.^feature instanceof Property val property = ex.^feature as Property !property.eIsProxy { !property.multivalued result = property.type.typeReference } or { property.multivalued && property.ordered result = property.type.sequenceOf } or { property.multivalued && !property.ordered && property.unique result = property.type.setOf } or { property.multivalued && !property.ordered && !property.unique result = property.type.bagOf } } */
+    /* { ex.^feature instanceof Operation G |- ex.^feature : var IUMLTypeReference opType opType.umlType == genericCollectionParameterType G |- ex.context : var CollectionTypeReference collType result = collType.valueType } or { ex.^feature instanceof Operation G |- ex.^feature : result } or { ex.^feature instanceof Property val property = ex.^feature as Property !property.eIsProxy { !property.multivalued result = property.type.typeReference } or { property.multivalued && property.ordered result = property.type.sequenceOf } or { property.multivalued && !property.ordered && property.unique result = property.type.setOf } or { property.multivalued && !property.ordered && !property.unique result = property.type.bagOf } } */
     {
       RuleFailedException previousFailure = null;
       try {
@@ -2973,113 +2973,148 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
         if (!(_feature instanceof Operation)) {
           sneakyThrowRuleFailedException("ex.^feature instanceof Operation");
         }
-        /* G |- ex.^feature : result */
+        /* G |- ex.^feature : var IUMLTypeReference opType */
         Feature _feature_1 = ex.getFeature();
+        IUMLTypeReference opType = null;
         Result<IUMLTypeReference> result_1 = typeInternal(G, _trace_, _feature_1);
         checkAssignableTo(result_1.getFirst(), IUMLTypeReference.class);
-        result = (IUMLTypeReference) result_1.getFirst();
+        opType = (IUMLTypeReference) result_1.getFirst();
         
+        Type _umlType = opType.getUmlType();
+        org.eclipse.uml2.uml.Class _genericCollectionParameterType = this.umlContext.getGenericCollectionParameterType();
+        boolean _equals = Objects.equal(_umlType, _genericCollectionParameterType);
+        /* opType.umlType == genericCollectionParameterType */
+        if (!_equals) {
+          sneakyThrowRuleFailedException("opType.umlType == genericCollectionParameterType");
+        }
+        /* G |- ex.context : var CollectionTypeReference collType */
+        Expression _context = ex.getContext();
+        CollectionTypeReference collType = null;
+        Result<IUMLTypeReference> result_2 = typeInternal(G, _trace_, _context);
+        checkAssignableTo(result_2.getFirst(), CollectionTypeReference.class);
+        collType = (CollectionTypeReference) result_2.getFirst();
+        
+        IUMLTypeReference _valueType = collType.getValueType();
+        result = _valueType;
       } catch (Exception e) {
         previousFailure = extractRuleFailedException(e);
-        Feature _feature_2 = ex.getFeature();
-        /* ex.^feature instanceof Property */
-        if (!(_feature_2 instanceof Property)) {
-          sneakyThrowRuleFailedException("ex.^feature instanceof Property");
-        }
-        Feature _feature_3 = ex.getFeature();
-        final Property property = ((Property) _feature_3);
-        boolean _eIsProxy = property.eIsProxy();
-        boolean _not = (!_eIsProxy);
-        /* !property.eIsProxy */
-        if (!_not) {
-          sneakyThrowRuleFailedException("!property.eIsProxy");
-        }
-        /* { !property.multivalued result = property.type.typeReference } or { property.multivalued && property.ordered result = property.type.sequenceOf } or { property.multivalued && !property.ordered && property.unique result = property.type.setOf } or { property.multivalued && !property.ordered && !property.unique result = property.type.bagOf } */
+        /* { ex.^feature instanceof Operation G |- ex.^feature : result } or { ex.^feature instanceof Property val property = ex.^feature as Property !property.eIsProxy { !property.multivalued result = property.type.typeReference } or { property.multivalued && property.ordered result = property.type.sequenceOf } or { property.multivalued && !property.ordered && property.unique result = property.type.setOf } or { property.multivalued && !property.ordered && !property.unique result = property.type.bagOf } } */
         {
           try {
-            boolean _isMultivalued = property.isMultivalued();
-            boolean _not_1 = (!_isMultivalued);
-            /* !property.multivalued */
-            if (!_not_1) {
-              sneakyThrowRuleFailedException("!property.multivalued");
+            Feature _feature_2 = ex.getFeature();
+            /* ex.^feature instanceof Operation */
+            if (!(_feature_2 instanceof Operation)) {
+              sneakyThrowRuleFailedException("ex.^feature instanceof Operation");
             }
-            Type _type = property.getType();
-            IUMLTypeReference _typeReference = this.typeFactory.typeReference(_type);
-            result = _typeReference;
+            /* G |- ex.^feature : result */
+            Feature _feature_3 = ex.getFeature();
+            Result<IUMLTypeReference> result_3 = typeInternal(G, _trace_, _feature_3);
+            checkAssignableTo(result_3.getFirst(), IUMLTypeReference.class);
+            result = (IUMLTypeReference) result_3.getFirst();
+            
           } catch (Exception e_1) {
             previousFailure = extractRuleFailedException(e_1);
-            /* { property.multivalued && property.ordered result = property.type.sequenceOf } or { property.multivalued && !property.ordered && property.unique result = property.type.setOf } or { property.multivalued && !property.ordered && !property.unique result = property.type.bagOf } */
+            Feature _feature_4 = ex.getFeature();
+            /* ex.^feature instanceof Property */
+            if (!(_feature_4 instanceof Property)) {
+              sneakyThrowRuleFailedException("ex.^feature instanceof Property");
+            }
+            Feature _feature_5 = ex.getFeature();
+            final Property property = ((Property) _feature_5);
+            boolean _eIsProxy = property.eIsProxy();
+            boolean _not = (!_eIsProxy);
+            /* !property.eIsProxy */
+            if (!_not) {
+              sneakyThrowRuleFailedException("!property.eIsProxy");
+            }
+            /* { !property.multivalued result = property.type.typeReference } or { property.multivalued && property.ordered result = property.type.sequenceOf } or { property.multivalued && !property.ordered && property.unique result = property.type.setOf } or { property.multivalued && !property.ordered && !property.unique result = property.type.bagOf } */
             {
               try {
-                boolean _and = false;
-                boolean _isMultivalued_1 = property.isMultivalued();
-                if (!_isMultivalued_1) {
-                  _and = false;
-                } else {
-                  boolean _isOrdered = property.isOrdered();
-                  _and = _isOrdered;
+                boolean _isMultivalued = property.isMultivalued();
+                boolean _not_1 = (!_isMultivalued);
+                /* !property.multivalued */
+                if (!_not_1) {
+                  sneakyThrowRuleFailedException("!property.multivalued");
                 }
-                /* property.multivalued && property.ordered */
-                if (!_and) {
-                  sneakyThrowRuleFailedException("property.multivalued && property.ordered");
-                }
-                Type _type_1 = property.getType();
-                CollectionTypeReference _sequenceOf = this.typeFactory.sequenceOf(_type_1);
-                result = _sequenceOf;
+                Type _type = property.getType();
+                IUMLTypeReference _typeReference = this.typeFactory.typeReference(_type);
+                result = _typeReference;
               } catch (Exception e_2) {
                 previousFailure = extractRuleFailedException(e_2);
-                /* { property.multivalued && !property.ordered && property.unique result = property.type.setOf } or { property.multivalued && !property.ordered && !property.unique result = property.type.bagOf } */
+                /* { property.multivalued && property.ordered result = property.type.sequenceOf } or { property.multivalued && !property.ordered && property.unique result = property.type.setOf } or { property.multivalued && !property.ordered && !property.unique result = property.type.bagOf } */
                 {
                   try {
-                    boolean _and_1 = false;
-                    boolean _and_2 = false;
-                    boolean _isMultivalued_2 = property.isMultivalued();
-                    if (!_isMultivalued_2) {
-                      _and_2 = false;
+                    boolean _and = false;
+                    boolean _isMultivalued_1 = property.isMultivalued();
+                    if (!_isMultivalued_1) {
+                      _and = false;
                     } else {
-                      boolean _isOrdered_1 = property.isOrdered();
-                      boolean _not_2 = (!_isOrdered_1);
-                      _and_2 = _not_2;
+                      boolean _isOrdered = property.isOrdered();
+                      _and = _isOrdered;
                     }
-                    if (!_and_2) {
-                      _and_1 = false;
-                    } else {
-                      boolean _isUnique = property.isUnique();
-                      _and_1 = _isUnique;
+                    /* property.multivalued && property.ordered */
+                    if (!_and) {
+                      sneakyThrowRuleFailedException("property.multivalued && property.ordered");
                     }
-                    /* property.multivalued && !property.ordered && property.unique */
-                    if (!_and_1) {
-                      sneakyThrowRuleFailedException("property.multivalued && !property.ordered && property.unique");
-                    }
-                    Type _type_2 = property.getType();
-                    CollectionTypeReference _setOf = this.typeFactory.setOf(_type_2);
-                    result = _setOf;
+                    Type _type_1 = property.getType();
+                    CollectionTypeReference _sequenceOf = this.typeFactory.sequenceOf(_type_1);
+                    result = _sequenceOf;
                   } catch (Exception e_3) {
                     previousFailure = extractRuleFailedException(e_3);
-                    boolean _and_3 = false;
-                    boolean _and_4 = false;
-                    boolean _isMultivalued_3 = property.isMultivalued();
-                    if (!_isMultivalued_3) {
-                      _and_4 = false;
-                    } else {
-                      boolean _isOrdered_2 = property.isOrdered();
-                      boolean _not_3 = (!_isOrdered_2);
-                      _and_4 = _not_3;
+                    /* { property.multivalued && !property.ordered && property.unique result = property.type.setOf } or { property.multivalued && !property.ordered && !property.unique result = property.type.bagOf } */
+                    {
+                      try {
+                        boolean _and_1 = false;
+                        boolean _and_2 = false;
+                        boolean _isMultivalued_2 = property.isMultivalued();
+                        if (!_isMultivalued_2) {
+                          _and_2 = false;
+                        } else {
+                          boolean _isOrdered_1 = property.isOrdered();
+                          boolean _not_2 = (!_isOrdered_1);
+                          _and_2 = _not_2;
+                        }
+                        if (!_and_2) {
+                          _and_1 = false;
+                        } else {
+                          boolean _isUnique = property.isUnique();
+                          _and_1 = _isUnique;
+                        }
+                        /* property.multivalued && !property.ordered && property.unique */
+                        if (!_and_1) {
+                          sneakyThrowRuleFailedException("property.multivalued && !property.ordered && property.unique");
+                        }
+                        Type _type_2 = property.getType();
+                        CollectionTypeReference _setOf = this.typeFactory.setOf(_type_2);
+                        result = _setOf;
+                      } catch (Exception e_4) {
+                        previousFailure = extractRuleFailedException(e_4);
+                        boolean _and_3 = false;
+                        boolean _and_4 = false;
+                        boolean _isMultivalued_3 = property.isMultivalued();
+                        if (!_isMultivalued_3) {
+                          _and_4 = false;
+                        } else {
+                          boolean _isOrdered_2 = property.isOrdered();
+                          boolean _not_3 = (!_isOrdered_2);
+                          _and_4 = _not_3;
+                        }
+                        if (!_and_4) {
+                          _and_3 = false;
+                        } else {
+                          boolean _isUnique_1 = property.isUnique();
+                          boolean _not_4 = (!_isUnique_1);
+                          _and_3 = _not_4;
+                        }
+                        /* property.multivalued && !property.ordered && !property.unique */
+                        if (!_and_3) {
+                          sneakyThrowRuleFailedException("property.multivalued && !property.ordered && !property.unique");
+                        }
+                        Type _type_3 = property.getType();
+                        CollectionTypeReference _bagOf = this.typeFactory.bagOf(_type_3);
+                        result = _bagOf;
+                      }
                     }
-                    if (!_and_4) {
-                      _and_3 = false;
-                    } else {
-                      boolean _isUnique_1 = property.isUnique();
-                      boolean _not_4 = (!_isUnique_1);
-                      _and_3 = _not_4;
-                    }
-                    /* property.multivalued && !property.ordered && !property.unique */
-                    if (!_and_3) {
-                      sneakyThrowRuleFailedException("property.multivalued && !property.ordered && !property.unique");
-                    }
-                    Type _type_3 = property.getType();
-                    CollectionTypeReference _bagOf = this.typeFactory.bagOf(_type_3);
-                    result = _bagOf;
                   }
                 }
               }

@@ -8,7 +8,6 @@ import org.eclipse.uml2.uml.OpaqueExpression
 import org.eclipse.uml2.uml.Operation
 import org.eclipse.uml2.uml.Package
 import java.util.Set
-import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import org.eclipse.emf.ecore.resource.ResourceSet
@@ -19,6 +18,7 @@ abstract class AbstractUMLContextProvider implements IUMLContextProvider {
 
     var Package primitivePackage
     var Model libraryModel
+    var Class collectionParameterType
 
     def protected abstract Package getPrimitivePackage();
 
@@ -50,7 +50,10 @@ abstract class AbstractUMLContextProvider implements IUMLContextProvider {
     }
     
     override getGenericCollectionParameterType() {
-        (libraryModel.getOwnedType("Collection") as Class).ownedTemplateSignature.ownedParameters.get(0).ownedElements.get(0) as Class 
+        if (collectionParameterType == null) {
+            collectionParameterType = (libraryModel.getOwnedType("Collection") as Class).ownedTemplateSignature.ownedParameters.get(0).ownedElements.get(0) as Class 
+        }
+        collectionParameterType
     }
 
     override getPrimitiveType(String name) {
