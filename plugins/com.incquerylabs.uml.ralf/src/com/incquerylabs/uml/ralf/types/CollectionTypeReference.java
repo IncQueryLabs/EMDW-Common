@@ -1,5 +1,7 @@
 package com.incquerylabs.uml.ralf.types;
 
+import org.eclipse.uml2.uml.Type;
+
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.CollectionType;
 
 public class CollectionTypeReference implements IUMLTypeReference {
@@ -58,5 +60,10 @@ public class CollectionTypeReference implements IUMLTypeReference {
 		if (type != other.type)
 			return false;
 		return true;
+	}
+	@Override
+	public Type getUmlType() {
+		// TODO After the types are available as a library, this should return an UML type
+		return null;
 	}
 }

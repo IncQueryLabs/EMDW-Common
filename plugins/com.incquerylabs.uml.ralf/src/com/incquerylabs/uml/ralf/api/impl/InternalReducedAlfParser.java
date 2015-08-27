@@ -23,6 +23,7 @@ import org.eclipse.xtext.util.LazyStringInputStream;
 import org.eclipse.xtext.validation.IDiagnosticConverter;
 
 import com.google.inject.Inject;
+import com.google.inject.Injector;
 import com.google.inject.Provider;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.ReducedAlfLanguageFactory;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.Statements;
@@ -42,6 +43,9 @@ class InternalReducedAlfParser {
     
     @Inject
     private IDiagnosticConverter converter;
+    
+    @Inject
+    private Injector injector;
 
     private String fileExtension; 
 
@@ -94,7 +98,7 @@ class InternalReducedAlfParser {
 			converter.convertResourceDiagnostic(diagnostic, Severity.ERROR, collector);
 		}
         if (contents.isEmpty()) {
-            return new ParsingResults(collector, ReducedAlfLanguageFactory.eINSTANCE.createStatements());
+            return new ParsingResults(collector, ReducedAlfLanguageFactory.eINSTANCE.createStatements(), injector);
         } else {
             Statements st = (Statements) contents.get(0);
             BasicDiagnostic diagnosticChain = new BasicDiagnostic();
@@ -102,7 +106,7 @@ class InternalReducedAlfParser {
             for (Diagnostic diag : new DiagnosticTreeIterator(diagnosticChain)) {
             	converter.convertValidatorDiagnostic(diag, collector);
             }
-            return new ParsingResults(collector, st);
+            return new ParsingResults(collector, st, injector);
         }
     }
 

@@ -4,6 +4,12 @@ import org.eclipse.uml2.uml.Type;
 
 public interface IUMLTypeReference {
 
+	/**
+	 * Returns the corresponding UML type for the type reference (if one exists).
+	 * @return the corresponding UML type, or null if no such type exists
+	 */
+	Type getUmlType();
+	
 	public class AnyTypeReference implements IUMLTypeReference {
 		
 		private static AnyTypeReference INSTANCE = new AnyTypeReference();
@@ -13,6 +19,11 @@ public interface IUMLTypeReference {
 		}
 		
 		private AnyTypeReference() {}
+
+		@Override
+		public Type getUmlType() {
+			return null;
+		}
 
 	}
 	public class NullTypeReference implements IUMLTypeReference {
@@ -25,6 +36,11 @@ public interface IUMLTypeReference {
 		
 		private NullTypeReference() {}
 
+		@Override
+		public Type getUmlType() {
+			return null;
+		}
+
 	}
 	
 	public class VoidTypeReference implements IUMLTypeReference {
@@ -36,5 +52,10 @@ public interface IUMLTypeReference {
 		}
 		
 		private VoidTypeReference() {}
+
+		@Override
+		public Type getUmlType() {
+			return null;
+		}
 	}
 }

@@ -3,15 +3,19 @@ package com.incquerylabs.uml.ralf.api.impl;
 import org.eclipse.xtext.validation.Issue;
 
 import com.google.common.collect.Iterables;
+import com.google.inject.Injector;
+import com.incquerylabs.uml.ralf.ReducedAlfSystem;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.Statements;
 
 public class ParsingResults {
     protected DiagnosticCollector diag;
     protected Statements model;
+	private final Injector injector;
     
-    public ParsingResults(DiagnosticCollector diag, Statements model) {
+    public ParsingResults(DiagnosticCollector diag, Statements model, Injector injector) {
         this.model = model;
         this.diag = diag;
+		this.injector = injector;
     }
     
     public boolean hasWarning() {
@@ -56,6 +60,8 @@ public class ParsingResults {
         return model;
     }
 
-
+    public ReducedAlfSystem getTypeSystem() {
+    	return injector.getInstance(ReducedAlfSystem.class);
+    }
 }
 

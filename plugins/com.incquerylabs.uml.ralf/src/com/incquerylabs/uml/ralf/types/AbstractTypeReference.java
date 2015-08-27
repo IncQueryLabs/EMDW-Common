@@ -14,6 +14,7 @@ public abstract class AbstractTypeReference implements IUMLTypeReference {
 		this.umlType = umlType;
 	}
 
+	@Override
 	public Type getUmlType() {
 		return umlType;
 	}
