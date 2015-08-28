@@ -94,6 +94,8 @@ pattern xtClass(umlClass: Class) {
 	neg find xtComponent(umlClass);
 	neg find node(umlClass);
 	neg find stereotype(umlClass);
+	neg find templateParameterClass(umlClass);
+	neg find templateBindingClass(umlClass);
 }
 
 private pattern behavior(it) {
@@ -106,6 +108,16 @@ private pattern node(it) {
 
 private pattern stereotype(it) {
 	Stereotype(it);
+}
+
+private pattern templateParameterClass(umlClass: Class){
+  TemplateSignature.ownedParameter(_, param);
+  ClassifierTemplateParameter.parameteredElement(param, umlClass);
+}
+
+private pattern templateBindingClass(umlClass: Class){
+  TemplateBinding.parameterSubstitution(_, param);
+  TemplateParameterSubstitution.actual(param, umlClass);
 }
 
 pattern xtClassInModel(model: Model, umlClass: Class) {

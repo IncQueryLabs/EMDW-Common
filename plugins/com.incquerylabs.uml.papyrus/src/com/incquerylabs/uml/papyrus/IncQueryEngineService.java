@@ -1,7 +1,6 @@
 package com.incquerylabs.uml.papyrus;
 
 import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -18,17 +17,12 @@ import org.eclipse.papyrus.infra.core.services.ServicesRegistry;
 import org.eclipse.papyrus.infra.emf.utils.ServiceUtilsForResourceSet;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Maps;
 
 public class IncQueryEngineService implements IService {
 
 	public static final String PATHMAP_SCHEME = "pathmap";
 	private static final String UML_LIBRARIES_AUTHORITY = "UML_LIBRARIES";
-	private static final Set<String> RESOURCE_URI_BLACKLIST = ImmutableSet.<String>builder()
-		// this library is filtered to avoid UML Classes in Template parameters of Map and List to be indexed
-		.add("pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml")
-		.build(); 
 
 	private Map<ModelSet, IncQueryEngine> engines = Maps.newHashMap();
 
@@ -92,9 +86,6 @@ public class IncQueryEngineService implements IService {
 					@Override
 					public boolean isResourceFiltered(Resource resource) {
 						URI uri = resource.getURI();
-						if(RESOURCE_URI_BLACKLIST.contains(uri.toString())) {
-							return true;
-						}
 						return PATHMAP_SCHEME.equals(uri.scheme()) && !uri.authority().equals(UML_LIBRARIES_AUTHORITY);
 					}
 
