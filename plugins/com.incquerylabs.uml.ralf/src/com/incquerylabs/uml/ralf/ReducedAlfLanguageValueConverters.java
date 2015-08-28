@@ -1,6 +1,5 @@
 package com.incquerylabs.uml.ralf;
 
-import org.eclipse.xtext.AbstractRule;
 import org.eclipse.xtext.common.services.DefaultTerminalConverters;
 import org.eclipse.xtext.conversion.IValueConverter;
 import org.eclipse.xtext.conversion.ValueConverter;

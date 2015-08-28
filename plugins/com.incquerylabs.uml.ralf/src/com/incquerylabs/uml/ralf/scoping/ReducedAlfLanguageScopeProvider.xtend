@@ -16,16 +16,15 @@ import com.incquerylabs.uml.ralf.reducedAlfLanguage.Statement
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.Statements
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.StaticFeatureInvocationExpression
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.Variable
-import com.incquerylabs.uml.ralf.types.IUMLTypeReference
 import com.incquerylabs.uml.ralf.types.UMLTypeReference
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference
 import org.eclipse.uml2.uml.Class
+import org.eclipse.uml2.uml.Classifier
 import org.eclipse.xtext.naming.IQualifiedNameConverter
 import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.Scopes
 import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider
-import org.eclipse.uml2.uml.Classifier
 
 /**
  * This class contains custom scoping description.
@@ -140,16 +139,6 @@ class ReducedAlfLanguageScopeProvider extends AbstractDeclarativeScopeProvider {
           default:
             emptyList
         }
-    }
-    
-    private def getClassifierFromTypeReference(IUMLTypeReference typeRef) {
-        if (typeRef instanceof UMLTypeReference) {
-            val type = typeRef.umlType
-            if (type instanceof Classifier) {
-                return type
-            }    
-        }
-        return null
     }
      
     def IScope scope_FeatureInvocationExpression_feature(FeatureInvocationExpression ctx, EReference ref) {
