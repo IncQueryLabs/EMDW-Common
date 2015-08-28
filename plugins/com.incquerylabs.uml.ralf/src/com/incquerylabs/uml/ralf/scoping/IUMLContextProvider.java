@@ -16,7 +16,7 @@ public interface IUMLContextProvider {
 	public static final String INTEGER_TYPE = "Integer";
 	public static final String STRING_TYPE = "String";
 	public static final String BOOLEAN_TYPE = "Boolean";
-	public static final String LIBRARY_URI = "pathmap:/RALF/library";
+	public static final String LIBRARY_URI = "pathmap://RALF/library.uml";
 	
 	
 	Iterable<Type> getKnownTypes();
@@ -25,8 +25,8 @@ public interface IUMLContextProvider {
 	Iterable<Association> getKnownAssociations();
 
 	Type getPrimitiveType(String name);
-	Class getCollectionType(CollectionType typeDescriptor);
-	Class getGenericCollectionParameterType();
+	Classifier getCollectionType(CollectionType typeDescriptor);
+	Classifier getGenericCollectionParameterType();
 	
 	Iterable<Property> getPropertiesOfClass(Classifier cl);
 	Iterable<Property> getAssociationsOfClass(Classifier cl);

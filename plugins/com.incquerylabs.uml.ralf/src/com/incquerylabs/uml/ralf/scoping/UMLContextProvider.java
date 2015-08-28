@@ -46,8 +46,7 @@ public abstract class UMLContextProvider extends AbstractUMLContextProvider {
 	protected IncQueryEngine getEngine() throws IncQueryException, IncQueryBaseException {
 		if (engine == null) {
 			engine = doGetEngine();
-			NavigationHelper base = EMFScope.extractUnderlyingEMFIndex(engine);
-			base.addRoot(getLibraryModel());
+			getLibraryModel();
 			IQueryGroup queries = GenericPatternGroup.of(
 					XtClassMatcher.querySpecification(),
 					AssociationsOfClassifierMatcher.querySpecification(),
@@ -153,12 +152,7 @@ public abstract class UMLContextProvider extends AbstractUMLContextProvider {
 
 	@Override
 	public Set<Operation> getOperationsOfClass(Classifier cl) {
-		if (cl instanceof Class) {
-			return getOperationsOfClass((Class) cl, false);
-		} else {
-			//This is the case e.g. for Signals
-			return Sets.newHashSet();
-		}
+		return getOperationsOfClass(cl, false);
 	}
 
 	@Override
@@ -174,7 +168,7 @@ public abstract class UMLContextProvider extends AbstractUMLContextProvider {
 		return Sets.newHashSet();
 	}
 
-	public Set<Operation> getOperationsOfClass(Class cl, final boolean staticClass) {
+	public Set<Operation> getOperationsOfClass(Classifier cl, final boolean staticClass) {
 		try {
 			OperationsOfClassMatcher matcher = OperationsOfClassMatcher.on(getEngine());
 			return Sets.filter(matcher.getAllValuesOfop(cl), (Operation op) -> op.isStatic() == staticClass);

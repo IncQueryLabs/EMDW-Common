@@ -16,8 +16,13 @@ pattern superClass(sub : Class, sup : Class) {
 }
 
 pattern superSignal(sub : Signal, sup : Signal) {
-    Generalization.general(gen, sub);
-    Generalization.target(gen, sup);
+    Generalization.specific(gen, sub);
+    Generalization.general(gen, sup);
+}
+
+pattern superDataType(sub : DataType, sup : DataType) {
+    Generalization.specific(gen, sub);
+    Generalization.general(gen, sup);
 }
 
 pattern attributesOfClassifier(cl : Classifier, attribute : Property) {
@@ -41,11 +46,17 @@ pattern associationsOfClassifier(cl : Classifier, association : Property) {
     Property.type(sourceEnd, sup);
 }
 
-pattern operationsOfClass(cl : Class, op : Operation) {
+pattern operationsOfClass(cl : Classifier, op : Operation) {
     find operation(cl, op);
+} or {
+    DataType(cl);    
+    DataType.ownedOperation(cl, op);
 } or {
     find superClass+(cl, sup);
     find operation(sup, op);
+} or {
+    find superDataType+(cl, sup);
+    DataType.ownedOperation(sup, op);
 }
 
 pattern staticOperations(op : Operation) {

@@ -86,6 +86,9 @@ public class IncQueryEngineService implements IService {
 					@Override
 					public boolean isResourceFiltered(Resource resource) {
 						URI uri = resource.getURI();
+						if (uri.toString().contains("RALF")) {
+							return false;
+						}
 						return PATHMAP_SCHEME.equals(uri.scheme()) && !uri.authority().equals(UML_LIBRARIES_AUTHORITY);
 					}
 

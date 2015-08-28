@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_7Xz3EEHJEeW93rsP3e6yLw" name="CollectionModel">
-  <packagedElement xmi:type="uml:Class" xmi:id="_2CoQMEHLEeW93rsP3e6yLw" name="Collection" isAbstract="true">
+  <packagedElement xmi:type="uml:DataType" xmi:id="_2CoQMEHLEeW93rsP3e6yLw" name="Collection" isAbstract="true">
     <ownedTemplateSignature xmi:type="uml:RedefinableTemplateSignature" xmi:id="_6U5WoEHLEeW93rsP3e6yLw" parameter="_Z0mewEHMEeW93rsP3e6yLw">
       <ownedParameter xmi:type="uml:ClassifierTemplateParameter" xmi:id="_Z0mewEHMEeW93rsP3e6yLw" parameteredElement="_7lvMEEHOEeW93rsP3e6yLw">
         <ownedParameteredElement xmi:type="uml:Class" xmi:id="_7lvMEEHOEeW93rsP3e6yLw" name="E" templateParameter="_Z0mewEHMEeW93rsP3e6yLw"/>
@@ -20,7 +20,7 @@
       </ownedParameter>
     </ownedOperation>
   </packagedElement>
-  <packagedElement xmi:type="uml:Class" xmi:id="_mFYXEEHQEeWcBfgUsqIwFQ" name="Set">
+  <packagedElement xmi:type="uml:DataType" xmi:id="_mFYXEEHQEeWcBfgUsqIwFQ" name="Set">
     <generalization xmi:type="uml:Generalization" xmi:id="_iD_ocEHUEeWcBfgUsqIwFQ" general="_2CoQMEHLEeW93rsP3e6yLw"/>
     <ownedOperation xmi:type="uml:Operation" xmi:id="_H8qlIEHSEeWcBfgUsqIwFQ" name="add">
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_jVMAAEHTEeWcBfgUsqIwFQ" name="element" type="_7lvMEEHOEeW93rsP3e6yLw"/>

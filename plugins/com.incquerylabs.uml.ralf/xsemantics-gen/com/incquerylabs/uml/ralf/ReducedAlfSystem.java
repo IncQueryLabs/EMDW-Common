@@ -2981,7 +2981,7 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
         opType = (IUMLTypeReference) result_1.getFirst();
         
         Type _umlType = opType.getUmlType();
-        org.eclipse.uml2.uml.Class _genericCollectionParameterType = this.umlContext.getGenericCollectionParameterType();
+        Classifier _genericCollectionParameterType = this.umlContext.getGenericCollectionParameterType();
         boolean _equals = Objects.equal(_umlType, _genericCollectionParameterType);
         /* opType.umlType == genericCollectionParameterType */
         if (!_equals) {

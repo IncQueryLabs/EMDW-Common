@@ -9,10 +9,10 @@ import org.eclipse.uml2.uml.Operation
 import org.eclipse.uml2.uml.Package
 import java.util.Set
 import org.eclipse.emf.common.util.URI
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import org.eclipse.emf.ecore.resource.ResourceSet
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.CollectionType
 import org.eclipse.uml2.uml.Model
+import org.eclipse.uml2.uml.Classifier
 
 abstract class AbstractUMLContextProvider implements IUMLContextProvider {
 
@@ -35,7 +35,7 @@ abstract class AbstractUMLContextProvider implements IUMLContextProvider {
     
     def protected Model getLibraryModel() {
         if (libraryModel == null) {
-            val ResourceSet set = new ResourceSetImpl();
+            val ResourceSet set = contextObject.eResource.resourceSet;
             val libraryPackage = set.getResource(URI.createURI(LIBRARY_URI), true);
             libraryModel = libraryPackage.contents.get(0) as Model
         }
@@ -44,7 +44,7 @@ abstract class AbstractUMLContextProvider implements IUMLContextProvider {
 
     override getCollectionType(CollectionType typeDescriptor) {
         switch typeDescriptor {
-            case SET : libraryModel.getOwnedType("Set") as Class
+            case SET : libraryModel.getOwnedType("Set") as Classifier
             default: throw new UnsupportedOperationException
         }
     }
