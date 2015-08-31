@@ -35,7 +35,7 @@ if(new_event->count % 10 == 0) {&#xD;
 }&#xD;
 ::std::cout &lt;&lt; new_event->myString &lt;&lt; new_event->count &lt;&lt; ::std::endl;&#xD;
 R1_ping->generate_event(new_event);</body>
-              <body>send new pong_s() to this->ping;</body>
+              <body>send new DerivedSignal() to this->ping;</body>
             </entry>
           </subvertex>
           <subvertex xmi:type="uml:Pseudostate" xmi:id="_faJEQBmmEeWkDIIs2OLK7g" name="initial"/>
@@ -83,7 +83,7 @@ if(new_event->count % 10 == 0) {&#xD;
 }&#xD;
 ::std::cout &lt;&lt; new_event->myString &lt;&lt; new_event->count &lt;&lt; ::std::endl;&#xD;
 R1_pong->generate_event(new_event);</body>
-              <body>send new ping_s() to this->pong;</body>
+              <body>send new DerivedSignal() to this->pong;</body>
             </entry>
           </subvertex>
           <subvertex xmi:type="uml:Pseudostate" xmi:id="_rax2gBmkEeWkDIIs2OLK7g" name="initial"/>
