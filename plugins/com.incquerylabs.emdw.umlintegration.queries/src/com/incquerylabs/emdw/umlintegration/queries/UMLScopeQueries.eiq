@@ -10,6 +10,11 @@ pattern umlTypes(type : Type) {
     Type(type);
 }
 
+pattern umlTypesInNamespace(type : Type, namespace : Namespace, name) {
+    Type.qualifiedName(type, name);
+    Namespace.member(namespace, type);
+}
+
 pattern superClass(sub : Class, sup : Class) {
     find xtGeneralization(sub, gen);
     Generalization.target(gen, sup);

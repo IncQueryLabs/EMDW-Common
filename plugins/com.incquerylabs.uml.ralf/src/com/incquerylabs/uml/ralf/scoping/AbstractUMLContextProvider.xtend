@@ -35,7 +35,11 @@ abstract class AbstractUMLContextProvider implements IUMLContextProvider {
     
     def protected Model getLibraryModel() {
         if (libraryModel == null) {
-            val ResourceSet set = contextObject.eResource.resourceSet;
+            val ResourceSet set = contextObject?.eResource?.resourceSet;
+            if (set == null) {
+                throw new IllegalStateException("Cannot load RALF library model.")    
+            }
+                
             val libraryPackage = set.getResource(URI.createURI(LIBRARY_URI), true);
             libraryModel = libraryPackage.contents.get(0) as Model
         }

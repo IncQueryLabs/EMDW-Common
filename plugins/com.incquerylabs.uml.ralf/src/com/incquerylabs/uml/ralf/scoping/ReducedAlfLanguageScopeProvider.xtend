@@ -25,6 +25,12 @@ import org.eclipse.xtext.naming.IQualifiedNameConverter
 import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.Scopes
 import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider
+import org.eclipse.xtext.naming.QualifiedName
+import org.eclipse.uml2.uml.Type
+import com.google.common.base.Function
+import org.eclipse.xtext.scoping.impl.SimpleScope
+import org.eclipse.uml2.uml.NamedElement
+import com.google.common.collect.Iterables
 
 /**
  * This class contains custom scoping description.
@@ -47,15 +53,12 @@ class ReducedAlfLanguageScopeProvider extends AbstractDeclarativeScopeProvider {
         if (umlContext == null) {
             IScope.NULLSCOPE
         } else {
-            Scopes.scopeFor(umlContext.knownTypes)
+            scopeOfTypes
         }
     }
     
     def IScope scope_Classifier(EObject context, EReference reference) {
-        Scopes.scopeFor(
-            umlContext.knownClasses,
-            Scopes.scopeFor(umlContext.knownSignals)
-        )
+        localAndQualifiedScopes(Iterables.<NamedElement>concat(umlContext.knownClasses, umlContext.knownSignals))
     }
     
     def IScope scope_Class(EObject context, EReference reference) {
@@ -100,7 +103,25 @@ class ReducedAlfLanguageScopeProvider extends AbstractDeclarativeScopeProvider {
     }
     
     private def IScope scopeOfTypes() {
-        Scopes.scopeFor(umlContext.knownTypes)
+        val knownTypes = umlContext.knownTypes
+        localAndQualifiedScopes(knownTypes)
+    }
+    
+    private def IScope localAndQualifiedScopes(Iterable<? extends NamedElement> elements) {
+        val fqnScope = Scopes.scopeFor(elements)
+        val qualifiedName = umlContext?.thisType?.namespace?.qualifiedName
+        if (qualifiedName != null) {
+            val packageRelativeElements = elements.filter[
+                it.qualifiedName != null &&
+                it.qualifiedName.startsWith(qualifiedName) &&
+                it.qualifiedName != qualifiedName
+            ]
+            new SimpleScope(fqnScope, Scopes.scopedElementsFor(packageRelativeElements, [NamedElement it |
+                nameConverter.toQualifiedName(it.qualifiedName.substring(qualifiedName.length + 2)) //+2 '::'
+            ]))
+        } else {
+            fqnScope
+        }
     }
     
     private def IScope getParametersScope(IScope parentScope) {
