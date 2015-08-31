@@ -43,14 +43,14 @@ public class IncQueryEngineService implements IService {
 	
 	public static IncQueryEngine getOrCreateEngineCheckingService(ModelSet resourceSet) throws IncQueryException {
 		try {
-			return getOrStartServiceInternal(resourceSet).getEngine(resourceSet);
+			return getOrStartServiceInternal(resourceSet).getOrCreateEngine(resourceSet);
 		} catch (ServiceException e) {
 			try {
 				// add service by hand instead of registering it when extensions are not supported
 				ServicesRegistry serviceRegistry = ServiceUtilsForResourceSet.getInstance().getServiceRegistry(resourceSet);
 				IncQueryEngineService service = new IncQueryEngineService();
 				serviceRegistry.add(IncQueryEngineService.class, 1, service);
-				return service.initializeEngine(resourceSet);
+				return service.getOrCreateEngine(resourceSet);
 			} catch (ServiceException e1) {
 				throw new IllegalStateException("Model set must have service registry, but could not access it!", e1);
 			}
@@ -61,7 +61,7 @@ public class IncQueryEngineService implements IService {
 		try {
 			return getOrStartServiceInternal(resourceSet).getOrCreateEngine(resourceSet);
 		} catch (ServiceException e) {
-			return new IncQueryEngineService().initializeEngine(resourceSet);
+			return new IncQueryEngineService().getOrCreateEngine(resourceSet);
 		}
 	}
 
