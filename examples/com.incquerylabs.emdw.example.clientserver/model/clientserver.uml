@@ -121,6 +121,7 @@ result->result = this->result;&#xD;
       <ownedReception xmi:type="uml:Reception" xmi:id="_S7koYDa-EeWQybI4hYY8OQ" name="AckReception" signal="_Gi3CQDadEeWQybI4hYY8OQ"/>
     </nestedClassifier>
     <nestedClassifier xmi:type="uml:Class" xmi:id="_YjJNUDacEeWQybI4hYY8OQ" name="Client" classifierBehavior="_NCW1QDadEeWQybI4hYY8OQ" isActive="true">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_BS1qgFABEeWSb7YLZPPQgg" name="type" type="_C6tcsFAAEeWSb7YLZPPQgg"/>
       <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_NCW1QDadEeWQybI4hYY8OQ" name="Behavior">
         <region xmi:type="uml:Region" xmi:id="_IdIhIDaeEeWQybI4hYY8OQ" name="MainRegion">
           <transition xmi:type="uml:Transition" xmi:id="_VqFqoDaeEeWQybI4hYY8OQ" name="TransitionInitReady" source="_UB-dUDaeEeWQybI4hYY8OQ" target="_OLWoMDaeEeWQybI4hYY8OQ"/>
@@ -203,9 +204,19 @@ R1_server->generate_event(ack);</body>
       </ownedBehavior>
       <ownedReception xmi:type="uml:Reception" xmi:id="_5_OtIDadEeWQybI4hYY8OQ" name="ResponseReception" signal="_Gi3CQDadEeWQybI4hYY8OQ"/>
     </nestedClassifier>
+    <packagedElement xmi:type="uml:Enumeration" xmi:id="_C6tcsFAAEeWSb7YLZPPQgg" name="ClientType">
+      <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_DaGHYFAAEeWSb7YLZPPQgg" name="User"/>
+      <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_Dm3YEFAAEeWSb7YLZPPQgg" name="Admin"/>
+    </packagedElement>
   </packagedElement>
   <packagedElement xmi:type="uml:SignalEvent" xmi:id="_onaa0DafEeWQybI4hYY8OQ" name="AdditionSignalEvent" signal="_mJ1sgDacEeWQybI4hYY8OQ"/>
   <packagedElement xmi:type="uml:SignalEvent" xmi:id="_yK1R0DafEeWQybI4hYY8OQ" name="MultiplicationSignalEvent" signal="_sc3w0DacEeWQybI4hYY8OQ"/>
   <packagedElement xmi:type="uml:SignalEvent" xmi:id="_7x9kIDafEeWQybI4hYY8OQ" name="ResponseSignalEvent" signal="_Gi3CQDadEeWQybI4hYY8OQ"/>
   <packagedElement xmi:type="uml:SignalEvent" xmi:id="_V5P2EDagEeWQybI4hYY8OQ" name="RequestSignalEvent" signal="_iDAaADacEeWQybI4hYY8OQ"/>
+  <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_BxYnsFABEeWSb7YLZPPQgg">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Bxac4FABEeWSb7YLZPPQgg" source="http://www.eclipse.org/uml2/2.0.0/UML">
+      <references xmi:type="ecore:EPackage" href="pathmap://PAPYRUS_ACTIONLANGUAGE_PROFILE/ActionLanguage-Profile.profile.uml#_Kv8EIKFXEeS_KNX0nfvIVQ"/>
+    </eAnnotations>
+    <appliedProfile xmi:type="uml:Profile" href="pathmap://PAPYRUS_ACTIONLANGUAGE_PROFILE/ActionLanguage-Profile.profile.uml#ActionLanguage"/>
+  </profileApplication>
 </uml:Model>
