@@ -25,6 +25,11 @@ public interface IUMLTypeReference {
 			return null;
 		}
 
+		@Override
+		public String toString() {
+			return "ANY UML type";
+		}
+
 	}
 	public class NullTypeReference implements IUMLTypeReference {
 		
@@ -39,6 +44,11 @@ public interface IUMLTypeReference {
 		@Override
 		public Type getUmlType() {
 			return null;
+		}
+
+		@Override
+		public String toString() {
+			return "NULL UML type";
 		}
 
 	}
@@ -57,5 +67,12 @@ public interface IUMLTypeReference {
 		public Type getUmlType() {
 			return null;
 		}
+
+		@Override
+		public String toString() {
+			return "VOID UML type";
+		}
+		
+		
 	}
 }

@@ -4,9 +4,13 @@
 package com.incquerylabs.uml.ralf.ui;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.eclipse.xtext.documentation.IEObjectDocumentationProvider;
+import org.eclipse.xtext.ui.editor.hover.IEObjectHoverProvider;
 
 import com.incquerylabs.uml.ralf.scoping.IUMLContextProvider;
 import com.incquerylabs.uml.ralf.scoping.SimpleUMLContextProvider;
+import com.incquerylabs.uml.ralf.ui.labeling.ReducedAlfLanguageEObjectDocumentationProvider;
+import com.incquerylabs.uml.ralf.ui.labeling.ReducedAlfLanguageEObjectHoverProvider;
 
 /**
  * Use this class to register components to be used within the IDE.
@@ -18,5 +22,13 @@ public class ReducedAlfLanguageUiModule extends com.incquerylabs.uml.ralf.ui.Abs
 
 	public Class<? extends IUMLContextProvider> bindIUMLContextProvider() {
 		return SimpleUMLContextProvider.class;
+	}
+	
+	public Class<? extends IEObjectDocumentationProvider> bindIEObjectDocumentationProvider() {
+		return ReducedAlfLanguageEObjectDocumentationProvider.class;
+	}
+	
+	public Class<? extends IEObjectHoverProvider> bindIEObjectHoverProvider() {
+		return ReducedAlfLanguageEObjectHoverProvider.class;
 	}
 }
