@@ -3,7 +3,7 @@
   <packagedElement xmi:type="uml:DataType" xmi:id="_2CoQMEHLEeW93rsP3e6yLw" name="Collection" isAbstract="true">
     <ownedTemplateSignature xmi:type="uml:RedefinableTemplateSignature" xmi:id="_6U5WoEHLEeW93rsP3e6yLw" parameter="_Z0mewEHMEeW93rsP3e6yLw">
       <ownedParameter xmi:type="uml:ClassifierTemplateParameter" xmi:id="_Z0mewEHMEeW93rsP3e6yLw" parameteredElement="_7lvMEEHOEeW93rsP3e6yLw">
-        <ownedParameteredElement xmi:type="uml:Class" xmi:id="_7lvMEEHOEeW93rsP3e6yLw" name="E" templateParameter="_Z0mewEHMEeW93rsP3e6yLw"/>
+        <ownedParameteredElement xmi:type="uml:DataType" xmi:id="_7lvMEEHOEeW93rsP3e6yLw" name="E" templateParameter="_Z0mewEHMEeW93rsP3e6yLw"/>
       </ownedParameter>
     </ownedTemplateSignature>
     <ownedOperation xmi:type="uml:Operation" xmi:id="_EoUBUEy7EeWOk_gTQOwDnA" name="one">

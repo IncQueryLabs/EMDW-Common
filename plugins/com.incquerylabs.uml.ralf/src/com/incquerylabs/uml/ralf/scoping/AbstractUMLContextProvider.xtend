@@ -18,7 +18,7 @@ abstract class AbstractUMLContextProvider implements IUMLContextProvider {
 
     var Package primitivePackage
     var Model libraryModel
-    var Class collectionParameterType
+    var Classifier collectionParameterType
 
     def protected abstract Package getPrimitivePackage();
 
@@ -51,7 +51,7 @@ abstract class AbstractUMLContextProvider implements IUMLContextProvider {
     
     override getGenericCollectionParameterType() {
         if (collectionParameterType == null) {
-            collectionParameterType = (libraryModel.getOwnedType("Collection") as Class).ownedTemplateSignature.ownedParameters.get(0).ownedElements.get(0) as Class 
+            collectionParameterType = (libraryModel.getOwnedType("Collection") as Classifier).ownedTemplateSignature.ownedParameters.get(0).ownedElements.get(0) as Classifier 
         }
         collectionParameterType
     }
