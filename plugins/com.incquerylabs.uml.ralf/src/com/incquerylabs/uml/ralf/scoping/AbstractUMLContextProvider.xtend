@@ -13,6 +13,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.CollectionType
 import org.eclipse.uml2.uml.Model
 import org.eclipse.uml2.uml.Classifier
+import org.eclipse.uml2.uml.Type
 
 abstract class AbstractUMLContextProvider implements IUMLContextProvider {
 
@@ -48,14 +49,14 @@ abstract class AbstractUMLContextProvider implements IUMLContextProvider {
 
     override getCollectionType(CollectionType typeDescriptor) {
         switch typeDescriptor {
-            case SET : libraryModel.getOwnedType("Set") as Classifier
+            case SET : getLibraryModel().getOwnedType("Set") as Classifier
             default: throw new UnsupportedOperationException
         }
     }
     
     override getGenericCollectionParameterType() {
         if (collectionParameterType == null) {
-            collectionParameterType = (libraryModel.getOwnedType("Collection") as Classifier).ownedTemplateSignature.ownedParameters.get(0).ownedElements.get(0) as Classifier 
+            collectionParameterType = (getLibraryModel().getOwnedType("Collection") as Classifier).ownedTemplateSignature.ownedParameters.get(0).ownedElements.get(0) as Classifier 
         }
         collectionParameterType
     }
@@ -65,6 +66,10 @@ abstract class AbstractUMLContextProvider implements IUMLContextProvider {
             primitivePackage = getPrimitivePackage()
         }
         primitivePackage.getOwnedType(name)
+    }
+
+    protected def Set<Type> getPrimitiveTypes() {
+        PRIMITIVE_TYPES.map[it.primitiveType].toSet
     }
 
     private def Class getOwnerClass(Element el) {

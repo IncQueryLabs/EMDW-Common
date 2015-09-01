@@ -25,12 +25,10 @@ import org.eclipse.xtext.naming.IQualifiedNameConverter
 import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.Scopes
 import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider
-import org.eclipse.xtext.naming.QualifiedName
-import org.eclipse.uml2.uml.Type
-import com.google.common.base.Function
-import org.eclipse.xtext.scoping.impl.SimpleScope
 import org.eclipse.uml2.uml.NamedElement
 import com.google.common.collect.Iterables
+import org.eclipse.uml2.uml.PrimitiveType
+import org.eclipse.xtext.naming.QualifiedName
 
 /**
  * This class contains custom scoping description.
@@ -107,21 +105,33 @@ class ReducedAlfLanguageScopeProvider extends AbstractDeclarativeScopeProvider {
         localAndQualifiedScopes(knownTypes)
     }
     
-    private def IScope localAndQualifiedScopes(Iterable<? extends NamedElement> elements) {
-        val fqnScope = Scopes.scopeFor(elements)
-        val qualifiedName = umlContext?.thisType?.namespace?.qualifiedName
+    private def IScope localScope(Iterable<? extends NamedElement> elements, String qualifiedName, IScope parentScope) {
         if (qualifiedName != null) {
             val packageRelativeElements = elements.filter[
                 it.qualifiedName != null &&
-                it.qualifiedName.startsWith(qualifiedName) &&
+                it.qualifiedName.startsWith(qualifiedName + "::") &&
                 it.qualifiedName != qualifiedName
             ]
-            new SimpleScope(fqnScope, Scopes.scopedElementsFor(packageRelativeElements, [NamedElement it |
+            Scopes.scopeFor(packageRelativeElements, [NamedElement it |
                 nameConverter.toQualifiedName(it.qualifiedName.substring(qualifiedName.length + 2)) //+2 '::'
-            ]))
+            ], parentScope)
         } else {
-            fqnScope
+            parentScope
         }
+    }
+    
+    private def IScope localAndQualifiedScopes(Iterable<? extends NamedElement> elements) {
+        val fqnScope = Scopes.scopeFor(elements.filter[it != null && !it.qualifiedName.nullOrEmpty], [NamedElement it|
+            switch it {
+            PrimitiveType : nameConverter.toQualifiedName(it.name)
+            default: nameConverter.toQualifiedName(it.qualifiedName)
+            }
+        ], IScope.NULLSCOPE)
+        val thisQualifiedName = umlContext?.thisType?.qualifiedName
+        val containerQualifiedName = umlContext?.thisType?.namespace?.qualifiedName
+        localScope(elements, thisQualifiedName, 
+            localScope(elements, containerQualifiedName, fqnScope)
+        )
     }
     
     private def IScope getParametersScope(IScope parentScope) {
@@ -186,13 +196,7 @@ class ReducedAlfLanguageScopeProvider extends AbstractDeclarativeScopeProvider {
     }
     
     def IScope scope_StaticFeatureInvocationExpression_operation(StaticFeatureInvocationExpression ctx, EReference ref) {
-        val staticScope = Scopes.scopeFor(umlContext.getStaticOperations(),
-            //XXX is this name conversion correct?
-            [
-                nameConverter.toQualifiedName('''«namespace.name»::«name»''')
-            ],
-            IScope.NULLSCOPE
-        )
+        val staticScope = umlContext.staticOperations.localAndQualifiedScopes
         val thisType = umlContext.thisType
         if (thisType != null) {
             Scopes.scopeFor(umlContext.getOperationsOfClass(thisType),
