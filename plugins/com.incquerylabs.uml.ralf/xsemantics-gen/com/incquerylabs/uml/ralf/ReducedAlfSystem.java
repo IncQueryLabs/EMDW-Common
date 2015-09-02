@@ -99,6 +99,8 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
   
   public final static String NULLLITERAL = "com.incquerylabs.uml.ralf.NullLiteral";
   
+  public final static String PROPERTY = "com.incquerylabs.uml.ralf.Property";
+  
   public final static String TYPEDECLARATION = "com.incquerylabs.uml.ralf.TypeDeclaration";
   
   public final static String VARIABLEDECLARATION = "com.incquerylabs.uml.ralf.VariableDeclaration";
@@ -1189,6 +1191,36 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
   private IUMLTypeReference.NullTypeReference _applyRuleNullLiteral_1(final RuleEnvironment G, final NullExpression ex) throws RuleFailedException {
     IUMLTypeReference.NullTypeReference _nullType = this.typeFactory.nullType();
     return _nullType;
+  }
+  
+  protected Result<IUMLTypeReference> typeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final Property prop) throws RuleFailedException {
+    try {
+    	final RuleApplicationTrace _subtrace_ = newTrace(_trace_);
+    	final Result<IUMLTypeReference> _result_ = applyRuleProperty(G, _subtrace_, prop);
+    	addToTrace(_trace_, new Provider<Object>() {
+    		public Object get() {
+    			return ruleName("Property") + stringRepForEnv(G) + " |- " + stringRep(prop) + " : " + stringRep(_result_.getFirst());
+    		}
+    	});
+    	addAsSubtrace(_trace_, _subtrace_);
+    	return _result_;
+    } catch (Exception e_applyRuleProperty) {
+    	typeThrowException(ruleName("Property") + stringRepForEnv(G) + " |- " + stringRep(prop) + " : " + "IUMLTypeReference",
+    		PROPERTY,
+    		e_applyRuleProperty, prop, new ErrorInformation[] {new ErrorInformation(prop)});
+    	return null;
+    }
+  }
+  
+  protected Result<IUMLTypeReference> applyRuleProperty(final RuleEnvironment G, final RuleApplicationTrace _trace_, final Property prop) throws RuleFailedException {
+    
+    return new Result<IUMLTypeReference>(_applyRuleProperty_1(G, prop));
+  }
+  
+  private IUMLTypeReference _applyRuleProperty_1(final RuleEnvironment G, final Property prop) throws RuleFailedException {
+    Type _type = prop.getType();
+    IUMLTypeReference _typeReference = this.typeFactory.typeReference(_type);
+    return _typeReference;
   }
   
   protected Result<IUMLTypeReference> typeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final TypeDeclaration typeDecl) throws RuleFailedException {

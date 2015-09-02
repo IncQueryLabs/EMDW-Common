@@ -134,6 +134,8 @@ axiom StringLiteral
 axiom NullLiteral
     G |- NullExpression ex : nullType
 
+axiom Property
+    G |- Property prop : prop.type.typeReference
 
 /**
  * Variable declarations
@@ -341,7 +343,7 @@ rule NameExpression
 from {
     G |- ex.reference : var IUMLTypeReference varType
     result = varType
-}
+} 
 
 rule FilterExpression
     G |- FilterExpression ex : IUMLTypeReference result

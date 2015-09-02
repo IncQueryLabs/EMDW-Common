@@ -135,11 +135,19 @@ class ReducedAlfLanguageScopeProvider extends AbstractDeclarativeScopeProvider {
     }
     
     private def IScope getParametersScope(IScope parentScope) {
+        val thisType = umlContext.thisType
+        var IScope returnScope = parentScope
+        if (thisType != null) {
+            returnScope = Scopes.scopeFor(umlContext.getPropertiesOfClass(thisType),
+               [nameConverter.toQualifiedName(it.name)] ,
+               returnScope
+               )
+        }
         val operation = umlContext.definedOperation
         if (operation == null) {
-            parentScope
+            returnScope
         } else {
-            Scopes.scopeFor(operation.ownedParameters, parentScope)
+            Scopes.scopeFor(operation.ownedParameters, returnScope)
         }
     }
     
