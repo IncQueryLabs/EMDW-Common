@@ -95,14 +95,9 @@ public abstract class UMLContextProvider extends AbstractUMLContextProvider {
 	@Override
 	public Set<Type> getKnownTypes() {
 		
-		return Sets.<Type>union(getPrimitiveTypes(), Sets.<Type>union(getKnownClassesSet(), getKnownSignals()));
-//		try {
-//			return getModelElementsByType(UMLPackage.Literals.TYPE, Type.class);
-//		} catch (IncQueryException | IncQueryBaseException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		return Sets.newHashSet();
+		return Sets.<Type>union(getPrimitiveTypes(),
+				Sets.<Type>union(getKnownClassesSet(),
+				 Sets.<Type>union(getKnownSignals(), getKnownAssociations())));
 	}
 	
 	@Override
