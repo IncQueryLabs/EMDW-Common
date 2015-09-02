@@ -1,6 +1,7 @@
 package com.incquerylabs.uml.papyrus;
 
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -75,6 +76,10 @@ public class IncQueryEngineService implements IService {
 
 	@Override
 	public void disposeService() throws ServiceException {
+		// dispose all engines initialized through the service
+		for (Entry<ModelSet, IncQueryEngine> entry : engines.entrySet()) {
+			AdvancedIncQueryEngine.from(entry.getValue()).dispose();
+		}
 	}
 
 	public IncQueryEngine initializeEngine(ModelSet set) throws IncQueryException {
