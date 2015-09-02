@@ -28,7 +28,6 @@ import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider
 import org.eclipse.uml2.uml.NamedElement
 import com.google.common.collect.Iterables
 import org.eclipse.uml2.uml.PrimitiveType
-import org.eclipse.xtext.naming.QualifiedName
 
 /**
  * This class contains custom scoping description.
@@ -135,14 +134,7 @@ class ReducedAlfLanguageScopeProvider extends AbstractDeclarativeScopeProvider {
     }
     
     private def IScope getParametersScope(IScope parentScope) {
-        val thisType = umlContext.thisType
         var IScope returnScope = parentScope
-        if (thisType != null) {
-            returnScope = Scopes.scopeFor(umlContext.getPropertiesOfClass(thisType),
-               [nameConverter.toQualifiedName(it.name)] ,
-               returnScope
-               )
-        }
         val operation = umlContext.definedOperation
         if (operation == null) {
             returnScope

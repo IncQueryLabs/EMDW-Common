@@ -134,9 +134,6 @@ axiom StringLiteral
 axiom NullLiteral
     G |- NullExpression ex : nullType
 
-axiom Property
-    G |- Property prop : prop.type.typeReference
-
 /**
  * Variable declarations
  */
@@ -184,6 +181,25 @@ rule Type
     derives G |- Type type : IUMLTypeReference result
 from {
     result = type.typeReference
+}
+
+rule Property
+    derives G |- Property property : IUMLTypeReference result
+from {
+        !property.eIsProxy
+        {
+            !property.multivalued
+            result = property.type.typeReference
+        } or {
+            property.multivalued && property.ordered 
+            result = property.type.sequenceOf
+        } or {
+            property.multivalued && !property.ordered && property.unique
+            result = property.type.setOf
+        } or {
+            property.multivalued && !property.ordered && !property.unique
+            result = property.type.bagOf
+        }
 }
 /**
  * Subtyping and assignability
@@ -561,20 +577,7 @@ from {
     } or {
         ex.^feature instanceof Property
         val property = ex.^feature as Property
-        !property.eIsProxy
-        {
-            !property.multivalued
-            result = property.type.typeReference
-        } or {
-            property.multivalued && property.ordered 
-            result = property.type.sequenceOf
-        } or {
-            property.multivalued && !property.ordered && property.unique
-            result = property.type.setOf
-        } or {
-            property.multivalued && !property.ordered && !property.unique
-            result = property.type.bagOf
-        }
+        G |- property : result
     }
 }
 
