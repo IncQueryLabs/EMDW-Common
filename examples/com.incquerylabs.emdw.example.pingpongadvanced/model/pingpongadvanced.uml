@@ -26,9 +26,6 @@ R1_ping->generate_event(new_event);</body>
             <subvertex xmi:type="uml:State" xmi:id="_cUor4BmmEeWkDIIs2OLK7g" name="s1"/>
             <subvertex xmi:type="uml:State" xmi:id="_d8s14BmmEeWkDIIs2OLK7g" name="s2">
               <entry xmi:type="uml:OpaqueBehavior" xmi:id="_Dxv2kBpDEeWJmP2mki6rxQ" name="sendPong">
-                <ownedComment xmi:type="uml:Comment" xmi:id="_AJvJoFCfEeWWBoAPL_SQ6w">
-                  <body>count => 1, myString => &quot;text&quot;</body>
-                </ownedComment>
                 <language>C++</language>
                 <language>rALF</language>
                 <body>::PingPongAdvanced::Component::Ping::DerivedSignal_event* new_event = new ::PingPongAdvanced::Component::Ping::DerivedSignal_event(false);&#xD;
@@ -72,7 +69,7 @@ if(new_event->count % 10 == 0) {&#xD;
 }&#xD;
 ::std::cout &lt;&lt; new_event->myString &lt;&lt; new_event->count &lt;&lt; ::std::endl;&#xD;
 R1_pong->generate_event(new_event);</body>
-                <body>send new DerivedSignal() to this->pong;</body>
+                <body>send new DerivedSignal(count => 2, myString => "text") to this->pong;</body>
               </effect>
               <trigger xmi:type="uml:Trigger" xmi:id="_KxVNMBmmEeWkDIIs2OLK7g" name="pong_t" event="_mfmjsBmpEeW8avfFxjlgXw"/>
             </transition>
@@ -89,7 +86,7 @@ if(new_event->count % 10 == 0) {&#xD;
 }&#xD;
 ::std::cout &lt;&lt; new_event->myString &lt;&lt; new_event->count &lt;&lt; ::std::endl;&#xD;
 R1_pong->generate_event(new_event);</body>
-                <body>send new DerivedSignal(count => 1, myString => &quot;text&quot;) to this->pong;</body>
+                <body>send new DerivedSignal(count => 3, myString => &quot;text&quot;) to this->pong;</body>
               </entry>
             </subvertex>
             <subvertex xmi:type="uml:Pseudostate" xmi:id="_rax2gBmkEeWkDIIs2OLK7g" name="initial"/>
@@ -174,5 +171,4 @@ R1_pong->generate_event(new_event);</body>
   </uml:Model>
   <ActionLanguage:TextualRepresentation xmi:id="_z95e4FCeEeWWBoAPL_SQ6w" language="com.incquerylabs.uml.ralf.ReducedAlfLanguage"/>
   <ActionLanguage:TextualRepresentation xmi:id="_3fiZoFCeEeWWBoAPL_SQ6w" language="com.incquerylabs.uml.ralf.ReducedAlfLanguage"/>
-  <ActionLanguage:TextualRepresentation xmi:id="_AJwXwFCfEeWWBoAPL_SQ6w" base_Comment="_AJvJoFCfEeWWBoAPL_SQ6w" language="com.incquerylabs.uml.ralf.ReducedAlfLanguage"/>
 </xmi:XMI>
