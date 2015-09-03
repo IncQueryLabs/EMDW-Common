@@ -17,9 +17,7 @@ import org.eclipse.uml2.uml.Type
 
 abstract class AbstractUMLContextProvider implements IUMLContextProvider {
 
-    var Package primitivePackage
     var Model libraryModel
-    var Classifier collectionParameterType
 
     def protected abstract Package getPrimitivePackage();
 
@@ -35,7 +33,7 @@ abstract class AbstractUMLContextProvider implements IUMLContextProvider {
     }
     
     def protected Model getLibraryModel() {
-        if (libraryModel == null) {
+        if (libraryModel == null || libraryModel.eIsProxy) {
             val ResourceSet set = contextObject?.eResource?.resourceSet;
             if (set == null) {
                 throw new IllegalStateException("Cannot load RALF library model.")    
@@ -55,16 +53,11 @@ abstract class AbstractUMLContextProvider implements IUMLContextProvider {
     }
     
     override getGenericCollectionParameterType() {
-        if (collectionParameterType == null) {
-            collectionParameterType = (getLibraryModel().getOwnedType("Collection") as Classifier).ownedTemplateSignature.ownedParameters.get(0).ownedElements.get(0) as Classifier 
-        }
-        collectionParameterType
+            (getLibraryModel().getOwnedType("Collection") as Classifier).ownedTemplateSignature.ownedParameters.get(0).ownedElements.get(0) as Classifier 
     }
 
     override getPrimitiveType(String name) {
-        if (primitivePackage == null) {
-            primitivePackage = getPrimitivePackage()
-        }
+        val primitivePackage = getPrimitivePackage()
         primitivePackage.getOwnedType(name)
     }
 
