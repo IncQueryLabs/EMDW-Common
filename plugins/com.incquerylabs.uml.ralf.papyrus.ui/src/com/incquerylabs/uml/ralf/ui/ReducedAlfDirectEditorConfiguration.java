@@ -156,7 +156,9 @@ public class ReducedAlfDirectEditorConfiguration extends DefaultXtextDirectEdito
 		if (objectToEdit instanceof BodyOwner) {
 			BodyOwner obj = (BodyOwner) objectToEdit;
 			int index = obj.getLanguages().indexOf(IReducedAlfParser.LANGUAGE_NAME);
-			return obj.getBodies().get(index);
+			if (obj.getBodies().size() > index) {
+				return obj.getBodies().get(index);
+			}
 		}
 		return super.getTextToEdit(objectToEdit);
 	}
