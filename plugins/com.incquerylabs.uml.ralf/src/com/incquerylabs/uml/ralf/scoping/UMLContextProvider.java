@@ -44,7 +44,7 @@ public abstract class UMLContextProvider extends AbstractUMLContextProvider {
 
 	private IncQueryEngine engine;
 	protected IncQueryEngine getEngine() throws IncQueryException, IncQueryBaseException {
-		if (engine == null) {
+//		if (engine == null) {
 			engine = doGetEngine();
 			getLibraryModel();
 			IQueryGroup queries = GenericPatternGroup.of(
@@ -58,7 +58,7 @@ public abstract class UMLContextProvider extends AbstractUMLContextProvider {
 					TriggerSignalOfBehaviorMatcher.querySpecification()
 					);
 			queries.prepare(engine);			
-		}
+//		}
 		return engine;
 	}
 	

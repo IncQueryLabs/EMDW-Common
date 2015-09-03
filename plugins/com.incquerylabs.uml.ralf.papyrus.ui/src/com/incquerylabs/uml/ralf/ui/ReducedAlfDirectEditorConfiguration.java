@@ -101,16 +101,13 @@ public class ReducedAlfDirectEditorConfiguration extends DefaultXtextDirectEdito
 	
 	private class EditorContext extends UMLContextProvider {
 
-		private Model model;
 
 		private Model getModel() {
-			if (model == null) {
-				Object contextObject = getObjectToEdit();
-				if (contextObject instanceof Element) {
-					model = EcoreUtil2.getContainerOfType(((Element)contextObject).eContainer(), Model.class);
-				}
+			Object contextObject = getObjectToEdit();
+			if (contextObject instanceof Element) {
+				return EcoreUtil2.getContainerOfType(((Element)contextObject).eContainer(), Model.class);
 			}
-			return model;
+			return null;
 		}
 		
 		@Override
