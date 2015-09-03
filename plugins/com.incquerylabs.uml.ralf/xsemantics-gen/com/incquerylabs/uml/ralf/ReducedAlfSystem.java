@@ -2964,7 +2964,20 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
   protected Result<IUMLTypeReference> applyRuleAssociationAccessExpression(final RuleEnvironment G, final RuleApplicationTrace _trace_, final AssociationAccessExpression ex) throws RuleFailedException {
     IUMLTypeReference result = null; // output parameter
     Property _association = ex.getAssociation();
-    Type _type = _association.getType();
+    boolean _notEquals = (!Objects.equal(_association, null));
+    /* ex.association != null */
+    if (!_notEquals) {
+      sneakyThrowRuleFailedException("ex.association != null");
+    }
+    Property _association_1 = ex.getAssociation();
+    boolean _eIsProxy = _association_1.eIsProxy();
+    boolean _not = (!_eIsProxy);
+    /* !ex.association.eIsProxy */
+    if (!_not) {
+      sneakyThrowRuleFailedException("!ex.association.eIsProxy");
+    }
+    Property _association_2 = ex.getAssociation();
+    Type _type = _association_2.getType();
     IUMLTypeReference _typeReference = this.typeFactory.typeReference(_type);
     result = _typeReference;
     return new Result<IUMLTypeReference>(result);

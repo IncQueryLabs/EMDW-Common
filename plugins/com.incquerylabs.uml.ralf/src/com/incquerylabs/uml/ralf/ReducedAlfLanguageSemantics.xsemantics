@@ -525,6 +525,8 @@ from {
 rule AssociationAccessExpression
     G |- AssociationAccessExpression ex : IUMLTypeReference result
 from {
+    ex.association != null
+    !ex.association.eIsProxy
     result = ex.association.type.typeReference
 }
 
