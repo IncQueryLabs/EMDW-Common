@@ -168,6 +168,10 @@ pattern destructorOperation(umlClass: Class, operation: Operation) {
 	find destructorByName(umlClass, operation);
 }
 
+pattern operationBehavior(operation: Operation, behavior: OpaqueBehavior) {
+	Operation.method(operation, behavior);
+}
+
 pattern constructorByName(umlClass : Class, operation : Operation){
 	find entity(umlClass);
 	Class.ownedOperation(umlClass, operation);
