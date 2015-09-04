@@ -28,6 +28,8 @@ import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider
 import org.eclipse.uml2.uml.NamedElement
 import com.google.common.collect.Iterables
 import org.eclipse.uml2.uml.PrimitiveType
+import com.incquerylabs.uml.ralf.types.TypeFactory
+import com.incquerylabs.uml.ralf.resource.ReducedAlfLanguageResource
 
 /**
  * This class contains custom scoping description.
@@ -38,40 +40,49 @@ import org.eclipse.uml2.uml.PrimitiveType
  */
  
 class ReducedAlfLanguageScopeProvider extends AbstractDeclarativeScopeProvider {
-
-    @Inject
-    IUMLContextProvider umlContext
+    
     @Inject
     ReducedAlfSystem system
     @Inject
     IQualifiedNameConverter nameConverter
     
+    private def umlContext(EObject context) {
+        val resource = context.eResource
+        if (resource instanceof ReducedAlfLanguageResource) {
+            (resource as ReducedAlfLanguageResource).umlContextProvider
+        } else {
+            throw new IllegalArgumentException('''EObject «context» is not contained in an rAlf Resource.''')
+        }
+    }
+    
     def IScope scope_Type(EObject context, EReference reference) {
-        if (umlContext == null) {
+        val uml = umlContext(context) 
+        if (uml == null) {
             IScope.NULLSCOPE
         } else {
-            scopeOfTypes
+            scopeOfTypes(uml)
         }
     }
     
     def IScope scope_Classifier(EObject context, EReference reference) {
-        localAndQualifiedScopes(Iterables.<NamedElement>concat(umlContext.knownClasses, umlContext.knownSignals))
+        val uml = umlContext(context)
+        localAndQualifiedScopes(Iterables.<NamedElement>concat(uml.knownClasses, uml.knownSignals), uml)
     }
     
     def IScope scope_Class(EObject context, EReference reference) {
-        Scopes.scopeFor(umlContext.knownClasses)
+        Scopes.scopeFor(umlContext(context).knownClasses)
     }
     
     def IScope scope_Signal(EObject context, EReference reference) {
-        Scopes.scopeFor(umlContext.knownSignals)
+        Scopes.scopeFor(umlContext(context).knownSignals)
     }
         
     def IScope scope_Association(EObject ctx, EReference ref) {
-        Scopes.scopeFor(umlContext.knownAssociations)
+        Scopes.scopeFor(umlContext(ctx).knownAssociations)
     }
     
     def scope_NamedElement(Expression context, EReference reference) {
-        val typeScope = scopeOfTypes
+        val typeScope = scopeOfTypes(umlContext(context))
         val scope = if (context.eContainer instanceof StaticFeatureInvocationExpression) {
             scope_NamedElement(context, scope_StaticFeatureInvocationExpression_operation(context.eContainer as StaticFeatureInvocationExpression, reference))
         } else {
@@ -81,13 +92,13 @@ class ReducedAlfLanguageScopeProvider extends AbstractDeclarativeScopeProvider {
     }
     
     def IScope scope_NamedElement(EObject block) {
-        scope_NamedElement(block, scopeOfTypes)    
+        scope_NamedElement(block, scopeOfTypes(umlContext(block)))    
     }
     
     def IScope scope_NamedElement(EObject block, IScope externalScope) {
         var parentBlock = block.eContainer
         if (parentBlock == null) {
-            getParametersScope(externalScope)
+            getParametersScope(externalScope, umlContext(block))
         } else {
             val parentScope = scope_NamedElement(parentBlock, externalScope)
             val declarations = parentBlock.variableDeclarations(block)
@@ -99,9 +110,9 @@ class ReducedAlfLanguageScopeProvider extends AbstractDeclarativeScopeProvider {
         }
     }
     
-    private def IScope scopeOfTypes() {
+    private def IScope scopeOfTypes(IUMLContextProvider umlContext) {
         val knownTypes = umlContext.knownTypes
-        localAndQualifiedScopes(knownTypes)
+        localAndQualifiedScopes(knownTypes, umlContext)
     }
     
     private def IScope localScope(Iterable<? extends NamedElement> elements, String qualifiedName, IScope parentScope) {
@@ -119,21 +130,22 @@ class ReducedAlfLanguageScopeProvider extends AbstractDeclarativeScopeProvider {
         }
     }
     
-    private def IScope localAndQualifiedScopes(Iterable<? extends NamedElement> elements) {
+    private def IScope localAndQualifiedScopes(Iterable<? extends NamedElement> elements, IUMLContextProvider umlContext) {
         val fqnScope = Scopes.scopeFor(elements.filter[it != null && !it.qualifiedName.nullOrEmpty], [NamedElement it|
             switch it {
             PrimitiveType : nameConverter.toQualifiedName(it.name)
             default: nameConverter.toQualifiedName(it.qualifiedName)
             }
         ], IScope.NULLSCOPE)
-        val thisQualifiedName = umlContext?.thisType?.qualifiedName
-        val containerQualifiedName = umlContext?.thisType?.namespace?.qualifiedName
+        val thisType = umlContext?.thisType
+        val thisQualifiedName = thisType?.qualifiedName
+        val containerQualifiedName = thisType?.namespace?.qualifiedName
         localScope(elements, thisQualifiedName, 
             localScope(elements, containerQualifiedName, fqnScope)
         )
     }
     
-    private def IScope getParametersScope(IScope parentScope) {
+    private def IScope getParametersScope(IScope parentScope, IUMLContextProvider umlContext) {
         var IScope returnScope = parentScope
         val operation = umlContext.definedOperation
         if (operation == null) {
@@ -187,8 +199,9 @@ class ReducedAlfLanguageScopeProvider extends AbstractDeclarativeScopeProvider {
         }
         val type = typeResult.value.umlType
         if (type instanceof Classifier) {
-            Scopes.scopeFor(umlContext.getPropertiesOfClass(type),
-                Scopes.scopeFor(umlContext.getOperationsOfClass(type))
+            val uml = umlContext(ctx)
+            Scopes.scopeFor(uml.getPropertiesOfClass(type),
+                Scopes.scopeFor(uml.getOperationsOfClass(type))
             )
         } else {
             null
@@ -196,10 +209,11 @@ class ReducedAlfLanguageScopeProvider extends AbstractDeclarativeScopeProvider {
     }
     
     def IScope scope_StaticFeatureInvocationExpression_operation(StaticFeatureInvocationExpression ctx, EReference ref) {
-        val staticScope = umlContext.staticOperations.localAndQualifiedScopes
-        val thisType = umlContext.thisType
+        val uml = umlContext(ctx)
+        val staticScope = uml.staticOperations.localAndQualifiedScopes(uml)
+        val thisType = uml.thisType
         if (thisType != null) {
-            Scopes.scopeFor(umlContext.getOperationsOfClass(thisType),
+            Scopes.scopeFor(uml.getOperationsOfClass(thisType),
                 [
                     nameConverter.toQualifiedName(name)
                 ],
@@ -227,7 +241,7 @@ class ReducedAlfLanguageScopeProvider extends AbstractDeclarativeScopeProvider {
         if (typeRef instanceof UMLTypeReference) {
             val type = typeRef.umlType
             if (type instanceof Class) {
-                return Scopes.scopeFor(umlContext.getAssociationsOfClass(type))
+                return Scopes.scopeFor(umlContext(ctx).getAssociationsOfClass(type))
             } 
         }
         return null

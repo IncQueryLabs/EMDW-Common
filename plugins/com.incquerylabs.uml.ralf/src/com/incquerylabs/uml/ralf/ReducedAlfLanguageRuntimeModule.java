@@ -6,7 +6,9 @@ package com.incquerylabs.uml.ralf;
 import org.eclipse.xtext.conversion.IValueConverterService;
 import org.eclipse.xtext.naming.IQualifiedNameConverter;
 import org.eclipse.xtext.resource.IDefaultResourceDescriptionStrategy;
+import org.eclipse.xtext.resource.XtextResource;
 
+import com.incquerylabs.uml.ralf.resource.ReducedAlfLanguageResource;
 import com.incquerylabs.uml.ralf.scoping.ReducedAlfLanguageQualifiedNameConverter;
 import com.incquerylabs.uml.ralf.scoping.ReducedAlfLanguageResourceDescriptionStrategy;
 
@@ -27,4 +29,11 @@ public class ReducedAlfLanguageRuntimeModule extends com.incquerylabs.uml.ralf.A
     public Class<? extends IQualifiedNameConverter> bindIQualifiedNameConverter() {
     	return ReducedAlfLanguageQualifiedNameConverter.class;
     }
+
+	@Override
+	public Class<? extends XtextResource> bindXtextResource() {
+		return ReducedAlfLanguageResource.class;
+	}
+    
+    
 }

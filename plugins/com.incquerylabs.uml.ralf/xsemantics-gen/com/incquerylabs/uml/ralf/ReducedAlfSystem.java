@@ -193,10 +193,6 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
   
   @Extension
   @Inject
-  private IUMLContextProvider umlContext;
-  
-  @Extension
-  @Inject
   private TypeFactory typeFactory;
   
   @Extension
@@ -233,25 +229,17 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
     typeDispatcher = buildPolymorphicDispatcher1(
     	"typeImpl", 3, "|-", ":");
     operationTypeDispatcher = buildPolymorphicDispatcher1(
-    	"operationTypeImpl", 4, "|-", "<:", ":");
+    	"operationTypeImpl", 4, "|-", "<:", ":>");
     subtypeReferenceDispatcher = buildPolymorphicDispatcher1(
-    	"subtypeReferenceImpl", 4, "|-", "<:");
+    	"subtypeReferenceImpl", 5, "|-", "<:", ":");
     subtypeOrEqualDispatcher = buildPolymorphicDispatcher1(
-    	"subtypeOrEqualImpl", 4, "|-", "<~");
+    	"subtypeOrEqualImpl", 5, "|-", "<~", ":");
     assignableDispatcher = buildPolymorphicDispatcher1(
     	"assignableImpl", 4, "|-", "|>");
     superClassListDispatcher = buildPolymorphicDispatcher(
     	"superClassListImpl", 2);
     typeReferenceDispatcher = buildPolymorphicDispatcher(
     	"typeReferenceImpl", 2);
-  }
-  
-  public IUMLContextProvider getUmlContext() {
-    return this.umlContext;
-  }
-  
-  public void setUmlContext(final IUMLContextProvider umlContext) {
-    this.umlContext = umlContext;
   }
   
   public TypeFactory getTypeFactory() {
@@ -342,66 +330,66 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
     }
   }
   
-  public Result<Boolean> subtypeReference(final IUMLTypeReference left, final IUMLTypeReference right) {
-    return subtypeReference(new RuleEnvironment(), null, left, right);
+  public Result<Boolean> subtypeReference(final IUMLTypeReference left, final IUMLTypeReference right, final IUMLContextProvider context) {
+    return subtypeReference(new RuleEnvironment(), null, left, right, context);
   }
   
-  public Result<Boolean> subtypeReference(final RuleEnvironment _environment_, final IUMLTypeReference left, final IUMLTypeReference right) {
-    return subtypeReference(_environment_, null, left, right);
+  public Result<Boolean> subtypeReference(final RuleEnvironment _environment_, final IUMLTypeReference left, final IUMLTypeReference right, final IUMLContextProvider context) {
+    return subtypeReference(_environment_, null, left, right, context);
   }
   
-  public Result<Boolean> subtypeReference(final RuleEnvironment _environment_, final RuleApplicationTrace _trace_, final IUMLTypeReference left, final IUMLTypeReference right) {
+  public Result<Boolean> subtypeReference(final RuleEnvironment _environment_, final RuleApplicationTrace _trace_, final IUMLTypeReference left, final IUMLTypeReference right, final IUMLContextProvider context) {
     try {
-    	return subtypeReferenceInternal(_environment_, _trace_, left, right);
+    	return subtypeReferenceInternal(_environment_, _trace_, left, right, context);
     } catch (Exception _e_subtypeReference) {
     	return resultForFailure(_e_subtypeReference);
     }
   }
   
-  public Boolean subtypeReferenceSucceeded(final IUMLTypeReference left, final IUMLTypeReference right) {
-    return subtypeReferenceSucceeded(new RuleEnvironment(), null, left, right);
+  public Boolean subtypeReferenceSucceeded(final IUMLTypeReference left, final IUMLTypeReference right, final IUMLContextProvider context) {
+    return subtypeReferenceSucceeded(new RuleEnvironment(), null, left, right, context);
   }
   
-  public Boolean subtypeReferenceSucceeded(final RuleEnvironment _environment_, final IUMLTypeReference left, final IUMLTypeReference right) {
-    return subtypeReferenceSucceeded(_environment_, null, left, right);
+  public Boolean subtypeReferenceSucceeded(final RuleEnvironment _environment_, final IUMLTypeReference left, final IUMLTypeReference right, final IUMLContextProvider context) {
+    return subtypeReferenceSucceeded(_environment_, null, left, right, context);
   }
   
-  public Boolean subtypeReferenceSucceeded(final RuleEnvironment _environment_, final RuleApplicationTrace _trace_, final IUMLTypeReference left, final IUMLTypeReference right) {
+  public Boolean subtypeReferenceSucceeded(final RuleEnvironment _environment_, final RuleApplicationTrace _trace_, final IUMLTypeReference left, final IUMLTypeReference right, final IUMLContextProvider context) {
     try {
-    	subtypeReferenceInternal(_environment_, _trace_, left, right);
+    	subtypeReferenceInternal(_environment_, _trace_, left, right, context);
     	return true;
     } catch (Exception _e_subtypeReference) {
     	return false;
     }
   }
   
-  public Result<Boolean> subtypeOrEqual(final Type left, final Type right) {
-    return subtypeOrEqual(new RuleEnvironment(), null, left, right);
+  public Result<Boolean> subtypeOrEqual(final Type left, final Type right, final IUMLContextProvider context) {
+    return subtypeOrEqual(new RuleEnvironment(), null, left, right, context);
   }
   
-  public Result<Boolean> subtypeOrEqual(final RuleEnvironment _environment_, final Type left, final Type right) {
-    return subtypeOrEqual(_environment_, null, left, right);
+  public Result<Boolean> subtypeOrEqual(final RuleEnvironment _environment_, final Type left, final Type right, final IUMLContextProvider context) {
+    return subtypeOrEqual(_environment_, null, left, right, context);
   }
   
-  public Result<Boolean> subtypeOrEqual(final RuleEnvironment _environment_, final RuleApplicationTrace _trace_, final Type left, final Type right) {
+  public Result<Boolean> subtypeOrEqual(final RuleEnvironment _environment_, final RuleApplicationTrace _trace_, final Type left, final Type right, final IUMLContextProvider context) {
     try {
-    	return subtypeOrEqualInternal(_environment_, _trace_, left, right);
+    	return subtypeOrEqualInternal(_environment_, _trace_, left, right, context);
     } catch (Exception _e_subtypeOrEqual) {
     	return resultForFailure(_e_subtypeOrEqual);
     }
   }
   
-  public Boolean subtypeOrEqualSucceeded(final Type left, final Type right) {
-    return subtypeOrEqualSucceeded(new RuleEnvironment(), null, left, right);
+  public Boolean subtypeOrEqualSucceeded(final Type left, final Type right, final IUMLContextProvider context) {
+    return subtypeOrEqualSucceeded(new RuleEnvironment(), null, left, right, context);
   }
   
-  public Boolean subtypeOrEqualSucceeded(final RuleEnvironment _environment_, final Type left, final Type right) {
-    return subtypeOrEqualSucceeded(_environment_, null, left, right);
+  public Boolean subtypeOrEqualSucceeded(final RuleEnvironment _environment_, final Type left, final Type right, final IUMLContextProvider context) {
+    return subtypeOrEqualSucceeded(_environment_, null, left, right, context);
   }
   
-  public Boolean subtypeOrEqualSucceeded(final RuleEnvironment _environment_, final RuleApplicationTrace _trace_, final Type left, final Type right) {
+  public Boolean subtypeOrEqualSucceeded(final RuleEnvironment _environment_, final RuleApplicationTrace _trace_, final Type left, final Type right, final IUMLContextProvider context) {
     try {
-    	subtypeOrEqualInternal(_environment_, _trace_, left, right);
+    	subtypeOrEqualInternal(_environment_, _trace_, left, right, context);
     	return true;
     } catch (Exception _e_subtypeOrEqual) {
     	return false;
@@ -515,8 +503,9 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
       checkAssignableTo(result_1.getFirst(), IUMLTypeReference.class);
       valueType = (IUMLTypeReference) result_1.getFirst();
       
-      /* empty |- varType <: valueType */
-      subtypeReferenceInternal(emptyEnvironment(), _trace_, varType, valueType);
+      /* empty |- varType <: valueType : st.umlContext */
+      IUMLContextProvider _umlContext = this.typeFactory.umlContext(st);
+      subtypeReferenceInternal(emptyEnvironment(), _trace_, varType, valueType, _umlContext);
     }
     return new Result<Boolean>(true);
   }
@@ -541,9 +530,11 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
     checkAssignableTo(result.getFirst(), IUMLTypeReference.class);
     condType = (IUMLTypeReference) result.getFirst();
     
-    /* empty |- condType <: BOOLEAN.primitiveTypeReference */
-    PrimitiveTypeReference _primitiveTypeReference = this.typeFactory.primitiveTypeReference(this.BOOLEAN);
-    subtypeReferenceInternal(emptyEnvironment(), _trace_, condType, _primitiveTypeReference);
+    /* empty |- condType <: BOOLEAN.primitiveTypeReference(cl.umlContext) : cl.umlContext */
+    IUMLContextProvider _umlContext = this.typeFactory.umlContext(cl);
+    PrimitiveTypeReference _primitiveTypeReference = this.typeFactory.primitiveTypeReference(this.BOOLEAN, _umlContext);
+    IUMLContextProvider _umlContext_1 = this.typeFactory.umlContext(cl);
+    subtypeReferenceInternal(emptyEnvironment(), _trace_, condType, _primitiveTypeReference, _umlContext_1);
     return new Result<Boolean>(true);
   }
   
@@ -567,9 +558,11 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
     checkAssignableTo(result.getFirst(), IUMLTypeReference.class);
     condType = (IUMLTypeReference) result.getFirst();
     
-    /* empty |- condType <: BOOLEAN.primitiveTypeReference */
-    PrimitiveTypeReference _primitiveTypeReference = this.typeFactory.primitiveTypeReference(this.BOOLEAN);
-    subtypeReferenceInternal(emptyEnvironment(), _trace_, condType, _primitiveTypeReference);
+    /* empty |- condType <: BOOLEAN.primitiveTypeReference(st.umlContext) : st.umlContext */
+    IUMLContextProvider _umlContext = this.typeFactory.umlContext(st);
+    PrimitiveTypeReference _primitiveTypeReference = this.typeFactory.primitiveTypeReference(this.BOOLEAN, _umlContext);
+    IUMLContextProvider _umlContext_1 = this.typeFactory.umlContext(st);
+    subtypeReferenceInternal(emptyEnvironment(), _trace_, condType, _primitiveTypeReference, _umlContext_1);
     return new Result<Boolean>(true);
   }
   
@@ -601,9 +594,10 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
     defType = (IUMLTypeReference) result_1.getFirst();
     
     if ((exType instanceof CollectionTypeReference)) {
-      /* empty |- exType.valueType <: defType */
+      /* empty |- exType.valueType <: defType : st.umlContext */
       IUMLTypeReference _valueType = ((CollectionTypeReference)exType).getValueType();
-      subtypeReferenceInternal(emptyEnvironment(), _trace_, _valueType, defType);
+      IUMLContextProvider _umlContext = this.typeFactory.umlContext(st);
+      subtypeReferenceInternal(emptyEnvironment(), _trace_, _valueType, defType, _umlContext);
     } else {
       /* fail error "Invalid collection type " */
       String error = "Invalid collection type ";
@@ -632,9 +626,11 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
     checkAssignableTo(result.getFirst(), IUMLTypeReference.class);
     condType = (IUMLTypeReference) result.getFirst();
     
-    /* empty |- condType <: BOOLEAN.primitiveTypeReference */
-    PrimitiveTypeReference _primitiveTypeReference = this.typeFactory.primitiveTypeReference(this.BOOLEAN);
-    subtypeReferenceInternal(emptyEnvironment(), _trace_, condType, _primitiveTypeReference);
+    /* empty |- condType <: BOOLEAN.primitiveTypeReference(st.umlContext) : st.umlContext */
+    IUMLContextProvider _umlContext = this.typeFactory.umlContext(st);
+    PrimitiveTypeReference _primitiveTypeReference = this.typeFactory.primitiveTypeReference(this.BOOLEAN, _umlContext);
+    IUMLContextProvider _umlContext_1 = this.typeFactory.umlContext(st);
+    subtypeReferenceInternal(emptyEnvironment(), _trace_, condType, _primitiveTypeReference, _umlContext_1);
     return new Result<Boolean>(true);
   }
   
@@ -658,9 +654,11 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
     checkAssignableTo(result.getFirst(), IUMLTypeReference.class);
     condType = (IUMLTypeReference) result.getFirst();
     
-    /* empty |- condType <: BOOLEAN.primitiveTypeReference */
-    PrimitiveTypeReference _primitiveTypeReference = this.typeFactory.primitiveTypeReference(this.BOOLEAN);
-    subtypeReferenceInternal(emptyEnvironment(), _trace_, condType, _primitiveTypeReference);
+    /* empty |- condType <: BOOLEAN.primitiveTypeReference(st.umlContext) : st.umlContext */
+    IUMLContextProvider _umlContext = this.typeFactory.umlContext(st);
+    PrimitiveTypeReference _primitiveTypeReference = this.typeFactory.primitiveTypeReference(this.BOOLEAN, _umlContext);
+    IUMLContextProvider _umlContext_1 = this.typeFactory.umlContext(st);
+    subtypeReferenceInternal(emptyEnvironment(), _trace_, condType, _primitiveTypeReference, _umlContext_1);
     return new Result<Boolean>(true);
   }
   
@@ -684,21 +682,23 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
     checkAssignableTo(result.getFirst(), IUMLTypeReference.class);
     eType = (IUMLTypeReference) result.getFirst();
     
-    /* { INTEGER.primitiveTypeReference == eType } or { STRING.primitiveTypeReference == eType } */
+    /* { INTEGER.primitiveTypeReference(st.umlContext) == eType } or { STRING.primitiveTypeReference(st.umlContext) == eType } */
     {
       RuleFailedException previousFailure = null;
       try {
-        PrimitiveTypeReference _primitiveTypeReference = this.typeFactory.primitiveTypeReference(this.INTEGER);
-        /* INTEGER.primitiveTypeReference == eType */
+        IUMLContextProvider _umlContext = this.typeFactory.umlContext(st);
+        PrimitiveTypeReference _primitiveTypeReference = this.typeFactory.primitiveTypeReference(this.INTEGER, _umlContext);
+        /* INTEGER.primitiveTypeReference(st.umlContext) == eType */
         if (!Objects.equal(_primitiveTypeReference, eType)) {
-          sneakyThrowRuleFailedException("INTEGER.primitiveTypeReference == eType");
+          sneakyThrowRuleFailedException("INTEGER.primitiveTypeReference(st.umlContext) == eType");
         }
       } catch (Exception e) {
         previousFailure = extractRuleFailedException(e);
-        PrimitiveTypeReference _primitiveTypeReference_1 = this.typeFactory.primitiveTypeReference(this.STRING);
-        /* STRING.primitiveTypeReference == eType */
+        IUMLContextProvider _umlContext_1 = this.typeFactory.umlContext(st);
+        PrimitiveTypeReference _primitiveTypeReference_1 = this.typeFactory.primitiveTypeReference(this.STRING, _umlContext_1);
+        /* STRING.primitiveTypeReference(st.umlContext) == eType */
         if (!Objects.equal(_primitiveTypeReference_1, eType)) {
-          sneakyThrowRuleFailedException("STRING.primitiveTypeReference == eType");
+          sneakyThrowRuleFailedException("STRING.primitiveTypeReference(st.umlContext) == eType");
         }
       }
     }
@@ -783,13 +783,14 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
   }
   
   protected Result<Boolean> returnStatementInternal(final RuleApplicationTrace _trace_, final ReturnStatement st) throws RuleFailedException {
-    Operation _definedOperation = this.umlContext.getDefinedOperation();
+    IUMLContextProvider _umlContext = this.typeFactory.umlContext(st);
+    Operation _definedOperation = _umlContext.getDefinedOperation();
     Parameter _returnParameter = null;
     if (_definedOperation!=null) {
       _returnParameter=this.scopeHelper.getReturnParameter(_definedOperation);
     }
     final Parameter returnValue = _returnParameter;
-    /* { returnValue == null st.expression == null } or { returnValue != null st.expression != null empty |- st.expression : var IUMLTypeReference exprType val returnType = returnValue.type.typeReference empty |- returnType <: exprType } or { returnValue == null st.expression != null fail error "Unexpected return value " + st.expression.stringRep source st.expression } */
+    /* { returnValue == null st.expression == null } or { returnValue != null st.expression != null empty |- st.expression : var IUMLTypeReference exprType val returnType = returnValue.type.typeReference empty |- returnType <: exprType : st.umlContext } or { returnValue == null st.expression != null fail error "Unexpected return value " + st.expression.stringRep source st.expression } */
     {
       RuleFailedException previousFailure = null;
       try {
@@ -805,7 +806,7 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
         }
       } catch (Exception e) {
         previousFailure = extractRuleFailedException(e);
-        /* { returnValue != null st.expression != null empty |- st.expression : var IUMLTypeReference exprType val returnType = returnValue.type.typeReference empty |- returnType <: exprType } or { returnValue == null st.expression != null fail error "Unexpected return value " + st.expression.stringRep source st.expression } */
+        /* { returnValue != null st.expression != null empty |- st.expression : var IUMLTypeReference exprType val returnType = returnValue.type.typeReference empty |- returnType <: exprType : st.umlContext } or { returnValue == null st.expression != null fail error "Unexpected return value " + st.expression.stringRep source st.expression } */
         {
           try {
             boolean _notEquals = (!Objects.equal(returnValue, null));
@@ -828,8 +829,9 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
             
             Type _type = returnValue.getType();
             final IUMLTypeReference returnType = this.typeFactory.typeReference(_type);
-            /* empty |- returnType <: exprType */
-            subtypeReferenceInternal(emptyEnvironment(), _trace_, returnType, exprType);
+            /* empty |- returnType <: exprType : st.umlContext */
+            IUMLContextProvider _umlContext_1 = this.typeFactory.umlContext(st);
+            subtypeReferenceInternal(emptyEnvironment(), _trace_, returnType, exprType, _umlContext_1);
           } catch (Exception e_1) {
             previousFailure = extractRuleFailedException(e_1);
             boolean _equals_1 = Objects.equal(returnValue, null);
@@ -940,17 +942,17 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
     	_issue, _ex, new ErrorInformation(source, null));
   }
   
-  protected Result<Boolean> subtypeReferenceInternal(final RuleEnvironment _environment_, final RuleApplicationTrace _trace_, final IUMLTypeReference left, final IUMLTypeReference right) {
+  protected Result<Boolean> subtypeReferenceInternal(final RuleEnvironment _environment_, final RuleApplicationTrace _trace_, final IUMLTypeReference left, final IUMLTypeReference right, final IUMLContextProvider context) {
     try {
-    	checkParamsNotNull(left, right);
-    	return subtypeReferenceDispatcher.invoke(_environment_, _trace_, left, right);
+    	checkParamsNotNull(left, right, context);
+    	return subtypeReferenceDispatcher.invoke(_environment_, _trace_, left, right, context);
     } catch (Exception _e_subtypeReference) {
     	sneakyThrowRuleFailedException(_e_subtypeReference);
     	return null;
     }
   }
   
-  protected void subtypeReferenceThrowException(final String _error, final String _issue, final Exception _ex, final IUMLTypeReference left, final IUMLTypeReference right, final ErrorInformation[] _errorInformations) throws RuleFailedException {
+  protected void subtypeReferenceThrowException(final String _error, final String _issue, final Exception _ex, final IUMLTypeReference left, final IUMLTypeReference right, final IUMLContextProvider context, final ErrorInformation[] _errorInformations) throws RuleFailedException {
     String _stringRep = this.stringRep(left);
     String _plus = (_stringRep + " is not a subtype of  ");
     String _stringRep_1 = this.stringRep(right);
@@ -960,17 +962,17 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
     	_issue, _ex, new ErrorInformation(null, null));
   }
   
-  protected Result<Boolean> subtypeOrEqualInternal(final RuleEnvironment _environment_, final RuleApplicationTrace _trace_, final Type left, final Type right) {
+  protected Result<Boolean> subtypeOrEqualInternal(final RuleEnvironment _environment_, final RuleApplicationTrace _trace_, final Type left, final Type right, final IUMLContextProvider context) {
     try {
-    	checkParamsNotNull(left, right);
-    	return subtypeOrEqualDispatcher.invoke(_environment_, _trace_, left, right);
+    	checkParamsNotNull(left, right, context);
+    	return subtypeOrEqualDispatcher.invoke(_environment_, _trace_, left, right, context);
     } catch (Exception _e_subtypeOrEqual) {
     	sneakyThrowRuleFailedException(_e_subtypeOrEqual);
     	return null;
     }
   }
   
-  protected void subtypeOrEqualThrowException(final String _error, final String _issue, final Exception _ex, final Type left, final Type right, final ErrorInformation[] _errorInformations) throws RuleFailedException {
+  protected void subtypeOrEqualThrowException(final String _error, final String _issue, final Exception _ex, final Type left, final Type right, final IUMLContextProvider context, final ErrorInformation[] _errorInformations) throws RuleFailedException {
     String _stringRep = this.stringRep(left);
     String _plus = (_stringRep + " is not a subtype of  ");
     String _stringRep_1 = this.stringRep(right);
@@ -1073,7 +1075,8 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
   }
   
   private PrimitiveTypeReference _applyRuleBooleanLiteral_1(final RuleEnvironment G, final BooleanLiteralExpression bool) throws RuleFailedException {
-    PrimitiveTypeReference _primitiveTypeReference = this.typeFactory.primitiveTypeReference(this.BOOLEAN);
+    IUMLContextProvider _umlContext = this.typeFactory.umlContext(bool);
+    PrimitiveTypeReference _primitiveTypeReference = this.typeFactory.primitiveTypeReference(this.BOOLEAN, _umlContext);
     return _primitiveTypeReference;
   }
   
@@ -1102,7 +1105,8 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
   }
   
   private PrimitiveTypeReference _applyRuleNaturalLiteral_1(final RuleEnvironment G, final NaturalLiteralExpression natural) throws RuleFailedException {
-    PrimitiveTypeReference _primitiveTypeReference = this.typeFactory.primitiveTypeReference(this.INTEGER);
+    IUMLContextProvider _umlContext = this.typeFactory.umlContext(natural);
+    PrimitiveTypeReference _primitiveTypeReference = this.typeFactory.primitiveTypeReference(this.INTEGER, _umlContext);
     return _primitiveTypeReference;
   }
   
@@ -1131,7 +1135,8 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
   }
   
   private PrimitiveTypeReference _applyRuleRealLiteral_1(final RuleEnvironment G, final RealLiteralExpression real) throws RuleFailedException {
-    PrimitiveTypeReference _primitiveTypeReference = this.typeFactory.primitiveTypeReference(this.REAL);
+    IUMLContextProvider _umlContext = this.typeFactory.umlContext(real);
+    PrimitiveTypeReference _primitiveTypeReference = this.typeFactory.primitiveTypeReference(this.REAL, _umlContext);
     return _primitiveTypeReference;
   }
   
@@ -1160,7 +1165,8 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
   }
   
   private PrimitiveTypeReference _applyRuleStringLiteral_1(final RuleEnvironment G, final StringLiteralExpression string) throws RuleFailedException {
-    PrimitiveTypeReference _primitiveTypeReference = this.typeFactory.primitiveTypeReference(this.STRING);
+    IUMLContextProvider _umlContext = this.typeFactory.umlContext(string);
+    PrimitiveTypeReference _primitiveTypeReference = this.typeFactory.primitiveTypeReference(this.STRING, _umlContext);
     return _primitiveTypeReference;
   }
   
@@ -1496,78 +1502,78 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
     return new Result<IUMLTypeReference>(result);
   }
   
-  protected Result<Boolean> subtypeReferenceImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final UMLTypeReference left, final IUMLTypeReference.NullTypeReference right) throws RuleFailedException {
+  protected Result<Boolean> subtypeReferenceImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final UMLTypeReference left, final IUMLTypeReference.NullTypeReference right, final IUMLContextProvider context) throws RuleFailedException {
     try {
     	final RuleApplicationTrace _subtrace_ = newTrace(_trace_);
-    	final Result<Boolean> _result_ = applyRuleNullSubtyping(G, _subtrace_, left, right);
+    	final Result<Boolean> _result_ = applyRuleNullSubtyping(G, _subtrace_, left, right, context);
     	addToTrace(_trace_, new Provider<Object>() {
     		public Object get() {
-    			return ruleName("NullSubtyping") + stringRepForEnv(G) + " |- " + stringRep(left) + " <: " + stringRep(right);
+    			return ruleName("NullSubtyping") + stringRepForEnv(G) + " |- " + stringRep(left) + " <: " + stringRep(right) + " : " + stringRep(context);
     		}
     	});
     	addAsSubtrace(_trace_, _subtrace_);
     	return _result_;
     } catch (Exception e_applyRuleNullSubtyping) {
-    	subtypeReferenceThrowException(ruleName("NullSubtyping") + stringRepForEnv(G) + " |- " + stringRep(left) + " <: " + stringRep(right),
+    	subtypeReferenceThrowException(ruleName("NullSubtyping") + stringRepForEnv(G) + " |- " + stringRep(left) + " <: " + stringRep(right) + " : " + stringRep(context),
     		NULLSUBTYPING,
-    		e_applyRuleNullSubtyping, left, right, new ErrorInformation[] {});
+    		e_applyRuleNullSubtyping, left, right, context, new ErrorInformation[] {});
     	return null;
     }
   }
   
-  protected Result<Boolean> applyRuleNullSubtyping(final RuleEnvironment G, final RuleApplicationTrace _trace_, final UMLTypeReference left, final IUMLTypeReference.NullTypeReference right) throws RuleFailedException {
+  protected Result<Boolean> applyRuleNullSubtyping(final RuleEnvironment G, final RuleApplicationTrace _trace_, final UMLTypeReference left, final IUMLTypeReference.NullTypeReference right, final IUMLContextProvider context) throws RuleFailedException {
     
     return new Result<Boolean>(true);
   }
   
-  protected Result<Boolean> subtypeReferenceImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final IUMLTypeReference.AnyTypeReference left, final IUMLTypeReference right) throws RuleFailedException {
+  protected Result<Boolean> subtypeReferenceImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final IUMLTypeReference.AnyTypeReference left, final IUMLTypeReference right, final IUMLContextProvider context) throws RuleFailedException {
     try {
     	final RuleApplicationTrace _subtrace_ = newTrace(_trace_);
-    	final Result<Boolean> _result_ = applyRuleAnySubtyping(G, _subtrace_, left, right);
+    	final Result<Boolean> _result_ = applyRuleAnySubtyping(G, _subtrace_, left, right, context);
     	addToTrace(_trace_, new Provider<Object>() {
     		public Object get() {
-    			return ruleName("AnySubtyping") + stringRepForEnv(G) + " |- " + stringRep(left) + " <: " + stringRep(right);
+    			return ruleName("AnySubtyping") + stringRepForEnv(G) + " |- " + stringRep(left) + " <: " + stringRep(right) + " : " + stringRep(context);
     		}
     	});
     	addAsSubtrace(_trace_, _subtrace_);
     	return _result_;
     } catch (Exception e_applyRuleAnySubtyping) {
-    	subtypeReferenceThrowException(ruleName("AnySubtyping") + stringRepForEnv(G) + " |- " + stringRep(left) + " <: " + stringRep(right),
+    	subtypeReferenceThrowException(ruleName("AnySubtyping") + stringRepForEnv(G) + " |- " + stringRep(left) + " <: " + stringRep(right) + " : " + stringRep(context),
     		ANYSUBTYPING,
-    		e_applyRuleAnySubtyping, left, right, new ErrorInformation[] {});
+    		e_applyRuleAnySubtyping, left, right, context, new ErrorInformation[] {});
     	return null;
     }
   }
   
-  protected Result<Boolean> applyRuleAnySubtyping(final RuleEnvironment G, final RuleApplicationTrace _trace_, final IUMLTypeReference.AnyTypeReference left, final IUMLTypeReference right) throws RuleFailedException {
+  protected Result<Boolean> applyRuleAnySubtyping(final RuleEnvironment G, final RuleApplicationTrace _trace_, final IUMLTypeReference.AnyTypeReference left, final IUMLTypeReference right, final IUMLContextProvider context) throws RuleFailedException {
     
     return new Result<Boolean>(true);
   }
   
-  protected Result<Boolean> subtypeReferenceImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final IUMLTypeReference left, final IUMLTypeReference right) throws RuleFailedException {
+  protected Result<Boolean> subtypeReferenceImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final IUMLTypeReference left, final IUMLTypeReference right, final IUMLContextProvider context) throws RuleFailedException {
     try {
     	final RuleApplicationTrace _subtrace_ = newTrace(_trace_);
-    	final Result<Boolean> _result_ = applyRuleGeneralReferenceSubtyping(G, _subtrace_, left, right);
+    	final Result<Boolean> _result_ = applyRuleGeneralReferenceSubtyping(G, _subtrace_, left, right, context);
     	addToTrace(_trace_, new Provider<Object>() {
     		public Object get() {
-    			return ruleName("GeneralReferenceSubtyping") + stringRepForEnv(G) + " |- " + stringRep(left) + " <: " + stringRep(right);
+    			return ruleName("GeneralReferenceSubtyping") + stringRepForEnv(G) + " |- " + stringRep(left) + " <: " + stringRep(right) + " : " + stringRep(context);
     		}
     	});
     	addAsSubtrace(_trace_, _subtrace_);
     	return _result_;
     } catch (Exception e_applyRuleGeneralReferenceSubtyping) {
-    	generalReferenceSubtypingThrowException(e_applyRuleGeneralReferenceSubtyping, left, right);
+    	generalReferenceSubtypingThrowException(e_applyRuleGeneralReferenceSubtyping, left, right, context);
     	return null;
     }
   }
   
-  protected Result<Boolean> applyRuleGeneralReferenceSubtyping(final RuleEnvironment G, final RuleApplicationTrace _trace_, final IUMLTypeReference left, final IUMLTypeReference right) throws RuleFailedException {
+  protected Result<Boolean> applyRuleGeneralReferenceSubtyping(final RuleEnvironment G, final RuleApplicationTrace _trace_, final IUMLTypeReference left, final IUMLTypeReference right, final IUMLContextProvider context) throws RuleFailedException {
     /* fail */
     throwForExplicitFail();
     return new Result<Boolean>(true);
   }
   
-  private void generalReferenceSubtypingThrowException(final Exception e_applyRuleGeneralReferenceSubtyping, final IUMLTypeReference left, final IUMLTypeReference right) throws RuleFailedException {
+  private void generalReferenceSubtypingThrowException(final Exception e_applyRuleGeneralReferenceSubtyping, final IUMLTypeReference left, final IUMLTypeReference right, final IUMLContextProvider context) throws RuleFailedException {
     String _stringRep = this.stringRep(left);
     String _plus = ("The type " + _stringRep);
     String _plus_1 = (_plus + " is not compatible with the type ");
@@ -1578,53 +1584,53 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
     	GENERALREFERENCESUBTYPING, e_applyRuleGeneralReferenceSubtyping, new ErrorInformation(null, null));
   }
   
-  protected Result<Boolean> subtypeReferenceImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final AbstractTypeReference left, final AbstractTypeReference right) throws RuleFailedException {
+  protected Result<Boolean> subtypeReferenceImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final AbstractTypeReference left, final AbstractTypeReference right, final IUMLContextProvider context) throws RuleFailedException {
     try {
     	final RuleApplicationTrace _subtrace_ = newTrace(_trace_);
-    	final Result<Boolean> _result_ = applyRuleSimpleTypeReferenceSubtyping(G, _subtrace_, left, right);
+    	final Result<Boolean> _result_ = applyRuleSimpleTypeReferenceSubtyping(G, _subtrace_, left, right, context);
     	addToTrace(_trace_, new Provider<Object>() {
     		public Object get() {
-    			return ruleName("SimpleTypeReferenceSubtyping") + stringRepForEnv(G) + " |- " + stringRep(left) + " <: " + stringRep(right);
+    			return ruleName("SimpleTypeReferenceSubtyping") + stringRepForEnv(G) + " |- " + stringRep(left) + " <: " + stringRep(right) + " : " + stringRep(context);
     		}
     	});
     	addAsSubtrace(_trace_, _subtrace_);
     	return _result_;
     } catch (Exception e_applyRuleSimpleTypeReferenceSubtyping) {
-    	subtypeReferenceThrowException(ruleName("SimpleTypeReferenceSubtyping") + stringRepForEnv(G) + " |- " + stringRep(left) + " <: " + stringRep(right),
+    	subtypeReferenceThrowException(ruleName("SimpleTypeReferenceSubtyping") + stringRepForEnv(G) + " |- " + stringRep(left) + " <: " + stringRep(right) + " : " + stringRep(context),
     		SIMPLETYPEREFERENCESUBTYPING,
-    		e_applyRuleSimpleTypeReferenceSubtyping, left, right, new ErrorInformation[] {});
+    		e_applyRuleSimpleTypeReferenceSubtyping, left, right, context, new ErrorInformation[] {});
     	return null;
     }
   }
   
-  protected Result<Boolean> applyRuleSimpleTypeReferenceSubtyping(final RuleEnvironment G, final RuleApplicationTrace _trace_, final AbstractTypeReference left, final AbstractTypeReference right) throws RuleFailedException {
-    /* G |- left.umlType <~ right.umlType */
+  protected Result<Boolean> applyRuleSimpleTypeReferenceSubtyping(final RuleEnvironment G, final RuleApplicationTrace _trace_, final AbstractTypeReference left, final AbstractTypeReference right, final IUMLContextProvider context) throws RuleFailedException {
+    /* G |- left.umlType <~ right.umlType : context */
     Type _umlType = left.getUmlType();
     Type _umlType_1 = right.getUmlType();
-    subtypeOrEqualInternal(G, _trace_, _umlType, _umlType_1);
+    subtypeOrEqualInternal(G, _trace_, _umlType, _umlType_1, context);
     return new Result<Boolean>(true);
   }
   
-  protected Result<Boolean> subtypeReferenceImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final CollectionTypeReference left, final CollectionTypeReference right) throws RuleFailedException {
+  protected Result<Boolean> subtypeReferenceImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final CollectionTypeReference left, final CollectionTypeReference right, final IUMLContextProvider context) throws RuleFailedException {
     try {
     	final RuleApplicationTrace _subtrace_ = newTrace(_trace_);
-    	final Result<Boolean> _result_ = applyRuleCollectionSubtyping(G, _subtrace_, left, right);
+    	final Result<Boolean> _result_ = applyRuleCollectionSubtyping(G, _subtrace_, left, right, context);
     	addToTrace(_trace_, new Provider<Object>() {
     		public Object get() {
-    			return ruleName("CollectionSubtyping") + stringRepForEnv(G) + " |- " + stringRep(left) + " <: " + stringRep(right);
+    			return ruleName("CollectionSubtyping") + stringRepForEnv(G) + " |- " + stringRep(left) + " <: " + stringRep(right) + " : " + stringRep(context);
     		}
     	});
     	addAsSubtrace(_trace_, _subtrace_);
     	return _result_;
     } catch (Exception e_applyRuleCollectionSubtyping) {
-    	subtypeReferenceThrowException(ruleName("CollectionSubtyping") + stringRepForEnv(G) + " |- " + stringRep(left) + " <: " + stringRep(right),
+    	subtypeReferenceThrowException(ruleName("CollectionSubtyping") + stringRepForEnv(G) + " |- " + stringRep(left) + " <: " + stringRep(right) + " : " + stringRep(context),
     		COLLECTIONSUBTYPING,
-    		e_applyRuleCollectionSubtyping, left, right, new ErrorInformation[] {});
+    		e_applyRuleCollectionSubtyping, left, right, context, new ErrorInformation[] {});
     	return null;
     }
   }
   
-  protected Result<Boolean> applyRuleCollectionSubtyping(final RuleEnvironment G, final RuleApplicationTrace _trace_, final CollectionTypeReference left, final CollectionTypeReference right) throws RuleFailedException {
+  protected Result<Boolean> applyRuleCollectionSubtyping(final RuleEnvironment G, final RuleApplicationTrace _trace_, final CollectionTypeReference left, final CollectionTypeReference right, final IUMLContextProvider context) throws RuleFailedException {
     CollectionType _type = left.getType();
     CollectionType _type_1 = right.getType();
     boolean _equals = Objects.equal(_type, _type_1);
@@ -1641,30 +1647,30 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
     return new Result<Boolean>(true);
   }
   
-  protected Result<Boolean> subtypeOrEqualImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final Type left, final Type right) throws RuleFailedException {
+  protected Result<Boolean> subtypeOrEqualImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final Type left, final Type right, final IUMLContextProvider context) throws RuleFailedException {
     try {
     	final RuleApplicationTrace _subtrace_ = newTrace(_trace_);
-    	final Result<Boolean> _result_ = applyRuleGeneralSubtyping(G, _subtrace_, left, right);
+    	final Result<Boolean> _result_ = applyRuleGeneralSubtyping(G, _subtrace_, left, right, context);
     	addToTrace(_trace_, new Provider<Object>() {
     		public Object get() {
-    			return ruleName("GeneralSubtyping") + stringRepForEnv(G) + " |- " + stringRep(left) + " <~ " + stringRep(right);
+    			return ruleName("GeneralSubtyping") + stringRepForEnv(G) + " |- " + stringRep(left) + " <~ " + stringRep(right) + " : " + stringRep(context);
     		}
     	});
     	addAsSubtrace(_trace_, _subtrace_);
     	return _result_;
     } catch (Exception e_applyRuleGeneralSubtyping) {
-    	generalSubtypingThrowException(e_applyRuleGeneralSubtyping, left, right);
+    	generalSubtypingThrowException(e_applyRuleGeneralSubtyping, left, right, context);
     	return null;
     }
   }
   
-  protected Result<Boolean> applyRuleGeneralSubtyping(final RuleEnvironment G, final RuleApplicationTrace _trace_, final Type left, final Type right) throws RuleFailedException {
+  protected Result<Boolean> applyRuleGeneralSubtyping(final RuleEnvironment G, final RuleApplicationTrace _trace_, final Type left, final Type right, final IUMLContextProvider context) throws RuleFailedException {
     /* fail */
     throwForExplicitFail();
     return new Result<Boolean>(true);
   }
   
-  private void generalSubtypingThrowException(final Exception e_applyRuleGeneralSubtyping, final Type left, final Type right) throws RuleFailedException {
+  private void generalSubtypingThrowException(final Exception e_applyRuleGeneralSubtyping, final Type left, final Type right, final IUMLContextProvider context) throws RuleFailedException {
     String _stringRep = this.stringRep(left);
     String _plus = ("The type " + _stringRep);
     String _plus_1 = (_plus + " is not compatible with the type ");
@@ -1675,27 +1681,27 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
     	GENERALSUBTYPING, e_applyRuleGeneralSubtyping, new ErrorInformation(null, null));
   }
   
-  protected Result<Boolean> subtypeOrEqualImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final PrimitiveType left, final PrimitiveType right) throws RuleFailedException {
+  protected Result<Boolean> subtypeOrEqualImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final PrimitiveType left, final PrimitiveType right, final IUMLContextProvider context) throws RuleFailedException {
     try {
     	final RuleApplicationTrace _subtrace_ = newTrace(_trace_);
-    	final Result<Boolean> _result_ = applyRulePrimitiveSubtyping(G, _subtrace_, left, right);
+    	final Result<Boolean> _result_ = applyRulePrimitiveSubtyping(G, _subtrace_, left, right, context);
     	addToTrace(_trace_, new Provider<Object>() {
     		public Object get() {
-    			return ruleName("PrimitiveSubtyping") + stringRepForEnv(G) + " |- " + stringRep(left) + " <~ " + stringRep(right);
+    			return ruleName("PrimitiveSubtyping") + stringRepForEnv(G) + " |- " + stringRep(left) + " <~ " + stringRep(right) + " : " + stringRep(context);
     		}
     	});
     	addAsSubtrace(_trace_, _subtrace_);
     	return _result_;
     } catch (Exception e_applyRulePrimitiveSubtyping) {
-    	subtypeOrEqualThrowException(ruleName("PrimitiveSubtyping") + stringRepForEnv(G) + " |- " + stringRep(left) + " <~ " + stringRep(right),
+    	subtypeOrEqualThrowException(ruleName("PrimitiveSubtyping") + stringRepForEnv(G) + " |- " + stringRep(left) + " <~ " + stringRep(right) + " : " + stringRep(context),
     		PRIMITIVESUBTYPING,
-    		e_applyRulePrimitiveSubtyping, left, right, new ErrorInformation[] {new ErrorInformation(left), new ErrorInformation(right)});
+    		e_applyRulePrimitiveSubtyping, left, right, context, new ErrorInformation[] {new ErrorInformation(left), new ErrorInformation(right)});
     	return null;
     }
   }
   
-  protected Result<Boolean> applyRulePrimitiveSubtyping(final RuleEnvironment G, final RuleApplicationTrace _trace_, final PrimitiveType left, final PrimitiveType right) throws RuleFailedException {
-    /* { left == right } or { left == REAL.primitiveType right == INTEGER.primitiveType } */
+  protected Result<Boolean> applyRulePrimitiveSubtyping(final RuleEnvironment G, final RuleApplicationTrace _trace_, final PrimitiveType left, final PrimitiveType right, final IUMLContextProvider context) throws RuleFailedException {
+    /* { left == right } or { left == context.getPrimitiveType(REAL) right == context.getPrimitiveType(INTEGER) } */
     {
       RuleFailedException previousFailure = null;
       try {
@@ -1705,42 +1711,42 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
         }
       } catch (Exception e) {
         previousFailure = extractRuleFailedException(e);
-        Type _primitiveType = this.umlContext.getPrimitiveType(this.REAL);
+        Type _primitiveType = context.getPrimitiveType(this.REAL);
         boolean _equals = Objects.equal(left, _primitiveType);
-        /* left == REAL.primitiveType */
+        /* left == context.getPrimitiveType(REAL) */
         if (!_equals) {
-          sneakyThrowRuleFailedException("left == REAL.primitiveType");
+          sneakyThrowRuleFailedException("left == context.getPrimitiveType(REAL)");
         }
-        Type _primitiveType_1 = this.umlContext.getPrimitiveType(this.INTEGER);
-        /* right == INTEGER.primitiveType */
+        Type _primitiveType_1 = context.getPrimitiveType(this.INTEGER);
+        /* right == context.getPrimitiveType(INTEGER) */
         if (!Objects.equal(right, _primitiveType_1)) {
-          sneakyThrowRuleFailedException("right == INTEGER.primitiveType");
+          sneakyThrowRuleFailedException("right == context.getPrimitiveType(INTEGER)");
         }
       }
     }
     return new Result<Boolean>(true);
   }
   
-  protected Result<Boolean> subtypeOrEqualImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final Classifier left, final Classifier right) throws RuleFailedException {
+  protected Result<Boolean> subtypeOrEqualImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final Classifier left, final Classifier right, final IUMLContextProvider context) throws RuleFailedException {
     try {
     	final RuleApplicationTrace _subtrace_ = newTrace(_trace_);
-    	final Result<Boolean> _result_ = applyRuleEqualsClassifierSubtyping(G, _subtrace_, left, right);
+    	final Result<Boolean> _result_ = applyRuleEqualsClassifierSubtyping(G, _subtrace_, left, right, context);
     	addToTrace(_trace_, new Provider<Object>() {
     		public Object get() {
-    			return ruleName("EqualsClassifierSubtyping") + stringRepForEnv(G) + " |- " + stringRep(left) + " <~ " + stringRep(right);
+    			return ruleName("EqualsClassifierSubtyping") + stringRepForEnv(G) + " |- " + stringRep(left) + " <~ " + stringRep(right) + " : " + stringRep(context);
     		}
     	});
     	addAsSubtrace(_trace_, _subtrace_);
     	return _result_;
     } catch (Exception e_applyRuleEqualsClassifierSubtyping) {
-    	subtypeOrEqualThrowException(ruleName("EqualsClassifierSubtyping") + stringRepForEnv(G) + " |- " + stringRep(left) + " <~ " + stringRep(right),
+    	subtypeOrEqualThrowException(ruleName("EqualsClassifierSubtyping") + stringRepForEnv(G) + " |- " + stringRep(left) + " <~ " + stringRep(right) + " : " + stringRep(context),
     		EQUALSCLASSIFIERSUBTYPING,
-    		e_applyRuleEqualsClassifierSubtyping, left, right, new ErrorInformation[] {new ErrorInformation(left), new ErrorInformation(right)});
+    		e_applyRuleEqualsClassifierSubtyping, left, right, context, new ErrorInformation[] {new ErrorInformation(left), new ErrorInformation(right)});
     	return null;
     }
   }
   
-  protected Result<Boolean> applyRuleEqualsClassifierSubtyping(final RuleEnvironment G, final RuleApplicationTrace _trace_, final Classifier left, final Classifier right) throws RuleFailedException {
+  protected Result<Boolean> applyRuleEqualsClassifierSubtyping(final RuleEnvironment G, final RuleApplicationTrace _trace_, final Classifier left, final Classifier right, final IUMLContextProvider context) throws RuleFailedException {
     /* left == right */
     if (!Objects.equal(left, right)) {
       sneakyThrowRuleFailedException("left == right");
@@ -1748,26 +1754,26 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
     return new Result<Boolean>(true);
   }
   
-  protected Result<Boolean> subtypeOrEqualImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final org.eclipse.uml2.uml.Class left, final org.eclipse.uml2.uml.Class right) throws RuleFailedException {
+  protected Result<Boolean> subtypeOrEqualImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final org.eclipse.uml2.uml.Class left, final org.eclipse.uml2.uml.Class right, final IUMLContextProvider context) throws RuleFailedException {
     try {
     	final RuleApplicationTrace _subtrace_ = newTrace(_trace_);
-    	final Result<Boolean> _result_ = applyRuleClassSubtyping(G, _subtrace_, left, right);
+    	final Result<Boolean> _result_ = applyRuleClassSubtyping(G, _subtrace_, left, right, context);
     	addToTrace(_trace_, new Provider<Object>() {
     		public Object get() {
-    			return ruleName("ClassSubtyping") + stringRepForEnv(G) + " |- " + stringRep(left) + " <~ " + stringRep(right);
+    			return ruleName("ClassSubtyping") + stringRepForEnv(G) + " |- " + stringRep(left) + " <~ " + stringRep(right) + " : " + stringRep(context);
     		}
     	});
     	addAsSubtrace(_trace_, _subtrace_);
     	return _result_;
     } catch (Exception e_applyRuleClassSubtyping) {
-    	subtypeOrEqualThrowException(ruleName("ClassSubtyping") + stringRepForEnv(G) + " |- " + stringRep(left) + " <~ " + stringRep(right),
+    	subtypeOrEqualThrowException(ruleName("ClassSubtyping") + stringRepForEnv(G) + " |- " + stringRep(left) + " <~ " + stringRep(right) + " : " + stringRep(context),
     		CLASSSUBTYPING,
-    		e_applyRuleClassSubtyping, left, right, new ErrorInformation[] {new ErrorInformation(left), new ErrorInformation(right)});
+    		e_applyRuleClassSubtyping, left, right, context, new ErrorInformation[] {new ErrorInformation(left), new ErrorInformation(right)});
     	return null;
     }
   }
   
-  protected Result<Boolean> applyRuleClassSubtyping(final RuleEnvironment G, final RuleApplicationTrace _trace_, final org.eclipse.uml2.uml.Class left, final org.eclipse.uml2.uml.Class right) throws RuleFailedException {
+  protected Result<Boolean> applyRuleClassSubtyping(final RuleEnvironment G, final RuleApplicationTrace _trace_, final org.eclipse.uml2.uml.Class left, final org.eclipse.uml2.uml.Class right, final IUMLContextProvider context) throws RuleFailedException {
     /* left == right or right.name == "Object" or superClassList(left).contains(right) */
     {
       RuleFailedException previousFailure = null;
@@ -1829,8 +1835,9 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
     checkAssignableTo(result.getFirst(), IUMLTypeReference.class);
     expressionType = (IUMLTypeReference) result.getFirst();
     
-    /* G |- expressionType <: target */
-    subtypeReferenceInternal(G, _trace_, expressionType, target);
+    /* G |- expressionType <: target : ex.umlContext */
+    IUMLContextProvider _umlContext = this.typeFactory.umlContext(ex);
+    subtypeReferenceInternal(G, _trace_, expressionType, target, _umlContext);
     return new Result<Boolean>(true);
   }
   
@@ -1840,13 +1847,13 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
     	final Result<IUMLTypeReference> _result_ = applyRuleOperationTyping(G, _subtrace_, op, params);
     	addToTrace(_trace_, new Provider<Object>() {
     		public Object get() {
-    			return ruleName("OperationTyping") + stringRepForEnv(G) + " |- " + stringRep(op) + " <: " + stringRep(params) + " : " + stringRep(_result_.getFirst());
+    			return ruleName("OperationTyping") + stringRepForEnv(G) + " |- " + stringRep(op) + " <: " + stringRep(params) + " :> " + stringRep(_result_.getFirst());
     		}
     	});
     	addAsSubtrace(_trace_, _subtrace_);
     	return _result_;
     } catch (Exception e_applyRuleOperationTyping) {
-    	operationTypeThrowException(ruleName("OperationTyping") + stringRepForEnv(G) + " |- " + stringRep(op) + " <: " + stringRep(params) + " : " + "IUMLTypeReference",
+    	operationTypeThrowException(ruleName("OperationTyping") + stringRepForEnv(G) + " |- " + stringRep(op) + " <: " + stringRep(params) + " :> " + "IUMLTypeReference",
     		OPERATIONTYPING,
     		e_applyRuleOperationTyping, op, params, new ErrorInformation[] {new ErrorInformation(op), new ErrorInformation(params)});
     	return null;
@@ -1866,13 +1873,13 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
     	final Result<IUMLTypeReference> _result_ = applyRuleParameterListTyping(G, _subtrace_, op, params);
     	addToTrace(_trace_, new Provider<Object>() {
     		public Object get() {
-    			return ruleName("ParameterListTyping") + stringRepForEnv(G) + " |- " + stringRep(op) + " <: " + stringRep(params) + " : " + stringRep(_result_.getFirst());
+    			return ruleName("ParameterListTyping") + stringRepForEnv(G) + " |- " + stringRep(op) + " <: " + stringRep(params) + " :> " + stringRep(_result_.getFirst());
     		}
     	});
     	addAsSubtrace(_trace_, _subtrace_);
     	return _result_;
     } catch (Exception e_applyRuleParameterListTyping) {
-    	operationTypeThrowException(ruleName("ParameterListTyping") + stringRepForEnv(G) + " |- " + stringRep(op) + " <: " + stringRep(params) + " : " + "IUMLTypeReference",
+    	operationTypeThrowException(ruleName("ParameterListTyping") + stringRepForEnv(G) + " |- " + stringRep(op) + " <: " + stringRep(params) + " :> " + "IUMLTypeReference",
     		PARAMETERLISTTYPING,
     		e_applyRuleParameterListTyping, op, params, new ErrorInformation[] {new ErrorInformation(op), new ErrorInformation(params)});
     	return null;
@@ -1913,13 +1920,13 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
     	final Result<IUMLTypeReference> _result_ = applyRuleNamedTupleTyping(G, _subtrace_, op, params);
     	addToTrace(_trace_, new Provider<Object>() {
     		public Object get() {
-    			return ruleName("NamedTupleTyping") + stringRepForEnv(G) + " |- " + stringRep(op) + " <: " + stringRep(params) + " : " + stringRep(_result_.getFirst());
+    			return ruleName("NamedTupleTyping") + stringRepForEnv(G) + " |- " + stringRep(op) + " <: " + stringRep(params) + " :> " + stringRep(_result_.getFirst());
     		}
     	});
     	addAsSubtrace(_trace_, _subtrace_);
     	return _result_;
     } catch (Exception e_applyRuleNamedTupleTyping) {
-    	operationTypeThrowException(ruleName("NamedTupleTyping") + stringRepForEnv(G) + " |- " + stringRep(op) + " <: " + stringRep(params) + " : " + "IUMLTypeReference",
+    	operationTypeThrowException(ruleName("NamedTupleTyping") + stringRepForEnv(G) + " |- " + stringRep(op) + " <: " + stringRep(params) + " :> " + "IUMLTypeReference",
     		NAMEDTUPLETYPING,
     		e_applyRuleNamedTupleTyping, op, params, new ErrorInformation[] {new ErrorInformation(op), new ErrorInformation(params)});
     	return null;
@@ -1956,33 +1963,37 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
   
   protected Result<IUMLTypeReference> applyRuleNumericUnaryExpression(final RuleEnvironment G, final RuleApplicationTrace _trace_, final NumericUnaryExpression ex) throws RuleFailedException {
     IUMLTypeReference result = null; // output parameter
-    /* { ex.operand.type.value == INTEGER.primitiveTypeReference result = INTEGER.primitiveTypeReference } or { ex.operand.type.value == REAL.primitiveTypeReference result = REAL.primitiveTypeReference } */
+    /* { ex.operand.type.value == INTEGER.primitiveTypeReference(ex.umlContext) result = INTEGER.primitiveTypeReference(ex.umlContext) } or { ex.operand.type.value == REAL.primitiveTypeReference(ex.umlContext) result = REAL.primitiveTypeReference(ex.umlContext) } */
     {
       RuleFailedException previousFailure = null;
       try {
         Expression _operand = ex.getOperand();
         Result<IUMLTypeReference> _type = this.type(_operand);
         IUMLTypeReference _value = _type.getValue();
-        PrimitiveTypeReference _primitiveTypeReference = this.typeFactory.primitiveTypeReference(this.INTEGER);
+        IUMLContextProvider _umlContext = this.typeFactory.umlContext(ex);
+        PrimitiveTypeReference _primitiveTypeReference = this.typeFactory.primitiveTypeReference(this.INTEGER, _umlContext);
         boolean _equals = Objects.equal(_value, _primitiveTypeReference);
-        /* ex.operand.type.value == INTEGER.primitiveTypeReference */
+        /* ex.operand.type.value == INTEGER.primitiveTypeReference(ex.umlContext) */
         if (!_equals) {
-          sneakyThrowRuleFailedException("ex.operand.type.value == INTEGER.primitiveTypeReference");
+          sneakyThrowRuleFailedException("ex.operand.type.value == INTEGER.primitiveTypeReference(ex.umlContext)");
         }
-        PrimitiveTypeReference _primitiveTypeReference_1 = this.typeFactory.primitiveTypeReference(this.INTEGER);
+        IUMLContextProvider _umlContext_1 = this.typeFactory.umlContext(ex);
+        PrimitiveTypeReference _primitiveTypeReference_1 = this.typeFactory.primitiveTypeReference(this.INTEGER, _umlContext_1);
         result = _primitiveTypeReference_1;
       } catch (Exception e) {
         previousFailure = extractRuleFailedException(e);
         Expression _operand_1 = ex.getOperand();
         Result<IUMLTypeReference> _type_1 = this.type(_operand_1);
         IUMLTypeReference _value_1 = _type_1.getValue();
-        PrimitiveTypeReference _primitiveTypeReference_2 = this.typeFactory.primitiveTypeReference(this.REAL);
+        IUMLContextProvider _umlContext_2 = this.typeFactory.umlContext(ex);
+        PrimitiveTypeReference _primitiveTypeReference_2 = this.typeFactory.primitiveTypeReference(this.REAL, _umlContext_2);
         boolean _equals_1 = Objects.equal(_value_1, _primitiveTypeReference_2);
-        /* ex.operand.type.value == REAL.primitiveTypeReference */
+        /* ex.operand.type.value == REAL.primitiveTypeReference(ex.umlContext) */
         if (!_equals_1) {
-          sneakyThrowRuleFailedException("ex.operand.type.value == REAL.primitiveTypeReference");
+          sneakyThrowRuleFailedException("ex.operand.type.value == REAL.primitiveTypeReference(ex.umlContext)");
         }
-        PrimitiveTypeReference _primitiveTypeReference_3 = this.typeFactory.primitiveTypeReference(this.REAL);
+        IUMLContextProvider _umlContext_3 = this.typeFactory.umlContext(ex);
+        PrimitiveTypeReference _primitiveTypeReference_3 = this.typeFactory.primitiveTypeReference(this.REAL, _umlContext_3);
         result = _primitiveTypeReference_3;
       }
     }
@@ -2024,7 +2035,7 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
     checkAssignableTo(result_2.getFirst(), IUMLTypeReference.class);
     type2 = (IUMLTypeReference) result_2.getFirst();
     
-    /* { ex.operator == "+" type1 == STRING.primitiveTypeReference type2 == STRING.primitiveTypeReference result = STRING.primitiveTypeReference } or { ex.operator == "+" type1 == REAL.primitiveTypeReference type2 == REAL.primitiveTypeReference || type2 == INTEGER.primitiveTypeReference result = REAL.primitiveTypeReference } or { ex.operator == "+" type1 == REAL.primitiveTypeReference || type1 == INTEGER.primitiveTypeReference type2 == REAL.primitiveTypeReference result = REAL.primitiveTypeReference } or { type1 == REAL.primitiveTypeReference type2 == INTEGER.primitiveTypeReference || type2 == REAL.primitiveTypeReference result = REAL.primitiveTypeReference } or { type1 == INTEGER.primitiveTypeReference || type1 == REAL.primitiveTypeReference type2 == REAL.primitiveTypeReference result = REAL.primitiveTypeReference } or { type1 == INTEGER.primitiveTypeReference type2 == INTEGER.primitiveTypeReference result = INTEGER.primitiveTypeReference } */
+    /* { ex.operator == "+" type1 == STRING.primitiveTypeReference(ex.umlContext) type2 == STRING.primitiveTypeReference(ex.umlContext) result = STRING.primitiveTypeReference(ex.umlContext) } or { ex.operator == "+" type1 == REAL.primitiveTypeReference(ex.umlContext) type2 == REAL.primitiveTypeReference(ex.umlContext) || type2 == INTEGER.primitiveTypeReference(ex.umlContext) result = REAL.primitiveTypeReference(ex.umlContext) } or { ex.operator == "+" type1 == REAL.primitiveTypeReference(ex.umlContext) || type1 == INTEGER.primitiveTypeReference(ex.umlContext) type2 == REAL.primitiveTypeReference(ex.umlContext) result = REAL.primitiveTypeReference(ex.umlContext) } or { type1 == REAL.primitiveTypeReference(ex.umlContext) type2 == INTEGER.primitiveTypeReference(ex.umlContext) || type2 == REAL.primitiveTypeReference(ex.umlContext) result = REAL.primitiveTypeReference(ex.umlContext) } or { type1 == INTEGER.primitiveTypeReference(ex.umlContext) || type1 == REAL.primitiveTypeReference(ex.umlContext) type2 == REAL.primitiveTypeReference(ex.umlContext) result = REAL.primitiveTypeReference(ex.umlContext) } or { type1 == INTEGER.primitiveTypeReference(ex.umlContext) type2 == INTEGER.primitiveTypeReference(ex.umlContext) result = INTEGER.primitiveTypeReference(ex.umlContext) } */
     {
       RuleFailedException previousFailure = null;
       try {
@@ -2034,23 +2045,26 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
         if (!_equals) {
           sneakyThrowRuleFailedException("ex.operator == \"+\"");
         }
-        PrimitiveTypeReference _primitiveTypeReference = this.typeFactory.primitiveTypeReference(this.STRING);
+        IUMLContextProvider _umlContext = this.typeFactory.umlContext(ex);
+        PrimitiveTypeReference _primitiveTypeReference = this.typeFactory.primitiveTypeReference(this.STRING, _umlContext);
         boolean _equals_1 = Objects.equal(type1, _primitiveTypeReference);
-        /* type1 == STRING.primitiveTypeReference */
+        /* type1 == STRING.primitiveTypeReference(ex.umlContext) */
         if (!_equals_1) {
-          sneakyThrowRuleFailedException("type1 == STRING.primitiveTypeReference");
+          sneakyThrowRuleFailedException("type1 == STRING.primitiveTypeReference(ex.umlContext)");
         }
-        PrimitiveTypeReference _primitiveTypeReference_1 = this.typeFactory.primitiveTypeReference(this.STRING);
+        IUMLContextProvider _umlContext_1 = this.typeFactory.umlContext(ex);
+        PrimitiveTypeReference _primitiveTypeReference_1 = this.typeFactory.primitiveTypeReference(this.STRING, _umlContext_1);
         boolean _equals_2 = Objects.equal(type2, _primitiveTypeReference_1);
-        /* type2 == STRING.primitiveTypeReference */
+        /* type2 == STRING.primitiveTypeReference(ex.umlContext) */
         if (!_equals_2) {
-          sneakyThrowRuleFailedException("type2 == STRING.primitiveTypeReference");
+          sneakyThrowRuleFailedException("type2 == STRING.primitiveTypeReference(ex.umlContext)");
         }
-        PrimitiveTypeReference _primitiveTypeReference_2 = this.typeFactory.primitiveTypeReference(this.STRING);
+        IUMLContextProvider _umlContext_2 = this.typeFactory.umlContext(ex);
+        PrimitiveTypeReference _primitiveTypeReference_2 = this.typeFactory.primitiveTypeReference(this.STRING, _umlContext_2);
         result = _primitiveTypeReference_2;
       } catch (Exception e) {
         previousFailure = extractRuleFailedException(e);
-        /* { ex.operator == "+" type1 == REAL.primitiveTypeReference type2 == REAL.primitiveTypeReference || type2 == INTEGER.primitiveTypeReference result = REAL.primitiveTypeReference } or { ex.operator == "+" type1 == REAL.primitiveTypeReference || type1 == INTEGER.primitiveTypeReference type2 == REAL.primitiveTypeReference result = REAL.primitiveTypeReference } or { type1 == REAL.primitiveTypeReference type2 == INTEGER.primitiveTypeReference || type2 == REAL.primitiveTypeReference result = REAL.primitiveTypeReference } or { type1 == INTEGER.primitiveTypeReference || type1 == REAL.primitiveTypeReference type2 == REAL.primitiveTypeReference result = REAL.primitiveTypeReference } or { type1 == INTEGER.primitiveTypeReference type2 == INTEGER.primitiveTypeReference result = INTEGER.primitiveTypeReference } */
+        /* { ex.operator == "+" type1 == REAL.primitiveTypeReference(ex.umlContext) type2 == REAL.primitiveTypeReference(ex.umlContext) || type2 == INTEGER.primitiveTypeReference(ex.umlContext) result = REAL.primitiveTypeReference(ex.umlContext) } or { ex.operator == "+" type1 == REAL.primitiveTypeReference(ex.umlContext) || type1 == INTEGER.primitiveTypeReference(ex.umlContext) type2 == REAL.primitiveTypeReference(ex.umlContext) result = REAL.primitiveTypeReference(ex.umlContext) } or { type1 == REAL.primitiveTypeReference(ex.umlContext) type2 == INTEGER.primitiveTypeReference(ex.umlContext) || type2 == REAL.primitiveTypeReference(ex.umlContext) result = REAL.primitiveTypeReference(ex.umlContext) } or { type1 == INTEGER.primitiveTypeReference(ex.umlContext) || type1 == REAL.primitiveTypeReference(ex.umlContext) type2 == REAL.primitiveTypeReference(ex.umlContext) result = REAL.primitiveTypeReference(ex.umlContext) } or { type1 == INTEGER.primitiveTypeReference(ex.umlContext) type2 == INTEGER.primitiveTypeReference(ex.umlContext) result = INTEGER.primitiveTypeReference(ex.umlContext) } */
         {
           try {
             String _operator_1 = ex.getOperator();
@@ -2059,31 +2073,35 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
             if (!_equals_3) {
               sneakyThrowRuleFailedException("ex.operator == \"+\"");
             }
-            PrimitiveTypeReference _primitiveTypeReference_3 = this.typeFactory.primitiveTypeReference(this.REAL);
+            IUMLContextProvider _umlContext_3 = this.typeFactory.umlContext(ex);
+            PrimitiveTypeReference _primitiveTypeReference_3 = this.typeFactory.primitiveTypeReference(this.REAL, _umlContext_3);
             boolean _equals_4 = Objects.equal(type1, _primitiveTypeReference_3);
-            /* type1 == REAL.primitiveTypeReference */
+            /* type1 == REAL.primitiveTypeReference(ex.umlContext) */
             if (!_equals_4) {
-              sneakyThrowRuleFailedException("type1 == REAL.primitiveTypeReference");
+              sneakyThrowRuleFailedException("type1 == REAL.primitiveTypeReference(ex.umlContext)");
             }
             boolean _or = false;
-            PrimitiveTypeReference _primitiveTypeReference_4 = this.typeFactory.primitiveTypeReference(this.REAL);
+            IUMLContextProvider _umlContext_4 = this.typeFactory.umlContext(ex);
+            PrimitiveTypeReference _primitiveTypeReference_4 = this.typeFactory.primitiveTypeReference(this.REAL, _umlContext_4);
             boolean _equals_5 = Objects.equal(type2, _primitiveTypeReference_4);
             if (_equals_5) {
               _or = true;
             } else {
-              PrimitiveTypeReference _primitiveTypeReference_5 = this.typeFactory.primitiveTypeReference(this.INTEGER);
+              IUMLContextProvider _umlContext_5 = this.typeFactory.umlContext(ex);
+              PrimitiveTypeReference _primitiveTypeReference_5 = this.typeFactory.primitiveTypeReference(this.INTEGER, _umlContext_5);
               boolean _equals_6 = Objects.equal(type2, _primitiveTypeReference_5);
               _or = _equals_6;
             }
-            /* type2 == REAL.primitiveTypeReference || type2 == INTEGER.primitiveTypeReference */
+            /* type2 == REAL.primitiveTypeReference(ex.umlContext) || type2 == INTEGER.primitiveTypeReference(ex.umlContext) */
             if (!_or) {
-              sneakyThrowRuleFailedException("type2 == REAL.primitiveTypeReference || type2 == INTEGER.primitiveTypeReference");
+              sneakyThrowRuleFailedException("type2 == REAL.primitiveTypeReference(ex.umlContext) || type2 == INTEGER.primitiveTypeReference(ex.umlContext)");
             }
-            PrimitiveTypeReference _primitiveTypeReference_6 = this.typeFactory.primitiveTypeReference(this.REAL);
+            IUMLContextProvider _umlContext_6 = this.typeFactory.umlContext(ex);
+            PrimitiveTypeReference _primitiveTypeReference_6 = this.typeFactory.primitiveTypeReference(this.REAL, _umlContext_6);
             result = _primitiveTypeReference_6;
           } catch (Exception e_1) {
             previousFailure = extractRuleFailedException(e_1);
-            /* { ex.operator == "+" type1 == REAL.primitiveTypeReference || type1 == INTEGER.primitiveTypeReference type2 == REAL.primitiveTypeReference result = REAL.primitiveTypeReference } or { type1 == REAL.primitiveTypeReference type2 == INTEGER.primitiveTypeReference || type2 == REAL.primitiveTypeReference result = REAL.primitiveTypeReference } or { type1 == INTEGER.primitiveTypeReference || type1 == REAL.primitiveTypeReference type2 == REAL.primitiveTypeReference result = REAL.primitiveTypeReference } or { type1 == INTEGER.primitiveTypeReference type2 == INTEGER.primitiveTypeReference result = INTEGER.primitiveTypeReference } */
+            /* { ex.operator == "+" type1 == REAL.primitiveTypeReference(ex.umlContext) || type1 == INTEGER.primitiveTypeReference(ex.umlContext) type2 == REAL.primitiveTypeReference(ex.umlContext) result = REAL.primitiveTypeReference(ex.umlContext) } or { type1 == REAL.primitiveTypeReference(ex.umlContext) type2 == INTEGER.primitiveTypeReference(ex.umlContext) || type2 == REAL.primitiveTypeReference(ex.umlContext) result = REAL.primitiveTypeReference(ex.umlContext) } or { type1 == INTEGER.primitiveTypeReference(ex.umlContext) || type1 == REAL.primitiveTypeReference(ex.umlContext) type2 == REAL.primitiveTypeReference(ex.umlContext) result = REAL.primitiveTypeReference(ex.umlContext) } or { type1 == INTEGER.primitiveTypeReference(ex.umlContext) type2 == INTEGER.primitiveTypeReference(ex.umlContext) result = INTEGER.primitiveTypeReference(ex.umlContext) } */
             {
               try {
                 String _operator_2 = ex.getOperator();
@@ -2093,96 +2111,111 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
                   sneakyThrowRuleFailedException("ex.operator == \"+\"");
                 }
                 boolean _or_1 = false;
-                PrimitiveTypeReference _primitiveTypeReference_7 = this.typeFactory.primitiveTypeReference(this.REAL);
+                IUMLContextProvider _umlContext_7 = this.typeFactory.umlContext(ex);
+                PrimitiveTypeReference _primitiveTypeReference_7 = this.typeFactory.primitiveTypeReference(this.REAL, _umlContext_7);
                 boolean _equals_8 = Objects.equal(type1, _primitiveTypeReference_7);
                 if (_equals_8) {
                   _or_1 = true;
                 } else {
-                  PrimitiveTypeReference _primitiveTypeReference_8 = this.typeFactory.primitiveTypeReference(this.INTEGER);
+                  IUMLContextProvider _umlContext_8 = this.typeFactory.umlContext(ex);
+                  PrimitiveTypeReference _primitiveTypeReference_8 = this.typeFactory.primitiveTypeReference(this.INTEGER, _umlContext_8);
                   boolean _equals_9 = Objects.equal(type1, _primitiveTypeReference_8);
                   _or_1 = _equals_9;
                 }
-                /* type1 == REAL.primitiveTypeReference || type1 == INTEGER.primitiveTypeReference */
+                /* type1 == REAL.primitiveTypeReference(ex.umlContext) || type1 == INTEGER.primitiveTypeReference(ex.umlContext) */
                 if (!_or_1) {
-                  sneakyThrowRuleFailedException("type1 == REAL.primitiveTypeReference || type1 == INTEGER.primitiveTypeReference");
+                  sneakyThrowRuleFailedException("type1 == REAL.primitiveTypeReference(ex.umlContext) || type1 == INTEGER.primitiveTypeReference(ex.umlContext)");
                 }
-                PrimitiveTypeReference _primitiveTypeReference_9 = this.typeFactory.primitiveTypeReference(this.REAL);
+                IUMLContextProvider _umlContext_9 = this.typeFactory.umlContext(ex);
+                PrimitiveTypeReference _primitiveTypeReference_9 = this.typeFactory.primitiveTypeReference(this.REAL, _umlContext_9);
                 boolean _equals_10 = Objects.equal(type2, _primitiveTypeReference_9);
-                /* type2 == REAL.primitiveTypeReference */
+                /* type2 == REAL.primitiveTypeReference(ex.umlContext) */
                 if (!_equals_10) {
-                  sneakyThrowRuleFailedException("type2 == REAL.primitiveTypeReference");
+                  sneakyThrowRuleFailedException("type2 == REAL.primitiveTypeReference(ex.umlContext)");
                 }
-                PrimitiveTypeReference _primitiveTypeReference_10 = this.typeFactory.primitiveTypeReference(this.REAL);
+                IUMLContextProvider _umlContext_10 = this.typeFactory.umlContext(ex);
+                PrimitiveTypeReference _primitiveTypeReference_10 = this.typeFactory.primitiveTypeReference(this.REAL, _umlContext_10);
                 result = _primitiveTypeReference_10;
               } catch (Exception e_2) {
                 previousFailure = extractRuleFailedException(e_2);
-                /* { type1 == REAL.primitiveTypeReference type2 == INTEGER.primitiveTypeReference || type2 == REAL.primitiveTypeReference result = REAL.primitiveTypeReference } or { type1 == INTEGER.primitiveTypeReference || type1 == REAL.primitiveTypeReference type2 == REAL.primitiveTypeReference result = REAL.primitiveTypeReference } or { type1 == INTEGER.primitiveTypeReference type2 == INTEGER.primitiveTypeReference result = INTEGER.primitiveTypeReference } */
+                /* { type1 == REAL.primitiveTypeReference(ex.umlContext) type2 == INTEGER.primitiveTypeReference(ex.umlContext) || type2 == REAL.primitiveTypeReference(ex.umlContext) result = REAL.primitiveTypeReference(ex.umlContext) } or { type1 == INTEGER.primitiveTypeReference(ex.umlContext) || type1 == REAL.primitiveTypeReference(ex.umlContext) type2 == REAL.primitiveTypeReference(ex.umlContext) result = REAL.primitiveTypeReference(ex.umlContext) } or { type1 == INTEGER.primitiveTypeReference(ex.umlContext) type2 == INTEGER.primitiveTypeReference(ex.umlContext) result = INTEGER.primitiveTypeReference(ex.umlContext) } */
                 {
                   try {
-                    PrimitiveTypeReference _primitiveTypeReference_11 = this.typeFactory.primitiveTypeReference(this.REAL);
+                    IUMLContextProvider _umlContext_11 = this.typeFactory.umlContext(ex);
+                    PrimitiveTypeReference _primitiveTypeReference_11 = this.typeFactory.primitiveTypeReference(this.REAL, _umlContext_11);
                     boolean _equals_11 = Objects.equal(type1, _primitiveTypeReference_11);
-                    /* type1 == REAL.primitiveTypeReference */
+                    /* type1 == REAL.primitiveTypeReference(ex.umlContext) */
                     if (!_equals_11) {
-                      sneakyThrowRuleFailedException("type1 == REAL.primitiveTypeReference");
+                      sneakyThrowRuleFailedException("type1 == REAL.primitiveTypeReference(ex.umlContext)");
                     }
                     boolean _or_2 = false;
-                    PrimitiveTypeReference _primitiveTypeReference_12 = this.typeFactory.primitiveTypeReference(this.INTEGER);
+                    IUMLContextProvider _umlContext_12 = this.typeFactory.umlContext(ex);
+                    PrimitiveTypeReference _primitiveTypeReference_12 = this.typeFactory.primitiveTypeReference(this.INTEGER, _umlContext_12);
                     boolean _equals_12 = Objects.equal(type2, _primitiveTypeReference_12);
                     if (_equals_12) {
                       _or_2 = true;
                     } else {
-                      PrimitiveTypeReference _primitiveTypeReference_13 = this.typeFactory.primitiveTypeReference(this.REAL);
+                      IUMLContextProvider _umlContext_13 = this.typeFactory.umlContext(ex);
+                      PrimitiveTypeReference _primitiveTypeReference_13 = this.typeFactory.primitiveTypeReference(this.REAL, _umlContext_13);
                       boolean _equals_13 = Objects.equal(type2, _primitiveTypeReference_13);
                       _or_2 = _equals_13;
                     }
-                    /* type2 == INTEGER.primitiveTypeReference || type2 == REAL.primitiveTypeReference */
+                    /* type2 == INTEGER.primitiveTypeReference(ex.umlContext) || type2 == REAL.primitiveTypeReference(ex.umlContext) */
                     if (!_or_2) {
-                      sneakyThrowRuleFailedException("type2 == INTEGER.primitiveTypeReference || type2 == REAL.primitiveTypeReference");
+                      sneakyThrowRuleFailedException("type2 == INTEGER.primitiveTypeReference(ex.umlContext) || type2 == REAL.primitiveTypeReference(ex.umlContext)");
                     }
-                    PrimitiveTypeReference _primitiveTypeReference_14 = this.typeFactory.primitiveTypeReference(this.REAL);
+                    IUMLContextProvider _umlContext_14 = this.typeFactory.umlContext(ex);
+                    PrimitiveTypeReference _primitiveTypeReference_14 = this.typeFactory.primitiveTypeReference(this.REAL, _umlContext_14);
                     result = _primitiveTypeReference_14;
                   } catch (Exception e_3) {
                     previousFailure = extractRuleFailedException(e_3);
-                    /* { type1 == INTEGER.primitiveTypeReference || type1 == REAL.primitiveTypeReference type2 == REAL.primitiveTypeReference result = REAL.primitiveTypeReference } or { type1 == INTEGER.primitiveTypeReference type2 == INTEGER.primitiveTypeReference result = INTEGER.primitiveTypeReference } */
+                    /* { type1 == INTEGER.primitiveTypeReference(ex.umlContext) || type1 == REAL.primitiveTypeReference(ex.umlContext) type2 == REAL.primitiveTypeReference(ex.umlContext) result = REAL.primitiveTypeReference(ex.umlContext) } or { type1 == INTEGER.primitiveTypeReference(ex.umlContext) type2 == INTEGER.primitiveTypeReference(ex.umlContext) result = INTEGER.primitiveTypeReference(ex.umlContext) } */
                     {
                       try {
                         boolean _or_3 = false;
-                        PrimitiveTypeReference _primitiveTypeReference_15 = this.typeFactory.primitiveTypeReference(this.INTEGER);
+                        IUMLContextProvider _umlContext_15 = this.typeFactory.umlContext(ex);
+                        PrimitiveTypeReference _primitiveTypeReference_15 = this.typeFactory.primitiveTypeReference(this.INTEGER, _umlContext_15);
                         boolean _equals_14 = Objects.equal(type1, _primitiveTypeReference_15);
                         if (_equals_14) {
                           _or_3 = true;
                         } else {
-                          PrimitiveTypeReference _primitiveTypeReference_16 = this.typeFactory.primitiveTypeReference(this.REAL);
+                          IUMLContextProvider _umlContext_16 = this.typeFactory.umlContext(ex);
+                          PrimitiveTypeReference _primitiveTypeReference_16 = this.typeFactory.primitiveTypeReference(this.REAL, _umlContext_16);
                           boolean _equals_15 = Objects.equal(type1, _primitiveTypeReference_16);
                           _or_3 = _equals_15;
                         }
-                        /* type1 == INTEGER.primitiveTypeReference || type1 == REAL.primitiveTypeReference */
+                        /* type1 == INTEGER.primitiveTypeReference(ex.umlContext) || type1 == REAL.primitiveTypeReference(ex.umlContext) */
                         if (!_or_3) {
-                          sneakyThrowRuleFailedException("type1 == INTEGER.primitiveTypeReference || type1 == REAL.primitiveTypeReference");
+                          sneakyThrowRuleFailedException("type1 == INTEGER.primitiveTypeReference(ex.umlContext) || type1 == REAL.primitiveTypeReference(ex.umlContext)");
                         }
-                        PrimitiveTypeReference _primitiveTypeReference_17 = this.typeFactory.primitiveTypeReference(this.REAL);
+                        IUMLContextProvider _umlContext_17 = this.typeFactory.umlContext(ex);
+                        PrimitiveTypeReference _primitiveTypeReference_17 = this.typeFactory.primitiveTypeReference(this.REAL, _umlContext_17);
                         boolean _equals_16 = Objects.equal(type2, _primitiveTypeReference_17);
-                        /* type2 == REAL.primitiveTypeReference */
+                        /* type2 == REAL.primitiveTypeReference(ex.umlContext) */
                         if (!_equals_16) {
-                          sneakyThrowRuleFailedException("type2 == REAL.primitiveTypeReference");
+                          sneakyThrowRuleFailedException("type2 == REAL.primitiveTypeReference(ex.umlContext)");
                         }
-                        PrimitiveTypeReference _primitiveTypeReference_18 = this.typeFactory.primitiveTypeReference(this.REAL);
+                        IUMLContextProvider _umlContext_18 = this.typeFactory.umlContext(ex);
+                        PrimitiveTypeReference _primitiveTypeReference_18 = this.typeFactory.primitiveTypeReference(this.REAL, _umlContext_18);
                         result = _primitiveTypeReference_18;
                       } catch (Exception e_4) {
                         previousFailure = extractRuleFailedException(e_4);
-                        PrimitiveTypeReference _primitiveTypeReference_19 = this.typeFactory.primitiveTypeReference(this.INTEGER);
+                        IUMLContextProvider _umlContext_19 = this.typeFactory.umlContext(ex);
+                        PrimitiveTypeReference _primitiveTypeReference_19 = this.typeFactory.primitiveTypeReference(this.INTEGER, _umlContext_19);
                         boolean _equals_17 = Objects.equal(type1, _primitiveTypeReference_19);
-                        /* type1 == INTEGER.primitiveTypeReference */
+                        /* type1 == INTEGER.primitiveTypeReference(ex.umlContext) */
                         if (!_equals_17) {
-                          sneakyThrowRuleFailedException("type1 == INTEGER.primitiveTypeReference");
+                          sneakyThrowRuleFailedException("type1 == INTEGER.primitiveTypeReference(ex.umlContext)");
                         }
-                        PrimitiveTypeReference _primitiveTypeReference_20 = this.typeFactory.primitiveTypeReference(this.INTEGER);
+                        IUMLContextProvider _umlContext_20 = this.typeFactory.umlContext(ex);
+                        PrimitiveTypeReference _primitiveTypeReference_20 = this.typeFactory.primitiveTypeReference(this.INTEGER, _umlContext_20);
                         boolean _equals_18 = Objects.equal(type2, _primitiveTypeReference_20);
-                        /* type2 == INTEGER.primitiveTypeReference */
+                        /* type2 == INTEGER.primitiveTypeReference(ex.umlContext) */
                         if (!_equals_18) {
-                          sneakyThrowRuleFailedException("type2 == INTEGER.primitiveTypeReference");
+                          sneakyThrowRuleFailedException("type2 == INTEGER.primitiveTypeReference(ex.umlContext)");
                         }
-                        PrimitiveTypeReference _primitiveTypeReference_21 = this.typeFactory.primitiveTypeReference(this.INTEGER);
+                        IUMLContextProvider _umlContext_21 = this.typeFactory.umlContext(ex);
+                        PrimitiveTypeReference _primitiveTypeReference_21 = this.typeFactory.primitiveTypeReference(this.INTEGER, _umlContext_21);
                         result = _primitiveTypeReference_21;
                       }
                     }
@@ -2271,14 +2304,16 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
     checkAssignableTo(result_3.getFirst(), CollectionTypeReference.class);
     contextType = (CollectionTypeReference) result_3.getFirst();
     
-    /* G |- contextType.valueType <: declarationType */
+    /* G |- contextType.valueType <: declarationType : ex.umlContext */
     IUMLTypeReference _valueType = contextType.getValueType();
-    subtypeReferenceInternal(G, _trace_, _valueType, declarationType);
-    PrimitiveTypeReference _primitiveTypeReference = this.typeFactory.primitiveTypeReference(this.BOOLEAN);
+    IUMLContextProvider _umlContext = this.typeFactory.umlContext(ex);
+    subtypeReferenceInternal(G, _trace_, _valueType, declarationType, _umlContext);
+    IUMLContextProvider _umlContext_1 = this.typeFactory.umlContext(ex);
+    PrimitiveTypeReference _primitiveTypeReference = this.typeFactory.primitiveTypeReference(this.BOOLEAN, _umlContext_1);
     boolean _equals = Objects.equal(expType, _primitiveTypeReference);
-    /* expType == BOOLEAN.primitiveTypeReference */
+    /* expType == BOOLEAN.primitiveTypeReference(ex.umlContext) */
     if (!_equals) {
-      sneakyThrowRuleFailedException("expType == BOOLEAN.primitiveTypeReference");
+      sneakyThrowRuleFailedException("expType == BOOLEAN.primitiveTypeReference(ex.umlContext)");
     }
     result = contextType;
     return new Result<IUMLTypeReference>(result);
@@ -2319,8 +2354,9 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
     checkAssignableTo(result_2.getFirst(), IUMLTypeReference.class);
     rightType = (IUMLTypeReference) result_2.getFirst();
     
-    /* G |- leftType <: rightType */
-    subtypeReferenceInternal(G, _trace_, leftType, rightType);
+    /* G |- leftType <: rightType : ex.umlContext */
+    IUMLContextProvider _umlContext = this.typeFactory.umlContext(ex);
+    subtypeReferenceInternal(G, _trace_, leftType, rightType, _umlContext);
     result = rightType;
     return new Result<IUMLTypeReference>(result);
   }
@@ -2353,13 +2389,15 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
     checkAssignableTo(result_1.getFirst(), IUMLTypeReference.class);
     opType = (IUMLTypeReference) result_1.getFirst();
     
-    PrimitiveTypeReference _primitiveTypeReference = this.typeFactory.primitiveTypeReference(this.INTEGER);
+    IUMLContextProvider _umlContext = this.typeFactory.umlContext(ex);
+    PrimitiveTypeReference _primitiveTypeReference = this.typeFactory.primitiveTypeReference(this.INTEGER, _umlContext);
     boolean _equals = Objects.equal(opType, _primitiveTypeReference);
-    /* opType == INTEGER.primitiveTypeReference */
+    /* opType == INTEGER.primitiveTypeReference(ex.umlContext) */
     if (!_equals) {
-      sneakyThrowRuleFailedException("opType == INTEGER.primitiveTypeReference");
+      sneakyThrowRuleFailedException("opType == INTEGER.primitiveTypeReference(ex.umlContext)");
     }
-    PrimitiveTypeReference _primitiveTypeReference_1 = this.typeFactory.primitiveTypeReference(this.INTEGER);
+    IUMLContextProvider _umlContext_1 = this.typeFactory.umlContext(ex);
+    PrimitiveTypeReference _primitiveTypeReference_1 = this.typeFactory.primitiveTypeReference(this.INTEGER, _umlContext_1);
     result = _primitiveTypeReference_1;
     return new Result<IUMLTypeReference>(result);
   }
@@ -2392,13 +2430,15 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
     checkAssignableTo(result_1.getFirst(), IUMLTypeReference.class);
     opType = (IUMLTypeReference) result_1.getFirst();
     
-    PrimitiveTypeReference _primitiveTypeReference = this.typeFactory.primitiveTypeReference(this.INTEGER);
+    IUMLContextProvider _umlContext = this.typeFactory.umlContext(ex);
+    PrimitiveTypeReference _primitiveTypeReference = this.typeFactory.primitiveTypeReference(this.INTEGER, _umlContext);
     boolean _equals = Objects.equal(opType, _primitiveTypeReference);
-    /* opType == INTEGER.primitiveTypeReference */
+    /* opType == INTEGER.primitiveTypeReference(ex.umlContext) */
     if (!_equals) {
-      sneakyThrowRuleFailedException("opType == INTEGER.primitiveTypeReference");
+      sneakyThrowRuleFailedException("opType == INTEGER.primitiveTypeReference(ex.umlContext)");
     }
-    PrimitiveTypeReference _primitiveTypeReference_1 = this.typeFactory.primitiveTypeReference(this.INTEGER);
+    IUMLContextProvider _umlContext_1 = this.typeFactory.umlContext(ex);
+    PrimitiveTypeReference _primitiveTypeReference_1 = this.typeFactory.primitiveTypeReference(this.INTEGER, _umlContext_1);
     result = _primitiveTypeReference_1;
     return new Result<IUMLTypeReference>(result);
   }
@@ -2438,19 +2478,22 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
     checkAssignableTo(result_2.getFirst(), IUMLTypeReference.class);
     op2Type = (IUMLTypeReference) result_2.getFirst();
     
-    PrimitiveTypeReference _primitiveTypeReference = this.typeFactory.primitiveTypeReference(this.INTEGER);
+    IUMLContextProvider _umlContext = this.typeFactory.umlContext(ex);
+    PrimitiveTypeReference _primitiveTypeReference = this.typeFactory.primitiveTypeReference(this.INTEGER, _umlContext);
     boolean _equals = Objects.equal(op1Type, _primitiveTypeReference);
-    /* op1Type == INTEGER.primitiveTypeReference */
+    /* op1Type == INTEGER.primitiveTypeReference(ex.umlContext) */
     if (!_equals) {
-      sneakyThrowRuleFailedException("op1Type == INTEGER.primitiveTypeReference");
+      sneakyThrowRuleFailedException("op1Type == INTEGER.primitiveTypeReference(ex.umlContext)");
     }
-    PrimitiveTypeReference _primitiveTypeReference_1 = this.typeFactory.primitiveTypeReference(this.INTEGER);
+    IUMLContextProvider _umlContext_1 = this.typeFactory.umlContext(ex);
+    PrimitiveTypeReference _primitiveTypeReference_1 = this.typeFactory.primitiveTypeReference(this.INTEGER, _umlContext_1);
     boolean _equals_1 = Objects.equal(op2Type, _primitiveTypeReference_1);
-    /* op2Type == INTEGER.primitiveTypeReference */
+    /* op2Type == INTEGER.primitiveTypeReference(ex.umlContext) */
     if (!_equals_1) {
-      sneakyThrowRuleFailedException("op2Type == INTEGER.primitiveTypeReference");
+      sneakyThrowRuleFailedException("op2Type == INTEGER.primitiveTypeReference(ex.umlContext)");
     }
-    PrimitiveTypeReference _primitiveTypeReference_2 = this.typeFactory.primitiveTypeReference(this.INTEGER);
+    IUMLContextProvider _umlContext_2 = this.typeFactory.umlContext(ex);
+    PrimitiveTypeReference _primitiveTypeReference_2 = this.typeFactory.primitiveTypeReference(this.INTEGER, _umlContext_2);
     result = _primitiveTypeReference_2;
     return new Result<IUMLTypeReference>(result);
   }
@@ -2490,19 +2533,22 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
     checkAssignableTo(result_2.getFirst(), IUMLTypeReference.class);
     op2Type = (IUMLTypeReference) result_2.getFirst();
     
-    /* G |- op1Type <: op2Type or G |- op2Type <: op1Type */
+    /* G |- op1Type <: op2Type : ex.umlContext or G |- op2Type <: op1Type : ex.umlContext */
     {
       RuleFailedException previousFailure = null;
       try {
-        /* G |- op1Type <: op2Type */
-        subtypeReferenceInternal(G, _trace_, op1Type, op2Type);
+        /* G |- op1Type <: op2Type : ex.umlContext */
+        IUMLContextProvider _umlContext = this.typeFactory.umlContext(ex);
+        subtypeReferenceInternal(G, _trace_, op1Type, op2Type, _umlContext);
       } catch (Exception e) {
         previousFailure = extractRuleFailedException(e);
-        /* G |- op2Type <: op1Type */
-        subtypeReferenceInternal(G, _trace_, op2Type, op1Type);
+        /* G |- op2Type <: op1Type : ex.umlContext */
+        IUMLContextProvider _umlContext_1 = this.typeFactory.umlContext(ex);
+        subtypeReferenceInternal(G, _trace_, op2Type, op1Type, _umlContext_1);
       }
     }
-    PrimitiveTypeReference _primitiveTypeReference = this.typeFactory.primitiveTypeReference(this.BOOLEAN);
+    IUMLContextProvider _umlContext_2 = this.typeFactory.umlContext(ex);
+    PrimitiveTypeReference _primitiveTypeReference = this.typeFactory.primitiveTypeReference(this.BOOLEAN, _umlContext_2);
     result = _primitiveTypeReference;
     return new Result<IUMLTypeReference>(result);
   }
@@ -2543,34 +2589,39 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
     op2Type = (IUMLTypeReference) result_2.getFirst();
     
     boolean _or = false;
-    PrimitiveTypeReference _primitiveTypeReference = this.typeFactory.primitiveTypeReference(this.INTEGER);
+    IUMLContextProvider _umlContext = this.typeFactory.umlContext(ex);
+    PrimitiveTypeReference _primitiveTypeReference = this.typeFactory.primitiveTypeReference(this.INTEGER, _umlContext);
     boolean _equals = Objects.equal(op1Type, _primitiveTypeReference);
     if (_equals) {
       _or = true;
     } else {
-      PrimitiveTypeReference _primitiveTypeReference_1 = this.typeFactory.primitiveTypeReference(this.REAL);
+      IUMLContextProvider _umlContext_1 = this.typeFactory.umlContext(ex);
+      PrimitiveTypeReference _primitiveTypeReference_1 = this.typeFactory.primitiveTypeReference(this.REAL, _umlContext_1);
       boolean _equals_1 = Objects.equal(op1Type, _primitiveTypeReference_1);
       _or = _equals_1;
     }
-    /* op1Type == INTEGER.primitiveTypeReference || op1Type == REAL.primitiveTypeReference */
+    /* op1Type == INTEGER.primitiveTypeReference(ex.umlContext) || op1Type == REAL.primitiveTypeReference(ex.umlContext) */
     if (!_or) {
-      sneakyThrowRuleFailedException("op1Type == INTEGER.primitiveTypeReference || op1Type == REAL.primitiveTypeReference");
+      sneakyThrowRuleFailedException("op1Type == INTEGER.primitiveTypeReference(ex.umlContext) || op1Type == REAL.primitiveTypeReference(ex.umlContext)");
     }
     boolean _or_1 = false;
-    PrimitiveTypeReference _primitiveTypeReference_2 = this.typeFactory.primitiveTypeReference(this.INTEGER);
+    IUMLContextProvider _umlContext_2 = this.typeFactory.umlContext(ex);
+    PrimitiveTypeReference _primitiveTypeReference_2 = this.typeFactory.primitiveTypeReference(this.INTEGER, _umlContext_2);
     boolean _equals_2 = Objects.equal(op2Type, _primitiveTypeReference_2);
     if (_equals_2) {
       _or_1 = true;
     } else {
-      PrimitiveTypeReference _primitiveTypeReference_3 = this.typeFactory.primitiveTypeReference(this.REAL);
+      IUMLContextProvider _umlContext_3 = this.typeFactory.umlContext(ex);
+      PrimitiveTypeReference _primitiveTypeReference_3 = this.typeFactory.primitiveTypeReference(this.REAL, _umlContext_3);
       boolean _equals_3 = Objects.equal(op2Type, _primitiveTypeReference_3);
       _or_1 = _equals_3;
     }
-    /* op2Type == INTEGER.primitiveTypeReference || op2Type == REAL.primitiveTypeReference */
+    /* op2Type == INTEGER.primitiveTypeReference(ex.umlContext) || op2Type == REAL.primitiveTypeReference(ex.umlContext) */
     if (!_or_1) {
-      sneakyThrowRuleFailedException("op2Type == INTEGER.primitiveTypeReference || op2Type == REAL.primitiveTypeReference");
+      sneakyThrowRuleFailedException("op2Type == INTEGER.primitiveTypeReference(ex.umlContext) || op2Type == REAL.primitiveTypeReference(ex.umlContext)");
     }
-    PrimitiveTypeReference _primitiveTypeReference_4 = this.typeFactory.primitiveTypeReference(this.BOOLEAN);
+    IUMLContextProvider _umlContext_4 = this.typeFactory.umlContext(ex);
+    PrimitiveTypeReference _primitiveTypeReference_4 = this.typeFactory.primitiveTypeReference(this.BOOLEAN, _umlContext_4);
     result = _primitiveTypeReference_4;
     return new Result<IUMLTypeReference>(result);
   }
@@ -2603,13 +2654,15 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
     checkAssignableTo(result_1.getFirst(), IUMLTypeReference.class);
     opType = (IUMLTypeReference) result_1.getFirst();
     
-    PrimitiveTypeReference _primitiveTypeReference = this.typeFactory.primitiveTypeReference(this.BOOLEAN);
+    IUMLContextProvider _umlContext = this.typeFactory.umlContext(ex);
+    PrimitiveTypeReference _primitiveTypeReference = this.typeFactory.primitiveTypeReference(this.BOOLEAN, _umlContext);
     boolean _equals = Objects.equal(opType, _primitiveTypeReference);
-    /* opType == BOOLEAN.primitiveTypeReference */
+    /* opType == BOOLEAN.primitiveTypeReference(ex.umlContext) */
     if (!_equals) {
-      sneakyThrowRuleFailedException("opType == BOOLEAN.primitiveTypeReference");
+      sneakyThrowRuleFailedException("opType == BOOLEAN.primitiveTypeReference(ex.umlContext)");
     }
-    PrimitiveTypeReference _primitiveTypeReference_1 = this.typeFactory.primitiveTypeReference(this.BOOLEAN);
+    IUMLContextProvider _umlContext_1 = this.typeFactory.umlContext(ex);
+    PrimitiveTypeReference _primitiveTypeReference_1 = this.typeFactory.primitiveTypeReference(this.BOOLEAN, _umlContext_1);
     result = _primitiveTypeReference_1;
     return new Result<IUMLTypeReference>(result);
   }
@@ -2649,39 +2702,45 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
     checkAssignableTo(result_2.getFirst(), IUMLTypeReference.class);
     op2Type = (IUMLTypeReference) result_2.getFirst();
     
-    /* { op1Type == BOOLEAN.primitiveTypeReference op2Type == BOOLEAN.primitiveTypeReference result = BOOLEAN.primitiveTypeReference } or { op1Type == INTEGER.primitiveTypeReference op2Type == INTEGER.primitiveTypeReference result = INTEGER.primitiveTypeReference } */
+    /* { op1Type == BOOLEAN.primitiveTypeReference(ex.umlContext) op2Type == BOOLEAN.primitiveTypeReference(ex.umlContext) result = BOOLEAN.primitiveTypeReference(ex.umlContext) } or { op1Type == INTEGER.primitiveTypeReference(ex.umlContext) op2Type == INTEGER.primitiveTypeReference(ex.umlContext) result = INTEGER.primitiveTypeReference(ex.umlContext) } */
     {
       RuleFailedException previousFailure = null;
       try {
-        PrimitiveTypeReference _primitiveTypeReference = this.typeFactory.primitiveTypeReference(this.BOOLEAN);
+        IUMLContextProvider _umlContext = this.typeFactory.umlContext(ex);
+        PrimitiveTypeReference _primitiveTypeReference = this.typeFactory.primitiveTypeReference(this.BOOLEAN, _umlContext);
         boolean _equals = Objects.equal(op1Type, _primitiveTypeReference);
-        /* op1Type == BOOLEAN.primitiveTypeReference */
+        /* op1Type == BOOLEAN.primitiveTypeReference(ex.umlContext) */
         if (!_equals) {
-          sneakyThrowRuleFailedException("op1Type == BOOLEAN.primitiveTypeReference");
+          sneakyThrowRuleFailedException("op1Type == BOOLEAN.primitiveTypeReference(ex.umlContext)");
         }
-        PrimitiveTypeReference _primitiveTypeReference_1 = this.typeFactory.primitiveTypeReference(this.BOOLEAN);
+        IUMLContextProvider _umlContext_1 = this.typeFactory.umlContext(ex);
+        PrimitiveTypeReference _primitiveTypeReference_1 = this.typeFactory.primitiveTypeReference(this.BOOLEAN, _umlContext_1);
         boolean _equals_1 = Objects.equal(op2Type, _primitiveTypeReference_1);
-        /* op2Type == BOOLEAN.primitiveTypeReference */
+        /* op2Type == BOOLEAN.primitiveTypeReference(ex.umlContext) */
         if (!_equals_1) {
-          sneakyThrowRuleFailedException("op2Type == BOOLEAN.primitiveTypeReference");
+          sneakyThrowRuleFailedException("op2Type == BOOLEAN.primitiveTypeReference(ex.umlContext)");
         }
-        PrimitiveTypeReference _primitiveTypeReference_2 = this.typeFactory.primitiveTypeReference(this.BOOLEAN);
+        IUMLContextProvider _umlContext_2 = this.typeFactory.umlContext(ex);
+        PrimitiveTypeReference _primitiveTypeReference_2 = this.typeFactory.primitiveTypeReference(this.BOOLEAN, _umlContext_2);
         result = _primitiveTypeReference_2;
       } catch (Exception e) {
         previousFailure = extractRuleFailedException(e);
-        PrimitiveTypeReference _primitiveTypeReference_3 = this.typeFactory.primitiveTypeReference(this.INTEGER);
+        IUMLContextProvider _umlContext_3 = this.typeFactory.umlContext(ex);
+        PrimitiveTypeReference _primitiveTypeReference_3 = this.typeFactory.primitiveTypeReference(this.INTEGER, _umlContext_3);
         boolean _equals_2 = Objects.equal(op1Type, _primitiveTypeReference_3);
-        /* op1Type == INTEGER.primitiveTypeReference */
+        /* op1Type == INTEGER.primitiveTypeReference(ex.umlContext) */
         if (!_equals_2) {
-          sneakyThrowRuleFailedException("op1Type == INTEGER.primitiveTypeReference");
+          sneakyThrowRuleFailedException("op1Type == INTEGER.primitiveTypeReference(ex.umlContext)");
         }
-        PrimitiveTypeReference _primitiveTypeReference_4 = this.typeFactory.primitiveTypeReference(this.INTEGER);
+        IUMLContextProvider _umlContext_4 = this.typeFactory.umlContext(ex);
+        PrimitiveTypeReference _primitiveTypeReference_4 = this.typeFactory.primitiveTypeReference(this.INTEGER, _umlContext_4);
         boolean _equals_3 = Objects.equal(op2Type, _primitiveTypeReference_4);
-        /* op2Type == INTEGER.primitiveTypeReference */
+        /* op2Type == INTEGER.primitiveTypeReference(ex.umlContext) */
         if (!_equals_3) {
-          sneakyThrowRuleFailedException("op2Type == INTEGER.primitiveTypeReference");
+          sneakyThrowRuleFailedException("op2Type == INTEGER.primitiveTypeReference(ex.umlContext)");
         }
-        PrimitiveTypeReference _primitiveTypeReference_5 = this.typeFactory.primitiveTypeReference(this.INTEGER);
+        IUMLContextProvider _umlContext_5 = this.typeFactory.umlContext(ex);
+        PrimitiveTypeReference _primitiveTypeReference_5 = this.typeFactory.primitiveTypeReference(this.INTEGER, _umlContext_5);
         result = _primitiveTypeReference_5;
       }
     }
@@ -2723,19 +2782,22 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
     checkAssignableTo(result_2.getFirst(), IUMLTypeReference.class);
     op2Type = (IUMLTypeReference) result_2.getFirst();
     
-    PrimitiveTypeReference _primitiveTypeReference = this.typeFactory.primitiveTypeReference(this.BOOLEAN);
+    IUMLContextProvider _umlContext = this.typeFactory.umlContext(ex);
+    PrimitiveTypeReference _primitiveTypeReference = this.typeFactory.primitiveTypeReference(this.BOOLEAN, _umlContext);
     boolean _equals = Objects.equal(op1Type, _primitiveTypeReference);
-    /* op1Type == BOOLEAN.primitiveTypeReference */
+    /* op1Type == BOOLEAN.primitiveTypeReference(ex.umlContext) */
     if (!_equals) {
-      sneakyThrowRuleFailedException("op1Type == BOOLEAN.primitiveTypeReference");
+      sneakyThrowRuleFailedException("op1Type == BOOLEAN.primitiveTypeReference(ex.umlContext)");
     }
-    PrimitiveTypeReference _primitiveTypeReference_1 = this.typeFactory.primitiveTypeReference(this.BOOLEAN);
+    IUMLContextProvider _umlContext_1 = this.typeFactory.umlContext(ex);
+    PrimitiveTypeReference _primitiveTypeReference_1 = this.typeFactory.primitiveTypeReference(this.BOOLEAN, _umlContext_1);
     boolean _equals_1 = Objects.equal(op2Type, _primitiveTypeReference_1);
-    /* op2Type == BOOLEAN.primitiveTypeReference */
+    /* op2Type == BOOLEAN.primitiveTypeReference(ex.umlContext) */
     if (!_equals_1) {
-      sneakyThrowRuleFailedException("op2Type == BOOLEAN.primitiveTypeReference");
+      sneakyThrowRuleFailedException("op2Type == BOOLEAN.primitiveTypeReference(ex.umlContext)");
     }
-    PrimitiveTypeReference _primitiveTypeReference_2 = this.typeFactory.primitiveTypeReference(this.BOOLEAN);
+    IUMLContextProvider _umlContext_2 = this.typeFactory.umlContext(ex);
+    PrimitiveTypeReference _primitiveTypeReference_2 = this.typeFactory.primitiveTypeReference(this.BOOLEAN, _umlContext_2);
     result = _primitiveTypeReference_2;
     return new Result<IUMLTypeReference>(result);
   }
@@ -2782,13 +2844,15 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
     checkAssignableTo(result_3.getFirst(), IUMLTypeReference.class);
     falseType = (IUMLTypeReference) result_3.getFirst();
     
-    /* G |- trueType <: falseType */
-    subtypeReferenceInternal(G, _trace_, trueType, falseType);
-    PrimitiveTypeReference _primitiveTypeReference = this.typeFactory.primitiveTypeReference(this.BOOLEAN);
+    /* G |- trueType <: falseType : ex.umlContext */
+    IUMLContextProvider _umlContext = this.typeFactory.umlContext(ex);
+    subtypeReferenceInternal(G, _trace_, trueType, falseType, _umlContext);
+    IUMLContextProvider _umlContext_1 = this.typeFactory.umlContext(ex);
+    PrimitiveTypeReference _primitiveTypeReference = this.typeFactory.primitiveTypeReference(this.BOOLEAN, _umlContext_1);
     boolean _equals = Objects.equal(condType, _primitiveTypeReference);
-    /* condType == BOOLEAN.primitiveTypeReference */
+    /* condType == BOOLEAN.primitiveTypeReference(ex.umlContext) */
     if (!_equals) {
-      sneakyThrowRuleFailedException("condType == BOOLEAN.primitiveTypeReference");
+      sneakyThrowRuleFailedException("condType == BOOLEAN.primitiveTypeReference(ex.umlContext)");
     }
     result = trueType;
     return new Result<IUMLTypeReference>(result);
@@ -2888,13 +2952,15 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
   
   protected Result<IUMLTypeReference> applyRuleThisExpression(final RuleEnvironment G, final RuleApplicationTrace _trace_, final ThisExpression ex) throws RuleFailedException {
     IUMLTypeReference result = null; // output parameter
-    org.eclipse.uml2.uml.Class _thisType = this.umlContext.getThisType();
+    IUMLContextProvider _umlContext = this.typeFactory.umlContext(ex);
+    org.eclipse.uml2.uml.Class _thisType = _umlContext.getThisType();
     boolean _equals = Objects.equal(_thisType, null);
     if (_equals) {
       IUMLTypeReference.AnyTypeReference _anyType = this.typeFactory.anyType();
       result = _anyType;
     } else {
-      org.eclipse.uml2.uml.Class _thisType_1 = this.umlContext.getThisType();
+      IUMLContextProvider _umlContext_1 = this.typeFactory.umlContext(ex);
+      org.eclipse.uml2.uml.Class _thisType_1 = _umlContext_1.getThisType();
       IUMLTypeReference _typeReference = this.typeFactory.typeReference(_thisType_1);
       result = _typeReference;
     }
@@ -2922,7 +2988,8 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
   
   protected Result<IUMLTypeReference> applyRuleSignalDataExpression(final RuleEnvironment G, final RuleApplicationTrace _trace_, final SignalDataExpression ex) throws RuleFailedException {
     IUMLTypeReference result = null; // output parameter
-    final Signal signalType = this.umlContext.getIncomingSignalType();
+    IUMLContextProvider _umlContext = this.typeFactory.umlContext(ex);
+    final Signal signalType = _umlContext.getIncomingSignalType();
     boolean _or = false;
     boolean _equals = Objects.equal(signalType, null);
     if (_equals) {
@@ -3065,8 +3132,9 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
       checkAssignableTo(result_1.getFirst(), IUMLTypeReference.class);
       elType = (IUMLTypeReference) result_1.getFirst();
       
-      /* G |- valueType <: elType */
-      subtypeReferenceInternal(G, _trace_, valueType, elType);
+      /* G |- valueType <: elType : ex.umlContext */
+      IUMLContextProvider _umlContext = this.typeFactory.umlContext(ex);
+      subtypeReferenceInternal(G, _trace_, valueType, elType, _umlContext);
     }
     CollectionType _collectionType = ex.getCollectionType();
     boolean _notEquals_1 = (!Objects.equal(_collectionType, null));
@@ -3102,7 +3170,7 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
   
   protected Result<IUMLTypeReference> applyRuleFeatureInvocationExpression(final RuleEnvironment G, final RuleApplicationTrace _trace_, final FeatureInvocationExpression ex) throws RuleFailedException {
     IUMLTypeReference result = null; // output parameter
-    /* { ex.^feature instanceof Operation G |- ex.^feature : var IUMLTypeReference opType opType.umlType == genericCollectionParameterType G |- ex.context : var CollectionTypeReference collType result = collType.valueType } or { ex.^feature instanceof Operation G |- ex.^feature : result } or { ex.^feature instanceof Property val property = ex.^feature as Property G |- property : result } */
+    /* { ex.^feature instanceof Operation G |- ex.^feature : var IUMLTypeReference opType opType.umlType == ex.umlContext.genericCollectionParameterType G |- ex.context : var CollectionTypeReference collType result = collType.valueType } or { ex.^feature instanceof Operation G |- ex.^feature : result } or { ex.^feature instanceof Property val property = ex.^feature as Property G |- property : result } */
     {
       RuleFailedException previousFailure = null;
       try {
@@ -3119,11 +3187,12 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
         opType = (IUMLTypeReference) result_1.getFirst();
         
         Type _umlType = opType.getUmlType();
-        Classifier _genericCollectionParameterType = this.umlContext.getGenericCollectionParameterType();
+        IUMLContextProvider _umlContext = this.typeFactory.umlContext(ex);
+        Classifier _genericCollectionParameterType = _umlContext.getGenericCollectionParameterType();
         boolean _equals = Objects.equal(_umlType, _genericCollectionParameterType);
-        /* opType.umlType == genericCollectionParameterType */
+        /* opType.umlType == ex.umlContext.genericCollectionParameterType */
         if (!_equals) {
-          sneakyThrowRuleFailedException("opType.umlType == genericCollectionParameterType");
+          sneakyThrowRuleFailedException("opType.umlType == ex.umlContext.genericCollectionParameterType");
         }
         /* G |- ex.context : var CollectionTypeReference collType */
         Expression _context = ex.getContext();

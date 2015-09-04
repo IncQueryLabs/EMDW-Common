@@ -10,12 +10,23 @@ import org.eclipse.uml2.uml.PrimitiveType
 import java.util.Map
 import com.incquerylabs.uml.ralf.types.IUMLTypeReference.VoidTypeReference
 import com.google.inject.Injector
+import org.eclipse.emf.ecore.EObject
+import com.incquerylabs.uml.ralf.resource.ReducedAlfLanguageResource
 
 class TypeFactory {
     
-    @Inject extension IUMLContextProvider umlContext
     @Inject var Injector injector
     Map<String, PrimitiveTypeReference> primitiveTypeMap = newHashMap()
+    
+    def IUMLContextProvider umlContext(EObject obj) {
+        val resource = obj.eResource
+        if (resource instanceof ReducedAlfLanguageResource) {
+            (resource as ReducedAlfLanguageResource).umlContextProvider
+        } else {
+            throw new IllegalArgumentException('''EObject «obj» is not contained in an rAlf Resource.''')
+        }
+        
+    }
     
     def IUMLTypeReference typeReference(Type type) {
         if (type instanceof PrimitiveType) {
@@ -25,8 +36,8 @@ class TypeFactory {
         }
     }
 
-    def PrimitiveTypeReference primitiveTypeReference(String name) {
-        return name.primitiveType.createPrimitiveTypeReference   
+    def PrimitiveTypeReference primitiveTypeReference(String name, IUMLContextProvider context) {
+        return context.getPrimitiveType(name).createPrimitiveTypeReference   
     }
     
     private def createPrimitiveTypeReference(Type type) {
