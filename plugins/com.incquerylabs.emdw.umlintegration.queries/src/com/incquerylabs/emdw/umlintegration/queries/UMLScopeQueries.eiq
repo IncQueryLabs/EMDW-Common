@@ -77,6 +77,12 @@ pattern triggerSignalOfBehavior(behavior, signal : Signal) {
     find triggerSignal(trigger, signal);
 } or {
     OpaqueBehavior(behavior);
+    find stateExitBehavior(state, behavior);
+    find transition(transition, state, _);
+    find xtEventTrigger(transition, trigger);
+    find triggerSignal(trigger, signal);
+} or {
+    OpaqueBehavior(behavior);
     find transition(transition, _, _);
     find actionChain(transition, behavior);
     find xtEventTrigger(transition, trigger);
