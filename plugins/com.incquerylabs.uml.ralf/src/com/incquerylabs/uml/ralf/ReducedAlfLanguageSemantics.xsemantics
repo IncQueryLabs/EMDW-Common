@@ -72,6 +72,7 @@ import org.eclipse.uml2.uml.Property
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.LeftHandSide
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.SignalDataExpression
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.ClassExtentExpression
+import com.incquerylabs.uml.ralf.reducedAlfLanguage.CastExpression
 
 inject extension TypeFactory typeFactory
 inject extension UMLScopeHelper scopeHelper
@@ -607,6 +608,13 @@ rule ClassExtentExpression
 from {
     G |- ex.class_ : var IUMLTypeReference classType
     result = setOf(classType)
+}
+
+rule CastExpression
+    derives G |- CastExpression ex : IUMLTypeReference result
+from {
+    G |- ex.type : var IUMLTypeReference castType
+    result = castType
 }
 
 //Non-expression types

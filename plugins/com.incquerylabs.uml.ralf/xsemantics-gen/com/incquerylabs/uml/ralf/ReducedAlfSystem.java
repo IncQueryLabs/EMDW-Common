@@ -8,6 +8,7 @@ import com.incquerylabs.uml.ralf.reducedAlfLanguage.AssignmentExpression;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.AssociationAccessExpression;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.BooleanLiteralExpression;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.BooleanUnaryExpression;
+import com.incquerylabs.uml.ralf.reducedAlfLanguage.CastExpression;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.ClassExtentExpression;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.CollectionType;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.ConditionalLogicalExpression;
@@ -188,6 +189,8 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
   public final static String OPERATION = "com.incquerylabs.uml.ralf.Operation";
   
   public final static String CLASSEXTENTEXPRESSION = "com.incquerylabs.uml.ralf.ClassExtentExpression";
+  
+  public final static String CASTEXPRESSION = "com.incquerylabs.uml.ralf.CastExpression";
   
   public final static String FEATURELEFTHANDSIDE = "com.incquerylabs.uml.ralf.FeatureLeftHandSide";
   
@@ -3355,6 +3358,38 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
     
     CollectionTypeReference _setOf = this.typeFactory.setOf(classType);
     result = _setOf;
+    return new Result<IUMLTypeReference>(result);
+  }
+  
+  protected Result<IUMLTypeReference> typeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final CastExpression ex) throws RuleFailedException {
+    try {
+    	final RuleApplicationTrace _subtrace_ = newTrace(_trace_);
+    	final Result<IUMLTypeReference> _result_ = applyRuleCastExpression(G, _subtrace_, ex);
+    	addToTrace(_trace_, new Provider<Object>() {
+    		public Object get() {
+    			return ruleName("CastExpression") + stringRepForEnv(G) + " |- " + stringRep(ex) + " : " + stringRep(_result_.getFirst());
+    		}
+    	});
+    	addAsSubtrace(_trace_, _subtrace_);
+    	return _result_;
+    } catch (Exception e_applyRuleCastExpression) {
+    	typeThrowException(ruleName("CastExpression") + stringRepForEnv(G) + " |- " + stringRep(ex) + " : " + "IUMLTypeReference",
+    		CASTEXPRESSION,
+    		e_applyRuleCastExpression, ex, new ErrorInformation[] {new ErrorInformation(ex)});
+    	return null;
+    }
+  }
+  
+  protected Result<IUMLTypeReference> applyRuleCastExpression(final RuleEnvironment G, final RuleApplicationTrace _trace_, final CastExpression ex) throws RuleFailedException {
+    IUMLTypeReference result = null; // output parameter
+    /* G |- ex.type : var IUMLTypeReference castType */
+    TypeDeclaration _type = ex.getType();
+    IUMLTypeReference castType = null;
+    Result<IUMLTypeReference> result_1 = typeInternal(G, _trace_, _type);
+    checkAssignableTo(result_1.getFirst(), IUMLTypeReference.class);
+    castType = (IUMLTypeReference) result_1.getFirst();
+    
+    result = castType;
     return new Result<IUMLTypeReference>(result);
   }
   
