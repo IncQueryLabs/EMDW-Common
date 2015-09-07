@@ -76,6 +76,12 @@ pattern triggerSignalOfBehavior(behavior, signal : Signal) {
     find xtEventTrigger(transition, trigger);
     find triggerSignal(trigger, signal);
 } or {
+    OpaqueBehavior(behavior);
+    find transition(transition, _, _);
+    find actionChain(transition, behavior);
+    find xtEventTrigger(transition, trigger);
+    find triggerSignal(trigger, signal);
+} or {
     OpaqueExpression(behavior);
     find transition(transition, _, _);
     Transition.guard.specification(transition, behavior);
