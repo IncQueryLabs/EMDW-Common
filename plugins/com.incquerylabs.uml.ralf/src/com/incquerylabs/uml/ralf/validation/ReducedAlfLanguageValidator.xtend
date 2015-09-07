@@ -27,6 +27,8 @@ import org.eclipse.uml2.uml.Property
 import org.eclipse.uml2.uml.UMLPackage
 import org.eclipse.xtext.naming.QualifiedName
 import org.eclipse.xtext.validation.Check
+import com.incquerylabs.uml.ralf.reducedAlfLanguage.ThisExpression
+import com.incquerylabs.uml.ralf.resource.ReducedAlfLanguageResource
 
 //import org.eclipse.xtext.validation.Check
 
@@ -44,6 +46,7 @@ class ReducedAlfLanguageValidator extends ReducedAlfSystemValidator {
     public static val CODE_INVALID_ASSOCIATION = "invalid_association"
     public static val CODE_INVALID_FEATURE = "invalid_feature"
     public static val CODE_INVALID_LHS = "invalid_lhs"
+    public static val CODE_THIS_IN_STATIC = "this_in_static"
 
 	@Check
 	def duplicateLocalVariables(LocalNameDeclarationStatement st) {
@@ -100,10 +103,15 @@ class ReducedAlfLanguageValidator extends ReducedAlfSystemValidator {
 	}
 	
 	@Check
-	def checkLinkOperation(FeatureInvocationExpression ex) {
+	def checkFeatureInvocation(FeatureInvocationExpression ex) {
 	    if (ex.feature instanceof Operation) {
 	        if (ex.parameters == null) {
 	          error('''Missing parameter definitions for operation «ex.feature.getName»''', ex, ReducedAlfLanguagePackage.Literals.FEATURE_INVOCATION_EXPRESSION__FEATURE, CODE_INVALID_FEATURE)  
+	        }
+	        if (ex.feature.static) {
+	            error('''To call static operation «ex.feature.name» use the '::' operator.''', ex,
+	                ReducedAlfLanguagePackage.Literals.FEATURE_INVOCATION_EXPRESSION__FEATURE, CODE_INVALID_FEATURE
+	            )
 	        }
 	    } else if (ex.feature instanceof Property) {
 	        if (ex.parameters != null) {
@@ -128,4 +136,14 @@ class ReducedAlfLanguageValidator extends ReducedAlfSystemValidator {
 	       error('''Invalid expression usage''', ex, ReducedAlfLanguagePackage.Literals.ASSIGNMENT_EXPRESSION__LEFT_HAND_SIDE, CODE_INVALID_LHS)  
         }
 	}
+	
+	@Check
+	def checkThisExpression(ThisExpression ex) {
+	    val op = (ex.eResource as ReducedAlfLanguageResource).umlContextProvider.definedOperation
+	    
+	    if (op != null && op.static) {
+	        error('''Cannot use this in static operation «op.name»''', ex, null, CODE_THIS_IN_STATIC)
+	    }
+	}
+
 }
