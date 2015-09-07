@@ -2035,7 +2035,7 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
     checkAssignableTo(result_2.getFirst(), IUMLTypeReference.class);
     type2 = (IUMLTypeReference) result_2.getFirst();
     
-    /* { ex.operator == "+" type1 == STRING.primitiveTypeReference(ex.umlContext) type2 == STRING.primitiveTypeReference(ex.umlContext) result = STRING.primitiveTypeReference(ex.umlContext) } or { ex.operator == "+" type1 == REAL.primitiveTypeReference(ex.umlContext) type2 == REAL.primitiveTypeReference(ex.umlContext) || type2 == INTEGER.primitiveTypeReference(ex.umlContext) result = REAL.primitiveTypeReference(ex.umlContext) } or { ex.operator == "+" type1 == REAL.primitiveTypeReference(ex.umlContext) || type1 == INTEGER.primitiveTypeReference(ex.umlContext) type2 == REAL.primitiveTypeReference(ex.umlContext) result = REAL.primitiveTypeReference(ex.umlContext) } or { type1 == REAL.primitiveTypeReference(ex.umlContext) type2 == INTEGER.primitiveTypeReference(ex.umlContext) || type2 == REAL.primitiveTypeReference(ex.umlContext) result = REAL.primitiveTypeReference(ex.umlContext) } or { type1 == INTEGER.primitiveTypeReference(ex.umlContext) || type1 == REAL.primitiveTypeReference(ex.umlContext) type2 == REAL.primitiveTypeReference(ex.umlContext) result = REAL.primitiveTypeReference(ex.umlContext) } or { type1 == INTEGER.primitiveTypeReference(ex.umlContext) type2 == INTEGER.primitiveTypeReference(ex.umlContext) result = INTEGER.primitiveTypeReference(ex.umlContext) } */
+    /* { ex.operator == "+" type1 == STRING.primitiveTypeReference(ex.umlContext) type2 == STRING.primitiveTypeReference(ex.umlContext) result = STRING.primitiveTypeReference(ex.umlContext) } or { ex.operator == "+" type1 == REAL.primitiveTypeReference(ex.umlContext) type2 == REAL.primitiveTypeReference(ex.umlContext) || type2 == INTEGER.primitiveTypeReference(ex.umlContext) result = REAL.primitiveTypeReference(ex.umlContext) } or { ex.operator == "+" type1 == REAL.primitiveTypeReference(ex.umlContext) || type1 == INTEGER.primitiveTypeReference(ex.umlContext) type2 == REAL.primitiveTypeReference(ex.umlContext) result = REAL.primitiveTypeReference(ex.umlContext) } or { ex.operator != "%" type1 == REAL.primitiveTypeReference(ex.umlContext) type2 == INTEGER.primitiveTypeReference(ex.umlContext) || type2 == REAL.primitiveTypeReference(ex.umlContext) result = REAL.primitiveTypeReference(ex.umlContext) } or { ex.operator != "%" type1 == INTEGER.primitiveTypeReference(ex.umlContext) || type1 == REAL.primitiveTypeReference(ex.umlContext) type2 == REAL.primitiveTypeReference(ex.umlContext) result = REAL.primitiveTypeReference(ex.umlContext) } or { type1 == INTEGER.primitiveTypeReference(ex.umlContext) type2 == INTEGER.primitiveTypeReference(ex.umlContext) result = INTEGER.primitiveTypeReference(ex.umlContext) } */
     {
       RuleFailedException previousFailure = null;
       try {
@@ -2064,7 +2064,7 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
         result = _primitiveTypeReference_2;
       } catch (Exception e) {
         previousFailure = extractRuleFailedException(e);
-        /* { ex.operator == "+" type1 == REAL.primitiveTypeReference(ex.umlContext) type2 == REAL.primitiveTypeReference(ex.umlContext) || type2 == INTEGER.primitiveTypeReference(ex.umlContext) result = REAL.primitiveTypeReference(ex.umlContext) } or { ex.operator == "+" type1 == REAL.primitiveTypeReference(ex.umlContext) || type1 == INTEGER.primitiveTypeReference(ex.umlContext) type2 == REAL.primitiveTypeReference(ex.umlContext) result = REAL.primitiveTypeReference(ex.umlContext) } or { type1 == REAL.primitiveTypeReference(ex.umlContext) type2 == INTEGER.primitiveTypeReference(ex.umlContext) || type2 == REAL.primitiveTypeReference(ex.umlContext) result = REAL.primitiveTypeReference(ex.umlContext) } or { type1 == INTEGER.primitiveTypeReference(ex.umlContext) || type1 == REAL.primitiveTypeReference(ex.umlContext) type2 == REAL.primitiveTypeReference(ex.umlContext) result = REAL.primitiveTypeReference(ex.umlContext) } or { type1 == INTEGER.primitiveTypeReference(ex.umlContext) type2 == INTEGER.primitiveTypeReference(ex.umlContext) result = INTEGER.primitiveTypeReference(ex.umlContext) } */
+        /* { ex.operator == "+" type1 == REAL.primitiveTypeReference(ex.umlContext) type2 == REAL.primitiveTypeReference(ex.umlContext) || type2 == INTEGER.primitiveTypeReference(ex.umlContext) result = REAL.primitiveTypeReference(ex.umlContext) } or { ex.operator == "+" type1 == REAL.primitiveTypeReference(ex.umlContext) || type1 == INTEGER.primitiveTypeReference(ex.umlContext) type2 == REAL.primitiveTypeReference(ex.umlContext) result = REAL.primitiveTypeReference(ex.umlContext) } or { ex.operator != "%" type1 == REAL.primitiveTypeReference(ex.umlContext) type2 == INTEGER.primitiveTypeReference(ex.umlContext) || type2 == REAL.primitiveTypeReference(ex.umlContext) result = REAL.primitiveTypeReference(ex.umlContext) } or { ex.operator != "%" type1 == INTEGER.primitiveTypeReference(ex.umlContext) || type1 == REAL.primitiveTypeReference(ex.umlContext) type2 == REAL.primitiveTypeReference(ex.umlContext) result = REAL.primitiveTypeReference(ex.umlContext) } or { type1 == INTEGER.primitiveTypeReference(ex.umlContext) type2 == INTEGER.primitiveTypeReference(ex.umlContext) result = INTEGER.primitiveTypeReference(ex.umlContext) } */
         {
           try {
             String _operator_1 = ex.getOperator();
@@ -2101,7 +2101,7 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
             result = _primitiveTypeReference_6;
           } catch (Exception e_1) {
             previousFailure = extractRuleFailedException(e_1);
-            /* { ex.operator == "+" type1 == REAL.primitiveTypeReference(ex.umlContext) || type1 == INTEGER.primitiveTypeReference(ex.umlContext) type2 == REAL.primitiveTypeReference(ex.umlContext) result = REAL.primitiveTypeReference(ex.umlContext) } or { type1 == REAL.primitiveTypeReference(ex.umlContext) type2 == INTEGER.primitiveTypeReference(ex.umlContext) || type2 == REAL.primitiveTypeReference(ex.umlContext) result = REAL.primitiveTypeReference(ex.umlContext) } or { type1 == INTEGER.primitiveTypeReference(ex.umlContext) || type1 == REAL.primitiveTypeReference(ex.umlContext) type2 == REAL.primitiveTypeReference(ex.umlContext) result = REAL.primitiveTypeReference(ex.umlContext) } or { type1 == INTEGER.primitiveTypeReference(ex.umlContext) type2 == INTEGER.primitiveTypeReference(ex.umlContext) result = INTEGER.primitiveTypeReference(ex.umlContext) } */
+            /* { ex.operator == "+" type1 == REAL.primitiveTypeReference(ex.umlContext) || type1 == INTEGER.primitiveTypeReference(ex.umlContext) type2 == REAL.primitiveTypeReference(ex.umlContext) result = REAL.primitiveTypeReference(ex.umlContext) } or { ex.operator != "%" type1 == REAL.primitiveTypeReference(ex.umlContext) type2 == INTEGER.primitiveTypeReference(ex.umlContext) || type2 == REAL.primitiveTypeReference(ex.umlContext) result = REAL.primitiveTypeReference(ex.umlContext) } or { ex.operator != "%" type1 == INTEGER.primitiveTypeReference(ex.umlContext) || type1 == REAL.primitiveTypeReference(ex.umlContext) type2 == REAL.primitiveTypeReference(ex.umlContext) result = REAL.primitiveTypeReference(ex.umlContext) } or { type1 == INTEGER.primitiveTypeReference(ex.umlContext) type2 == INTEGER.primitiveTypeReference(ex.umlContext) result = INTEGER.primitiveTypeReference(ex.umlContext) } */
             {
               try {
                 String _operator_2 = ex.getOperator();
@@ -2138,9 +2138,15 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
                 result = _primitiveTypeReference_10;
               } catch (Exception e_2) {
                 previousFailure = extractRuleFailedException(e_2);
-                /* { type1 == REAL.primitiveTypeReference(ex.umlContext) type2 == INTEGER.primitiveTypeReference(ex.umlContext) || type2 == REAL.primitiveTypeReference(ex.umlContext) result = REAL.primitiveTypeReference(ex.umlContext) } or { type1 == INTEGER.primitiveTypeReference(ex.umlContext) || type1 == REAL.primitiveTypeReference(ex.umlContext) type2 == REAL.primitiveTypeReference(ex.umlContext) result = REAL.primitiveTypeReference(ex.umlContext) } or { type1 == INTEGER.primitiveTypeReference(ex.umlContext) type2 == INTEGER.primitiveTypeReference(ex.umlContext) result = INTEGER.primitiveTypeReference(ex.umlContext) } */
+                /* { ex.operator != "%" type1 == REAL.primitiveTypeReference(ex.umlContext) type2 == INTEGER.primitiveTypeReference(ex.umlContext) || type2 == REAL.primitiveTypeReference(ex.umlContext) result = REAL.primitiveTypeReference(ex.umlContext) } or { ex.operator != "%" type1 == INTEGER.primitiveTypeReference(ex.umlContext) || type1 == REAL.primitiveTypeReference(ex.umlContext) type2 == REAL.primitiveTypeReference(ex.umlContext) result = REAL.primitiveTypeReference(ex.umlContext) } or { type1 == INTEGER.primitiveTypeReference(ex.umlContext) type2 == INTEGER.primitiveTypeReference(ex.umlContext) result = INTEGER.primitiveTypeReference(ex.umlContext) } */
                 {
                   try {
+                    String _operator_3 = ex.getOperator();
+                    boolean _notEquals = (!Objects.equal(_operator_3, "%"));
+                    /* ex.operator != "%" */
+                    if (!_notEquals) {
+                      sneakyThrowRuleFailedException("ex.operator != \"%\"");
+                    }
                     IUMLContextProvider _umlContext_11 = this.typeFactory.umlContext(ex);
                     PrimitiveTypeReference _primitiveTypeReference_11 = this.typeFactory.primitiveTypeReference(this.REAL, _umlContext_11);
                     boolean _equals_11 = Objects.equal(type1, _primitiveTypeReference_11);
@@ -2169,9 +2175,15 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
                     result = _primitiveTypeReference_14;
                   } catch (Exception e_3) {
                     previousFailure = extractRuleFailedException(e_3);
-                    /* { type1 == INTEGER.primitiveTypeReference(ex.umlContext) || type1 == REAL.primitiveTypeReference(ex.umlContext) type2 == REAL.primitiveTypeReference(ex.umlContext) result = REAL.primitiveTypeReference(ex.umlContext) } or { type1 == INTEGER.primitiveTypeReference(ex.umlContext) type2 == INTEGER.primitiveTypeReference(ex.umlContext) result = INTEGER.primitiveTypeReference(ex.umlContext) } */
+                    /* { ex.operator != "%" type1 == INTEGER.primitiveTypeReference(ex.umlContext) || type1 == REAL.primitiveTypeReference(ex.umlContext) type2 == REAL.primitiveTypeReference(ex.umlContext) result = REAL.primitiveTypeReference(ex.umlContext) } or { type1 == INTEGER.primitiveTypeReference(ex.umlContext) type2 == INTEGER.primitiveTypeReference(ex.umlContext) result = INTEGER.primitiveTypeReference(ex.umlContext) } */
                     {
                       try {
+                        String _operator_4 = ex.getOperator();
+                        boolean _notEquals_1 = (!Objects.equal(_operator_4, "%"));
+                        /* ex.operator != "%" */
+                        if (!_notEquals_1) {
+                          sneakyThrowRuleFailedException("ex.operator != \"%\"");
+                        }
                         boolean _or_3 = false;
                         IUMLContextProvider _umlContext_15 = this.typeFactory.umlContext(ex);
                         PrimitiveTypeReference _primitiveTypeReference_15 = this.typeFactory.primitiveTypeReference(this.INTEGER, _umlContext_15);

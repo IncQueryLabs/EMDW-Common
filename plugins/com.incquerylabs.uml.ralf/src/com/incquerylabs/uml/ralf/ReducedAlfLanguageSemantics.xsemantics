@@ -338,10 +338,12 @@ from {
        type2 == REAL.primitiveTypeReference(ex.umlContext)
        result = REAL.primitiveTypeReference(ex.umlContext)
    } or {
+       ex.operator != "%"
        type1 == REAL.primitiveTypeReference(ex.umlContext)
        type2 == INTEGER.primitiveTypeReference(ex.umlContext) || type2 == REAL.primitiveTypeReference(ex.umlContext)
        result = REAL.primitiveTypeReference(ex.umlContext)
    } or {
+       ex.operator != "%"
        type1 == INTEGER.primitiveTypeReference(ex.umlContext) || type1 == REAL.primitiveTypeReference(ex.umlContext)
        type2 == REAL.primitiveTypeReference(ex.umlContext)
        result = REAL.primitiveTypeReference(ex.umlContext)
