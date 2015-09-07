@@ -213,7 +213,7 @@ CollectionLiteralExpression returns CollectionLiteralExpression:
 ;
 
 enum CollectionType:
-     set = 'set' | bag = 'bag' | sequence = 'sequence'
+     set = 'Set' | bag = 'Bag' | sequence = 'Sequence'
 ;
 
 TypeDeclaration: //TODO define collection types as well
