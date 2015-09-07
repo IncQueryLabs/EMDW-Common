@@ -1,5 +1,6 @@
 package com.incquerylabs.uml.ralf.scoping;
 
+import java.util.Iterator;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.URI;
@@ -31,11 +32,14 @@ import org.eclipse.uml2.uml.resource.UMLResource;
 
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Sets;
+import com.incquerylabs.emdw.umlintegration.queries.AncestorSignalMatcher;
 import com.incquerylabs.emdw.umlintegration.queries.AssociationsOfClassifierMatcher;
 import com.incquerylabs.emdw.umlintegration.queries.AttributesOfClassifierMatcher;
+import com.incquerylabs.emdw.umlintegration.queries.CommonAncestorSignalMatcher;
 import com.incquerylabs.emdw.umlintegration.queries.OperationsOfClassMatcher;
 import com.incquerylabs.emdw.umlintegration.queries.SignalsMatcher;
 import com.incquerylabs.emdw.umlintegration.queries.StaticOperationsMatcher;
+import com.incquerylabs.emdw.umlintegration.queries.SuperSignalMatcher;
 import com.incquerylabs.emdw.umlintegration.queries.TriggerSignalOfBehaviorMatcher;
 import com.incquerylabs.emdw.umlintegration.queries.UmlTypesMatcher;
 import com.incquerylabs.emdw.umlintegration.queries.XtClassMatcher;
@@ -55,7 +59,8 @@ public abstract class UMLContextProvider extends AbstractUMLContextProvider {
 					UmlTypesMatcher.querySpecification(),
 					OperationsOfClassMatcher.querySpecification(),
 					StaticOperationsMatcher.querySpecification(),
-					TriggerSignalOfBehaviorMatcher.querySpecification()
+					TriggerSignalOfBehaviorMatcher.querySpecification(),
+					CommonAncestorSignalMatcher.querySpecification()
 					);
 			queries.prepare(engine);			
 //		}
@@ -183,9 +188,17 @@ public abstract class UMLContextProvider extends AbstractUMLContextProvider {
 			if (ctx instanceof OpaqueBehavior || ctx instanceof OpaqueExpression) {
 				TriggerSignalOfBehaviorMatcher matcher = TriggerSignalOfBehaviorMatcher.on(getEngine());
 				Set<Signal> signalTypes = matcher.getAllValuesOfsignal((PackageableElement)ctx);
-				if (!signalTypes.isEmpty()) {
-					// TODO calculate common ancestor here
+				if (signalTypes.isEmpty()) {
+					return super.getIncomingSignalType();
+				} else if (signalTypes.size() == 1) {
 					return signalTypes.iterator().next();
+				} else {
+					Iterator<Signal> it = signalTypes.iterator();
+					Signal current = it.next();
+					while (current != null && it.hasNext()) {
+						current = getLowestCommonAncestor(current, it.next());
+					}
+					return current;
 				}
 			}
 		} catch (IncQueryException | IncQueryBaseException e) {
@@ -195,5 +208,26 @@ public abstract class UMLContextProvider extends AbstractUMLContextProvider {
 		return super.getIncomingSignalType();
 	}
 	
-	
+	private Signal getLowestCommonAncestor(Signal signal1, Signal signal2) throws IncQueryException, IncQueryBaseException {
+		AncestorSignalMatcher matcher = AncestorSignalMatcher.on(getEngine());
+		if (matcher.hasMatch(signal1, signal2)) {
+			return signal2;
+		} else if (matcher.hasMatch(signal2, signal1)) {
+			return signal1;
+		} else {
+			Set<Signal> ancestors = CommonAncestorSignalMatcher.
+					on(getEngine()).getAllValuesOfancestor(signal1, signal2);
+			if (ancestors.isEmpty()) {
+				return null;
+			} else {
+				//XXX The following approach is copied from EventTemplates#eventType, but is it correct?
+				SuperSignalMatcher superMatcher = SuperSignalMatcher.on(getEngine());
+				Signal currentSignal = signal1;
+				while(!ancestors.contains(currentSignal)) {
+					currentSignal = superMatcher.getAllValuesOfsup(currentSignal).iterator().next();
+				}
+				return currentSignal;
+			}
+		}
+	}
 }

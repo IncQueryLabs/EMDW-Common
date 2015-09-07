@@ -25,6 +25,15 @@ pattern superSignal(sub : Signal, sup : Signal) {
     Generalization.general(gen, sup);
 }
 
+pattern ancestorSignal(sub : Signal, ancestor : Signal) {
+    find superSignal+(sub, ancestor);
+}
+
+pattern commonAncestorSignal(sub1 : Signal, sub2 : Signal, ancestor : Signal) {
+    find ancestorSignal(sub1, ancestor);
+    find ancestorSignal(sub2, ancestor);
+}
+
 pattern superDataType(sub : DataType, sup : DataType) {
     Generalization.specific(gen, sub);
     Generalization.general(gen, sup);
@@ -38,7 +47,7 @@ pattern attributesOfClassifier(cl : Classifier, attribute : Property) {
 } or {
     Signal.ownedAttribute(cl, attribute);
 } or {
-    find superSignal+(cl, sup);
+    find ancestorSignal(cl, sup);
     Signal.ownedAttribute(sup, attribute);
 }
 
