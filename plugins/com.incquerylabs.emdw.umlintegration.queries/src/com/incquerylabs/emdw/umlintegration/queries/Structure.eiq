@@ -34,7 +34,7 @@ pattern xtPackageInModel(model: Model, umlPackage: Package) {
 }
 
 pattern xtPackageInComponent(component: Component, umlPackage: Package) {
-	Component.packagedElement(component, umlPackage);
+	find componentContainedElement(component, umlPackage);
 	find xtPackage(umlPackage);
 }
 
@@ -62,6 +62,12 @@ pattern xtComponentInPackage(umlPackage: Package, component: Component) {
 }
 
 // Component children
+
+pattern componentContainedElement(parent : Component, element) {
+	Component.nestedClassifier(parent, element);
+} or {
+	Component.packagedElement(parent, element);
+}
 
 pattern xtPort(component: Component, port: Port) {
 	Component.ownedAttribute(component, port);
@@ -132,10 +138,7 @@ pattern xtClassInPackage(umlPackage: Package, umlClass: Class) {
 }
 
 pattern xtClassInComponent(component: Component, umlClass: Class) {
-	Component.nestedClassifier(component, umlClass);
-	find xtClass(umlClass);
-} or {
-	Component.packagedElement(component, umlClass);
+	find componentContainedElement(component, umlClass);
 	find xtClass(umlClass);
 }
 
@@ -279,7 +282,7 @@ pattern typeDefinitionInPackage(umlPackage: Package, type : uml::Type) {
 
 pattern typeDefinitionInComponent(umlComponent: Component, type : uml::Type) {
 	find typeDefinition(type);
-	Component.packagedElement(umlComponent, type);
+	find componentContainedElement(umlComponent, type);
 }
 
 pattern typeDefinition(type: uml::Type) {
@@ -316,7 +319,7 @@ pattern structTypeInComponent(
 	structType : DataType,
 	umlComponent : Component
 ) {
-	Component.packagedElement(umlComponent, structType);
+	find componentContainedElement(umlComponent, structType);
 }
 
 pattern structTypeInPackage(
@@ -342,7 +345,7 @@ private pattern elementInComponent(
 	component : Component,
 	packageableElement : PackageableElement
 ) {
-	Component.packagedElement(component, packageableElement);
+	find componentContainedElement(component, packageableElement);
 }
 
 private pattern elementInPackage(
