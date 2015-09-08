@@ -63,7 +63,7 @@ ConditionalExpression returns Expression :
 PrimaryExpression returns Expression :
   BaseExpression
   ( {FeatureInvocationExpression.context = current} '.' feature = [uml::Feature|Name] (-> parameters = Tuple)? |
-    {FilterExpression.context = current} '->' 'filter' '(' declaration = FilterVariableDeclaration ':' expression = Expression ')' |
+    {FilterExpression.context = current} '.' 'filter' '(' declaration = FilterVariableDeclaration ':' expression = Expression ')' |
     {AssociationAccessExpression.context = current} '->' association = [uml::Property|Name]  | 
 //    {ExtentOrExpression.nonNameExpression = current} '->' 
 //      ( {SequenceOperationExpression.primary = current} operation = [uml::Operation|QualifiedName] tuple = Tuple
