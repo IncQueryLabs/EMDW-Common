@@ -73,6 +73,11 @@ pattern operationsOfClass(cl : Classifier, op : Operation) {
     DataType.ownedOperation(sup, op);
 }
 
+pattern operationsOfClassByName(cl : Classifier, op : Operation, name) {
+    find operationsOfClass(cl, op);
+    Operation.name(op, name);
+}
+
 pattern staticOperations(op : Operation) {
     find operation(_, op);
     Operation.isStatic(op, true);

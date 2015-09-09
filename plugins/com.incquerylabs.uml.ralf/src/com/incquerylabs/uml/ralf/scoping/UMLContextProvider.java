@@ -36,6 +36,7 @@ import com.incquerylabs.emdw.umlintegration.queries.AncestorSignalMatcher;
 import com.incquerylabs.emdw.umlintegration.queries.AssociationsOfClassifierMatcher;
 import com.incquerylabs.emdw.umlintegration.queries.AttributesOfClassifierMatcher;
 import com.incquerylabs.emdw.umlintegration.queries.CommonAncestorSignalMatcher;
+import com.incquerylabs.emdw.umlintegration.queries.OperationsOfClassByNameMatcher;
 import com.incquerylabs.emdw.umlintegration.queries.OperationsOfClassMatcher;
 import com.incquerylabs.emdw.umlintegration.queries.SignalsMatcher;
 import com.incquerylabs.emdw.umlintegration.queries.StaticOperationsMatcher;
@@ -58,6 +59,7 @@ public abstract class UMLContextProvider extends AbstractUMLContextProvider {
 					SignalsMatcher.querySpecification(),
 					UmlTypesMatcher.querySpecification(),
 					OperationsOfClassMatcher.querySpecification(),
+					OperationsOfClassByNameMatcher.querySpecification(),
 					StaticOperationsMatcher.querySpecification(),
 					TriggerSignalOfBehaviorMatcher.querySpecification(),
 					CommonAncestorSignalMatcher.querySpecification()
@@ -174,6 +176,18 @@ public abstract class UMLContextProvider extends AbstractUMLContextProvider {
 		try {
 			OperationsOfClassMatcher matcher = OperationsOfClassMatcher.on(getEngine());
 			return Sets.filter(matcher.getAllValuesOfop(cl), (Operation op) -> op.isStatic() == staticClass);
+		} catch (IncQueryException | IncQueryBaseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return Sets.newHashSet();
+	}
+
+	@Override
+	public Set<Operation> getOperationCandidatesOfClass(Classifier cl, String name) {
+		try {
+			OperationsOfClassByNameMatcher matcher = OperationsOfClassByNameMatcher.on(getEngine());
+			return matcher.getAllValuesOfop(cl, name);
 		} catch (IncQueryException | IncQueryBaseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

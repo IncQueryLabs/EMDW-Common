@@ -33,6 +33,7 @@ import com.incquerylabs.uml.ralf.reducedAlfLanguage.LocalNameDeclarationStatemen
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.LogicalExpression;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.LoopVariable;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.NameExpression;
+import com.incquerylabs.uml.ralf.reducedAlfLanguage.NamedExpression;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.NamedTuple;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.NaturalLiteralExpression;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.NullExpression;
@@ -68,7 +69,9 @@ import it.xsemantics.runtime.RuleApplicationTrace;
 import it.xsemantics.runtime.RuleEnvironment;
 import it.xsemantics.runtime.RuleFailedException;
 import it.xsemantics.runtime.XsemanticsRuntimeSystem;
+import java.util.HashMap;
 import java.util.List;
+import java.util.function.Consumer;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.uml2.uml.Association;
@@ -77,12 +80,19 @@ import org.eclipse.uml2.uml.Feature;
 import org.eclipse.uml2.uml.NamedElement;
 import org.eclipse.uml2.uml.Operation;
 import org.eclipse.uml2.uml.Parameter;
+import org.eclipse.uml2.uml.ParameterDirectionKind;
 import org.eclipse.uml2.uml.PrimitiveType;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Signal;
 import org.eclipse.uml2.uml.Type;
 import org.eclipse.xtext.util.PolymorphicDispatcher;
+import org.eclipse.xtext.xbase.lib.CollectionLiterals;
+import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Extension;
+import org.eclipse.xtext.xbase.lib.Functions.Function1;
+import org.eclipse.xtext.xbase.lib.IterableExtensions;
+import org.eclipse.xtext.xbase.lib.ListExtensions;
+import org.eclipse.xtext.xbase.lib.Pair;
 
 @SuppressWarnings("all")
 public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
@@ -135,6 +145,8 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
   public final static String EXPRESSIONASSIGNABLETOTYPE = "com.incquerylabs.uml.ralf.ExpressionAssignableToType";
   
   public final static String OPERATIONTYPING = "com.incquerylabs.uml.ralf.OperationTyping";
+  
+  public final static String OPERATIONTYPINGWITHRESULT = "com.incquerylabs.uml.ralf.OperationTypingWithResult";
   
   public final static String PARAMETERLISTTYPING = "com.incquerylabs.uml.ralf.ParameterListTyping";
   
@@ -216,6 +228,8 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
   
   private PolymorphicDispatcher<Result<IUMLTypeReference>> typeDispatcher;
   
+  private PolymorphicDispatcher<Result<Boolean>> operationParametersTypeDispatcher;
+  
   private PolymorphicDispatcher<Result<IUMLTypeReference>> operationTypeDispatcher;
   
   private PolymorphicDispatcher<Result<Boolean>> subtypeReferenceDispatcher;
@@ -231,6 +245,8 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
   public void init() {
     typeDispatcher = buildPolymorphicDispatcher1(
     	"typeImpl", 3, "|-", ":");
+    operationParametersTypeDispatcher = buildPolymorphicDispatcher1(
+    	"operationParametersTypeImpl", 4, "|-", "<:");
     operationTypeDispatcher = buildPolymorphicDispatcher1(
     	"operationTypeImpl", 4, "|-", "<:", ":>");
     subtypeReferenceDispatcher = buildPolymorphicDispatcher1(
@@ -314,6 +330,39 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
     	return typeInternal(_environment_, _trace_, expression);
     } catch (Exception _e_type) {
     	return resultForFailure(_e_type);
+    }
+  }
+  
+  public Result<Boolean> operationParametersType(final Operation op, final Tuple params) {
+    return operationParametersType(new RuleEnvironment(), null, op, params);
+  }
+  
+  public Result<Boolean> operationParametersType(final RuleEnvironment _environment_, final Operation op, final Tuple params) {
+    return operationParametersType(_environment_, null, op, params);
+  }
+  
+  public Result<Boolean> operationParametersType(final RuleEnvironment _environment_, final RuleApplicationTrace _trace_, final Operation op, final Tuple params) {
+    try {
+    	return operationParametersTypeInternal(_environment_, _trace_, op, params);
+    } catch (Exception _e_operationParametersType) {
+    	return resultForFailure(_e_operationParametersType);
+    }
+  }
+  
+  public Boolean operationParametersTypeSucceeded(final Operation op, final Tuple params) {
+    return operationParametersTypeSucceeded(new RuleEnvironment(), null, op, params);
+  }
+  
+  public Boolean operationParametersTypeSucceeded(final RuleEnvironment _environment_, final Operation op, final Tuple params) {
+    return operationParametersTypeSucceeded(_environment_, null, op, params);
+  }
+  
+  public Boolean operationParametersTypeSucceeded(final RuleEnvironment _environment_, final RuleApplicationTrace _trace_, final Operation op, final Tuple params) {
+    try {
+    	operationParametersTypeInternal(_environment_, _trace_, op, params);
+    	return true;
+    } catch (Exception _e_operationParametersType) {
+    	return false;
     }
   }
   
@@ -924,6 +973,20 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
     EObject source = expression;
     throwRuleFailedException(error,
     	_issue, _ex, new ErrorInformation(source, null));
+  }
+  
+  protected Result<Boolean> operationParametersTypeInternal(final RuleEnvironment _environment_, final RuleApplicationTrace _trace_, final Operation op, final Tuple params) {
+    try {
+    	checkParamsNotNull(op, params);
+    	return operationParametersTypeDispatcher.invoke(_environment_, _trace_, op, params);
+    } catch (Exception _e_operationParametersType) {
+    	sneakyThrowRuleFailedException(_e_operationParametersType);
+    	return null;
+    }
+  }
+  
+  protected void operationParametersTypeThrowException(final String _error, final String _issue, final Exception _ex, final Operation op, final Tuple params, final ErrorInformation[] _errorInformations) throws RuleFailedException {
+    throwRuleFailedException(_error, _issue, _ex, _errorInformations);
   }
   
   protected Result<IUMLTypeReference> operationTypeInternal(final RuleEnvironment _environment_, final RuleApplicationTrace _trace_, final Operation op, final Tuple params) {
@@ -1852,71 +1915,54 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
     return new Result<Boolean>(true);
   }
   
-  protected Result<IUMLTypeReference> operationTypeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final Operation op, final Tuple params) throws RuleFailedException {
+  protected Result<Boolean> operationParametersTypeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final Operation op, final Tuple params) throws RuleFailedException {
     try {
     	final RuleApplicationTrace _subtrace_ = newTrace(_trace_);
-    	final Result<IUMLTypeReference> _result_ = applyRuleOperationTyping(G, _subtrace_, op, params);
+    	final Result<Boolean> _result_ = applyRuleOperationTyping(G, _subtrace_, op, params);
     	addToTrace(_trace_, new Provider<Object>() {
     		public Object get() {
-    			return ruleName("OperationTyping") + stringRepForEnv(G) + " |- " + stringRep(op) + " <: " + stringRep(params) + " :> " + stringRep(_result_.getFirst());
+    			return ruleName("OperationTyping") + stringRepForEnv(G) + " |- " + stringRep(op) + " <: " + stringRep(params);
     		}
     	});
     	addAsSubtrace(_trace_, _subtrace_);
     	return _result_;
     } catch (Exception e_applyRuleOperationTyping) {
-    	operationTypeThrowException(ruleName("OperationTyping") + stringRepForEnv(G) + " |- " + stringRep(op) + " <: " + stringRep(params) + " :> " + "IUMLTypeReference",
+    	operationParametersTypeThrowException(ruleName("OperationTyping") + stringRepForEnv(G) + " |- " + stringRep(op) + " <: " + stringRep(params),
     		OPERATIONTYPING,
     		e_applyRuleOperationTyping, op, params, new ErrorInformation[] {new ErrorInformation(op), new ErrorInformation(params)});
     	return null;
     }
   }
   
-  protected Result<IUMLTypeReference> applyRuleOperationTyping(final RuleEnvironment G, final RuleApplicationTrace _trace_, final Operation op, final Tuple params) throws RuleFailedException {
-    IUMLTypeReference result = null; // output parameter
+  protected Result<Boolean> applyRuleOperationTyping(final RuleEnvironment G, final RuleApplicationTrace _trace_, final Operation op, final Tuple params) throws RuleFailedException {
     /* fail */
     throwForExplicitFail();
-    return new Result<IUMLTypeReference>(result);
+    return new Result<Boolean>(true);
   }
   
-  protected Result<IUMLTypeReference> operationTypeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final Operation op, final ExpressionList params) throws RuleFailedException {
+  protected Result<IUMLTypeReference> operationTypeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final Operation op, final Tuple params) throws RuleFailedException {
     try {
     	final RuleApplicationTrace _subtrace_ = newTrace(_trace_);
-    	final Result<IUMLTypeReference> _result_ = applyRuleParameterListTyping(G, _subtrace_, op, params);
+    	final Result<IUMLTypeReference> _result_ = applyRuleOperationTypingWithResult(G, _subtrace_, op, params);
     	addToTrace(_trace_, new Provider<Object>() {
     		public Object get() {
-    			return ruleName("ParameterListTyping") + stringRepForEnv(G) + " |- " + stringRep(op) + " <: " + stringRep(params) + " :> " + stringRep(_result_.getFirst());
+    			return ruleName("OperationTypingWithResult") + stringRepForEnv(G) + " |- " + stringRep(op) + " <: " + stringRep(params) + " :> " + stringRep(_result_.getFirst());
     		}
     	});
     	addAsSubtrace(_trace_, _subtrace_);
     	return _result_;
-    } catch (Exception e_applyRuleParameterListTyping) {
-    	operationTypeThrowException(ruleName("ParameterListTyping") + stringRepForEnv(G) + " |- " + stringRep(op) + " <: " + stringRep(params) + " :> " + "IUMLTypeReference",
-    		PARAMETERLISTTYPING,
-    		e_applyRuleParameterListTyping, op, params, new ErrorInformation[] {new ErrorInformation(op), new ErrorInformation(params)});
+    } catch (Exception e_applyRuleOperationTypingWithResult) {
+    	operationTypeThrowException(ruleName("OperationTypingWithResult") + stringRepForEnv(G) + " |- " + stringRep(op) + " <: " + stringRep(params) + " :> " + "IUMLTypeReference",
+    		OPERATIONTYPINGWITHRESULT,
+    		e_applyRuleOperationTypingWithResult, op, params, new ErrorInformation[] {new ErrorInformation(op), new ErrorInformation(params)});
     	return null;
     }
   }
   
-  protected Result<IUMLTypeReference> applyRuleParameterListTyping(final RuleEnvironment G, final RuleApplicationTrace _trace_, final Operation op, final ExpressionList params) throws RuleFailedException {
+  protected Result<IUMLTypeReference> applyRuleOperationTypingWithResult(final RuleEnvironment G, final RuleApplicationTrace _trace_, final Operation op, final Tuple params) throws RuleFailedException {
     IUMLTypeReference result = null; // output parameter
-    EList<Parameter> _ownedParameters = op.getOwnedParameters();
-    final int opParamLength = _ownedParameters.size();
-    EList<Expression> _expressions = params.getExpressions();
-    final int paramLength = _expressions.size();
-    /* opParamLength == paramLength */
-    if (!(opParamLength == paramLength)) {
-      sneakyThrowRuleFailedException("opParamLength == paramLength");
-    }
-    for (int i = 0; (i < paramLength); i++) {
-      EList<Parameter> _ownedParameters_1 = op.getOwnedParameters();
-      Parameter _get = _ownedParameters_1.get(i);
-      Type _type = _get.getType();
-      final IUMLTypeReference declaredType = this.typeFactory.typeReference(_type);
-      /* G |- params.expressions.get(i) |> declaredType */
-      EList<Expression> _expressions_1 = params.getExpressions();
-      Expression _get_1 = _expressions_1.get(i);
-      assignableInternal(G, _trace_, _get_1, declaredType);
-    }
+    /* G |- op <: params */
+    operationParametersTypeInternal(G, _trace_, op, params);
     /* G |- op : result */
     Result<IUMLTypeReference> result_1 = typeInternal(G, _trace_, op);
     checkAssignableTo(result_1.getFirst(), IUMLTypeReference.class);
@@ -1925,32 +1971,95 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
     return new Result<IUMLTypeReference>(result);
   }
   
-  protected Result<IUMLTypeReference> operationTypeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final Operation op, final NamedTuple params) throws RuleFailedException {
+  protected Result<Boolean> operationParametersTypeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final Operation op, final ExpressionList params) throws RuleFailedException {
     try {
     	final RuleApplicationTrace _subtrace_ = newTrace(_trace_);
-    	final Result<IUMLTypeReference> _result_ = applyRuleNamedTupleTyping(G, _subtrace_, op, params);
+    	final Result<Boolean> _result_ = applyRuleParameterListTyping(G, _subtrace_, op, params);
     	addToTrace(_trace_, new Provider<Object>() {
     		public Object get() {
-    			return ruleName("NamedTupleTyping") + stringRepForEnv(G) + " |- " + stringRep(op) + " <: " + stringRep(params) + " :> " + stringRep(_result_.getFirst());
+    			return ruleName("ParameterListTyping") + stringRepForEnv(G) + " |- " + stringRep(op) + " <: " + stringRep(params);
+    		}
+    	});
+    	addAsSubtrace(_trace_, _subtrace_);
+    	return _result_;
+    } catch (Exception e_applyRuleParameterListTyping) {
+    	operationParametersTypeThrowException(ruleName("ParameterListTyping") + stringRepForEnv(G) + " |- " + stringRep(op) + " <: " + stringRep(params),
+    		PARAMETERLISTTYPING,
+    		e_applyRuleParameterListTyping, op, params, new ErrorInformation[] {new ErrorInformation(op), new ErrorInformation(params)});
+    	return null;
+    }
+  }
+  
+  protected Result<Boolean> applyRuleParameterListTyping(final RuleEnvironment G, final RuleApplicationTrace _trace_, final Operation op, final ExpressionList params) throws RuleFailedException {
+    EList<Parameter> _ownedParameters = op.getOwnedParameters();
+    final Function1<Parameter, Boolean> _function = (Parameter it) -> {
+      ParameterDirectionKind _direction = it.getDirection();
+      return Boolean.valueOf((!Objects.equal(_direction, ParameterDirectionKind.RETURN_LITERAL)));
+    };
+    final Iterable<Parameter> declaredParameters = IterableExtensions.<Parameter>filter(_ownedParameters, _function);
+    final int opParamLength = IterableExtensions.size(declaredParameters);
+    EList<Expression> _expressions = params.getExpressions();
+    final int paramLength = _expressions.size();
+    /* opParamLength == paramLength */
+    if (!(opParamLength == paramLength)) {
+      sneakyThrowRuleFailedException("opParamLength == paramLength");
+    }
+    for (int i = 0; (i < paramLength); i++) {
+      Parameter _get = ((Parameter[])Conversions.unwrapArray(declaredParameters, Parameter.class))[i];
+      Type _type = _get.getType();
+      final IUMLTypeReference declaredType = this.typeFactory.typeReference(_type);
+      /* G |- params.expressions.get(i) |> declaredType */
+      EList<Expression> _expressions_1 = params.getExpressions();
+      Expression _get_1 = _expressions_1.get(i);
+      assignableInternal(G, _trace_, _get_1, declaredType);
+    }
+    return new Result<Boolean>(true);
+  }
+  
+  protected Result<Boolean> operationParametersTypeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final Operation op, final NamedTuple params) throws RuleFailedException {
+    try {
+    	final RuleApplicationTrace _subtrace_ = newTrace(_trace_);
+    	final Result<Boolean> _result_ = applyRuleNamedTupleTyping(G, _subtrace_, op, params);
+    	addToTrace(_trace_, new Provider<Object>() {
+    		public Object get() {
+    			return ruleName("NamedTupleTyping") + stringRepForEnv(G) + " |- " + stringRep(op) + " <: " + stringRep(params);
     		}
     	});
     	addAsSubtrace(_trace_, _subtrace_);
     	return _result_;
     } catch (Exception e_applyRuleNamedTupleTyping) {
-    	operationTypeThrowException(ruleName("NamedTupleTyping") + stringRepForEnv(G) + " |- " + stringRep(op) + " <: " + stringRep(params) + " :> " + "IUMLTypeReference",
+    	operationParametersTypeThrowException(ruleName("NamedTupleTyping") + stringRepForEnv(G) + " |- " + stringRep(op) + " <: " + stringRep(params),
     		NAMEDTUPLETYPING,
     		e_applyRuleNamedTupleTyping, op, params, new ErrorInformation[] {new ErrorInformation(op), new ErrorInformation(params)});
     	return null;
     }
   }
   
-  protected Result<IUMLTypeReference> applyRuleNamedTupleTyping(final RuleEnvironment G, final RuleApplicationTrace _trace_, final Operation op, final NamedTuple params) throws RuleFailedException {
-    IUMLTypeReference result = null; // output parameter
-    Parameter _returnParameter = this.scopeHelper.getReturnParameter(op);
-    Type _type = _returnParameter.getType();
-    IUMLTypeReference _typeReference = this.typeFactory.typeReference(_type);
-    result = _typeReference;
-    return new Result<IUMLTypeReference>(result);
+  protected Result<Boolean> applyRuleNamedTupleTyping(final RuleEnvironment G, final RuleApplicationTrace _trace_, final Operation op, final NamedTuple params) throws RuleFailedException {
+    EList<NamedExpression> _expressions = params.getExpressions();
+    final Function1<NamedExpression, Pair<String, Expression>> _function = (NamedExpression it) -> {
+      String _name = it.getName();
+      Expression _expression = it.getExpression();
+      return Pair.<String, Expression>of(_name, _expression);
+    };
+    List<Pair<? extends String, ? extends Expression>> _map = ListExtensions.<NamedExpression, Pair<? extends String, ? extends Expression>>map(_expressions, _function);
+    final HashMap<String, Expression> paramMap = CollectionLiterals.<String, Expression>newHashMap(((Pair<? extends String, ? extends Expression>[])Conversions.unwrapArray(_map, Pair.class)));
+    EList<Parameter> _ownedParameters = op.getOwnedParameters();
+    final Function1<Parameter, Boolean> _function_1 = (Parameter it) -> {
+      ParameterDirectionKind _direction = it.getDirection();
+      return Boolean.valueOf((!Objects.equal(_direction, ParameterDirectionKind.RETURN_LITERAL)));
+    };
+    Iterable<Parameter> _filter = IterableExtensions.<Parameter>filter(_ownedParameters, _function_1);
+    final Consumer<Parameter> _function_2 = (Parameter it) -> {
+      String _name = it.getName();
+      final Expression paramExpression = paramMap.get(_name);
+      Type _type = it.getType();
+      final IUMLTypeReference declaredType = this.typeFactory.typeReference(_type);
+      /* G |- paramExpression |> declaredType */
+      assignableInternal(G, _trace_, paramExpression, declaredType);
+    };
+    _filter.forEach(_function_2);
+    return new Result<Boolean>(true);
   }
   
   protected Result<IUMLTypeReference> typeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final NumericUnaryExpression ex) throws RuleFailedException {

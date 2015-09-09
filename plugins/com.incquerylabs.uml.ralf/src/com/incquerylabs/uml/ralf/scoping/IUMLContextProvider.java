@@ -35,6 +35,7 @@ public interface IUMLContextProvider {
 	Iterable<Property> getPropertiesOfClass(Classifier cl);
 	Iterable<Property> getAssociationsOfClass(Classifier cl);
 	Iterable<Operation> getOperationsOfClass(Classifier cl);
+	Set<Operation> getOperationCandidatesOfClass(Classifier cl, String name);
 	Iterable<Operation> getStaticOperations();
 	
 	/**

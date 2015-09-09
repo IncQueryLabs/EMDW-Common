@@ -74,4 +74,9 @@ class SimpleUMLContextProvider extends AbstractUMLContextProvider {
         null
     }
     
+    override getOperationCandidatesOfClass(Classifier cl, String name) {
+        newHashSet()
+    }
+    
+    
 }

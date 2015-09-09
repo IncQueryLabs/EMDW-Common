@@ -73,6 +73,7 @@ import com.incquerylabs.uml.ralf.reducedAlfLanguage.LeftHandSide
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.SignalDataExpression
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.ClassExtentExpression
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.CastExpression
+import org.eclipse.uml2.uml.ParameterDirectionKind
 
 inject extension TypeFactory typeFactory
 inject extension UMLScopeHelper scopeHelper
@@ -91,6 +92,7 @@ judgments {
     type |- EObject expression : output IUMLTypeReference
         error "Cannot type " + stringRep(expression)
         source expression
+    operationParametersType |- Operation op <: Tuple params
     operationType |- Operation op <: Tuple params :> output IUMLTypeReference
         error "Invalid parameter types " + stringRep(op)
         source op
@@ -278,29 +280,41 @@ from {
  * Operation typing
  */
 rule OperationTyping
-    G |- Operation op <: Tuple params :> IUMLTypeReference result
+    G |- Operation op <: Tuple params
 from {
     fail
 }
-rule ParameterListTyping
-    G |- Operation op <: ExpressionList params :> IUMLTypeReference result
+rule OperationTypingWithResult
+    G |- Operation op <: Tuple params :> IUMLTypeReference result
 from {
-    val opParamLength = op.ownedParameters.size
+    G |- op <: params
+    G |- op : result
+}
+rule ParameterListTyping
+    G |- Operation op <: ExpressionList params
+from {
+    val declaredParameters = op.ownedParameters.filter[direction != ParameterDirectionKind.RETURN_LITERAL]
+    
+    val opParamLength = declaredParameters.size
     val paramLength = params.expressions.size
     opParamLength == paramLength
     
     for (var i = 0; i < paramLength; i++) {
-        val declaredType = op.ownedParameters.get(i).type.typeReference
+        val declaredType = declaredParameters.get(i).type.typeReference
         G |- params.expressions.get(i) |> declaredType
     }
-    
-    G |- op : result
 }
+
 rule NamedTupleTyping
-    G |- Operation op <: NamedTuple params :> IUMLTypeReference result
+    G |- Operation op <: NamedTuple params
 from {
-    
-    result = op.returnParameter.type.typeReference
+    val paramMap = <String, Expression> newHashMap(params.expressions.map[it.name -> it.expression])
+   
+    op.ownedParameters.filter[direction != ParameterDirectionKind.RETURN_LITERAL].forEach[
+        val paramExpression = paramMap.get(it.name)
+        val declaredType = it.type.typeReference
+        G |- paramExpression |> declaredType
+    ]
 }
 
 /**
