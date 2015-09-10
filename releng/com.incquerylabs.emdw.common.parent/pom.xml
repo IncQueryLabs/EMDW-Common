@@ -15,7 +15,7 @@
 		<module>../../plugins/com.incquerylabs.emdw.umlintegration.queries</module>
 		
 		<!-- xUML-RT profile -->
-		<module>../../plugins//hu.eltesoft.modelexecution.profile</module>
+		<module>../../plugins/hu.eltesoft.modelexecution.profile</module>
 		
 		<!-- Project nature -->
 		<module>../../plugins/com.incquerylabs.emdw.common.nature</module>

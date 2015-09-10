@@ -9,6 +9,6 @@
 		<relativePath>../../releng/com.incquerylabs.emdw.common.parent</relativePath>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
-	<artifactId>/hu.eltesoft.modelexecution.profile</artifactId>
+	<artifactId>hu.eltesoft.modelexecution.profile</artifactId>
 	<packaging>eclipse-plugin</packaging>
 </project>
