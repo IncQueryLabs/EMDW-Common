@@ -21,6 +21,7 @@ import com.google.inject.Inject;
 import com.incquerylabs.uml.ralf.ReducedAlfSystem;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.Expression;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.FeatureInvocationExpression;
+import com.incquerylabs.uml.ralf.reducedAlfLanguage.StaticFeatureInvocationExpression;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.Tuple;
 import com.incquerylabs.uml.ralf.resource.ReducedAlfLanguageResource;
 
@@ -71,16 +72,24 @@ public class ReducedAlfLanguageLinkingService extends DefaultLinkingService {
 		if (linkedObjects.size() == 1 && linkedObjects.get(0) instanceof Operation) {
 			Operation op = (Operation) linkedObjects.get(0);
 			IUMLContextProvider umlContext = ((ReducedAlfLanguageResource)context.eResource()).getUmlContextProvider();
-			Expression ctx = null;
+			Set<Operation> candidates = null;
+			Type contextType = null;
 			Tuple parameters = null;
 			if (context instanceof FeatureInvocationExpression) {
 				FeatureInvocationExpression featureInvocationExpression = (FeatureInvocationExpression) context;
-				ctx = featureInvocationExpression.getContext();
+				Expression ctx = featureInvocationExpression.getContext();
 				parameters = featureInvocationExpression.getParameters();
+				contextType = typeSystem.type(ctx).getValue().getUmlType();
+			} else if (context instanceof StaticFeatureInvocationExpression) {
+				StaticFeatureInvocationExpression staticFeatureInvocationExpression = (StaticFeatureInvocationExpression) context;
+				parameters = staticFeatureInvocationExpression.getParameters();
+				contextType = op.getClass_();
+			} else {
+				//throw new UnsupportedOperationException("Invalid context of Operation call: " + context.eClass().getName());
+				return linkedObjects;
 			}
-			Type contextType = typeSystem.type(ctx).getValue().getUmlType();
-			Set<Operation> candidates = umlContext.getOperationCandidatesOfClass((Classifier) contextType, op.getName());
-			if (candidates.size() > 1) {
+			candidates = umlContext.getOperationCandidatesOfClass((Classifier) contextType, op.getName());
+			if (candidates != null && candidates.size() > 1) {
 				linkedObjects = calculateBestCandidates(candidates, parameters);
 			}
 		}
