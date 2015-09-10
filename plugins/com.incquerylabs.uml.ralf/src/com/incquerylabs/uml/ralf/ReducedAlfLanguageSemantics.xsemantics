@@ -92,7 +92,7 @@ auxiliary {
 }
 
 judgments {
-    type |- EObject expression : output IUMLTypeReference
+    type |- EObject expression : output IUMLTypeReference cached
         error "Cannot type " + stringRep(expression)
         source expression
     operationParametersType |- Operation op <: Tuple params
