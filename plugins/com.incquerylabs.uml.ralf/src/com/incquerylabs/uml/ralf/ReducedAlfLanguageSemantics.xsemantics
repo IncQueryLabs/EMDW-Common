@@ -108,11 +108,11 @@ auxiliary superClassList(Class cl) {
 }
 
 auxiliary typeReference(TypeDeclaration decl) {
-//    if (decl.isIsAny) {
-//        anyType
-//    } else {
-        decl.getType().typeReference
-//    }
+    if (decl.getType == null) {
+        anyType
+    } else {
+        decl.getType().typeReference        
+    }
 }
 
 axiom BooleanLiteral
@@ -482,14 +482,21 @@ from {
 rule InstanceCreationExpression
     G |- InstanceCreationExpression ex : IUMLTypeReference result
 from {
-    // Primitive types cannot be instantiated
-    !(ex.instance instanceof PrimitiveType)
+    {
+        ex.instance == null
+        fail error "Invalid instance definition" source ex.instance
+    } or {
+        ex.instance != null
+        // Primitive types cannot be instantiated
+        !(ex.instance instanceof PrimitiveType)
     
-    // TODO Parameter mapping
-    ex.parameters
+        // TODO Parameter mapping
+        ex.parameters
     
-    // Return typing
-    result = ex.instance.typeReference
+        // Return typing
+        result = ex.instance.typeReference
+    
+    }
 }
 
 

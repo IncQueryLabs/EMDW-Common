@@ -1049,8 +1049,16 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
   }
   
   protected IUMLTypeReference applyAuxFunTypeReference(final RuleApplicationTrace _trace_, final TypeDeclaration decl) throws RuleFailedException {
+    IUMLTypeReference _xifexpression = null;
     Type _type = decl.getType();
-    return this.typeFactory.typeReference(_type);
+    boolean _equals = Objects.equal(_type, null);
+    if (_equals) {
+      _xifexpression = this.typeFactory.anyType();
+    } else {
+      Type _type_1 = decl.getType();
+      _xifexpression = this.typeFactory.typeReference(_type_1);
+    }
+    return _xifexpression;
   }
   
   protected Result<IUMLTypeReference> typeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final BooleanLiteralExpression bool) throws RuleFailedException {
@@ -2894,16 +2902,41 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
   
   protected Result<IUMLTypeReference> applyRuleInstanceCreationExpression(final RuleEnvironment G, final RuleApplicationTrace _trace_, final InstanceCreationExpression ex) throws RuleFailedException {
     IUMLTypeReference result = null; // output parameter
-    Classifier _instance = ex.getInstance();
-    boolean _not = (!(_instance instanceof PrimitiveType));
-    /* !(ex.instance instanceof PrimitiveType) */
-    if (!_not) {
-      sneakyThrowRuleFailedException("!(ex.instance instanceof PrimitiveType)");
+    /* { ex.instance == null fail error "Invalid instance definition" source ex.instance } or { ex.instance != null !(ex.instance instanceof PrimitiveType) ex.parameters result = ex.instance.typeReference } */
+    {
+      RuleFailedException previousFailure = null;
+      try {
+        Classifier _instance = ex.getInstance();
+        boolean _equals = Objects.equal(_instance, null);
+        /* ex.instance == null */
+        if (!_equals) {
+          sneakyThrowRuleFailedException("ex.instance == null");
+        }
+        /* fail error "Invalid instance definition" source ex.instance */
+        String error = "Invalid instance definition";
+        Classifier _instance_1 = ex.getInstance();
+        EObject source = _instance_1;
+        throwForExplicitFail(error, new ErrorInformation(source, null));
+      } catch (Exception e) {
+        previousFailure = extractRuleFailedException(e);
+        Classifier _instance_2 = ex.getInstance();
+        boolean _notEquals = (!Objects.equal(_instance_2, null));
+        /* ex.instance != null */
+        if (!_notEquals) {
+          sneakyThrowRuleFailedException("ex.instance != null");
+        }
+        Classifier _instance_3 = ex.getInstance();
+        boolean _not = (!(_instance_3 instanceof PrimitiveType));
+        /* !(ex.instance instanceof PrimitiveType) */
+        if (!_not) {
+          sneakyThrowRuleFailedException("!(ex.instance instanceof PrimitiveType)");
+        }
+        ex.getParameters();
+        Classifier _instance_4 = ex.getInstance();
+        IUMLTypeReference _typeReference = this.typeFactory.typeReference(_instance_4);
+        result = _typeReference;
+      }
     }
-    ex.getParameters();
-    Classifier _instance_1 = ex.getInstance();
-    IUMLTypeReference _typeReference = this.typeFactory.typeReference(_instance_1);
-    result = _typeReference;
     return new Result<IUMLTypeReference>(result);
   }
   
