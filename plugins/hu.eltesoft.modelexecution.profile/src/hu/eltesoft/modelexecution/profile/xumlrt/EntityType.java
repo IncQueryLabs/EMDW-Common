@@ -13,7 +13,7 @@ import org.eclipse.emf.common.util.Enumerator;
  * A representation of the literals of the enumeration '<em><b>Entity Type</b></em>',
  * and utility methods for working with them.
  * <!-- end-user-doc -->
- * @see hu.eltesoft.modelexecution.profile.xumlrt.xumlrtPackage#getEntityType()
+ * @see hu.eltesoft.modelexecution.profile.xumlrt.XUMLRTPackage#getEntityType()
  * @model
  * @generated
  */

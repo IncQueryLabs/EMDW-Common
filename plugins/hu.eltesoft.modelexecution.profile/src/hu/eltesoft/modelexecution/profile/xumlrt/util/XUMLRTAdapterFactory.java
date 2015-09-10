@@ -16,17 +16,17 @@ import org.eclipse.emf.ecore.EObject;
  * The <b>Adapter Factory</b> for the model.
  * It provides an adapter <code>createXXX</code> method for each class of the model.
  * <!-- end-user-doc -->
- * @see hu.eltesoft.modelexecution.profile.xumlrt.xumlrtPackage
+ * @see hu.eltesoft.modelexecution.profile.xumlrt.XUMLRTPackage
  * @generated
  */
-public class xumlrtAdapterFactory extends AdapterFactoryImpl {
+public class XUMLRTAdapterFactory extends AdapterFactoryImpl {
 	/**
 	 * The cached model package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected static xumlrtPackage modelPackage;
+	protected static XUMLRTPackage modelPackage;
 
 	/**
 	 * Creates an instance of the adapter factory.
@@ -34,9 +34,9 @@ public class xumlrtAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public xumlrtAdapterFactory() {
+	public XUMLRTAdapterFactory() {
 		if (modelPackage == null) {
-			modelPackage = xumlrtPackage.eINSTANCE;
+			modelPackage = XUMLRTPackage.eINSTANCE;
 		}
 	}
 
@@ -65,8 +65,8 @@ public class xumlrtAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected xumlrtSwitch<Adapter> modelSwitch =
-		new xumlrtSwitch<Adapter>() {
+	protected XUMLRTSwitch<Adapter> modelSwitch =
+		new XUMLRTSwitch<Adapter>() {
 			@Override
 			public Adapter caseCallable(Callable object) {
 				return createCallableAdapter();
@@ -135,4 +135,4 @@ public class xumlrtAdapterFactory extends AdapterFactoryImpl {
 		return null;
 	}
 
-} //xumlrtAdapterFactory
+} //XUMLRTAdapterFactory

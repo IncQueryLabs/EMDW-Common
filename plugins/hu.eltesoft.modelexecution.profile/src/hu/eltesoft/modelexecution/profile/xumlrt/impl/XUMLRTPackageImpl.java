@@ -5,11 +5,10 @@ package hu.eltesoft.modelexecution.profile.xumlrt.impl;
 import hu.eltesoft.modelexecution.profile.xumlrt.Callable;
 import hu.eltesoft.modelexecution.profile.xumlrt.EntityType;
 import hu.eltesoft.modelexecution.profile.xumlrt.ExternalEntity;
+import hu.eltesoft.modelexecution.profile.xumlrt.XUMLRTFactory;
+import hu.eltesoft.modelexecution.profile.xumlrt.XUMLRTPackage;
 
-import hu.eltesoft.modelexecution.profile.xumlrt.util.xumlrtValidator;
-
-import hu.eltesoft.modelexecution.profile.xumlrt.xumlrtFactory;
-import hu.eltesoft.modelexecution.profile.xumlrt.xumlrtPackage;
+import hu.eltesoft.modelexecution.profile.xumlrt.util.XUMLRTValidator;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -32,7 +31,7 @@ import org.eclipse.uml2.uml.UMLPackage;
  * <!-- end-user-doc -->
  * @generated
  */
-public class xumlrtPackageImpl extends EPackageImpl implements xumlrtPackage {
+public class XUMLRTPackageImpl extends EPackageImpl implements XUMLRTPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -65,12 +64,12 @@ public class xumlrtPackageImpl extends EPackageImpl implements xumlrtPackage {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see org.eclipse.emf.ecore.EPackage.Registry
-	 * @see hu.eltesoft.modelexecution.profile.xumlrt.xumlrtPackage#eNS_URI
+	 * @see hu.eltesoft.modelexecution.profile.xumlrt.XUMLRTPackage#eNS_URI
 	 * @see #init()
 	 * @generated
 	 */
-	private xumlrtPackageImpl() {
-		super(eNS_URI, xumlrtFactory.eINSTANCE);
+	private XUMLRTPackageImpl() {
+		super(eNS_URI, XUMLRTFactory.eINSTANCE);
 	}
 
 	/**
@@ -83,7 +82,7 @@ public class xumlrtPackageImpl extends EPackageImpl implements xumlrtPackage {
 	/**
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
 	 * 
-	 * <p>This method is used to initialize {@link xumlrtPackage#eINSTANCE} when that field is accessed.
+	 * <p>This method is used to initialize {@link XUMLRTPackage#eINSTANCE} when that field is accessed.
 	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -92,11 +91,11 @@ public class xumlrtPackageImpl extends EPackageImpl implements xumlrtPackage {
 	 * @see #initializePackageContents()
 	 * @generated
 	 */
-	public static xumlrtPackage init() {
-		if (isInited) return (xumlrtPackage)EPackage.Registry.INSTANCE.getEPackage(xumlrtPackage.eNS_URI);
+	public static XUMLRTPackage init() {
+		if (isInited) return (XUMLRTPackage)EPackage.Registry.INSTANCE.getEPackage(XUMLRTPackage.eNS_URI);
 
 		// Obtain or create and register package
-		xumlrtPackageImpl thexumlrtPackage = (xumlrtPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof xumlrtPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new xumlrtPackageImpl());
+		XUMLRTPackageImpl theXUMLRTPackage = (XUMLRTPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof XUMLRTPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new XUMLRTPackageImpl());
 
 		isInited = true;
 
@@ -104,27 +103,27 @@ public class xumlrtPackageImpl extends EPackageImpl implements xumlrtPackage {
 		UMLPackage.eINSTANCE.eClass();
 
 		// Create package meta-data objects
-		thexumlrtPackage.createPackageContents();
+		theXUMLRTPackage.createPackageContents();
 
 		// Initialize created meta-data
-		thexumlrtPackage.initializePackageContents();
+		theXUMLRTPackage.initializePackageContents();
 
 		// Register package validator
 		EValidator.Registry.INSTANCE.put
-			(thexumlrtPackage, 
+			(theXUMLRTPackage, 
 			 new EValidator.Descriptor() {
 				 public EValidator getEValidator() {
-					 return xumlrtValidator.INSTANCE;
+					 return XUMLRTValidator.INSTANCE;
 				 }
 			 });
 
 		// Mark meta-data to indicate it can't be changed
-		thexumlrtPackage.freeze();
+		theXUMLRTPackage.freeze();
 
   
 		// Update the registry and return the package
-		EPackage.Registry.INSTANCE.put(xumlrtPackage.eNS_URI, thexumlrtPackage);
-		return thexumlrtPackage;
+		EPackage.Registry.INSTANCE.put(XUMLRTPackage.eNS_URI, theXUMLRTPackage);
+		return theXUMLRTPackage;
 	}
 
 	/**
@@ -197,6 +196,24 @@ public class xumlrtPackageImpl extends EPackageImpl implements xumlrtPackage {
 	 */
 	public EAttribute getExternalEntity_Type() {
 		return (EAttribute)externalEntityEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getExternalEntity_ExternalHeaderLocation() {
+		return (EAttribute)externalEntityEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getExternalEntity_ExternalNamespace() {
+		return (EAttribute)externalEntityEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -312,8 +329,8 @@ public class xumlrtPackageImpl extends EPackageImpl implements xumlrtPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public xumlrtFactory getxumlrtFactory() {
-		return (xumlrtFactory)getEFactoryInstance();
+	public XUMLRTFactory getXUMLRTFactory() {
+		return (XUMLRTFactory)getEFactoryInstance();
 	}
 
 	/**
@@ -344,6 +361,8 @@ public class xumlrtPackageImpl extends EPackageImpl implements xumlrtPackage {
 		createEReference(externalEntityEClass, EXTERNAL_ENTITY__BASE_CLASS);
 		createEAttribute(externalEntityEClass, EXTERNAL_ENTITY__CLASS);
 		createEAttribute(externalEntityEClass, EXTERNAL_ENTITY__TYPE);
+		createEAttribute(externalEntityEClass, EXTERNAL_ENTITY__EXTERNAL_HEADER_LOCATION);
+		createEAttribute(externalEntityEClass, EXTERNAL_ENTITY__EXTERNAL_NAMESPACE);
 		createEOperation(externalEntityEClass, EXTERNAL_ENTITY___ALL_OPERATIONS_ARE_STATIC__DIAGNOSTICCHAIN_MAP);
 		createEOperation(externalEntityEClass, EXTERNAL_ENTITY___HAS_NO_ATTRIBUTES__DIAGNOSTICCHAIN_MAP);
 		createEOperation(externalEntityEClass, EXTERNAL_ENTITY___REFERENCED_CLASS_NAME_IS_VALID__DIAGNOSTICCHAIN_MAP);
@@ -419,6 +438,8 @@ public class xumlrtPackageImpl extends EPackageImpl implements xumlrtPackage {
 		initEReference(getExternalEntity_Base_Class(), theUMLPackage.getClass_(), null, "base_Class", null, 1, 1, ExternalEntity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEAttribute(getExternalEntity_Class(), theTypesPackage.getString(), "class", null, 1, 1, ExternalEntity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEAttribute(getExternalEntity_Type(), this.getEntityType(), "type", "Stateless", 1, 1, ExternalEntity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getExternalEntity_ExternalHeaderLocation(), theTypesPackage.getString(), "externalHeaderLocation", null, 1, 1, ExternalEntity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getExternalEntity_ExternalNamespace(), theTypesPackage.getString(), "externalNamespace", null, 1, 1, ExternalEntity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
 		op = initEOperation(getExternalEntity__AllOperationsAreStatic__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "AllOperationsAreStatic", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostics", 0, 1, IS_UNIQUE, IS_ORDERED);
@@ -548,4 +569,4 @@ public class xumlrtPackageImpl extends EPackageImpl implements xumlrtPackage {
 		   });
 	}
 
-} //xumlrtPackageImpl
+} //XUMLRTPackageImpl

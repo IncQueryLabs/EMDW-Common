@@ -20,9 +20,11 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link hu.eltesoft.modelexecution.profile.xumlrt.ExternalEntity#getBase_Class <em>Base Class</em>}</li>
  *   <li>{@link hu.eltesoft.modelexecution.profile.xumlrt.ExternalEntity#getClass_ <em>Class</em>}</li>
  *   <li>{@link hu.eltesoft.modelexecution.profile.xumlrt.ExternalEntity#getType <em>Type</em>}</li>
+ *   <li>{@link hu.eltesoft.modelexecution.profile.xumlrt.ExternalEntity#getExternalHeaderLocation <em>External Header Location</em>}</li>
+ *   <li>{@link hu.eltesoft.modelexecution.profile.xumlrt.ExternalEntity#getExternalNamespace <em>External Namespace</em>}</li>
  * </ul>
  *
- * @see hu.eltesoft.modelexecution.profile.xumlrt.xumlrtPackage#getExternalEntity()
+ * @see hu.eltesoft.modelexecution.profile.xumlrt.XUMLRTPackage#getExternalEntity()
  * @model
  * @generated
  */
@@ -37,7 +39,7 @@ public interface ExternalEntity extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Base Class</em>' reference.
 	 * @see #setBase_Class(org.eclipse.uml2.uml.Class)
-	 * @see hu.eltesoft.modelexecution.profile.xumlrt.xumlrtPackage#getExternalEntity_Base_Class()
+	 * @see hu.eltesoft.modelexecution.profile.xumlrt.XUMLRTPackage#getExternalEntity_Base_Class()
 	 * @model required="true" ordered="false"
 	 * @generated
 	 */
@@ -63,7 +65,7 @@ public interface ExternalEntity extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Class</em>' attribute.
 	 * @see #setClass_(String)
-	 * @see hu.eltesoft.modelexecution.profile.xumlrt.xumlrtPackage#getExternalEntity_Class()
+	 * @see hu.eltesoft.modelexecution.profile.xumlrt.XUMLRTPackage#getExternalEntity_Class()
 	 * @model dataType="org.eclipse.uml2.types.String" required="true" ordered="false"
 	 * @generated
 	 */
@@ -92,7 +94,7 @@ public interface ExternalEntity extends EObject {
 	 * @return the value of the '<em>Type</em>' attribute.
 	 * @see hu.eltesoft.modelexecution.profile.xumlrt.EntityType
 	 * @see #setType(EntityType)
-	 * @see hu.eltesoft.modelexecution.profile.xumlrt.xumlrtPackage#getExternalEntity_Type()
+	 * @see hu.eltesoft.modelexecution.profile.xumlrt.XUMLRTPackage#getExternalEntity_Type()
 	 * @model default="Stateless" required="true" ordered="false"
 	 * @generated
 	 */
@@ -108,6 +110,58 @@ public interface ExternalEntity extends EObject {
 	 * @generated
 	 */
 	void setType(EntityType value);
+
+	/**
+	 * Returns the value of the '<em><b>External Header Location</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>External Header Location</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>External Header Location</em>' attribute.
+	 * @see #setExternalHeaderLocation(String)
+	 * @see hu.eltesoft.modelexecution.profile.xumlrt.XUMLRTPackage#getExternalEntity_ExternalHeaderLocation()
+	 * @model dataType="org.eclipse.uml2.types.String" required="true" ordered="false"
+	 * @generated
+	 */
+	String getExternalHeaderLocation();
+
+	/**
+	 * Sets the value of the '{@link hu.eltesoft.modelexecution.profile.xumlrt.ExternalEntity#getExternalHeaderLocation <em>External Header Location</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>External Header Location</em>' attribute.
+	 * @see #getExternalHeaderLocation()
+	 * @generated
+	 */
+	void setExternalHeaderLocation(String value);
+
+	/**
+	 * Returns the value of the '<em><b>External Namespace</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>External Namespace</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>External Namespace</em>' attribute.
+	 * @see #setExternalNamespace(String)
+	 * @see hu.eltesoft.modelexecution.profile.xumlrt.XUMLRTPackage#getExternalEntity_ExternalNamespace()
+	 * @model dataType="org.eclipse.uml2.types.String" required="true" ordered="false"
+	 * @generated
+	 */
+	String getExternalNamespace();
+
+	/**
+	 * Sets the value of the '{@link hu.eltesoft.modelexecution.profile.xumlrt.ExternalEntity#getExternalNamespace <em>External Namespace</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>External Namespace</em>' attribute.
+	 * @see #getExternalNamespace()
+	 * @generated
+	 */
+	void setExternalNamespace(String value);
 
 	/**
 	 * <!-- begin-user-doc -->

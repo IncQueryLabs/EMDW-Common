@@ -22,8 +22,8 @@ import org.eclipse.uml2.uml.ParameterDirectionKind;
 
 import hu.eltesoft.modelexecution.profile.xumlrt.EntityType;
 import hu.eltesoft.modelexecution.profile.xumlrt.ExternalEntity;
-import hu.eltesoft.modelexecution.profile.xumlrt.xumlrtPackage;
-import hu.eltesoft.modelexecution.profile.xumlrt.util.xumlrtValidator;
+import hu.eltesoft.modelexecution.profile.xumlrt.XUMLRTPackage;
+import hu.eltesoft.modelexecution.profile.xumlrt.util.XUMLRTValidator;
 
 /**
  * <!-- begin-user-doc -->
@@ -36,6 +36,8 @@ import hu.eltesoft.modelexecution.profile.xumlrt.util.xumlrtValidator;
  *   <li>{@link hu.eltesoft.modelexecution.profile.xumlrt.impl.ExternalEntityImpl#getBase_Class <em>Base Class</em>}</li>
  *   <li>{@link hu.eltesoft.modelexecution.profile.xumlrt.impl.ExternalEntityImpl#getClass_ <em>Class</em>}</li>
  *   <li>{@link hu.eltesoft.modelexecution.profile.xumlrt.impl.ExternalEntityImpl#getType <em>Type</em>}</li>
+ *   <li>{@link hu.eltesoft.modelexecution.profile.xumlrt.impl.ExternalEntityImpl#getExternalHeaderLocation <em>External Header Location</em>}</li>
+ *   <li>{@link hu.eltesoft.modelexecution.profile.xumlrt.impl.ExternalEntityImpl#getExternalNamespace <em>External Namespace</em>}</li>
  * </ul>
  *
  * @generated
@@ -92,6 +94,46 @@ public class ExternalEntityImpl extends MinimalEObjectImpl.Container implements 
 	protected EntityType type = TYPE_EDEFAULT;
 
 	/**
+	 * The default value of the '{@link #getExternalHeaderLocation() <em>External Header Location</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getExternalHeaderLocation()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String EXTERNAL_HEADER_LOCATION_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getExternalHeaderLocation() <em>External Header Location</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getExternalHeaderLocation()
+	 * @generated
+	 * @ordered
+	 */
+	protected String externalHeaderLocation = EXTERNAL_HEADER_LOCATION_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getExternalNamespace() <em>External Namespace</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getExternalNamespace()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String EXTERNAL_NAMESPACE_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getExternalNamespace() <em>External Namespace</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getExternalNamespace()
+	 * @generated
+	 * @ordered
+	 */
+	protected String externalNamespace = EXTERNAL_NAMESPACE_EDEFAULT;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -107,7 +149,7 @@ public class ExternalEntityImpl extends MinimalEObjectImpl.Container implements 
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return xumlrtPackage.Literals.EXTERNAL_ENTITY;
+		return XUMLRTPackage.Literals.EXTERNAL_ENTITY;
 	}
 
 	/**
@@ -121,7 +163,7 @@ public class ExternalEntityImpl extends MinimalEObjectImpl.Container implements 
 			base_Class = (org.eclipse.uml2.uml.Class)eResolveProxy(oldBase_Class);
 			if (base_Class != oldBase_Class) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, xumlrtPackage.EXTERNAL_ENTITY__BASE_CLASS, oldBase_Class, base_Class));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, XUMLRTPackage.EXTERNAL_ENTITY__BASE_CLASS, oldBase_Class, base_Class));
 			}
 		}
 		return base_Class;
@@ -145,7 +187,7 @@ public class ExternalEntityImpl extends MinimalEObjectImpl.Container implements 
 		org.eclipse.uml2.uml.Class oldBase_Class = base_Class;
 		base_Class = newBase_Class;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, xumlrtPackage.EXTERNAL_ENTITY__BASE_CLASS, oldBase_Class, base_Class));
+			eNotify(new ENotificationImpl(this, Notification.SET, XUMLRTPackage.EXTERNAL_ENTITY__BASE_CLASS, oldBase_Class, base_Class));
 	}
 
 	/**
@@ -166,7 +208,7 @@ public class ExternalEntityImpl extends MinimalEObjectImpl.Container implements 
 		String oldClass = class_;
 		class_ = newClass;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, xumlrtPackage.EXTERNAL_ENTITY__CLASS, oldClass, class_));
+			eNotify(new ENotificationImpl(this, Notification.SET, XUMLRTPackage.EXTERNAL_ENTITY__CLASS, oldClass, class_));
 	}
 
 	/**
@@ -187,7 +229,49 @@ public class ExternalEntityImpl extends MinimalEObjectImpl.Container implements 
 		EntityType oldType = type;
 		type = newType == null ? TYPE_EDEFAULT : newType;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, xumlrtPackage.EXTERNAL_ENTITY__TYPE, oldType, type));
+			eNotify(new ENotificationImpl(this, Notification.SET, XUMLRTPackage.EXTERNAL_ENTITY__TYPE, oldType, type));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getExternalHeaderLocation() {
+		return externalHeaderLocation;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setExternalHeaderLocation(String newExternalHeaderLocation) {
+		String oldExternalHeaderLocation = externalHeaderLocation;
+		externalHeaderLocation = newExternalHeaderLocation;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, XUMLRTPackage.EXTERNAL_ENTITY__EXTERNAL_HEADER_LOCATION, oldExternalHeaderLocation, externalHeaderLocation));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getExternalNamespace() {
+		return externalNamespace;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setExternalNamespace(String newExternalNamespace) {
+		String oldExternalNamespace = externalNamespace;
+		externalNamespace = newExternalNamespace;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, XUMLRTPackage.EXTERNAL_ENTITY__EXTERNAL_NAMESPACE, oldExternalNamespace, externalNamespace));
 	}
 
 	/**
@@ -196,19 +280,21 @@ public class ExternalEntityImpl extends MinimalEObjectImpl.Container implements 
 	 * @generated
 	 */
 	public boolean AllOperationsAreStatic(DiagnosticChain diagnostics, Map<Object, Object> context) {
-		for (Operation o : getBase_Class().getOwnedOperations()) {
-			if (!o.isStatic()) {
-				if (diagnostics != null) {
-					diagnostics.add
-						(new BasicDiagnostic
-							(Diagnostic.ERROR,
-							 xumlrtValidator.DIAGNOSTIC_SOURCE,
-							 xumlrtValidator.EXTERNAL_ENTITY__ALL_OPERATIONS_ARE_STATIC,
-							 EcorePlugin.INSTANCE.getString("_UI_GenericInvariant_diagnostic", new Object[] { "AllOperationsAreStatic", EObjectValidator.getObjectLabel(this, context) }),
-							 new Object [] { this }));
-				}
-				return false;
+		// TODO: implement this method
+		// -> specify the condition that violates the invariant
+		// -> verify the details of the diagnostic, including severity and message
+		// Ensure that you remove @generated or mark it @generated NOT
+		if (false) {
+			if (diagnostics != null) {
+				diagnostics.add
+					(new BasicDiagnostic
+						(Diagnostic.ERROR,
+						 XUMLRTValidator.DIAGNOSTIC_SOURCE,
+						 XUMLRTValidator.EXTERNAL_ENTITY__ALL_OPERATIONS_ARE_STATIC,
+						 EcorePlugin.INSTANCE.getString("_UI_GenericInvariant_diagnostic", new Object[] { "AllOperationsAreStatic", EObjectValidator.getObjectLabel(this, context) }),
+						 new Object [] { this }));
 			}
+			return false;
 		}
 		return true;
 	}
@@ -224,8 +310,8 @@ public class ExternalEntityImpl extends MinimalEObjectImpl.Container implements 
 				diagnostics.add
 					(new BasicDiagnostic
 						(Diagnostic.ERROR,
-						 xumlrtValidator.DIAGNOSTIC_SOURCE,
-						 xumlrtValidator.EXTERNAL_ENTITY__HAS_NO_ATTRIBUTES,
+						 XUMLRTValidator.DIAGNOSTIC_SOURCE,
+						 XUMLRTValidator.EXTERNAL_ENTITY__HAS_NO_ATTRIBUTES,
 						 EcorePlugin.INSTANCE.getString("_UI_GenericInvariant_diagnostic", new Object[] { "HasNoAttributes", EObjectValidator.getObjectLabel(this, context) }),
 						 new Object [] { this }));
 			}
@@ -245,8 +331,8 @@ public class ExternalEntityImpl extends MinimalEObjectImpl.Container implements 
 				diagnostics.add
 					(new BasicDiagnostic
 						(Diagnostic.ERROR,
-						 xumlrtValidator.DIAGNOSTIC_SOURCE,
-						 xumlrtValidator.EXTERNAL_ENTITY__REFERENCED_CLASS_NAME_IS_VALID,
+						 XUMLRTValidator.DIAGNOSTIC_SOURCE,
+						 XUMLRTValidator.EXTERNAL_ENTITY__REFERENCED_CLASS_NAME_IS_VALID,
 						 EcorePlugin.INSTANCE.getString("_UI_GenericInvariant_diagnostic", new Object[] { "ReferencedClassNameIsValid", EObjectValidator.getObjectLabel(this, context) }),
 						 new Object [] { this }));
 			}
@@ -267,8 +353,8 @@ public class ExternalEntityImpl extends MinimalEObjectImpl.Container implements 
 					diagnostics.add
 						(new BasicDiagnostic
 							(Diagnostic.ERROR,
-							 xumlrtValidator.DIAGNOSTIC_SOURCE,
-							 xumlrtValidator.EXTERNAL_ENTITY__OPERATION_NAMES_ARE_VALID,
+							 XUMLRTValidator.DIAGNOSTIC_SOURCE,
+							 XUMLRTValidator.EXTERNAL_ENTITY__OPERATION_NAMES_ARE_VALID,
 							 EcorePlugin.INSTANCE.getString("_UI_GenericInvariant_diagnostic", new Object[] { "OperationNamesAreValid", EObjectValidator.getObjectLabel(this, context) }),
 							 new Object [] { this }));
 				}
@@ -290,8 +376,8 @@ public class ExternalEntityImpl extends MinimalEObjectImpl.Container implements 
 					diagnostics.add
 						(new BasicDiagnostic
 							(Diagnostic.ERROR,
-							 xumlrtValidator.DIAGNOSTIC_SOURCE,
-							 xumlrtValidator.EXTERNAL_ENTITY__NUMBER_OF_PARAMETERS_IS_VALID,
+							 XUMLRTValidator.DIAGNOSTIC_SOURCE,
+							 XUMLRTValidator.EXTERNAL_ENTITY__NUMBER_OF_PARAMETERS_IS_VALID,
 							 EcorePlugin.INSTANCE.getString("_UI_GenericInvariant_diagnostic", new Object[] { "NumberOfParametersIsValid", EObjectValidator.getObjectLabel(this, context) }),
 							 new Object [] { this }));
 				}
@@ -314,8 +400,8 @@ public class ExternalEntityImpl extends MinimalEObjectImpl.Container implements 
 						diagnostics.add
 							(new BasicDiagnostic
 								(Diagnostic.ERROR,
-								 xumlrtValidator.DIAGNOSTIC_SOURCE,
-								 xumlrtValidator.EXTERNAL_ENTITY__PARAMETER_IS_CALLABLE,
+								 XUMLRTValidator.DIAGNOSTIC_SOURCE,
+								 XUMLRTValidator.EXTERNAL_ENTITY__PARAMETER_IS_CALLABLE,
 								 EcorePlugin.INSTANCE.getString("_UI_GenericInvariant_diagnostic", new Object[] { "ParameterIsCallable", EObjectValidator.getObjectLabel(this, context) }),
 								 new Object [] { this }));
 					}
@@ -339,8 +425,8 @@ public class ExternalEntityImpl extends MinimalEObjectImpl.Container implements 
 						diagnostics.add
 							(new BasicDiagnostic
 								(Diagnostic.ERROR,
-								 xumlrtValidator.DIAGNOSTIC_SOURCE,
-								 xumlrtValidator.EXTERNAL_ENTITY__PARAMETER_DIRECTION_IS_IN,
+								 XUMLRTValidator.DIAGNOSTIC_SOURCE,
+								 XUMLRTValidator.EXTERNAL_ENTITY__PARAMETER_DIRECTION_IS_IN,
 								 EcorePlugin.INSTANCE.getString("_UI_GenericInvariant_diagnostic", new Object[] { "ParameterDirectionIsIn", EObjectValidator.getObjectLabel(this, context) }),
 								 new Object [] { this }));
 					}
@@ -364,8 +450,8 @@ public class ExternalEntityImpl extends MinimalEObjectImpl.Container implements 
 						diagnostics.add
 							(new BasicDiagnostic
 								(Diagnostic.ERROR,
-								 xumlrtValidator.DIAGNOSTIC_SOURCE,
-								 xumlrtValidator.EXTERNAL_ENTITY__PARAMETER_NAME_IS_VALID,
+								 XUMLRTValidator.DIAGNOSTIC_SOURCE,
+								 XUMLRTValidator.EXTERNAL_ENTITY__PARAMETER_NAME_IS_VALID,
 								 EcorePlugin.INSTANCE.getString("_UI_GenericInvariant_diagnostic", new Object[] { "ParameterNameIsValid", EObjectValidator.getObjectLabel(this, context) }),
 								 new Object [] { this }));
 					}
@@ -389,8 +475,8 @@ public class ExternalEntityImpl extends MinimalEObjectImpl.Container implements 
 						diagnostics.add
 							(new BasicDiagnostic
 								(Diagnostic.ERROR,
-								 xumlrtValidator.DIAGNOSTIC_SOURCE,
-								 xumlrtValidator.EXTERNAL_ENTITY__PARAMETER_MULTIPLICITY_IS_ONE,
+								 XUMLRTValidator.DIAGNOSTIC_SOURCE,
+								 XUMLRTValidator.EXTERNAL_ENTITY__PARAMETER_MULTIPLICITY_IS_ONE,
 								 EcorePlugin.INSTANCE.getString("_UI_GenericInvariant_diagnostic", new Object[] { "ParameterMultiplicityIsOne", EObjectValidator.getObjectLabel(this, context) }),
 								 new Object [] { this }));
 					}
@@ -412,8 +498,8 @@ public class ExternalEntityImpl extends MinimalEObjectImpl.Container implements 
 				diagnostics.add
 					(new BasicDiagnostic
 						(Diagnostic.ERROR,
-						 xumlrtValidator.DIAGNOSTIC_SOURCE,
-						 xumlrtValidator.EXTERNAL_ENTITY__CLASS_MUST_BE_ABSTRACT,
+						 XUMLRTValidator.DIAGNOSTIC_SOURCE,
+						 XUMLRTValidator.EXTERNAL_ENTITY__CLASS_MUST_BE_ABSTRACT,
 						 EcorePlugin.INSTANCE.getString("_UI_GenericInvariant_diagnostic", new Object[] { "ClassMustBeAbstract", EObjectValidator.getObjectLabel(this, context) }),
 						 new Object [] { this }));
 			}
@@ -433,8 +519,8 @@ public class ExternalEntityImpl extends MinimalEObjectImpl.Container implements 
 				diagnostics.add
 					(new BasicDiagnostic
 						(Diagnostic.ERROR,
-						 xumlrtValidator.DIAGNOSTIC_SOURCE,
-						 xumlrtValidator.EXTERNAL_ENTITY__CLASS_NAME_IS_VALID,
+						 XUMLRTValidator.DIAGNOSTIC_SOURCE,
+						 XUMLRTValidator.EXTERNAL_ENTITY__CLASS_NAME_IS_VALID,
 						 EcorePlugin.INSTANCE.getString("_UI_GenericInvariant_diagnostic", new Object[] { "ClassNameIsValid", EObjectValidator.getObjectLabel(this, context) }),
 						 new Object [] { this }));
 			}
@@ -451,13 +537,17 @@ public class ExternalEntityImpl extends MinimalEObjectImpl.Container implements 
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case xumlrtPackage.EXTERNAL_ENTITY__BASE_CLASS:
+			case XUMLRTPackage.EXTERNAL_ENTITY__BASE_CLASS:
 				if (resolve) return getBase_Class();
 				return basicGetBase_Class();
-			case xumlrtPackage.EXTERNAL_ENTITY__CLASS:
+			case XUMLRTPackage.EXTERNAL_ENTITY__CLASS:
 				return getClass_();
-			case xumlrtPackage.EXTERNAL_ENTITY__TYPE:
+			case XUMLRTPackage.EXTERNAL_ENTITY__TYPE:
 				return getType();
+			case XUMLRTPackage.EXTERNAL_ENTITY__EXTERNAL_HEADER_LOCATION:
+				return getExternalHeaderLocation();
+			case XUMLRTPackage.EXTERNAL_ENTITY__EXTERNAL_NAMESPACE:
+				return getExternalNamespace();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -470,14 +560,20 @@ public class ExternalEntityImpl extends MinimalEObjectImpl.Container implements 
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case xumlrtPackage.EXTERNAL_ENTITY__BASE_CLASS:
+			case XUMLRTPackage.EXTERNAL_ENTITY__BASE_CLASS:
 				setBase_Class((org.eclipse.uml2.uml.Class)newValue);
 				return;
-			case xumlrtPackage.EXTERNAL_ENTITY__CLASS:
+			case XUMLRTPackage.EXTERNAL_ENTITY__CLASS:
 				setClass_((String)newValue);
 				return;
-			case xumlrtPackage.EXTERNAL_ENTITY__TYPE:
+			case XUMLRTPackage.EXTERNAL_ENTITY__TYPE:
 				setType((EntityType)newValue);
+				return;
+			case XUMLRTPackage.EXTERNAL_ENTITY__EXTERNAL_HEADER_LOCATION:
+				setExternalHeaderLocation((String)newValue);
+				return;
+			case XUMLRTPackage.EXTERNAL_ENTITY__EXTERNAL_NAMESPACE:
+				setExternalNamespace((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -491,14 +587,20 @@ public class ExternalEntityImpl extends MinimalEObjectImpl.Container implements 
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case xumlrtPackage.EXTERNAL_ENTITY__BASE_CLASS:
+			case XUMLRTPackage.EXTERNAL_ENTITY__BASE_CLASS:
 				setBase_Class((org.eclipse.uml2.uml.Class)null);
 				return;
-			case xumlrtPackage.EXTERNAL_ENTITY__CLASS:
+			case XUMLRTPackage.EXTERNAL_ENTITY__CLASS:
 				setClass_(CLASS_EDEFAULT);
 				return;
-			case xumlrtPackage.EXTERNAL_ENTITY__TYPE:
+			case XUMLRTPackage.EXTERNAL_ENTITY__TYPE:
 				setType(TYPE_EDEFAULT);
+				return;
+			case XUMLRTPackage.EXTERNAL_ENTITY__EXTERNAL_HEADER_LOCATION:
+				setExternalHeaderLocation(EXTERNAL_HEADER_LOCATION_EDEFAULT);
+				return;
+			case XUMLRTPackage.EXTERNAL_ENTITY__EXTERNAL_NAMESPACE:
+				setExternalNamespace(EXTERNAL_NAMESPACE_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -512,12 +614,16 @@ public class ExternalEntityImpl extends MinimalEObjectImpl.Container implements 
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case xumlrtPackage.EXTERNAL_ENTITY__BASE_CLASS:
+			case XUMLRTPackage.EXTERNAL_ENTITY__BASE_CLASS:
 				return base_Class != null;
-			case xumlrtPackage.EXTERNAL_ENTITY__CLASS:
+			case XUMLRTPackage.EXTERNAL_ENTITY__CLASS:
 				return CLASS_EDEFAULT == null ? class_ != null : !CLASS_EDEFAULT.equals(class_);
-			case xumlrtPackage.EXTERNAL_ENTITY__TYPE:
+			case XUMLRTPackage.EXTERNAL_ENTITY__TYPE:
 				return type != TYPE_EDEFAULT;
+			case XUMLRTPackage.EXTERNAL_ENTITY__EXTERNAL_HEADER_LOCATION:
+				return EXTERNAL_HEADER_LOCATION_EDEFAULT == null ? externalHeaderLocation != null : !EXTERNAL_HEADER_LOCATION_EDEFAULT.equals(externalHeaderLocation);
+			case XUMLRTPackage.EXTERNAL_ENTITY__EXTERNAL_NAMESPACE:
+				return EXTERNAL_NAMESPACE_EDEFAULT == null ? externalNamespace != null : !EXTERNAL_NAMESPACE_EDEFAULT.equals(externalNamespace);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -531,27 +637,27 @@ public class ExternalEntityImpl extends MinimalEObjectImpl.Container implements 
 	@SuppressWarnings("unchecked")
 	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
 		switch (operationID) {
-			case xumlrtPackage.EXTERNAL_ENTITY___ALL_OPERATIONS_ARE_STATIC__DIAGNOSTICCHAIN_MAP:
+			case XUMLRTPackage.EXTERNAL_ENTITY___ALL_OPERATIONS_ARE_STATIC__DIAGNOSTICCHAIN_MAP:
 				return AllOperationsAreStatic((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case xumlrtPackage.EXTERNAL_ENTITY___HAS_NO_ATTRIBUTES__DIAGNOSTICCHAIN_MAP:
+			case XUMLRTPackage.EXTERNAL_ENTITY___HAS_NO_ATTRIBUTES__DIAGNOSTICCHAIN_MAP:
 				return HasNoAttributes((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case xumlrtPackage.EXTERNAL_ENTITY___REFERENCED_CLASS_NAME_IS_VALID__DIAGNOSTICCHAIN_MAP:
+			case XUMLRTPackage.EXTERNAL_ENTITY___REFERENCED_CLASS_NAME_IS_VALID__DIAGNOSTICCHAIN_MAP:
 				return ReferencedClassNameIsValid((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case xumlrtPackage.EXTERNAL_ENTITY___OPERATION_NAMES_ARE_VALID__DIAGNOSTICCHAIN_MAP:
+			case XUMLRTPackage.EXTERNAL_ENTITY___OPERATION_NAMES_ARE_VALID__DIAGNOSTICCHAIN_MAP:
 				return OperationNamesAreValid((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case xumlrtPackage.EXTERNAL_ENTITY___NUMBER_OF_PARAMETERS_IS_VALID__DIAGNOSTICCHAIN_MAP:
+			case XUMLRTPackage.EXTERNAL_ENTITY___NUMBER_OF_PARAMETERS_IS_VALID__DIAGNOSTICCHAIN_MAP:
 				return NumberOfParametersIsValid((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case xumlrtPackage.EXTERNAL_ENTITY___PARAMETER_IS_CALLABLE__DIAGNOSTICCHAIN_MAP:
+			case XUMLRTPackage.EXTERNAL_ENTITY___PARAMETER_IS_CALLABLE__DIAGNOSTICCHAIN_MAP:
 				return ParameterIsCallable((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case xumlrtPackage.EXTERNAL_ENTITY___PARAMETER_DIRECTION_IS_IN__DIAGNOSTICCHAIN_MAP:
+			case XUMLRTPackage.EXTERNAL_ENTITY___PARAMETER_DIRECTION_IS_IN__DIAGNOSTICCHAIN_MAP:
 				return ParameterDirectionIsIn((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case xumlrtPackage.EXTERNAL_ENTITY___PARAMETER_NAME_IS_VALID__DIAGNOSTICCHAIN_MAP:
+			case XUMLRTPackage.EXTERNAL_ENTITY___PARAMETER_NAME_IS_VALID__DIAGNOSTICCHAIN_MAP:
 				return ParameterNameIsValid((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case xumlrtPackage.EXTERNAL_ENTITY___PARAMETER_MULTIPLICITY_IS_ONE__DIAGNOSTICCHAIN_MAP:
+			case XUMLRTPackage.EXTERNAL_ENTITY___PARAMETER_MULTIPLICITY_IS_ONE__DIAGNOSTICCHAIN_MAP:
 				return ParameterMultiplicityIsOne((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case xumlrtPackage.EXTERNAL_ENTITY___CLASS_MUST_BE_ABSTRACT__DIAGNOSTICCHAIN_MAP:
+			case XUMLRTPackage.EXTERNAL_ENTITY___CLASS_MUST_BE_ABSTRACT__DIAGNOSTICCHAIN_MAP:
 				return ClassMustBeAbstract((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case xumlrtPackage.EXTERNAL_ENTITY___CLASS_NAME_IS_VALID__DIAGNOSTICCHAIN_MAP:
+			case XUMLRTPackage.EXTERNAL_ENTITY___CLASS_NAME_IS_VALID__DIAGNOSTICCHAIN_MAP:
 				return ClassNameIsValid((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}
 		return super.eInvoke(operationID, arguments);
@@ -571,6 +677,10 @@ public class ExternalEntityImpl extends MinimalEObjectImpl.Container implements 
 		result.append(class_);
 		result.append(", type: ");
 		result.append(type);
+		result.append(", externalHeaderLocation: ");
+		result.append(externalHeaderLocation);
+		result.append(", externalNamespace: ");
+		result.append(externalNamespace);
 		result.append(')');
 		return result.toString();
 	}

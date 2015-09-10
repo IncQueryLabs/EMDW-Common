@@ -19,8 +19,8 @@ import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.uml2.uml.Reception;
 
 import hu.eltesoft.modelexecution.profile.xumlrt.Callable;
-import hu.eltesoft.modelexecution.profile.xumlrt.xumlrtPackage;
-import hu.eltesoft.modelexecution.profile.xumlrt.util.xumlrtValidator;
+import hu.eltesoft.modelexecution.profile.xumlrt.XUMLRTPackage;
+import hu.eltesoft.modelexecution.profile.xumlrt.util.XUMLRTValidator;
 
 /**
  * <!-- begin-user-doc -->
@@ -62,7 +62,7 @@ public class CallableImpl extends MinimalEObjectImpl.Container implements Callab
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return xumlrtPackage.Literals.CALLABLE;
+		return XUMLRTPackage.Literals.CALLABLE;
 	}
 
 	/**
@@ -76,7 +76,7 @@ public class CallableImpl extends MinimalEObjectImpl.Container implements Callab
 			base_Class = (org.eclipse.uml2.uml.Class)eResolveProxy(oldBase_Class);
 			if (base_Class != oldBase_Class) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, xumlrtPackage.CALLABLE__BASE_CLASS, oldBase_Class, base_Class));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, XUMLRTPackage.CALLABLE__BASE_CLASS, oldBase_Class, base_Class));
 			}
 		}
 		return base_Class;
@@ -100,7 +100,7 @@ public class CallableImpl extends MinimalEObjectImpl.Container implements Callab
 		org.eclipse.uml2.uml.Class oldBase_Class = base_Class;
 		base_Class = newBase_Class;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, xumlrtPackage.CALLABLE__BASE_CLASS, oldBase_Class, base_Class));
+			eNotify(new ENotificationImpl(this, Notification.SET, XUMLRTPackage.CALLABLE__BASE_CLASS, oldBase_Class, base_Class));
 	}
 
 	/**
@@ -114,8 +114,8 @@ public class CallableImpl extends MinimalEObjectImpl.Container implements Callab
 				diagnostics.add
 					(new BasicDiagnostic
 						(Diagnostic.ERROR,
-						 xumlrtValidator.DIAGNOSTIC_SOURCE,
-						 xumlrtValidator.CALLABLE__CLASS_NAME_IS_VALID,
+						 XUMLRTValidator.DIAGNOSTIC_SOURCE,
+						 XUMLRTValidator.CALLABLE__CLASS_NAME_IS_VALID,
 						 EcorePlugin.INSTANCE.getString("_UI_GenericInvariant_diagnostic", new Object[] { "ClassNameIsValid", EObjectValidator.getObjectLabel(this, context) }),
 						 new Object [] { this }));
 			}
@@ -136,8 +136,8 @@ public class CallableImpl extends MinimalEObjectImpl.Container implements Callab
 					diagnostics.add
 						(new BasicDiagnostic
 							(Diagnostic.ERROR,
-							 xumlrtValidator.DIAGNOSTIC_SOURCE,
-							 xumlrtValidator.CALLABLE__RECEPTION_NAMES_ARE_VALID,
+							 XUMLRTValidator.DIAGNOSTIC_SOURCE,
+							 XUMLRTValidator.CALLABLE__RECEPTION_NAMES_ARE_VALID,
 							 EcorePlugin.INSTANCE.getString("_UI_GenericInvariant_diagnostic", new Object[] { "ReceptionNamesAreValid", EObjectValidator.getObjectLabel(this, context) }),
 							 new Object [] { this }));
 				}
@@ -155,7 +155,7 @@ public class CallableImpl extends MinimalEObjectImpl.Container implements Callab
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case xumlrtPackage.CALLABLE__BASE_CLASS:
+			case XUMLRTPackage.CALLABLE__BASE_CLASS:
 				if (resolve) return getBase_Class();
 				return basicGetBase_Class();
 		}
@@ -170,7 +170,7 @@ public class CallableImpl extends MinimalEObjectImpl.Container implements Callab
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case xumlrtPackage.CALLABLE__BASE_CLASS:
+			case XUMLRTPackage.CALLABLE__BASE_CLASS:
 				setBase_Class((org.eclipse.uml2.uml.Class)newValue);
 				return;
 		}
@@ -185,7 +185,7 @@ public class CallableImpl extends MinimalEObjectImpl.Container implements Callab
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case xumlrtPackage.CALLABLE__BASE_CLASS:
+			case XUMLRTPackage.CALLABLE__BASE_CLASS:
 				setBase_Class((org.eclipse.uml2.uml.Class)null);
 				return;
 		}
@@ -200,7 +200,7 @@ public class CallableImpl extends MinimalEObjectImpl.Container implements Callab
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case xumlrtPackage.CALLABLE__BASE_CLASS:
+			case XUMLRTPackage.CALLABLE__BASE_CLASS:
 				return base_Class != null;
 		}
 		return super.eIsSet(featureID);
@@ -215,9 +215,9 @@ public class CallableImpl extends MinimalEObjectImpl.Container implements Callab
 	@SuppressWarnings("unchecked")
 	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
 		switch (operationID) {
-			case xumlrtPackage.CALLABLE___CLASS_NAME_IS_VALID__DIAGNOSTICCHAIN_MAP:
+			case XUMLRTPackage.CALLABLE___CLASS_NAME_IS_VALID__DIAGNOSTICCHAIN_MAP:
 				return ClassNameIsValid((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case xumlrtPackage.CALLABLE___RECEPTION_NAMES_ARE_VALID__DIAGNOSTICCHAIN_MAP:
+			case XUMLRTPackage.CALLABLE___RECEPTION_NAMES_ARE_VALID__DIAGNOSTICCHAIN_MAP:
 				return ReceptionNamesAreValid((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}
 		return super.eInvoke(operationID, arguments);

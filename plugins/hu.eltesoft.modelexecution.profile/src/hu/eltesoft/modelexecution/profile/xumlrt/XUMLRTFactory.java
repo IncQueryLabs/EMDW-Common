@@ -9,17 +9,17 @@ import org.eclipse.emf.ecore.EFactory;
  * The <b>Factory</b> for the model.
  * It provides a create method for each non-abstract class of the model.
  * <!-- end-user-doc -->
- * @see hu.eltesoft.modelexecution.profile.xumlrt.xumlrtPackage
+ * @see hu.eltesoft.modelexecution.profile.xumlrt.XUMLRTPackage
  * @generated
  */
-public interface xumlrtFactory extends EFactory {
+public interface XUMLRTFactory extends EFactory {
 	/**
 	 * The singleton instance of the factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	xumlrtFactory eINSTANCE = hu.eltesoft.modelexecution.profile.xumlrt.impl.xumlrtFactoryImpl.init();
+	XUMLRTFactory eINSTANCE = hu.eltesoft.modelexecution.profile.xumlrt.impl.XUMLRTFactoryImpl.init();
 
 	/**
 	 * Returns a new object of class '<em>Callable</em>'.
@@ -46,6 +46,6 @@ public interface xumlrtFactory extends EFactory {
 	 * @return the package supported by this factory.
 	 * @generated
 	 */
-	xumlrtPackage getxumlrtPackage();
+	XUMLRTPackage getXUMLRTPackage();
 
-} //xumlrtFactory
+} //XUMLRTFactory

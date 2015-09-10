@@ -31,12 +31,11 @@
     <details key="VALIDATION_DELEGATES" value="IGNORE"/>
   </genAnnotations>
   <foreignModel>xumlrt.profile.uml</foreignModel>
-  <genPackages xsi:type="genmodel:GenPackage" prefix="xumlrt" basePackage="hu.eltesoft.modelexecution.profile"
+  <genPackages xsi:type="genmodel:GenPackage" prefix="XUMLRT" basePackage="hu.eltesoft.modelexecution.profile"
       disposableProviderFactory="true" ecorePackage="xumlrt.ecore#/">
     <genEnums xsi:type="genmodel:GenEnum" typeSafeEnumCompatible="false" ecoreEnum="xumlrt.ecore#//EntityType">
       <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="xumlrt.ecore#//EntityType/Stateless"/>
       <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="xumlrt.ecore#//EntityType/Singleton"/>
-      <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="xumlrt.ecore#//EntityType/LazySingleton"/>
     </genEnums>
     <genClasses xsi:type="genmodel:GenClass" ecoreClass="xumlrt.ecore#//Callable">
       <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
@@ -55,9 +54,11 @@
           propertySortChoices="true" ecoreFeature="ecore:EReference xumlrt.ecore#//ExternalEntity/base_Class"/>
       <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute xumlrt.ecore#//ExternalEntity/class"/>
       <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute xumlrt.ecore#//ExternalEntity/type"/>
-      <genOperations xsi:type="genmodel:GenOperation" ecoreOperation="xumlrt.ecore#//ExternalEntity/AllOperationsAreNonStatic">
-        <genParameters xsi:type="genmodel:GenParameter" ecoreParameter="xumlrt.ecore#//ExternalEntity/AllOperationsAreNonStatic/diagnostics"/>
-        <genParameters xsi:type="genmodel:GenParameter" ecoreParameter="xumlrt.ecore#//ExternalEntity/AllOperationsAreNonStatic/context"/>
+      <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute xumlrt.ecore#//ExternalEntity/externalHeaderLocation"/>
+      <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute xumlrt.ecore#//ExternalEntity/externalNamespace"/>
+      <genOperations xsi:type="genmodel:GenOperation" ecoreOperation="xumlrt.ecore#//ExternalEntity/AllOperationsAreStatic">
+        <genParameters xsi:type="genmodel:GenParameter" ecoreParameter="xumlrt.ecore#//ExternalEntity/AllOperationsAreStatic/diagnostics"/>
+        <genParameters xsi:type="genmodel:GenParameter" ecoreParameter="xumlrt.ecore#//ExternalEntity/AllOperationsAreStatic/context"/>
       </genOperations>
       <genOperations xsi:type="genmodel:GenOperation" ecoreOperation="xumlrt.ecore#//ExternalEntity/HasNoAttributes">
         <genParameters xsi:type="genmodel:GenParameter" ecoreParameter="xumlrt.ecore#//ExternalEntity/HasNoAttributes/diagnostics"/>
@@ -100,7 +101,5 @@
         <genParameters xsi:type="genmodel:GenParameter" ecoreParameter="xumlrt.ecore#//ExternalEntity/ClassNameIsValid/context"/>
       </genOperations>
     </genClasses>
-    <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="xUMLRTExternal" basePackage="hu.eltesoft.modelexecution.profile"
-        disposableProviderFactory="true" ecorePackage="xumlrt.ecore#//external"/>
   </genPackages>
 </genmodel:GenModel>

@@ -19,24 +19,24 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
  * <!-- end-user-doc -->
  * @generated
  */
-public class xumlrtFactoryImpl extends EFactoryImpl implements xumlrtFactory {
+public class XUMLRTFactoryImpl extends EFactoryImpl implements XUMLRTFactory {
 	/**
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static xumlrtFactory init() {
+	public static XUMLRTFactory init() {
 		try {
-			xumlrtFactory thexumlrtFactory = (xumlrtFactory)EPackage.Registry.INSTANCE.getEFactory(xumlrtPackage.eNS_URI);
-			if (thexumlrtFactory != null) {
-				return thexumlrtFactory;
+			XUMLRTFactory theXUMLRTFactory = (XUMLRTFactory)EPackage.Registry.INSTANCE.getEFactory(XUMLRTPackage.eNS_URI);
+			if (theXUMLRTFactory != null) {
+				return theXUMLRTFactory;
 			}
 		}
 		catch (Exception exception) {
 			EcorePlugin.INSTANCE.log(exception);
 		}
-		return new xumlrtFactoryImpl();
+		return new XUMLRTFactoryImpl();
 	}
 
 	/**
@@ -45,7 +45,7 @@ public class xumlrtFactoryImpl extends EFactoryImpl implements xumlrtFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public xumlrtFactoryImpl() {
+	public XUMLRTFactoryImpl() {
 		super();
 	}
 
@@ -57,8 +57,8 @@ public class xumlrtFactoryImpl extends EFactoryImpl implements xumlrtFactory {
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-			case xumlrtPackage.CALLABLE: return createCallable();
-			case xumlrtPackage.EXTERNAL_ENTITY: return createExternalEntity();
+			case XUMLRTPackage.CALLABLE: return createCallable();
+			case XUMLRTPackage.EXTERNAL_ENTITY: return createExternalEntity();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -72,7 +72,7 @@ public class xumlrtFactoryImpl extends EFactoryImpl implements xumlrtFactory {
 	@Override
 	public Object createFromString(EDataType eDataType, String initialValue) {
 		switch (eDataType.getClassifierID()) {
-			case xumlrtPackage.ENTITY_TYPE:
+			case XUMLRTPackage.ENTITY_TYPE:
 				return createEntityTypeFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
@@ -87,7 +87,7 @@ public class xumlrtFactoryImpl extends EFactoryImpl implements xumlrtFactory {
 	@Override
 	public String convertToString(EDataType eDataType, Object instanceValue) {
 		switch (eDataType.getClassifierID()) {
-			case xumlrtPackage.ENTITY_TYPE:
+			case XUMLRTPackage.ENTITY_TYPE:
 				return convertEntityTypeToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
@@ -139,8 +139,8 @@ public class xumlrtFactoryImpl extends EFactoryImpl implements xumlrtFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public xumlrtPackage getxumlrtPackage() {
-		return (xumlrtPackage)getEPackage();
+	public XUMLRTPackage getXUMLRTPackage() {
+		return (XUMLRTPackage)getEPackage();
 	}
 
 	/**
@@ -150,8 +150,8 @@ public class xumlrtFactoryImpl extends EFactoryImpl implements xumlrtFactory {
 	 * @generated
 	 */
 	@Deprecated
-	public static xumlrtPackage getPackage() {
-		return xumlrtPackage.eINSTANCE;
+	public static XUMLRTPackage getPackage() {
+		return XUMLRTPackage.eINSTANCE;
 	}
 
-} //xumlrtFactoryImpl
+} //XUMLRTFactoryImpl

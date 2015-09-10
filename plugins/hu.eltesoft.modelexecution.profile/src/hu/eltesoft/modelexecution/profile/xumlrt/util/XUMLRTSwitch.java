@@ -19,17 +19,17 @@ import org.eclipse.emf.ecore.util.Switch;
  * until a non-null result is returned,
  * which is the result of the switch.
  * <!-- end-user-doc -->
- * @see hu.eltesoft.modelexecution.profile.xumlrt.xumlrtPackage
+ * @see hu.eltesoft.modelexecution.profile.xumlrt.XUMLRTPackage
  * @generated
  */
-public class xumlrtSwitch<T> extends Switch<T> {
+public class XUMLRTSwitch<T> extends Switch<T> {
 	/**
 	 * The cached model package
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected static xumlrtPackage modelPackage;
+	protected static XUMLRTPackage modelPackage;
 
 	/**
 	 * Creates an instance of the switch.
@@ -37,9 +37,9 @@ public class xumlrtSwitch<T> extends Switch<T> {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public xumlrtSwitch() {
+	public XUMLRTSwitch() {
 		if (modelPackage == null) {
-			modelPackage = xumlrtPackage.eINSTANCE;
+			modelPackage = XUMLRTPackage.eINSTANCE;
 		}
 	}
 
@@ -66,13 +66,13 @@ public class xumlrtSwitch<T> extends Switch<T> {
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
-			case xumlrtPackage.CALLABLE: {
+			case XUMLRTPackage.CALLABLE: {
 				Callable callable = (Callable)theEObject;
 				T result = caseCallable(callable);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case xumlrtPackage.EXTERNAL_ENTITY: {
+			case XUMLRTPackage.EXTERNAL_ENTITY: {
 				ExternalEntity externalEntity = (ExternalEntity)theEObject;
 				T result = caseExternalEntity(externalEntity);
 				if (result == null) result = defaultCase(theEObject);
@@ -128,4 +128,4 @@ public class xumlrtSwitch<T> extends Switch<T> {
 		return null;
 	}
 
-} //xumlrtSwitch
+} //XUMLRTSwitch

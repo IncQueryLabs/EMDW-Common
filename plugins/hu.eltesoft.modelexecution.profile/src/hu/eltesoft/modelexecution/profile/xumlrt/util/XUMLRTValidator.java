@@ -17,17 +17,17 @@ import org.eclipse.emf.ecore.util.EObjectValidator;
  * <!-- begin-user-doc -->
  * The <b>Validator</b> for the model.
  * <!-- end-user-doc -->
- * @see hu.eltesoft.modelexecution.profile.xumlrt.xumlrtPackage
+ * @see hu.eltesoft.modelexecution.profile.xumlrt.XUMLRTPackage
  * @generated
  */
-public class xumlrtValidator extends EObjectValidator {
+public class XUMLRTValidator extends EObjectValidator {
 	/**
 	 * The cached model package
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final xumlrtValidator INSTANCE = new xumlrtValidator();
+	public static final XUMLRTValidator INSTANCE = new XUMLRTValidator();
 
 	/**
 	 * A constant for the {@link org.eclipse.emf.common.util.Diagnostic#getSource() source} of diagnostic {@link org.eclipse.emf.common.util.Diagnostic#getCode() codes} from this package.
@@ -165,7 +165,7 @@ public class xumlrtValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public xumlrtValidator() {
+	public XUMLRTValidator() {
 		super();
 	}
 
@@ -177,7 +177,7 @@ public class xumlrtValidator extends EObjectValidator {
 	 */
 	@Override
 	protected EPackage getEPackage() {
-	  return xumlrtPackage.eINSTANCE;
+	  return XUMLRTPackage.eINSTANCE;
 	}
 
 	/**
@@ -189,11 +189,11 @@ public class xumlrtValidator extends EObjectValidator {
 	@Override
 	protected boolean validate(int classifierID, Object value, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		switch (classifierID) {
-			case xumlrtPackage.CALLABLE:
+			case XUMLRTPackage.CALLABLE:
 				return validateCallable((Callable)value, diagnostics, context);
-			case xumlrtPackage.EXTERNAL_ENTITY:
+			case XUMLRTPackage.EXTERNAL_ENTITY:
 				return validateExternalEntity((ExternalEntity)value, diagnostics, context);
-			case xumlrtPackage.ENTITY_TYPE:
+			case XUMLRTPackage.ENTITY_TYPE:
 				return validateEntityType((EntityType)value, diagnostics, context);
 			default:
 				return true;
@@ -402,4 +402,4 @@ public class xumlrtValidator extends EObjectValidator {
 		return super.getResourceLocator();
 	}
 
-} //xumlrtValidator
+} //XUMLRTValidator

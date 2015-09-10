@@ -20,7 +20,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link hu.eltesoft.modelexecution.profile.xumlrt.Callable#getBase_Class <em>Base Class</em>}</li>
  * </ul>
  *
- * @see hu.eltesoft.modelexecution.profile.xumlrt.xumlrtPackage#getCallable()
+ * @see hu.eltesoft.modelexecution.profile.xumlrt.XUMLRTPackage#getCallable()
  * @model
  * @generated
  */
@@ -35,7 +35,7 @@ public interface Callable extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Base Class</em>' reference.
 	 * @see #setBase_Class(org.eclipse.uml2.uml.Class)
-	 * @see hu.eltesoft.modelexecution.profile.xumlrt.xumlrtPackage#getCallable_Base_Class()
+	 * @see hu.eltesoft.modelexecution.profile.xumlrt.XUMLRTPackage#getCallable_Base_Class()
 	 * @model required="true" ordered="false"
 	 * @generated
 	 */

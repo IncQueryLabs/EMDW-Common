@@ -21,12 +21,12 @@ import org.eclipse.emf.ecore.EReference;
  *   <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
- * @see hu.eltesoft.modelexecution.profile.xumlrt.xumlrtFactory
+ * @see hu.eltesoft.modelexecution.profile.xumlrt.XUMLRTFactory
  * @model kind="package"
  *        annotation="http://www.eclipse.org/uml2/2.0.0/UML originalName='xUMLRT'"
  * @generated
  */
-public interface xumlrtPackage extends EPackage {
+public interface XUMLRTPackage extends EPackage {
 	/**
 	 * The package name.
 	 * <!-- begin-user-doc -->
@@ -49,7 +49,7 @@ public interface xumlrtPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_PREFIX = "xUMLRT";
+	String eNS_PREFIX = "xumlrt";
 
 	/**
 	 * The singleton instance of the package.
@@ -57,14 +57,14 @@ public interface xumlrtPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	xumlrtPackage eINSTANCE = hu.eltesoft.modelexecution.profile.xumlrt.impl.xumlrtPackageImpl.init();
+	XUMLRTPackage eINSTANCE = hu.eltesoft.modelexecution.profile.xumlrt.impl.XUMLRTPackageImpl.init();
 
 	/**
 	 * The meta object id for the '{@link hu.eltesoft.modelexecution.profile.xumlrt.impl.CallableImpl <em>Callable</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see hu.eltesoft.modelexecution.profile.xumlrt.impl.CallableImpl
-	 * @see hu.eltesoft.modelexecution.profile.xumlrt.impl.xumlrtPackageImpl#getCallable()
+	 * @see hu.eltesoft.modelexecution.profile.xumlrt.impl.XUMLRTPackageImpl#getCallable()
 	 * @generated
 	 */
 	int CALLABLE = 0;
@@ -119,7 +119,7 @@ public interface xumlrtPackage extends EPackage {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see hu.eltesoft.modelexecution.profile.xumlrt.impl.ExternalEntityImpl
-	 * @see hu.eltesoft.modelexecution.profile.xumlrt.impl.xumlrtPackageImpl#getExternalEntity()
+	 * @see hu.eltesoft.modelexecution.profile.xumlrt.impl.XUMLRTPackageImpl#getExternalEntity()
 	 * @generated
 	 */
 	int EXTERNAL_ENTITY = 1;
@@ -152,13 +152,31 @@ public interface xumlrtPackage extends EPackage {
 	int EXTERNAL_ENTITY__TYPE = 2;
 
 	/**
+	 * The feature id for the '<em><b>External Header Location</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXTERNAL_ENTITY__EXTERNAL_HEADER_LOCATION = 3;
+
+	/**
+	 * The feature id for the '<em><b>External Namespace</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXTERNAL_ENTITY__EXTERNAL_NAMESPACE = 4;
+
+	/**
 	 * The number of structural features of the '<em>External Entity</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int EXTERNAL_ENTITY_FEATURE_COUNT = 3;
+	int EXTERNAL_ENTITY_FEATURE_COUNT = 5;
 
 	/**
 	 * The operation id for the '<em>All Operations Are Static</em>' operation.
@@ -273,7 +291,7 @@ public interface xumlrtPackage extends EPackage {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see hu.eltesoft.modelexecution.profile.xumlrt.EntityType
-	 * @see hu.eltesoft.modelexecution.profile.xumlrt.impl.xumlrtPackageImpl#getEntityType()
+	 * @see hu.eltesoft.modelexecution.profile.xumlrt.impl.XUMLRTPackageImpl#getEntityType()
 	 * @generated
 	 */
 	int ENTITY_TYPE = 2;
@@ -362,6 +380,28 @@ public interface xumlrtPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getExternalEntity_Type();
+
+	/**
+	 * Returns the meta object for the attribute '{@link hu.eltesoft.modelexecution.profile.xumlrt.ExternalEntity#getExternalHeaderLocation <em>External Header Location</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>External Header Location</em>'.
+	 * @see hu.eltesoft.modelexecution.profile.xumlrt.ExternalEntity#getExternalHeaderLocation()
+	 * @see #getExternalEntity()
+	 * @generated
+	 */
+	EAttribute getExternalEntity_ExternalHeaderLocation();
+
+	/**
+	 * Returns the meta object for the attribute '{@link hu.eltesoft.modelexecution.profile.xumlrt.ExternalEntity#getExternalNamespace <em>External Namespace</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>External Namespace</em>'.
+	 * @see hu.eltesoft.modelexecution.profile.xumlrt.ExternalEntity#getExternalNamespace()
+	 * @see #getExternalEntity()
+	 * @generated
+	 */
+	EAttribute getExternalEntity_ExternalNamespace();
 
 	/**
 	 * Returns the meta object for the '{@link hu.eltesoft.modelexecution.profile.xumlrt.ExternalEntity#AllOperationsAreStatic(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>All Operations Are Static</em>}' operation.
@@ -490,7 +530,7 @@ public interface xumlrtPackage extends EPackage {
 	 * @return the factory that creates the instances of the model.
 	 * @generated
 	 */
-	xumlrtFactory getxumlrtFactory();
+	XUMLRTFactory getXUMLRTFactory();
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -511,7 +551,7 @@ public interface xumlrtPackage extends EPackage {
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @see hu.eltesoft.modelexecution.profile.xumlrt.impl.CallableImpl
-		 * @see hu.eltesoft.modelexecution.profile.xumlrt.impl.xumlrtPackageImpl#getCallable()
+		 * @see hu.eltesoft.modelexecution.profile.xumlrt.impl.XUMLRTPackageImpl#getCallable()
 		 * @generated
 		 */
 		EClass CALLABLE = eINSTANCE.getCallable();
@@ -545,7 +585,7 @@ public interface xumlrtPackage extends EPackage {
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @see hu.eltesoft.modelexecution.profile.xumlrt.impl.ExternalEntityImpl
-		 * @see hu.eltesoft.modelexecution.profile.xumlrt.impl.xumlrtPackageImpl#getExternalEntity()
+		 * @see hu.eltesoft.modelexecution.profile.xumlrt.impl.XUMLRTPackageImpl#getExternalEntity()
 		 * @generated
 		 */
 		EClass EXTERNAL_ENTITY = eINSTANCE.getExternalEntity();
@@ -573,6 +613,22 @@ public interface xumlrtPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute EXTERNAL_ENTITY__TYPE = eINSTANCE.getExternalEntity_Type();
+
+		/**
+		 * The meta object literal for the '<em><b>External Header Location</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute EXTERNAL_ENTITY__EXTERNAL_HEADER_LOCATION = eINSTANCE.getExternalEntity_ExternalHeaderLocation();
+
+		/**
+		 * The meta object literal for the '<em><b>External Namespace</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute EXTERNAL_ENTITY__EXTERNAL_NAMESPACE = eINSTANCE.getExternalEntity_ExternalNamespace();
 
 		/**
 		 * The meta object literal for the '<em><b>All Operations Are Static</b></em>' operation.
@@ -667,11 +723,11 @@ public interface xumlrtPackage extends EPackage {
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @see hu.eltesoft.modelexecution.profile.xumlrt.EntityType
-		 * @see hu.eltesoft.modelexecution.profile.xumlrt.impl.xumlrtPackageImpl#getEntityType()
+		 * @see hu.eltesoft.modelexecution.profile.xumlrt.impl.XUMLRTPackageImpl#getEntityType()
 		 * @generated
 		 */
 		EEnum ENTITY_TYPE = eINSTANCE.getEntityType();
 
 	}
 
-} //xumlrtPackage
+} //XUMLRTPackage
