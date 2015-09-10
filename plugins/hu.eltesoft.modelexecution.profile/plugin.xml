@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated xumlrt.profile -->
+      <package
+            uri="http://modelexecution.eltesoft.hu/xumlrt/"
+            class="hu.eltesoft.modelexecution.profile.xumlrt.xumlrtPackage"
+            genModel="profile/xumlrt.profile.genmodel"/>
+   </extension>
+   <extension
+         point="org.eclipse.emf.ecore.uri_mapping">
+      <mapping
+            source="pathmap://XUMLRT_PROFILE/"
+            target="platform:/plugin/hu.eltesoft.modelexecution.profile/profile/">
+      </mapping>
+   </extension>
+   <extension
+         point="org.eclipse.papyrus.uml.extensionpoints.UMLProfile">
+      <profile
+            description="xUML-RT Profile for external entity support"
+            name="xUML-RT"
+            path="pathmap://XUMLRT_PROFILE/xumlrt.profile.uml"
+            provider="ELTE-Soft Kft">
+      </profile>
+   </extension>
+   <extension
+         point="org.eclipse.uml2.uml.generated_package">
+      <profile
+            location="pathmap://XUMLRT_PROFILE/xumlrt.profile.uml#_HaqtUBDoEeWE3_d6VQejPQ"
+            uri="http://modelexecution.eltesoft.hu/xumlrt/">
+      </profile>
+   </extension>
+
+</plugin>
