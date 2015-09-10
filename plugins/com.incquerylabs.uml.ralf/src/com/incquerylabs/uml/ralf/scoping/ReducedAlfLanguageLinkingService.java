@@ -59,7 +59,7 @@ public class ReducedAlfLanguageLinkingService extends DefaultLinkingService {
 	
 	private boolean operationMatchesParameters(Operation op, Tuple parameters) {
 		Result<Boolean> result = typeSystem.operationParametersType(op, parameters);
-		return !result.failed();
+		return !result.failed() && result.getValue();
 	}
 	
 	@Inject
@@ -80,8 +80,8 @@ public class ReducedAlfLanguageLinkingService extends DefaultLinkingService {
 				Expression ctx = featureInvocationExpression.getContext();
 				parameters = featureInvocationExpression.getParameters();
 				contextType = typeSystem.type(ctx).getValue().getUmlType();
-			} else if (context instanceof StaticFeatureInvocationExpression) {
-				StaticFeatureInvocationExpression staticFeatureInvocationExpression = (StaticFeatureInvocationExpression) context;
+			} else if (context.eContainer() instanceof StaticFeatureInvocationExpression) {
+				StaticFeatureInvocationExpression staticFeatureInvocationExpression = (StaticFeatureInvocationExpression) context.eContainer();
 				parameters = staticFeatureInvocationExpression.getParameters();
 				contextType = op.getClass_();
 			} else {

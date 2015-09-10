@@ -11,6 +11,7 @@ import com.incquerylabs.uml.ralf.reducedAlfLanguage.IfClause;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.LocalNameDeclarationStatement;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.ReturnStatement;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.SendSignalStatement;
+import com.incquerylabs.uml.ralf.reducedAlfLanguage.StaticFeatureInvocationExpression;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.SwitchStatement;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.Variable;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.WhileStatement;
@@ -111,6 +112,13 @@ public class ReducedAlfSystemValidator extends AbstractReducedAlfLanguageValidat
   public void operationParameters(final FeatureInvocationExpression ex) {
     errorGenerator.generateErrors(this,
     	getXsemanticsSystem().operationParameters(ex),
+    		ex);
+  }
+  
+  @Check
+  public void staticOperationParameters(final StaticFeatureInvocationExpression ex) {
+    errorGenerator.generateErrors(this,
+    	getXsemanticsSystem().staticOperationParameters(ex),
     		ex);
   }
 }

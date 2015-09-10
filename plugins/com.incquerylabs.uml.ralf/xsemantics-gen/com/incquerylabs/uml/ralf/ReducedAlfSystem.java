@@ -71,7 +71,7 @@ import it.xsemantics.runtime.RuleFailedException;
 import it.xsemantics.runtime.XsemanticsRuntimeSystem;
 import java.util.HashMap;
 import java.util.List;
-import java.util.function.Consumer;
+import java.util.Map;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.uml2.uml.Association;
@@ -90,8 +90,10 @@ import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
+import org.eclipse.xtext.xbase.lib.Functions.Function2;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.ListExtensions;
+import org.eclipse.xtext.xbase.lib.MapExtensions;
 import org.eclipse.xtext.xbase.lib.Pair;
 
 @SuppressWarnings("all")
@@ -925,6 +927,67 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
   }
   
   protected Result<Boolean> operationParametersInternal(final RuleApplicationTrace _trace_, final FeatureInvocationExpression ex) throws RuleFailedException {
+    /* { ex.^feature instanceof Operation empty |- (ex.^feature as Operation) <: ex.parameters } or { } */
+    {
+      RuleFailedException previousFailure = null;
+      try {
+        Feature _feature = ex.getFeature();
+        /* ex.^feature instanceof Operation */
+        if (!(_feature instanceof Operation)) {
+          sneakyThrowRuleFailedException("ex.^feature instanceof Operation");
+        }
+        /* empty |- (ex.^feature as Operation) <: ex.parameters */
+        Feature _feature_1 = ex.getFeature();
+        Tuple _parameters = ex.getParameters();
+        operationParametersTypeInternal(emptyEnvironment(), _trace_, ((Operation) _feature_1), _parameters);
+      } catch (Exception e) {
+        previousFailure = extractRuleFailedException(e);
+      }
+    }
+    return new Result<Boolean>(true);
+  }
+  
+  public Result<Boolean> staticOperationParameters(final StaticFeatureInvocationExpression ex) {
+    return staticOperationParameters(null, ex);
+  }
+  
+  public Result<Boolean> staticOperationParameters(final RuleApplicationTrace _trace_, final StaticFeatureInvocationExpression ex) {
+    try {
+    	return staticOperationParametersInternal(_trace_, ex);
+    } catch (Exception _e_StaticOperationParameters) {
+    	return resultForFailure(_e_StaticOperationParameters);
+    }
+  }
+  
+  protected Result<Boolean> staticOperationParametersInternal(final RuleApplicationTrace _trace_, final StaticFeatureInvocationExpression ex) throws RuleFailedException {
+    /* { ex.operation instanceof Operation empty |- (ex.operation as Operation) <: ex.parameters } or { ex.operation.reference instanceof Operation empty |- (ex.operation.reference as Operation) <: ex.parameters } */
+    {
+      RuleFailedException previousFailure = null;
+      try {
+        NameExpression _operation = ex.getOperation();
+        /* ex.operation instanceof Operation */
+        if (!(_operation instanceof Operation)) {
+          sneakyThrowRuleFailedException("ex.operation instanceof Operation");
+        }
+        /* empty |- (ex.operation as Operation) <: ex.parameters */
+        NameExpression _operation_1 = ex.getOperation();
+        Tuple _parameters = ex.getParameters();
+        operationParametersTypeInternal(emptyEnvironment(), _trace_, ((Operation) _operation_1), _parameters);
+      } catch (Exception e) {
+        previousFailure = extractRuleFailedException(e);
+        NameExpression _operation_2 = ex.getOperation();
+        NamedElement _reference = _operation_2.getReference();
+        /* ex.operation.reference instanceof Operation */
+        if (!(_reference instanceof Operation)) {
+          sneakyThrowRuleFailedException("ex.operation.reference instanceof Operation");
+        }
+        /* empty |- (ex.operation.reference as Operation) <: ex.parameters */
+        NameExpression _operation_3 = ex.getOperation();
+        NamedElement _reference_1 = _operation_3.getReference();
+        Tuple _parameters_1 = ex.getParameters();
+        operationParametersTypeInternal(emptyEnvironment(), _trace_, ((Operation) _reference_1), _parameters_1);
+      }
+    }
     return new Result<Boolean>(true);
   }
   
@@ -2043,22 +2106,86 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
       return Pair.<String, Expression>of(_name, _expression);
     };
     List<Pair<? extends String, ? extends Expression>> _map = ListExtensions.<NamedExpression, Pair<? extends String, ? extends Expression>>map(_expressions, _function);
-    final HashMap<String, Expression> paramMap = CollectionLiterals.<String, Expression>newHashMap(((Pair<? extends String, ? extends Expression>[])Conversions.unwrapArray(_map, Pair.class)));
+    final HashMap<String, Expression> exprMap = CollectionLiterals.<String, Expression>newHashMap(((Pair<? extends String, ? extends Expression>[])Conversions.unwrapArray(_map, Pair.class)));
     EList<Parameter> _ownedParameters = op.getOwnedParameters();
     final Function1<Parameter, Boolean> _function_1 = (Parameter it) -> {
       ParameterDirectionKind _direction = it.getDirection();
       return Boolean.valueOf((!Objects.equal(_direction, ParameterDirectionKind.RETURN_LITERAL)));
     };
     Iterable<Parameter> _filter = IterableExtensions.<Parameter>filter(_ownedParameters, _function_1);
-    final Consumer<Parameter> _function_2 = (Parameter it) -> {
+    final Function1<Parameter, Pair<String, Type>> _function_2 = (Parameter it) -> {
       String _name = it.getName();
-      final Expression paramExpression = paramMap.get(_name);
       Type _type = it.getType();
-      final IUMLTypeReference declaredType = this.typeFactory.typeReference(_type);
-      /* G |- paramExpression |> declaredType */
-      assignableInternal(G, _trace_, paramExpression, declaredType);
+      return Pair.<String, Type>of(_name, _type);
     };
-    _filter.forEach(_function_2);
+    Iterable<Pair<? extends String, ? extends Type>> _map_1 = IterableExtensions.<Parameter, Pair<? extends String, ? extends Type>>map(_filter, _function_2);
+    final HashMap<String, Type> paramMap = CollectionLiterals.<String, Type>newHashMap(((Pair<? extends String, ? extends Type>[])Conversions.unwrapArray(_map_1, Pair.class)));
+    final Function2<String, Expression, Boolean> _function_3 = (String name, Expression expr) -> {
+      boolean _xblockexpression = false;
+      {
+        final Type declaredType = paramMap.get(name);
+        boolean _or = false;
+        boolean _or_1 = false;
+        boolean _equals = Objects.equal(expr, null);
+        if (_equals) {
+          _or_1 = true;
+        } else {
+          boolean _equals_1 = Objects.equal(declaredType, null);
+          _or_1 = _equals_1;
+        }
+        if (_or_1) {
+          _or = true;
+        } else {
+          /* G |- expr |> declaredType.typeReference */
+          IUMLTypeReference _typeReference = this.typeFactory.typeReference(declaredType);
+          boolean _ruleinvocation = assignableSucceeded(G, _trace_, expr, _typeReference);
+          boolean _not = (!_ruleinvocation);
+          _or = _not;
+        }
+        _xblockexpression = _or;
+      }
+      return Boolean.valueOf(_xblockexpression);
+    };
+    final Map<String, Expression> problematicValues = MapExtensions.<String, Expression>filter(exprMap, _function_3);
+    final Function2<String, Type, Boolean> _function_4 = (String name, Type declaredType) -> {
+      boolean _xblockexpression = false;
+      {
+        final Expression expr = exprMap.get(name);
+        boolean _or = false;
+        boolean _or_1 = false;
+        boolean _equals = Objects.equal(declaredType, null);
+        if (_equals) {
+          _or_1 = true;
+        } else {
+          boolean _equals_1 = Objects.equal(expr, null);
+          _or_1 = _equals_1;
+        }
+        if (_or_1) {
+          _or = true;
+        } else {
+          /* G |- expr |> declaredType.typeReference */
+          IUMLTypeReference _typeReference = this.typeFactory.typeReference(declaredType);
+          boolean _ruleinvocation = assignableSucceeded(G, _trace_, expr, _typeReference);
+          boolean _not = (!_ruleinvocation);
+          _or = _not;
+        }
+        _xblockexpression = _or;
+      }
+      return Boolean.valueOf(_xblockexpression);
+    };
+    final Map<String, Type> problematicDeclarations = MapExtensions.<String, Type>filter(paramMap, _function_4);
+    int _size = problematicValues.size();
+    boolean _greaterThan = (_size > 0);
+    if (_greaterThan) {
+      /* fail */
+      throwForExplicitFail();
+    }
+    int _size_1 = problematicDeclarations.size();
+    boolean _greaterThan_1 = (_size_1 > 0);
+    if (_greaterThan_1) {
+      /* fail */
+      throwForExplicitFail();
+    }
     return new Result<Boolean>(true);
   }
   
