@@ -56,6 +56,7 @@ import com.incquerylabs.uml.ralf.reducedAlfLanguage.TypeDeclaration;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.Variable;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.WhileStatement;
 import com.incquerylabs.uml.ralf.scoping.IUMLContextProvider;
+import com.incquerylabs.uml.ralf.scoping.OperationCandidateChecker;
 import com.incquerylabs.uml.ralf.scoping.UMLScopeHelper;
 import com.incquerylabs.uml.ralf.types.AbstractTypeReference;
 import com.incquerylabs.uml.ralf.types.CollectionTypeReference;
@@ -72,6 +73,7 @@ import it.xsemantics.runtime.XsemanticsRuntimeSystem;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.uml2.uml.Association;
@@ -216,6 +218,10 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
   @Inject
   private UMLScopeHelper scopeHelper;
   
+  @Extension
+  @Inject
+  private OperationCandidateChecker candidateChecker;
+  
   private final String REAL = IUMLContextProvider.REAL_TYPE;
   
   private final String INTEGER = IUMLContextProvider.INTEGER_TYPE;
@@ -277,6 +283,14 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
   
   public void setScopeHelper(final UMLScopeHelper scopeHelper) {
     this.scopeHelper = scopeHelper;
+  }
+  
+  public OperationCandidateChecker getCandidateChecker() {
+    return this.candidateChecker;
+  }
+  
+  public void setCandidateChecker(final OperationCandidateChecker candidateChecker) {
+    this.candidateChecker = candidateChecker;
   }
   
   public Object getREAL() {
@@ -986,6 +1000,78 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
         NamedElement _reference_1 = _operation_3.getReference();
         Tuple _parameters_1 = ex.getParameters();
         operationParametersTypeInternal(emptyEnvironment(), _trace_, ((Operation) _reference_1), _parameters_1);
+      }
+    }
+    return new Result<Boolean>(true);
+  }
+  
+  public Result<Boolean> instanceCreationExpressionParameter(final InstanceCreationExpression ex) {
+    return instanceCreationExpressionParameter(null, ex);
+  }
+  
+  public Result<Boolean> instanceCreationExpressionParameter(final RuleApplicationTrace _trace_, final InstanceCreationExpression ex) {
+    try {
+    	return instanceCreationExpressionParameterInternal(_trace_, ex);
+    } catch (Exception _e_InstanceCreationExpressionParameter) {
+    	return resultForFailure(_e_InstanceCreationExpressionParameter);
+    }
+  }
+  
+  protected Result<Boolean> instanceCreationExpressionParameterInternal(final RuleApplicationTrace _trace_, final InstanceCreationExpression ex) throws RuleFailedException {
+    Classifier _instance = ex.getInstance();
+    /* ex.instance instanceof Class */
+    if (!(_instance instanceof org.eclipse.uml2.uml.Class)) {
+      sneakyThrowRuleFailedException("ex.instance instanceof Class");
+    }
+    IUMLContextProvider _umlContext = this.typeFactory.umlContext(ex);
+    Classifier _instance_1 = ex.getInstance();
+    final Set<Operation> candidates = _umlContext.getConstructorsOfClass(((org.eclipse.uml2.uml.Class) _instance_1));
+    Tuple _parameters = ex.getParameters();
+    final List<Operation> filteredCandidates = this.candidateChecker.calculateBestCandidates(candidates, _parameters);
+    boolean _isEmpty = candidates.isEmpty();
+    if (_isEmpty) {
+      boolean _or = false;
+      Tuple _parameters_1 = ex.getParameters();
+      boolean _not = (!(_parameters_1 instanceof ExpressionList));
+      if (_not) {
+        _or = true;
+      } else {
+        Tuple _parameters_2 = ex.getParameters();
+        EList<Expression> _expressions = ((ExpressionList) _parameters_2).getExpressions();
+        boolean _isEmpty_1 = _expressions.isEmpty();
+        boolean _not_1 = (!_isEmpty_1);
+        _or = _not_1;
+      }
+      if (_or) {
+        /* fail error "Default constructor cannot have parameters" source ex.parameters */
+        String error = "Default constructor cannot have parameters";
+        Tuple _parameters_3 = ex.getParameters();
+        EObject source = _parameters_3;
+        throwForExplicitFail(error, new ErrorInformation(source, null));
+      }
+    } else {
+      boolean _isEmpty_2 = filteredCandidates.isEmpty();
+      if (_isEmpty_2) {
+        /* fail error "No constructors match parameters" source ex.parameters */
+        String error_1 = "No constructors match parameters";
+        Tuple _parameters_4 = ex.getParameters();
+        EObject source_1 = _parameters_4;
+        throwForExplicitFail(error_1, new ErrorInformation(source_1, null));
+      } else {
+        int _size = filteredCandidates.size();
+        boolean _equals = (_size == 1);
+        if (_equals) {
+          /* empty |- filteredCandidates.get(0) <: ex.parameters */
+          Operation _get = filteredCandidates.get(0);
+          Tuple _parameters_5 = ex.getParameters();
+          operationParametersTypeInternal(emptyEnvironment(), _trace_, _get, _parameters_5);
+        } else {
+          /* fail error "Multiple constructor candidates match the parameters" source ex.parameters */
+          String error_2 = "Multiple constructor candidates match the parameters";
+          Tuple _parameters_6 = ex.getParameters();
+          EObject source_2 = _parameters_6;
+          throwForExplicitFail(error_2, new ErrorInformation(source_2, null));
+        }
       }
     }
     return new Result<Boolean>(true);

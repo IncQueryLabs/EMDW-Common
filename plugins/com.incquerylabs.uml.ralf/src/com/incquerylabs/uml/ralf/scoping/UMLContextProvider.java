@@ -36,6 +36,7 @@ import com.incquerylabs.emdw.umlintegration.queries.AncestorSignalMatcher;
 import com.incquerylabs.emdw.umlintegration.queries.AssociationsOfClassifierMatcher;
 import com.incquerylabs.emdw.umlintegration.queries.AttributesOfClassifierMatcher;
 import com.incquerylabs.emdw.umlintegration.queries.CommonAncestorSignalMatcher;
+import com.incquerylabs.emdw.umlintegration.queries.ConstructorByNameMatcher;
 import com.incquerylabs.emdw.umlintegration.queries.OperationsOfClassByNameMatcher;
 import com.incquerylabs.emdw.umlintegration.queries.OperationsOfClassMatcher;
 import com.incquerylabs.emdw.umlintegration.queries.SignalsMatcher;
@@ -62,7 +63,8 @@ public abstract class UMLContextProvider extends AbstractUMLContextProvider {
 					OperationsOfClassByNameMatcher.querySpecification(),
 					StaticOperationsMatcher.querySpecification(),
 					TriggerSignalOfBehaviorMatcher.querySpecification(),
-					CommonAncestorSignalMatcher.querySpecification()
+					CommonAncestorSignalMatcher.querySpecification(),
+					ConstructorByNameMatcher.querySpecification()
 					);
 			queries.prepare(engine);			
 //		}
@@ -244,4 +246,18 @@ public abstract class UMLContextProvider extends AbstractUMLContextProvider {
 			}
 		}
 	}
+
+	@Override
+	public Set<Operation> getConstructorsOfClass(Class cl) {
+		try {
+			ConstructorByNameMatcher matcher = ConstructorByNameMatcher.on(getEngine());
+			return matcher.getAllValuesOfoperation(cl);
+		} catch (IncQueryException | IncQueryBaseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return Sets.newHashSet();
+	}
+	
+	
 }

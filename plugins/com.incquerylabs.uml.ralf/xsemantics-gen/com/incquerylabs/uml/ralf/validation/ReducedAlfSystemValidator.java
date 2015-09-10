@@ -8,6 +8,7 @@ import com.incquerylabs.uml.ralf.reducedAlfLanguage.FeatureInvocationExpression;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.ForEachStatement;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.ForStatement;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.IfClause;
+import com.incquerylabs.uml.ralf.reducedAlfLanguage.InstanceCreationExpression;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.LocalNameDeclarationStatement;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.ReturnStatement;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.SendSignalStatement;
@@ -119,6 +120,13 @@ public class ReducedAlfSystemValidator extends AbstractReducedAlfLanguageValidat
   public void staticOperationParameters(final StaticFeatureInvocationExpression ex) {
     errorGenerator.generateErrors(this,
     	getXsemanticsSystem().staticOperationParameters(ex),
+    		ex);
+  }
+  
+  @Check
+  public void instanceCreationExpressionParameter(final InstanceCreationExpression ex) {
+    errorGenerator.generateErrors(this,
+    	getXsemanticsSystem().instanceCreationExpressionParameter(ex),
     		ex);
   }
 }

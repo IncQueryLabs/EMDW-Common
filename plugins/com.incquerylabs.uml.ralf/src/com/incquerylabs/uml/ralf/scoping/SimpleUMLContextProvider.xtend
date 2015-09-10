@@ -78,5 +78,9 @@ class SimpleUMLContextProvider extends AbstractUMLContextProvider {
         newHashSet()
     }
     
+    override getConstructorsOfClass(Class cl) {
+        newHashSet()
+    }
+    
     
 }

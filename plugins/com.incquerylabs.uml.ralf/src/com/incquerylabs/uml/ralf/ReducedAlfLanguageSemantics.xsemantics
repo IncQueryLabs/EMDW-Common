@@ -74,9 +74,11 @@ import org.eclipse.uml2.uml.PrimitiveType
 import org.eclipse.uml2.uml.Property
 import org.eclipse.uml2.uml.Signal
 import org.eclipse.uml2.uml.Type
+import com.incquerylabs.uml.ralf.scoping.OperationCandidateChecker
 
 inject extension TypeFactory typeFactory
 inject extension UMLScopeHelper scopeHelper
+inject extension OperationCandidateChecker candidateChecker
 
 val REAL    = IUMLContextProvider.REAL_TYPE
 val INTEGER = IUMLContextProvider.INTEGER_TYPE
@@ -807,5 +809,32 @@ from {
     } or {
         ex.operation.reference instanceof Operation
         empty |- (ex.operation.reference as Operation) <: ex.parameters
+    }
+}
+
+checkrule InstanceCreationExpressionParameter for
+    InstanceCreationExpression ex
+from {
+    ex.instance instanceof Class
+    val candidates = umlContext(ex).
+        getConstructorsOfClass(ex.instance as Class)
+        
+    val filteredCandidates = candidates.calculateBestCandidates(ex.parameters)
+    if (candidates.isEmpty) {
+        if (!(ex.parameters instanceof ExpressionList) || !(ex.parameters as ExpressionList).expressions.isEmpty) {
+            fail 
+              error "Default constructor cannot have parameters"
+              source ex.parameters
+        }
+    } else if (filteredCandidates.isEmpty) {
+      fail
+        error "No constructors match parameters"
+        source ex.parameters
+    } else if (filteredCandidates.size == 1) {
+        empty |- filteredCandidates.get(0) <: ex.parameters
+    } else {
+        fail 
+          error "Multiple constructor candidates match the parameters"
+          source ex.parameters
     }
 }
