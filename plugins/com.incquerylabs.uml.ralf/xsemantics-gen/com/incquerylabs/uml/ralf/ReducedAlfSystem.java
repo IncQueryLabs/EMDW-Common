@@ -41,6 +41,7 @@ import com.incquerylabs.uml.ralf.reducedAlfLanguage.NumericUnaryExpression;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.PostfixExpression;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.PrefixExpression;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.RealLiteralExpression;
+import com.incquerylabs.uml.ralf.reducedAlfLanguage.ReducedAlfLanguagePackage;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.RelationalExpression;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.ReturnStatement;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.SendSignalStatement;
@@ -3552,69 +3553,84 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
   
   protected Result<IUMLTypeReference> applyRuleFeatureInvocationExpression(final RuleEnvironment G, final RuleApplicationTrace _trace_, final FeatureInvocationExpression ex) throws RuleFailedException {
     IUMLTypeReference result = null; // output parameter
-    /* { ex.^feature instanceof Operation G |- ex.^feature : var IUMLTypeReference opType opType.umlType == ex.umlContext.genericCollectionParameterType G |- ex.context : var CollectionTypeReference collType result = collType.valueType } or { ex.^feature instanceof Operation G |- ex.^feature : result } or { ex.^feature instanceof Property val property = ex.^feature as Property G |- property : result } */
+    /* { (ex.eGet(ReducedAlfLanguagePackage.Literals.FEATURE_INVOCATION_EXPRESSION__FEATURE, false) as EObject).eIsProxy result = anyType } or { ex.^feature instanceof Operation G |- ex.^feature : var IUMLTypeReference opType opType.umlType == ex.umlContext.genericCollectionParameterType G |- ex.context : var CollectionTypeReference collType result = collType.valueType } or { ex.^feature instanceof Operation G |- ex.^feature : result } or { ex.^feature instanceof Property val property = ex.^feature as Property G |- property : result } */
     {
       RuleFailedException previousFailure = null;
       try {
-        Feature _feature = ex.getFeature();
-        /* ex.^feature instanceof Operation */
-        if (!(_feature instanceof Operation)) {
-          sneakyThrowRuleFailedException("ex.^feature instanceof Operation");
+        Object _eGet = ex.eGet(ReducedAlfLanguagePackage.Literals.FEATURE_INVOCATION_EXPRESSION__FEATURE, false);
+        boolean _eIsProxy = ((EObject) _eGet).eIsProxy();
+        /* (ex.eGet(ReducedAlfLanguagePackage.Literals.FEATURE_INVOCATION_EXPRESSION__FEATURE, false) as EObject).eIsProxy */
+        if (!_eIsProxy) {
+          sneakyThrowRuleFailedException("(ex.eGet(ReducedAlfLanguagePackage.Literals.FEATURE_INVOCATION_EXPRESSION__FEATURE, false) as EObject).eIsProxy");
         }
-        /* G |- ex.^feature : var IUMLTypeReference opType */
-        Feature _feature_1 = ex.getFeature();
-        IUMLTypeReference opType = null;
-        Result<IUMLTypeReference> result_1 = typeInternal(G, _trace_, _feature_1);
-        checkAssignableTo(result_1.getFirst(), IUMLTypeReference.class);
-        opType = (IUMLTypeReference) result_1.getFirst();
-        
-        Type _umlType = opType.getUmlType();
-        IUMLContextProvider _umlContext = this.typeFactory.umlContext(ex);
-        Classifier _genericCollectionParameterType = _umlContext.getGenericCollectionParameterType();
-        boolean _equals = Objects.equal(_umlType, _genericCollectionParameterType);
-        /* opType.umlType == ex.umlContext.genericCollectionParameterType */
-        if (!_equals) {
-          sneakyThrowRuleFailedException("opType.umlType == ex.umlContext.genericCollectionParameterType");
-        }
-        /* G |- ex.context : var CollectionTypeReference collType */
-        Expression _context = ex.getContext();
-        CollectionTypeReference collType = null;
-        Result<IUMLTypeReference> result_2 = typeInternal(G, _trace_, _context);
-        checkAssignableTo(result_2.getFirst(), CollectionTypeReference.class);
-        collType = (CollectionTypeReference) result_2.getFirst();
-        
-        IUMLTypeReference _valueType = collType.getValueType();
-        result = _valueType;
+        IUMLTypeReference.AnyTypeReference _anyType = this.typeFactory.anyType();
+        result = _anyType;
       } catch (Exception e) {
         previousFailure = extractRuleFailedException(e);
-        /* { ex.^feature instanceof Operation G |- ex.^feature : result } or { ex.^feature instanceof Property val property = ex.^feature as Property G |- property : result } */
+        /* { ex.^feature instanceof Operation G |- ex.^feature : var IUMLTypeReference opType opType.umlType == ex.umlContext.genericCollectionParameterType G |- ex.context : var CollectionTypeReference collType result = collType.valueType } or { ex.^feature instanceof Operation G |- ex.^feature : result } or { ex.^feature instanceof Property val property = ex.^feature as Property G |- property : result } */
         {
           try {
-            Feature _feature_2 = ex.getFeature();
+            Feature _feature = ex.getFeature();
             /* ex.^feature instanceof Operation */
-            if (!(_feature_2 instanceof Operation)) {
+            if (!(_feature instanceof Operation)) {
               sneakyThrowRuleFailedException("ex.^feature instanceof Operation");
             }
-            /* G |- ex.^feature : result */
-            Feature _feature_3 = ex.getFeature();
-            Result<IUMLTypeReference> result_3 = typeInternal(G, _trace_, _feature_3);
-            checkAssignableTo(result_3.getFirst(), IUMLTypeReference.class);
-            result = (IUMLTypeReference) result_3.getFirst();
+            /* G |- ex.^feature : var IUMLTypeReference opType */
+            Feature _feature_1 = ex.getFeature();
+            IUMLTypeReference opType = null;
+            Result<IUMLTypeReference> result_1 = typeInternal(G, _trace_, _feature_1);
+            checkAssignableTo(result_1.getFirst(), IUMLTypeReference.class);
+            opType = (IUMLTypeReference) result_1.getFirst();
             
+            Type _umlType = opType.getUmlType();
+            IUMLContextProvider _umlContext = this.typeFactory.umlContext(ex);
+            Classifier _genericCollectionParameterType = _umlContext.getGenericCollectionParameterType();
+            boolean _equals = Objects.equal(_umlType, _genericCollectionParameterType);
+            /* opType.umlType == ex.umlContext.genericCollectionParameterType */
+            if (!_equals) {
+              sneakyThrowRuleFailedException("opType.umlType == ex.umlContext.genericCollectionParameterType");
+            }
+            /* G |- ex.context : var CollectionTypeReference collType */
+            Expression _context = ex.getContext();
+            CollectionTypeReference collType = null;
+            Result<IUMLTypeReference> result_2 = typeInternal(G, _trace_, _context);
+            checkAssignableTo(result_2.getFirst(), CollectionTypeReference.class);
+            collType = (CollectionTypeReference) result_2.getFirst();
+            
+            IUMLTypeReference _valueType = collType.getValueType();
+            result = _valueType;
           } catch (Exception e_1) {
             previousFailure = extractRuleFailedException(e_1);
-            Feature _feature_4 = ex.getFeature();
-            /* ex.^feature instanceof Property */
-            if (!(_feature_4 instanceof Property)) {
-              sneakyThrowRuleFailedException("ex.^feature instanceof Property");
+            /* { ex.^feature instanceof Operation G |- ex.^feature : result } or { ex.^feature instanceof Property val property = ex.^feature as Property G |- property : result } */
+            {
+              try {
+                Feature _feature_2 = ex.getFeature();
+                /* ex.^feature instanceof Operation */
+                if (!(_feature_2 instanceof Operation)) {
+                  sneakyThrowRuleFailedException("ex.^feature instanceof Operation");
+                }
+                /* G |- ex.^feature : result */
+                Feature _feature_3 = ex.getFeature();
+                Result<IUMLTypeReference> result_3 = typeInternal(G, _trace_, _feature_3);
+                checkAssignableTo(result_3.getFirst(), IUMLTypeReference.class);
+                result = (IUMLTypeReference) result_3.getFirst();
+                
+              } catch (Exception e_2) {
+                previousFailure = extractRuleFailedException(e_2);
+                Feature _feature_4 = ex.getFeature();
+                /* ex.^feature instanceof Property */
+                if (!(_feature_4 instanceof Property)) {
+                  sneakyThrowRuleFailedException("ex.^feature instanceof Property");
+                }
+                Feature _feature_5 = ex.getFeature();
+                final Property property = ((Property) _feature_5);
+                /* G |- property : result */
+                Result<IUMLTypeReference> result_4 = typeInternal(G, _trace_, property);
+                checkAssignableTo(result_4.getFirst(), IUMLTypeReference.class);
+                result = (IUMLTypeReference) result_4.getFirst();
+                
+              }
             }
-            Feature _feature_5 = ex.getFeature();
-            final Property property = ((Property) _feature_5);
-            /* G |- property : result */
-            Result<IUMLTypeReference> result_4 = typeInternal(G, _trace_, property);
-            checkAssignableTo(result_4.getFirst(), IUMLTypeReference.class);
-            result = (IUMLTypeReference) result_4.getFirst();
-            
           }
         }
       }
