@@ -815,26 +815,32 @@ from {
 checkrule InstanceCreationExpressionParameter for
     InstanceCreationExpression ex
 from {
-    ex.instance instanceof Class
-    val candidates = umlContext(ex).
-        getConstructorsOfClass(ex.instance as Class)
+    switch (ex.instance) {
+        Class : {
+            val candidates = umlContext(ex).
+            getConstructorsOfClass(ex.instance as Class)
         
-    val filteredCandidates = candidates.calculateBestCandidates(ex.parameters)
-    if (candidates.isEmpty) {
-        if (!(ex.parameters instanceof ExpressionList) || !(ex.parameters as ExpressionList).expressions.isEmpty) {
-            fail 
-              error "Default constructor cannot have parameters"
-              source ex.parameters
+            val filteredCandidates = candidates.calculateBestCandidates(ex.parameters)
+            if (candidates.isEmpty) {
+                if (!(ex.parameters instanceof ExpressionList) || !(ex.parameters as ExpressionList).expressions.isEmpty) {
+                    fail 
+                        error "Default constructor cannot have parameters"
+                        source ex.parameters
+                }
+            } else if (filteredCandidates.isEmpty) {
+                fail
+                    error "No constructors match parameters"
+                    source ex.parameters
+            } else if (filteredCandidates.size == 1) {
+                empty |- filteredCandidates.get(0) <: ex.parameters
+            } else {
+                fail 
+                    error "Multiple constructor candidates match the parameters"
+                    source ex.parameters
+            }
         }
-    } else if (filteredCandidates.isEmpty) {
-      fail
-        error "No constructors match parameters"
-        source ex.parameters
-    } else if (filteredCandidates.size == 1) {
-        empty |- filteredCandidates.get(0) <: ex.parameters
-    } else {
-        fail 
-          error "Multiple constructor candidates match the parameters"
-          source ex.parameters
+        Signal : {
+            empty |- (ex.instance as Signal).createVirtualConstructor <: ex.parameters
+        }
     }
 }

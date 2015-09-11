@@ -1019,59 +1019,71 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
   
   protected Result<Boolean> instanceCreationExpressionParameterInternal(final RuleApplicationTrace _trace_, final InstanceCreationExpression ex) throws RuleFailedException {
     Classifier _instance = ex.getInstance();
-    /* ex.instance instanceof Class */
-    if (!(_instance instanceof org.eclipse.uml2.uml.Class)) {
-      sneakyThrowRuleFailedException("ex.instance instanceof Class");
-    }
-    IUMLContextProvider _umlContext = this.typeFactory.umlContext(ex);
-    Classifier _instance_1 = ex.getInstance();
-    final Set<Operation> candidates = _umlContext.getConstructorsOfClass(((org.eclipse.uml2.uml.Class) _instance_1));
-    Tuple _parameters = ex.getParameters();
-    final List<Operation> filteredCandidates = this.candidateChecker.calculateBestCandidates(candidates, _parameters);
-    boolean _isEmpty = candidates.isEmpty();
-    if (_isEmpty) {
-      boolean _or = false;
-      Tuple _parameters_1 = ex.getParameters();
-      boolean _not = (!(_parameters_1 instanceof ExpressionList));
-      if (_not) {
-        _or = true;
-      } else {
-        Tuple _parameters_2 = ex.getParameters();
-        EList<Expression> _expressions = ((ExpressionList) _parameters_2).getExpressions();
-        boolean _isEmpty_1 = _expressions.isEmpty();
-        boolean _not_1 = (!_isEmpty_1);
-        _or = _not_1;
-      }
-      if (_or) {
-        /* fail error "Default constructor cannot have parameters" source ex.parameters */
-        String error = "Default constructor cannot have parameters";
-        Tuple _parameters_3 = ex.getParameters();
-        EObject source = _parameters_3;
-        throwForExplicitFail(error, new ErrorInformation(source, null));
-      }
-    } else {
-      boolean _isEmpty_2 = filteredCandidates.isEmpty();
-      if (_isEmpty_2) {
-        /* fail error "No constructors match parameters" source ex.parameters */
-        String error_1 = "No constructors match parameters";
-        Tuple _parameters_4 = ex.getParameters();
-        EObject source_1 = _parameters_4;
-        throwForExplicitFail(error_1, new ErrorInformation(source_1, null));
-      } else {
-        int _size = filteredCandidates.size();
-        boolean _equals = (_size == 1);
-        if (_equals) {
-          /* empty |- filteredCandidates.get(0) <: ex.parameters */
-          Operation _get = filteredCandidates.get(0);
-          Tuple _parameters_5 = ex.getParameters();
-          operationParametersTypeInternal(emptyEnvironment(), _trace_, _get, _parameters_5);
+    boolean _matched = false;
+    if (!_matched) {
+      if (_instance instanceof org.eclipse.uml2.uml.Class) {
+        _matched=true;
+        IUMLContextProvider _umlContext = this.typeFactory.umlContext(ex);
+        Classifier _instance_1 = ex.getInstance();
+        final Set<Operation> candidates = _umlContext.getConstructorsOfClass(((org.eclipse.uml2.uml.Class) _instance_1));
+        Tuple _parameters = ex.getParameters();
+        final List<Operation> filteredCandidates = this.candidateChecker.calculateBestCandidates(candidates, _parameters);
+        boolean _isEmpty = candidates.isEmpty();
+        if (_isEmpty) {
+          boolean _or = false;
+          Tuple _parameters_1 = ex.getParameters();
+          boolean _not = (!(_parameters_1 instanceof ExpressionList));
+          if (_not) {
+            _or = true;
+          } else {
+            Tuple _parameters_2 = ex.getParameters();
+            EList<Expression> _expressions = ((ExpressionList) _parameters_2).getExpressions();
+            boolean _isEmpty_1 = _expressions.isEmpty();
+            boolean _not_1 = (!_isEmpty_1);
+            _or = _not_1;
+          }
+          if (_or) {
+            /* fail error "Default constructor cannot have parameters" source ex.parameters */
+            String error = "Default constructor cannot have parameters";
+            Tuple _parameters_3 = ex.getParameters();
+            EObject source = _parameters_3;
+            throwForExplicitFail(error, new ErrorInformation(source, null));
+          }
         } else {
-          /* fail error "Multiple constructor candidates match the parameters" source ex.parameters */
-          String error_2 = "Multiple constructor candidates match the parameters";
-          Tuple _parameters_6 = ex.getParameters();
-          EObject source_2 = _parameters_6;
-          throwForExplicitFail(error_2, new ErrorInformation(source_2, null));
+          boolean _isEmpty_2 = filteredCandidates.isEmpty();
+          if (_isEmpty_2) {
+            /* fail error "No constructors match parameters" source ex.parameters */
+            String error_1 = "No constructors match parameters";
+            Tuple _parameters_4 = ex.getParameters();
+            EObject source_1 = _parameters_4;
+            throwForExplicitFail(error_1, new ErrorInformation(source_1, null));
+          } else {
+            int _size = filteredCandidates.size();
+            boolean _equals = (_size == 1);
+            if (_equals) {
+              /* empty |- filteredCandidates.get(0) <: ex.parameters */
+              Operation _get = filteredCandidates.get(0);
+              Tuple _parameters_5 = ex.getParameters();
+              operationParametersTypeInternal(emptyEnvironment(), _trace_, _get, _parameters_5);
+            } else {
+              /* fail error "Multiple constructor candidates match the parameters" source ex.parameters */
+              String error_2 = "Multiple constructor candidates match the parameters";
+              Tuple _parameters_6 = ex.getParameters();
+              EObject source_2 = _parameters_6;
+              throwForExplicitFail(error_2, new ErrorInformation(source_2, null));
+            }
+          }
         }
+      }
+    }
+    if (!_matched) {
+      if (_instance instanceof Signal) {
+        _matched=true;
+        /* empty |- (ex.instance as Signal).createVirtualConstructor <: ex.parameters */
+        Classifier _instance_1 = ex.getInstance();
+        Operation _createVirtualConstructor = this.scopeHelper.createVirtualConstructor(((Signal) _instance_1));
+        Tuple _parameters = ex.getParameters();
+        operationParametersTypeInternal(emptyEnvironment(), _trace_, _createVirtualConstructor, _parameters);
       }
     }
     return new Result<Boolean>(true);

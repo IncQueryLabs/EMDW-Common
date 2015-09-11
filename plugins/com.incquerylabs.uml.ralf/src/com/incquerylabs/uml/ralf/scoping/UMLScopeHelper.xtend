@@ -4,6 +4,8 @@ import org.eclipse.uml2.uml.Behavior
 import org.eclipse.uml2.uml.Parameter
 import org.eclipse.uml2.uml.ParameterDirectionKind
 import org.eclipse.uml2.uml.Operation
+import org.eclipse.uml2.uml.Signal
+import org.eclipse.uml2.uml.UMLFactory
 
 class UMLScopeHelper {
 
@@ -27,5 +29,22 @@ class UMLScopeHelper {
     
     def Parameter getReturnParameter(Operation operation) {
         operation?.ownedParameters?.findFirst[direction == ParameterDirectionKind.RETURN_LITERAL]
+    }
+    
+    /** 
+     * Returns a virtual (not in the model) operation that has the same signature a signal constructor expects 
+     */
+    def Operation createVirtualConstructor(Signal signal) {
+        val operation = UMLFactory.eINSTANCE.createOperation => [
+            name = signal.name
+            ownedParameters.addAll(signal.allAttributes().map [
+                val parameter = UMLFactory.eINSTANCE.createParameter
+                parameter.name = it.name
+                parameter.type = it.type
+                parameter.direction = ParameterDirectionKind.IN_LITERAL
+                parameter
+            ])
+        ]
+        operation
     }
 }
