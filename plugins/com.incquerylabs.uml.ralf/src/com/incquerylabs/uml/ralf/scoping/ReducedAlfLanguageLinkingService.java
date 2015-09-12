@@ -20,6 +20,9 @@ import com.incquerylabs.uml.ralf.reducedAlfLanguage.FeatureInvocationExpression;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.StaticFeatureInvocationExpression;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.Tuple;
 import com.incquerylabs.uml.ralf.resource.ReducedAlfLanguageResource;
+import com.incquerylabs.uml.ralf.types.IUMLTypeReference;
+
+import it.xsemantics.runtime.Result;
 
 public class ReducedAlfLanguageLinkingService extends DefaultLinkingService {
 	
@@ -42,19 +45,22 @@ public class ReducedAlfLanguageLinkingService extends DefaultLinkingService {
 				FeatureInvocationExpression featureInvocationExpression = (FeatureInvocationExpression) context;
 				Expression ctx = featureInvocationExpression.getContext();
 				parameters = featureInvocationExpression.getParameters();
-				contextType = typeSystem.type(ctx).getValue().getUmlType();
+				Result<IUMLTypeReference> type = typeSystem.type(ctx);
+				if (!type.failed()) {
+					contextType = type.getValue().getUmlType();
+				}
 			} else if (context.eContainer() instanceof StaticFeatureInvocationExpression) {
 				StaticFeatureInvocationExpression staticFeatureInvocationExpression = (StaticFeatureInvocationExpression) context.eContainer();
 				parameters = staticFeatureInvocationExpression.getParameters();
 				contextType = op.getClass_();
-			} else {
-				//throw new UnsupportedOperationException("Invalid context of Operation call: " + context.eClass().getName());
-				return linkedObjects;
 			}
-			candidates = umlContext.getOperationCandidatesOfClass((Classifier) contextType, op.getName());
-			if (candidates != null && candidates.size() > 1) {
-				linkedObjects = Lists.newArrayList(candidateChecker.calculateBestCandidates(candidates, parameters));
+			if (contextType != null && parameters != null) {
+				candidates = umlContext.getOperationCandidatesOfClass((Classifier) contextType, op.getName());
+				if (candidates != null && candidates.size() > 1) {
+					linkedObjects = Lists.newArrayList(candidateChecker.calculateBestCandidates(candidates, parameters));
+				}
 			}
+			
 		}
 		return linkedObjects;
 	}
