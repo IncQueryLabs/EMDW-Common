@@ -92,7 +92,7 @@ auxiliary {
 }
 
 judgments {
-    type |- EObject expression : output IUMLTypeReference cached
+    type |- EObject expression : output IUMLTypeReference
         error "Cannot type " + stringRep(expression)
         source expression
     operationParametersType |- Operation op <: Tuple params
@@ -568,6 +568,7 @@ from {
 rule AssociationAccessExpression
     G |- AssociationAccessExpression ex : IUMLTypeReference result
 from {
+//    val association = ex.eGet(ReducedAlfLanguagePackage.Literals.ASSOCIATION_ACCESS_EXPRESSION__ASSOCIATION, false) as EObject
     ex.association != null
     !ex.association.eIsProxy
     result = ex.association.type.typeReference
@@ -607,10 +608,7 @@ from {
 rule FeatureInvocationExpression
     derives G |- FeatureInvocationExpression ex : IUMLTypeReference result
 from {
-    {
-        (ex.eGet(ReducedAlfLanguagePackage.Literals.FEATURE_INVOCATION_EXPRESSION__FEATURE, false) as EObject).eIsProxy
-        result = anyType
-    } or
+//    (ex.eGet(ReducedAlfLanguagePackage.Literals.FEATURE_INVOCATION_EXPRESSION__FEATURE, false) as EObject).eIsProxy
     {
         ex.^feature instanceof Operation
         G |- ex.^feature : var IUMLTypeReference opType

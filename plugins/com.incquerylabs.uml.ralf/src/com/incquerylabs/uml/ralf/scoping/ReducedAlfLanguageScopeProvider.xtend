@@ -28,8 +28,8 @@ import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider
 import org.eclipse.uml2.uml.NamedElement
 import com.google.common.collect.Iterables
 import org.eclipse.uml2.uml.PrimitiveType
-import com.incquerylabs.uml.ralf.types.TypeFactory
 import com.incquerylabs.uml.ralf.resource.ReducedAlfLanguageResource
+import org.eclipse.emf.ecore.util.EcoreUtil
 
 /**
  * This class contains custom scoping description.
@@ -193,6 +193,7 @@ class ReducedAlfLanguageScopeProvider extends AbstractDeclarativeScopeProvider {
     }
     
     def IScope scope_FeatureInvocationExpression_feature(Expression ctx, EReference ref) {
+        EcoreUtil.resolveAll(ctx);
         val typeResult = system.type(ctx)
         if (typeResult.failed) {
             return null
@@ -233,6 +234,7 @@ class ReducedAlfLanguageScopeProvider extends AbstractDeclarativeScopeProvider {
     }
     
     def IScope scope_AssociationAccessExpression_association(Expression ctx, EReference ref) {
+        EcoreUtil.resolveAll(ctx)
         val typeResult = system.type(ctx)
         if (typeResult.failed) {
             return null
