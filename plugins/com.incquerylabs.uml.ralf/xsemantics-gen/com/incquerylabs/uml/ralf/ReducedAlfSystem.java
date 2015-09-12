@@ -981,32 +981,29 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
   }
   
   protected Result<Boolean> staticOperationParametersInternal(final RuleApplicationTrace _trace_, final StaticFeatureInvocationExpression ex) throws RuleFailedException {
-    /* { ex.operation instanceof Operation empty |- (ex.operation as Operation) <: ex.parameters } or { ex.operation.reference instanceof Operation empty |- (ex.operation.reference as Operation) <: ex.parameters } */
+    /* { ex.operation.reference.eIsProxy } or { ex.operation.reference instanceof Operation empty |- (ex.operation.reference as Operation) <: ex.parameters } */
     {
       RuleFailedException previousFailure = null;
       try {
         NameExpression _operation = ex.getOperation();
-        /* ex.operation instanceof Operation */
-        if (!(_operation instanceof Operation)) {
-          sneakyThrowRuleFailedException("ex.operation instanceof Operation");
+        NamedElement _reference = _operation.getReference();
+        /* ex.operation.reference.eIsProxy */
+        if (!_reference.eIsProxy()) {
+          sneakyThrowRuleFailedException("ex.operation.reference.eIsProxy");
         }
-        /* empty |- (ex.operation as Operation) <: ex.parameters */
-        NameExpression _operation_1 = ex.getOperation();
-        Tuple _parameters = ex.getParameters();
-        operationParametersTypeInternal(emptyEnvironment(), _trace_, ((Operation) _operation_1), _parameters);
       } catch (Exception e) {
         previousFailure = extractRuleFailedException(e);
-        NameExpression _operation_2 = ex.getOperation();
-        NamedElement _reference = _operation_2.getReference();
+        NameExpression _operation_1 = ex.getOperation();
+        NamedElement _reference_1 = _operation_1.getReference();
         /* ex.operation.reference instanceof Operation */
-        if (!(_reference instanceof Operation)) {
+        if (!(_reference_1 instanceof Operation)) {
           sneakyThrowRuleFailedException("ex.operation.reference instanceof Operation");
         }
         /* empty |- (ex.operation.reference as Operation) <: ex.parameters */
-        NameExpression _operation_3 = ex.getOperation();
-        NamedElement _reference_1 = _operation_3.getReference();
-        Tuple _parameters_1 = ex.getParameters();
-        operationParametersTypeInternal(emptyEnvironment(), _trace_, ((Operation) _reference_1), _parameters_1);
+        NameExpression _operation_2 = ex.getOperation();
+        NamedElement _reference_2 = _operation_2.getReference();
+        Tuple _parameters = ex.getParameters();
+        operationParametersTypeInternal(emptyEnvironment(), _trace_, ((Operation) _reference_2), _parameters);
       }
     }
     return new Result<Boolean>(true);
@@ -1159,7 +1156,12 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
   }
   
   protected void operationParametersTypeThrowException(final String _error, final String _issue, final Exception _ex, final Operation op, final Tuple params, final ErrorInformation[] _errorInformations) throws RuleFailedException {
-    throwRuleFailedException(_error, _issue, _ex, _errorInformations);
+    String _stringRep = this.stringRep(op);
+    String _plus = ("Invalid parameter types " + _stringRep);
+    String error = _plus;
+    EObject source = params;
+    throwRuleFailedException(error,
+    	_issue, _ex, new ErrorInformation(source, null));
   }
   
   protected Result<IUMLTypeReference> operationTypeInternal(final RuleEnvironment _environment_, final RuleApplicationTrace _trace_, final Operation op, final Tuple params) {

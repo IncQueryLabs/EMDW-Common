@@ -96,6 +96,8 @@ judgments {
         error "Cannot type " + stringRep(expression)
         source expression
     operationParametersType |- Operation op <: Tuple params
+        error "Invalid parameter types " + stringRep(op)
+        source params
     operationType |- Operation op <: Tuple params :> output IUMLTypeReference
         error "Invalid parameter types " + stringRep(op)
         source op
@@ -809,8 +811,7 @@ checkrule StaticOperationParameters for
     StaticFeatureInvocationExpression ex
 from {
     {
-        ex.operation instanceof Operation
-        empty |- (ex.operation as Operation) <: ex.parameters
+        ex.operation.reference.eIsProxy
     } or {
         ex.operation.reference instanceof Operation
         empty |- (ex.operation.reference as Operation) <: ex.parameters
