@@ -35,7 +35,9 @@ public interface IUMLContextProvider {
 	Iterable<Property> getPropertiesOfClass(Classifier cl);
 	Iterable<Property> getAssociationsOfClass(Classifier cl);
 	Iterable<Operation> getOperationsOfClass(Classifier cl);
+	Set<Operation> getOperationCandidatesOfClass(Classifier cl, String name);
 	Iterable<Operation> getStaticOperations();
+	Set<Operation> getConstructorsOfClass(Class cl);
 	
 	/**
 	 * Returns the type of the this expression. If no container can be calculated, might return null.

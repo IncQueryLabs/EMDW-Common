@@ -36,6 +36,8 @@ import com.incquerylabs.emdw.umlintegration.queries.AncestorSignalMatcher;
 import com.incquerylabs.emdw.umlintegration.queries.AssociationsOfClassifierMatcher;
 import com.incquerylabs.emdw.umlintegration.queries.AttributesOfClassifierMatcher;
 import com.incquerylabs.emdw.umlintegration.queries.CommonAncestorSignalMatcher;
+import com.incquerylabs.emdw.umlintegration.queries.ConstructorByNameMatcher;
+import com.incquerylabs.emdw.umlintegration.queries.OperationsOfClassByNameMatcher;
 import com.incquerylabs.emdw.umlintegration.queries.OperationsOfClassMatcher;
 import com.incquerylabs.emdw.umlintegration.queries.SignalsMatcher;
 import com.incquerylabs.emdw.umlintegration.queries.StaticOperationsMatcher;
@@ -58,9 +60,11 @@ public abstract class UMLContextProvider extends AbstractUMLContextProvider {
 					SignalsMatcher.querySpecification(),
 					UmlTypesMatcher.querySpecification(),
 					OperationsOfClassMatcher.querySpecification(),
+					OperationsOfClassByNameMatcher.querySpecification(),
 					StaticOperationsMatcher.querySpecification(),
 					TriggerSignalOfBehaviorMatcher.querySpecification(),
-					CommonAncestorSignalMatcher.querySpecification()
+					CommonAncestorSignalMatcher.querySpecification(),
+					ConstructorByNameMatcher.querySpecification()
 					);
 			queries.prepare(engine);			
 //		}
@@ -182,6 +186,18 @@ public abstract class UMLContextProvider extends AbstractUMLContextProvider {
 	}
 
 	@Override
+	public Set<Operation> getOperationCandidatesOfClass(Classifier cl, String name) {
+		try {
+			OperationsOfClassByNameMatcher matcher = OperationsOfClassByNameMatcher.on(getEngine());
+			return matcher.getAllValuesOfop(cl, name);
+		} catch (IncQueryException | IncQueryBaseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return Sets.newHashSet();
+	}
+
+	@Override
 	public Signal getIncomingSignalType() {
 		try {
 			EObject ctx = getContextObject();
@@ -230,4 +246,18 @@ public abstract class UMLContextProvider extends AbstractUMLContextProvider {
 			}
 		}
 	}
+
+	@Override
+	public Set<Operation> getConstructorsOfClass(Class cl) {
+		try {
+			ConstructorByNameMatcher matcher = ConstructorByNameMatcher.on(getEngine());
+			return matcher.getAllValuesOfoperation(cl);
+		} catch (IncQueryException | IncQueryBaseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return Sets.newHashSet();
+	}
+	
+	
 }

@@ -7,38 +7,54 @@ import com.incquerylabs.uml.ralf.reducedAlfLanguage.AssignmentExpression
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.AssociationAccessExpression
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.BooleanLiteralExpression
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.BooleanUnaryExpression
+import com.incquerylabs.uml.ralf.reducedAlfLanguage.CastExpression
+import com.incquerylabs.uml.ralf.reducedAlfLanguage.ClassExtentExpression
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.ConditionalLogicalExpression
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.ConditionalTestExpression
-import com.incquerylabs.uml.ralf.reducedAlfLanguage.FilterVariable
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.DoStatement
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.ElementCollectionExpression
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.EqualityExpression
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.Expression
+import com.incquerylabs.uml.ralf.reducedAlfLanguage.ExpressionList
+import com.incquerylabs.uml.ralf.reducedAlfLanguage.FeatureInvocationExpression
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.FilterExpression
+import com.incquerylabs.uml.ralf.reducedAlfLanguage.FilterVariable
+import com.incquerylabs.uml.ralf.reducedAlfLanguage.ForEachStatement
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.ForStatement
+import com.incquerylabs.uml.ralf.reducedAlfLanguage.IfClause
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.InstanceCreationExpression
+import com.incquerylabs.uml.ralf.reducedAlfLanguage.InstanceDeletionExpression
+import com.incquerylabs.uml.ralf.reducedAlfLanguage.LeftHandSide
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.LinkOperation
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.LinkOperationExpression
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.LocalNameDeclarationStatement
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.LogicalExpression
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.LoopVariable
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.NameExpression
+import com.incquerylabs.uml.ralf.reducedAlfLanguage.NamedTuple
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.NaturalLiteralExpression
+import com.incquerylabs.uml.ralf.reducedAlfLanguage.NullExpression
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.NumericUnaryExpression
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.PostfixExpression
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.PrefixExpression
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.RealLiteralExpression
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.RelationalExpression
+import com.incquerylabs.uml.ralf.reducedAlfLanguage.ReturnStatement
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.SendSignalStatement
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.ShiftExpression
+import com.incquerylabs.uml.ralf.reducedAlfLanguage.SignalDataExpression
+import com.incquerylabs.uml.ralf.reducedAlfLanguage.StaticFeatureInvocationExpression
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.StringLiteralExpression
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.SwitchClause
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.SwitchStatement
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.ThisExpression
+import com.incquerylabs.uml.ralf.reducedAlfLanguage.Tuple
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.TypeDeclaration
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.Variable
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.WhileStatement
 import com.incquerylabs.uml.ralf.scoping.IUMLContextProvider
+import com.incquerylabs.uml.ralf.scoping.UMLScopeHelper
+import com.incquerylabs.uml.ralf.types.AbstractTypeReference
 import com.incquerylabs.uml.ralf.types.CollectionTypeReference
 import com.incquerylabs.uml.ralf.types.IUMLTypeReference
 import com.incquerylabs.uml.ralf.types.IUMLTypeReference.AnyTypeReference
@@ -51,31 +67,19 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.uml2.uml.Association
 import org.eclipse.uml2.uml.Class
 import org.eclipse.uml2.uml.Classifier
+import org.eclipse.uml2.uml.Operation
+import org.eclipse.uml2.uml.Parameter
+import org.eclipse.uml2.uml.ParameterDirectionKind
 import org.eclipse.uml2.uml.PrimitiveType
+import org.eclipse.uml2.uml.Property
 import org.eclipse.uml2.uml.Signal
 import org.eclipse.uml2.uml.Type
-import com.incquerylabs.uml.ralf.reducedAlfLanguage.ForEachStatement
-import com.incquerylabs.uml.ralf.reducedAlfLanguage.NullExpression
-import com.incquerylabs.uml.ralf.types.AbstractTypeReference
-import org.eclipse.uml2.uml.Parameter
-import com.incquerylabs.uml.ralf.reducedAlfLanguage.ReturnStatement
-import com.incquerylabs.uml.ralf.scoping.UMLScopeHelper
-import com.incquerylabs.uml.ralf.reducedAlfLanguage.FeatureInvocationExpression
-import org.eclipse.uml2.uml.Operation
-import com.incquerylabs.uml.ralf.reducedAlfLanguage.Tuple
-import com.incquerylabs.uml.ralf.reducedAlfLanguage.NamedTuple
-import com.incquerylabs.uml.ralf.reducedAlfLanguage.ExpressionList
-import com.incquerylabs.uml.ralf.reducedAlfLanguage.InstanceDeletionExpression
-import com.incquerylabs.uml.ralf.reducedAlfLanguage.StaticFeatureInvocationExpression
-import com.incquerylabs.uml.ralf.reducedAlfLanguage.IfClause
-import org.eclipse.uml2.uml.Property
-import com.incquerylabs.uml.ralf.reducedAlfLanguage.LeftHandSide
-import com.incquerylabs.uml.ralf.reducedAlfLanguage.SignalDataExpression
-import com.incquerylabs.uml.ralf.reducedAlfLanguage.ClassExtentExpression
-import com.incquerylabs.uml.ralf.reducedAlfLanguage.CastExpression
+import com.incquerylabs.uml.ralf.scoping.OperationCandidateChecker
+import com.incquerylabs.uml.ralf.reducedAlfLanguage.ReducedAlfLanguagePackage
 
 inject extension TypeFactory typeFactory
 inject extension UMLScopeHelper scopeHelper
+inject extension OperationCandidateChecker candidateChecker
 
 val REAL    = IUMLContextProvider.REAL_TYPE
 val INTEGER = IUMLContextProvider.INTEGER_TYPE
@@ -88,9 +92,12 @@ auxiliary {
 }
 
 judgments {
-    type |- EObject expression : output IUMLTypeReference
+    type |- EObject expression : output IUMLTypeReference cached
         error "Cannot type " + stringRep(expression)
         source expression
+    operationParametersType |- Operation op <: Tuple params
+        error "Invalid parameter types " + stringRep(op)
+        source params
     operationType |- Operation op <: Tuple params :> output IUMLTypeReference
         error "Invalid parameter types " + stringRep(op)
         source op
@@ -108,11 +115,11 @@ auxiliary superClassList(Class cl) {
 }
 
 auxiliary typeReference(TypeDeclaration decl) {
-//    if (decl.isIsAny) {
-//        anyType
-//    } else {
-        decl.getType().typeReference
-//    }
+    if (decl.getType == null) {
+        anyType
+    } else {
+        decl.getType().typeReference        
+    }
 }
 
 axiom BooleanLiteral
@@ -278,29 +285,56 @@ from {
  * Operation typing
  */
 rule OperationTyping
-    G |- Operation op <: Tuple params :> IUMLTypeReference result
+    G |- Operation op <: Tuple params
 from {
     fail
 }
-rule ParameterListTyping
-    G |- Operation op <: ExpressionList params :> IUMLTypeReference result
+rule OperationTypingWithResult
+    G |- Operation op <: Tuple params :> IUMLTypeReference result
 from {
-    val opParamLength = op.ownedParameters.size
+    G |- op <: params
+    G |- op : result
+}
+rule ParameterListTyping
+    G |- Operation op <: ExpressionList params
+from {
+    val declaredParameters = op.ownedParameters.filter[direction != ParameterDirectionKind.RETURN_LITERAL]
+    
+    val opParamLength = declaredParameters.size
     val paramLength = params.expressions.size
     opParamLength == paramLength
     
     for (var i = 0; i < paramLength; i++) {
-        val declaredType = op.ownedParameters.get(i).type.typeReference
+        val declaredType = declaredParameters.get(i).type.typeReference
         G |- params.expressions.get(i) |> declaredType
     }
-    
-    G |- op : result
 }
+
 rule NamedTupleTyping
-    G |- Operation op <: NamedTuple params :> IUMLTypeReference result
+    G |- Operation op <: NamedTuple params
 from {
-    
-    result = op.returnParameter.type.typeReference
+    val exprMap = <String, Expression> newHashMap(params.expressions.map[it.name -> it.expression])
+    val paramMap = <String, Type> newHashMap(op.ownedParameters.filter[direction != ParameterDirectionKind.RETURN_LITERAL].map[
+        it.name -> it.type
+    ])
+    val problematicValues = exprMap.filter[name, expr|
+            val declaredType = paramMap.get(name)
+            expr == null ||
+            declaredType == null ||
+            !{G |- expr |> declaredType.typeReference}
+        ]
+    val problematicDeclarations = paramMap.filter[name, declaredType|
+            val expr = exprMap.get(name)
+            declaredType == null ||
+            expr == null ||
+            !{G |- expr |> declaredType.typeReference}
+        ]
+    if(problematicValues.size > 0) {
+        fail 
+    }
+    if (problematicDeclarations.size > 0) {
+        fail
+    }
 }
 
 /**
@@ -482,14 +516,21 @@ from {
 rule InstanceCreationExpression
     G |- InstanceCreationExpression ex : IUMLTypeReference result
 from {
-    // Primitive types cannot be instantiated
-    !(ex.instance instanceof PrimitiveType)
+    {
+        ex.instance == null
+        fail error "Invalid instance definition" source ex.instance
+    } or {
+        ex.instance != null
+        // Primitive types cannot be instantiated
+        !(ex.instance instanceof PrimitiveType)
     
-    // TODO Parameter mapping
-    ex.parameters
+        // TODO Parameter mapping
+        ex.parameters
     
-    // Return typing
-    result = ex.instance.typeReference
+        // Return typing
+        result = ex.instance.typeReference
+    
+    }
 }
 
 
@@ -566,6 +607,10 @@ from {
 rule FeatureInvocationExpression
     derives G |- FeatureInvocationExpression ex : IUMLTypeReference result
 from {
+    {
+        (ex.eGet(ReducedAlfLanguagePackage.Literals.FEATURE_INVOCATION_EXPRESSION__FEATURE, false) as EObject).eIsProxy
+        result = anyType
+    } or
     {
         ex.^feature instanceof Operation
         G |- ex.^feature : var IUMLTypeReference opType
@@ -755,5 +800,53 @@ from {
 checkrule OperationParameters for 
     FeatureInvocationExpression ex
 from {
-    
+    {
+        ex.^feature instanceof Operation
+        empty |- (ex.^feature as Operation) <: ex.parameters
+    } or {
+    }
+}
+
+checkrule StaticOperationParameters for
+    StaticFeatureInvocationExpression ex
+from {
+    {
+        ex.operation.reference.eIsProxy
+    } or {
+        ex.operation.reference instanceof Operation
+        empty |- (ex.operation.reference as Operation) <: ex.parameters
+    }
+}
+
+checkrule InstanceCreationExpressionParameter for
+    InstanceCreationExpression ex
+from {
+    switch (ex.instance) {
+        Class : {
+            val candidates = umlContext(ex).
+            getConstructorsOfClass(ex.instance as Class)
+        
+            val filteredCandidates = candidates.calculateBestCandidates(ex.parameters)
+            if (candidates.isEmpty) {
+                if (!(ex.parameters instanceof ExpressionList) || !(ex.parameters as ExpressionList).expressions.isEmpty) {
+                    fail 
+                        error "Default constructor cannot have parameters"
+                        source ex.parameters
+                }
+            } else if (filteredCandidates.isEmpty) {
+                fail
+                    error "No constructors match parameters"
+                    source ex.parameters
+            } else if (filteredCandidates.size == 1) {
+                empty |- filteredCandidates.get(0) <: ex.parameters
+            } else {
+                fail 
+                    error "Multiple constructor candidates match the parameters"
+                    source ex.parameters
+            }
+        }
+        Signal : {
+            empty |- (ex.instance as Signal).createVirtualConstructor <: ex.parameters
+        }
+    }
 }

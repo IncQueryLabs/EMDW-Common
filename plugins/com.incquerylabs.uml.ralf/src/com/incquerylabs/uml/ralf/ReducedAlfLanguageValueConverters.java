@@ -13,7 +13,7 @@ public class ReducedAlfLanguageValueConverters extends DefaultTerminalConverters
 
 		@Override
 		public String toValue(String string, INode node) throws ValueConverterException {
-			if (string.startsWith("'") && string.endsWith("'")) {
+			if (string != null && string.startsWith("'") && string.endsWith("'")) {
 				return string.substring(1, string.length() - 1); 
 			} else {
 				return string;
