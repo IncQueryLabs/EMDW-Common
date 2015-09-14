@@ -100,8 +100,6 @@ import org.eclipse.xtext.xbase.lib.Pair;
 
 @SuppressWarnings("all")
 public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
-  public final static String SUPERCLASSLIST = "com.incquerylabs.uml.ralf.SuperClassList";
-  
   public final static String TYPEREFERENCE = "com.incquerylabs.uml.ralf.TypeReference";
   
   public final static String CONSTRUCTOROPERATIONCANDIDATES = "com.incquerylabs.uml.ralf.ConstructorOperationCandidates";
@@ -234,8 +232,6 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
   
   private final String STRING = IUMLContextProvider.STRING_TYPE;
   
-  private PolymorphicDispatcher<List<org.eclipse.uml2.uml.Class>> superClassListDispatcher;
-  
   private PolymorphicDispatcher<IUMLTypeReference> typeReferenceDispatcher;
   
   private PolymorphicDispatcher<Set<Operation>> constructorOperationCandidatesDispatcher;
@@ -271,8 +267,6 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
     	"subtypeOrEqualImpl", 5, "|-", "<~", ":");
     assignableDispatcher = buildPolymorphicDispatcher1(
     	"assignableImpl", 4, "|-", "|>");
-    superClassListDispatcher = buildPolymorphicDispatcher(
-    	"superClassListImpl", 2);
     typeReferenceDispatcher = buildPolymorphicDispatcher(
     	"typeReferenceImpl", 2);
     constructorOperationCandidatesDispatcher = buildPolymorphicDispatcher(
@@ -319,18 +313,6 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
   
   public Object getSTRING() {
     return this.STRING;
-  }
-  
-  public List<org.eclipse.uml2.uml.Class> superClassList(final org.eclipse.uml2.uml.Class cl) throws RuleFailedException {
-    return superClassList(null, cl);
-  }
-  
-  public List<org.eclipse.uml2.uml.Class> superClassList(final RuleApplicationTrace _trace_, final org.eclipse.uml2.uml.Class cl) throws RuleFailedException {
-    try {
-    	return superClassListInternal(_trace_, cl);
-    } catch (Exception _e_superClassList) {
-    	throw extractRuleFailedException(_e_superClassList);
-    }
   }
   
   public IUMLTypeReference typeReference(final TypeDeclaration decl) throws RuleFailedException {
@@ -1105,20 +1087,6 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
     return new Result<Boolean>(true);
   }
   
-  protected List<org.eclipse.uml2.uml.Class> superClassListInternal(final RuleApplicationTrace _trace_, final org.eclipse.uml2.uml.Class cl) {
-    try {
-    	checkParamsNotNull(cl);
-    	return superClassListDispatcher.invoke(_trace_, cl);
-    } catch (Exception _e_superClassList) {
-    	sneakyThrowRuleFailedException(_e_superClassList);
-    	return null;
-    }
-  }
-  
-  protected void superClassListThrowException(final String _error, final String _issue, final Exception _ex, final org.eclipse.uml2.uml.Class cl, final ErrorInformation[] _errorInformations) throws RuleFailedException {
-    throwRuleFailedException(_error, _issue, _ex, _errorInformations);
-  }
-  
   protected IUMLTypeReference typeReferenceInternal(final RuleApplicationTrace _trace_, final TypeDeclaration decl) {
     try {
     	checkParamsNotNull(decl);
@@ -1277,29 +1245,6 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
     EObject source = expression;
     throwRuleFailedException(error,
     	_issue, _ex, new ErrorInformation(source, null));
-  }
-  
-  protected List<org.eclipse.uml2.uml.Class> superClassListImpl(final RuleApplicationTrace _trace_, final org.eclipse.uml2.uml.Class cl) throws RuleFailedException {
-    try {
-    	final RuleApplicationTrace _subtrace_ = newTrace(_trace_);
-    	final List<org.eclipse.uml2.uml.Class> _result_ = applyAuxFunSuperClassList(_subtrace_, cl);
-    	addToTrace(_trace_, new Provider<Object>() {
-    		public Object get() {
-    			return auxFunName("superClassList") + "(" + stringRep(cl)+ ")" + " = " + stringRep(_result_);
-    		}
-    	});
-    	addAsSubtrace(_trace_, _subtrace_);
-    	return _result_;
-    } catch (Exception e_applyAuxFunSuperClassList) {
-    	superClassListThrowException(auxFunName("superClassList") + "(" + stringRep(cl)+ ")",
-    		SUPERCLASSLIST,
-    		e_applyAuxFunSuperClassList, cl, new ErrorInformation[] {new ErrorInformation(cl)});
-    	return null;
-    }
-  }
-  
-  protected List<org.eclipse.uml2.uml.Class> applyAuxFunSuperClassList(final RuleApplicationTrace _trace_, final org.eclipse.uml2.uml.Class cl) throws RuleFailedException {
-    return cl.getSuperClasses();
   }
   
   protected IUMLTypeReference typeReferenceImpl(final RuleApplicationTrace _trace_, final TypeDeclaration decl) throws RuleFailedException {
@@ -2137,7 +2082,7 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
   }
   
   protected Result<Boolean> applyRuleClassSubtyping(final RuleEnvironment G, final RuleApplicationTrace _trace_, final org.eclipse.uml2.uml.Class left, final org.eclipse.uml2.uml.Class right, final IUMLContextProvider context) throws RuleFailedException {
-    /* left == right or right.name == "Object" or superClassList(left).contains(right) */
+    /* left == right or right.name == "Object" or right.superClasses.contains(left) */
     {
       RuleFailedException previousFailure = null;
       try {
@@ -2148,7 +2093,7 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
         }
       } catch (Exception e) {
         previousFailure = extractRuleFailedException(e);
-        /* right.name == "Object" or superClassList(left).contains(right) */
+        /* right.name == "Object" or right.superClasses.contains(left) */
         {
           try {
             String _name = right.getName();
@@ -2159,11 +2104,11 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
             }
           } catch (Exception e_1) {
             previousFailure = extractRuleFailedException(e_1);
-            List<org.eclipse.uml2.uml.Class> _superClassList = this.superClassListInternal(_trace_, left);
-            boolean _contains = _superClassList.contains(right);
-            /* superClassList(left).contains(right) */
+            EList<org.eclipse.uml2.uml.Class> _superClasses = right.getSuperClasses();
+            boolean _contains = _superClasses.contains(left);
+            /* right.superClasses.contains(left) */
             if (!_contains) {
-              sneakyThrowRuleFailedException("superClassList(left).contains(right)");
+              sneakyThrowRuleFailedException("right.superClasses.contains(left)");
             }
           }
         }
