@@ -29,7 +29,6 @@ import org.eclipse.uml2.uml.NamedElement
 import com.google.common.collect.Iterables
 import org.eclipse.uml2.uml.PrimitiveType
 import com.incquerylabs.uml.ralf.resource.ReducedAlfLanguageResource
-import org.eclipse.emf.ecore.util.EcoreUtil
 
 /**
  * This class contains custom scoping description.
@@ -188,15 +187,14 @@ class ReducedAlfLanguageScopeProvider extends AbstractDeclarativeScopeProvider {
         if (ctx.context != null && !ctx.context.eIsProxy) {
             scope_FeatureInvocationExpression_feature(ctx.context, ref)    
         } else {
-            null
+            IScope.NULLSCOPE
         }
     }
     
     def IScope scope_FeatureInvocationExpression_feature(Expression ctx, EReference ref) {
-        EcoreUtil.resolveAll(ctx);
         val typeResult = system.type(ctx)
         if (typeResult.failed) {
-            return null
+            return IScope.NULLSCOPE
         }
         val type = typeResult.value.umlType
         if (type instanceof Classifier) {
@@ -205,13 +203,14 @@ class ReducedAlfLanguageScopeProvider extends AbstractDeclarativeScopeProvider {
                 Scopes.scopeFor(uml.getOperationsOfClass(type))
             )
         } else {
-            null
+            IScope.NULLSCOPE
         }
     }
     
     def IScope scope_StaticFeatureInvocationExpression_operation(StaticFeatureInvocationExpression ctx, EReference ref) {
         val uml = umlContext(ctx)
-        val staticScope = uml.staticOperations.localAndQualifiedScopes(uml)
+        val libraryScope = Scopes.scopeFor(uml.libraryOperations)
+        val staticScope = uml.staticOperations.localAndQualifiedScopes(libraryScope, uml)
         val thisType = uml.thisType
         if (thisType != null) {
             Scopes.scopeFor(uml.getOperationsOfClass(thisType),
@@ -229,15 +228,14 @@ class ReducedAlfLanguageScopeProvider extends AbstractDeclarativeScopeProvider {
         if (ctx.context != null && !(ctx.context.eIsProxy)) {
             scope_AssociationAccessExpression_association(ctx.context, ref)
         } else {
-            null
+            IScope.NULLSCOPE
         }
     }
     
     def IScope scope_AssociationAccessExpression_association(Expression ctx, EReference ref) {
-        EcoreUtil.resolveAll(ctx)
         val typeResult = system.type(ctx)
         if (typeResult.failed) {
-            return null
+            return IScope.NULLSCOPE
         }
         val typeRef = typeResult.value
         if (typeRef instanceof UMLTypeReference) {
@@ -246,7 +244,7 @@ class ReducedAlfLanguageScopeProvider extends AbstractDeclarativeScopeProvider {
                 return Scopes.scopeFor(umlContext(ctx).getAssociationsOfClass(type))
             } 
         }
-        return null
+        return IScope.NULLSCOPE
     }
 
 }
