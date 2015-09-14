@@ -129,19 +129,23 @@ class ReducedAlfLanguageScopeProvider extends AbstractDeclarativeScopeProvider {
         }
     }
     
-    private def IScope localAndQualifiedScopes(Iterable<? extends NamedElement> elements, IUMLContextProvider umlContext) {
+    private def IScope localAndQualifiedScopes(Iterable<? extends NamedElement> elements, IScope parentScope, IUMLContextProvider umlContext) {
         val fqnScope = Scopes.scopeFor(elements.filter[it != null && !it.qualifiedName.nullOrEmpty], [NamedElement it|
             switch it {
             PrimitiveType : nameConverter.toQualifiedName(it.name)
             default: nameConverter.toQualifiedName(it.qualifiedName)
             }
-        ], IScope.NULLSCOPE)
+        ], parentScope)
         val thisType = umlContext?.thisType
         val thisQualifiedName = thisType?.qualifiedName
         val containerQualifiedName = thisType?.namespace?.qualifiedName
         localScope(elements, thisQualifiedName, 
             localScope(elements, containerQualifiedName, fqnScope)
         )
+    }
+    
+    private def IScope localAndQualifiedScopes(Iterable<? extends NamedElement> elements, IUMLContextProvider umlContext) {
+        localAndQualifiedScopes(elements, IScope.NULLSCOPE, umlContext)
     }
     
     private def IScope getParametersScope(IScope parentScope, IUMLContextProvider umlContext) {
@@ -209,7 +213,9 @@ class ReducedAlfLanguageScopeProvider extends AbstractDeclarativeScopeProvider {
     
     def IScope scope_StaticFeatureInvocationExpression_operation(StaticFeatureInvocationExpression ctx, EReference ref) {
         val uml = umlContext(ctx)
-        val libraryScope = Scopes.scopeFor(uml.libraryOperations)
+        val libraryScope = Scopes.scopeFor(uml.libraryOperations, [
+            nameConverter.toQualifiedName(it.qualifiedName)
+        ], IScope.NULLSCOPE)
         val staticScope = uml.staticOperations.localAndQualifiedScopes(libraryScope, uml)
         val thisType = uml.thisType
         if (thisType != null) {

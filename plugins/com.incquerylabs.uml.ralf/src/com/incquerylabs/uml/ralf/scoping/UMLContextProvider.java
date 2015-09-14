@@ -30,7 +30,9 @@ import org.eclipse.uml2.uml.Type;
 import org.eclipse.uml2.uml.UMLPackage;
 import org.eclipse.uml2.uml.resource.UMLResource;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
+import com.google.common.collect.Iterators;
 import com.google.common.collect.Sets;
 import com.incquerylabs.emdw.umlintegration.queries.AncestorSignalMatcher;
 import com.incquerylabs.emdw.umlintegration.queries.AssociationsOfClassifierMatcher;
@@ -257,6 +259,12 @@ public abstract class UMLContextProvider extends AbstractUMLContextProvider {
 			e.printStackTrace();
 		}
 		return Sets.newHashSet();
+	}
+
+	@Override
+	public Iterable<Operation> getLibraryOperations() {
+		return ImmutableList.copyOf(
+				Iterators.filter(((Package)getLibraryModel().getOwnedMember("std")).eAllContents(), Operation.class));
 	}
 	
 	

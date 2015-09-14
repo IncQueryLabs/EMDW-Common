@@ -82,5 +82,9 @@ class SimpleUMLContextProvider extends AbstractUMLContextProvider {
         newHashSet()
     }
     
+    override getLibraryOperations() {
+        newArrayList()
+    }
+    
     
 }
