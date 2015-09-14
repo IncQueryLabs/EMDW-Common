@@ -75,7 +75,7 @@ import org.eclipse.uml2.uml.Property
 import org.eclipse.uml2.uml.Signal
 import org.eclipse.uml2.uml.Type
 import com.incquerylabs.uml.ralf.scoping.OperationCandidateChecker
-import com.incquerylabs.uml.ralf.reducedAlfLanguage.ReducedAlfLanguagePackage
+import java.util.Set
 
 inject extension TypeFactory typeFactory
 inject extension UMLScopeHelper scopeHelper
@@ -88,7 +88,9 @@ val STRING  = IUMLContextProvider.STRING_TYPE
 
 auxiliary {
     superClassList(Class cl) : List<Class>
-    typeReference(TypeDeclaration decl) : IUMLTypeReference 
+    typeReference(TypeDeclaration decl) : IUMLTypeReference
+    constructorOperationCandidates(Classifier cl, Tuple parameters) : Set<Operation>
+    constructorOperation(Classifier cl, Tuple parameters) : Operation
 }
 
 judgments {
@@ -119,6 +121,24 @@ auxiliary typeReference(TypeDeclaration decl) {
         anyType
     } else {
         decl.getType().typeReference        
+    }
+}
+
+auxiliary constructorOperationCandidates(Class cl, Tuple parameters) {
+    umlContext(parameters).getConstructorsOfClass(cl)
+}
+
+auxiliary constructorOperationCandidates(Signal sig, Tuple parameters) {
+   newHashSet(sig.createVirtualConstructor)
+}
+
+auxiliary constructorOperation(Classifier cl, Tuple parameters) {
+    val candidates = cl.constructorOperationCandidates(parameters).calculateBestCandidates(parameters)
+    
+    if (candidates.size == 1) {
+        return candidates.get(0)
+    } else {
+        return null
     }
 }
 
@@ -524,9 +544,6 @@ from {
         // Primitive types cannot be instantiated
         !(ex.instance instanceof PrimitiveType)
     
-        // TODO Parameter mapping
-        ex.parameters
-    
         // Return typing
         result = ex.instance.typeReference
     
@@ -615,12 +632,9 @@ from {
         opType.umlType == ex.umlContext.genericCollectionParameterType
         G |- ex.context : var CollectionTypeReference collType
         result = collType.valueType
-        // TODO parameter typing
     } or {
         ex.^feature instanceof Operation
         G |- ex.^feature : result
-        
-        // TODO parameter typing
     } or {
         ex.^feature instanceof Property
         val property = ex.^feature as Property
@@ -632,7 +646,6 @@ rule StaticFeatureInvocationExpression
     derives G |- StaticFeatureInvocationExpression ex : IUMLTypeReference result
 from {
     G |- ex.operation : result
-    //TODO parameter typing
 }
 
 rule Operation
@@ -819,32 +832,24 @@ from {
 checkrule InstanceCreationExpressionParameter for
     InstanceCreationExpression ex
 from {
-    switch (ex.instance) {
-        Class : {
-            val candidates = umlContext(ex).
-            getConstructorsOfClass(ex.instance as Class)
-        
-            val filteredCandidates = candidates.calculateBestCandidates(ex.parameters)
-            if (candidates.isEmpty) {
-                if (!(ex.parameters instanceof ExpressionList) || !(ex.parameters as ExpressionList).expressions.isEmpty) {
-                    fail 
-                        error "Default constructor cannot have parameters"
-                        source ex.parameters
-                }
-            } else if (filteredCandidates.isEmpty) {
-                fail
-                    error "No constructors match parameters"
-                    source ex.parameters
-            } else if (filteredCandidates.size == 1) {
-                empty |- filteredCandidates.get(0) <: ex.parameters
-            } else {
-                fail 
-                    error "Multiple constructor candidates match the parameters"
-                    source ex.parameters
-            }
+    val candidates = ex.instance.constructorOperationCandidates(ex.parameters)
+    val filteredCandidates = candidates.calculateBestCandidates(ex.parameters)
+    
+    if (candidates.isEmpty) {
+        if (!(ex.parameters instanceof ExpressionList) || !(ex.parameters as ExpressionList).expressions.isEmpty) {
+            fail 
+                error "Default constructor cannot have parameters"
+                source ex.parameters
         }
-        Signal : {
-            empty |- (ex.instance as Signal).createVirtualConstructor <: ex.parameters
-        }
+    } else if (filteredCandidates.isEmpty) {
+        fail
+            error "No constructors match parameters"
+           source ex.parameters
+    } else if (filteredCandidates.size == 1) {
+        empty |- filteredCandidates.get(0) <: ex.parameters
+    } else {
+        fail 
+          error "Multiple constructor candidates match the parameters"
+          source ex.parameters
     }
 }

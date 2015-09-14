@@ -104,6 +104,10 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
   
   public final static String TYPEREFERENCE = "com.incquerylabs.uml.ralf.TypeReference";
   
+  public final static String CONSTRUCTOROPERATIONCANDIDATES = "com.incquerylabs.uml.ralf.ConstructorOperationCandidates";
+  
+  public final static String CONSTRUCTOROPERATION = "com.incquerylabs.uml.ralf.ConstructorOperation";
+  
   public final static String BOOLEANLITERAL = "com.incquerylabs.uml.ralf.BooleanLiteral";
   
   public final static String NATURALLITERAL = "com.incquerylabs.uml.ralf.NaturalLiteral";
@@ -234,6 +238,10 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
   
   private PolymorphicDispatcher<IUMLTypeReference> typeReferenceDispatcher;
   
+  private PolymorphicDispatcher<Set<Operation>> constructorOperationCandidatesDispatcher;
+  
+  private PolymorphicDispatcher<Operation> constructorOperationDispatcher;
+  
   private PolymorphicDispatcher<Result<IUMLTypeReference>> typeDispatcher;
   
   private PolymorphicDispatcher<Result<Boolean>> operationParametersTypeDispatcher;
@@ -267,6 +275,10 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
     	"superClassListImpl", 2);
     typeReferenceDispatcher = buildPolymorphicDispatcher(
     	"typeReferenceImpl", 2);
+    constructorOperationCandidatesDispatcher = buildPolymorphicDispatcher(
+    	"constructorOperationCandidatesImpl", 3);
+    constructorOperationDispatcher = buildPolymorphicDispatcher(
+    	"constructorOperationImpl", 3);
   }
   
   public TypeFactory getTypeFactory() {
@@ -330,6 +342,30 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
     	return typeReferenceInternal(_trace_, decl);
     } catch (Exception _e_typeReference) {
     	throw extractRuleFailedException(_e_typeReference);
+    }
+  }
+  
+  public Set<Operation> constructorOperationCandidates(final Classifier cl, final Tuple parameters) throws RuleFailedException {
+    return constructorOperationCandidates(null, cl, parameters);
+  }
+  
+  public Set<Operation> constructorOperationCandidates(final RuleApplicationTrace _trace_, final Classifier cl, final Tuple parameters) throws RuleFailedException {
+    try {
+    	return constructorOperationCandidatesInternal(_trace_, cl, parameters);
+    } catch (Exception _e_constructorOperationCandidates) {
+    	throw extractRuleFailedException(_e_constructorOperationCandidates);
+    }
+  }
+  
+  public Operation constructorOperation(final Classifier cl, final Tuple parameters) throws RuleFailedException {
+    return constructorOperation(null, cl, parameters);
+  }
+  
+  public Operation constructorOperation(final RuleApplicationTrace _trace_, final Classifier cl, final Tuple parameters) throws RuleFailedException {
+    try {
+    	return constructorOperationInternal(_trace_, cl, parameters);
+    } catch (Exception _e_constructorOperation) {
+    	throw extractRuleFailedException(_e_constructorOperation);
     }
   }
   
@@ -1016,71 +1052,54 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
   
   protected Result<Boolean> instanceCreationExpressionParameterInternal(final RuleApplicationTrace _trace_, final InstanceCreationExpression ex) throws RuleFailedException {
     Classifier _instance = ex.getInstance();
-    boolean _matched = false;
-    if (!_matched) {
-      if (_instance instanceof org.eclipse.uml2.uml.Class) {
-        _matched=true;
-        IUMLContextProvider _umlContext = this.typeFactory.umlContext(ex);
-        Classifier _instance_1 = ex.getInstance();
-        final Set<Operation> candidates = _umlContext.getConstructorsOfClass(((org.eclipse.uml2.uml.Class) _instance_1));
-        Tuple _parameters = ex.getParameters();
-        final List<Operation> filteredCandidates = this.candidateChecker.calculateBestCandidates(candidates, _parameters);
-        boolean _isEmpty = candidates.isEmpty();
-        if (_isEmpty) {
-          boolean _or = false;
-          Tuple _parameters_1 = ex.getParameters();
-          boolean _not = (!(_parameters_1 instanceof ExpressionList));
-          if (_not) {
-            _or = true;
-          } else {
-            Tuple _parameters_2 = ex.getParameters();
-            EList<Expression> _expressions = ((ExpressionList) _parameters_2).getExpressions();
-            boolean _isEmpty_1 = _expressions.isEmpty();
-            boolean _not_1 = (!_isEmpty_1);
-            _or = _not_1;
-          }
-          if (_or) {
-            /* fail error "Default constructor cannot have parameters" source ex.parameters */
-            String error = "Default constructor cannot have parameters";
-            Tuple _parameters_3 = ex.getParameters();
-            EObject source = _parameters_3;
-            throwForExplicitFail(error, new ErrorInformation(source, null));
-          }
-        } else {
-          boolean _isEmpty_2 = filteredCandidates.isEmpty();
-          if (_isEmpty_2) {
-            /* fail error "No constructors match parameters" source ex.parameters */
-            String error_1 = "No constructors match parameters";
-            Tuple _parameters_4 = ex.getParameters();
-            EObject source_1 = _parameters_4;
-            throwForExplicitFail(error_1, new ErrorInformation(source_1, null));
-          } else {
-            int _size = filteredCandidates.size();
-            boolean _equals = (_size == 1);
-            if (_equals) {
-              /* empty |- filteredCandidates.get(0) <: ex.parameters */
-              Operation _get = filteredCandidates.get(0);
-              Tuple _parameters_5 = ex.getParameters();
-              operationParametersTypeInternal(emptyEnvironment(), _trace_, _get, _parameters_5);
-            } else {
-              /* fail error "Multiple constructor candidates match the parameters" source ex.parameters */
-              String error_2 = "Multiple constructor candidates match the parameters";
-              Tuple _parameters_6 = ex.getParameters();
-              EObject source_2 = _parameters_6;
-              throwForExplicitFail(error_2, new ErrorInformation(source_2, null));
-            }
-          }
-        }
+    Tuple _parameters = ex.getParameters();
+    final Set<Operation> candidates = this.constructorOperationCandidatesInternal(_trace_, _instance, _parameters);
+    Tuple _parameters_1 = ex.getParameters();
+    final List<Operation> filteredCandidates = this.candidateChecker.calculateBestCandidates(candidates, _parameters_1);
+    boolean _isEmpty = candidates.isEmpty();
+    if (_isEmpty) {
+      boolean _or = false;
+      Tuple _parameters_2 = ex.getParameters();
+      boolean _not = (!(_parameters_2 instanceof ExpressionList));
+      if (_not) {
+        _or = true;
+      } else {
+        Tuple _parameters_3 = ex.getParameters();
+        EList<Expression> _expressions = ((ExpressionList) _parameters_3).getExpressions();
+        boolean _isEmpty_1 = _expressions.isEmpty();
+        boolean _not_1 = (!_isEmpty_1);
+        _or = _not_1;
       }
-    }
-    if (!_matched) {
-      if (_instance instanceof Signal) {
-        _matched=true;
-        /* empty |- (ex.instance as Signal).createVirtualConstructor <: ex.parameters */
-        Classifier _instance_1 = ex.getInstance();
-        Operation _createVirtualConstructor = this.scopeHelper.createVirtualConstructor(((Signal) _instance_1));
-        Tuple _parameters = ex.getParameters();
-        operationParametersTypeInternal(emptyEnvironment(), _trace_, _createVirtualConstructor, _parameters);
+      if (_or) {
+        /* fail error "Default constructor cannot have parameters" source ex.parameters */
+        String error = "Default constructor cannot have parameters";
+        Tuple _parameters_4 = ex.getParameters();
+        EObject source = _parameters_4;
+        throwForExplicitFail(error, new ErrorInformation(source, null));
+      }
+    } else {
+      boolean _isEmpty_2 = filteredCandidates.isEmpty();
+      if (_isEmpty_2) {
+        /* fail error "No constructors match parameters" source ex.parameters */
+        String error_1 = "No constructors match parameters";
+        Tuple _parameters_5 = ex.getParameters();
+        EObject source_1 = _parameters_5;
+        throwForExplicitFail(error_1, new ErrorInformation(source_1, null));
+      } else {
+        int _size = filteredCandidates.size();
+        boolean _equals = (_size == 1);
+        if (_equals) {
+          /* empty |- filteredCandidates.get(0) <: ex.parameters */
+          Operation _get = filteredCandidates.get(0);
+          Tuple _parameters_6 = ex.getParameters();
+          operationParametersTypeInternal(emptyEnvironment(), _trace_, _get, _parameters_6);
+        } else {
+          /* fail error "Multiple constructor candidates match the parameters" source ex.parameters */
+          String error_2 = "Multiple constructor candidates match the parameters";
+          Tuple _parameters_7 = ex.getParameters();
+          EObject source_2 = _parameters_7;
+          throwForExplicitFail(error_2, new ErrorInformation(source_2, null));
+        }
       }
     }
     return new Result<Boolean>(true);
@@ -1111,6 +1130,34 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
   }
   
   protected void typeReferenceThrowException(final String _error, final String _issue, final Exception _ex, final TypeDeclaration decl, final ErrorInformation[] _errorInformations) throws RuleFailedException {
+    throwRuleFailedException(_error, _issue, _ex, _errorInformations);
+  }
+  
+  protected Set<Operation> constructorOperationCandidatesInternal(final RuleApplicationTrace _trace_, final Classifier cl, final Tuple parameters) {
+    try {
+    	checkParamsNotNull(cl, parameters);
+    	return constructorOperationCandidatesDispatcher.invoke(_trace_, cl, parameters);
+    } catch (Exception _e_constructorOperationCandidates) {
+    	sneakyThrowRuleFailedException(_e_constructorOperationCandidates);
+    	return null;
+    }
+  }
+  
+  protected void constructorOperationCandidatesThrowException(final String _error, final String _issue, final Exception _ex, final Classifier cl, final Tuple parameters, final ErrorInformation[] _errorInformations) throws RuleFailedException {
+    throwRuleFailedException(_error, _issue, _ex, _errorInformations);
+  }
+  
+  protected Operation constructorOperationInternal(final RuleApplicationTrace _trace_, final Classifier cl, final Tuple parameters) {
+    try {
+    	checkParamsNotNull(cl, parameters);
+    	return constructorOperationDispatcher.invoke(_trace_, cl, parameters);
+    } catch (Exception _e_constructorOperation) {
+    	sneakyThrowRuleFailedException(_e_constructorOperation);
+    	return null;
+    }
+  }
+  
+  protected void constructorOperationThrowException(final String _error, final String _issue, final Exception _ex, final Classifier cl, final Tuple parameters, final ErrorInformation[] _errorInformations) throws RuleFailedException {
     throwRuleFailedException(_error, _issue, _ex, _errorInformations);
   }
   
@@ -1285,6 +1332,85 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
       _xifexpression = this.typeFactory.typeReference(_type_1);
     }
     return _xifexpression;
+  }
+  
+  protected Set<Operation> constructorOperationCandidatesImpl(final RuleApplicationTrace _trace_, final org.eclipse.uml2.uml.Class cl, final Tuple parameters) throws RuleFailedException {
+    try {
+    	final RuleApplicationTrace _subtrace_ = newTrace(_trace_);
+    	final Set<Operation> _result_ = applyAuxFunConstructorOperationCandidates(_subtrace_, cl, parameters);
+    	addToTrace(_trace_, new Provider<Object>() {
+    		public Object get() {
+    			return auxFunName("constructorOperationCandidates") + "(" + stringRep(cl) + ", " + stringRep(parameters)+ ")" + " = " + stringRep(_result_);
+    		}
+    	});
+    	addAsSubtrace(_trace_, _subtrace_);
+    	return _result_;
+    } catch (Exception e_applyAuxFunConstructorOperationCandidates) {
+    	constructorOperationCandidatesThrowException(auxFunName("constructorOperationCandidates") + "(" + stringRep(cl) + ", " + stringRep(parameters)+ ")",
+    		CONSTRUCTOROPERATIONCANDIDATES,
+    		e_applyAuxFunConstructorOperationCandidates, cl, parameters, new ErrorInformation[] {new ErrorInformation(cl), new ErrorInformation(parameters)});
+    	return null;
+    }
+  }
+  
+  protected Set<Operation> applyAuxFunConstructorOperationCandidates(final RuleApplicationTrace _trace_, final org.eclipse.uml2.uml.Class cl, final Tuple parameters) throws RuleFailedException {
+    IUMLContextProvider _umlContext = this.typeFactory.umlContext(parameters);
+    return _umlContext.getConstructorsOfClass(cl);
+  }
+  
+  protected Set<Operation> constructorOperationCandidatesImpl(final RuleApplicationTrace _trace_, final Signal sig, final Tuple parameters) throws RuleFailedException {
+    try {
+    	final RuleApplicationTrace _subtrace_ = newTrace(_trace_);
+    	final Set<Operation> _result_ = applyAuxFunConstructorOperationCandidates(_subtrace_, sig, parameters);
+    	addToTrace(_trace_, new Provider<Object>() {
+    		public Object get() {
+    			return auxFunName("constructorOperationCandidates") + "(" + stringRep(sig) + ", " + stringRep(parameters)+ ")" + " = " + stringRep(_result_);
+    		}
+    	});
+    	addAsSubtrace(_trace_, _subtrace_);
+    	return _result_;
+    } catch (Exception e_applyAuxFunConstructorOperationCandidates) {
+    	constructorOperationCandidatesThrowException(auxFunName("constructorOperationCandidates") + "(" + stringRep(sig) + ", " + stringRep(parameters)+ ")",
+    		CONSTRUCTOROPERATIONCANDIDATES,
+    		e_applyAuxFunConstructorOperationCandidates, sig, parameters, new ErrorInformation[] {new ErrorInformation(sig), new ErrorInformation(parameters)});
+    	return null;
+    }
+  }
+  
+  protected Set<Operation> applyAuxFunConstructorOperationCandidates(final RuleApplicationTrace _trace_, final Signal sig, final Tuple parameters) throws RuleFailedException {
+    Operation _createVirtualConstructor = this.scopeHelper.createVirtualConstructor(sig);
+    return CollectionLiterals.<Operation>newHashSet(_createVirtualConstructor);
+  }
+  
+  protected Operation constructorOperationImpl(final RuleApplicationTrace _trace_, final Classifier cl, final Tuple parameters) throws RuleFailedException {
+    try {
+    	final RuleApplicationTrace _subtrace_ = newTrace(_trace_);
+    	final Operation _result_ = applyAuxFunConstructorOperation(_subtrace_, cl, parameters);
+    	addToTrace(_trace_, new Provider<Object>() {
+    		public Object get() {
+    			return auxFunName("constructorOperation") + "(" + stringRep(cl) + ", " + stringRep(parameters)+ ")" + " = " + stringRep(_result_);
+    		}
+    	});
+    	addAsSubtrace(_trace_, _subtrace_);
+    	return _result_;
+    } catch (Exception e_applyAuxFunConstructorOperation) {
+    	constructorOperationThrowException(auxFunName("constructorOperation") + "(" + stringRep(cl) + ", " + stringRep(parameters)+ ")",
+    		CONSTRUCTOROPERATION,
+    		e_applyAuxFunConstructorOperation, cl, parameters, new ErrorInformation[] {new ErrorInformation(cl), new ErrorInformation(parameters)});
+    	return null;
+    }
+  }
+  
+  protected Operation applyAuxFunConstructorOperation(final RuleApplicationTrace _trace_, final Classifier cl, final Tuple parameters) throws RuleFailedException {
+    Set<Operation> _constructorOperationCandidates = this.constructorOperationCandidatesInternal(_trace_, cl, parameters);
+    final List<Operation> candidates = this.candidateChecker.calculateBestCandidates(_constructorOperationCandidates, parameters);
+    int _size = candidates.size();
+    boolean _equals = (_size == 1);
+    if (_equals) {
+      return candidates.get(0);
+    } else {
+      return null;
+    }
   }
   
   protected Result<IUMLTypeReference> typeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final BooleanLiteralExpression bool) throws RuleFailedException {
@@ -3238,7 +3364,7 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
   
   protected Result<IUMLTypeReference> applyRuleInstanceCreationExpression(final RuleEnvironment G, final RuleApplicationTrace _trace_, final InstanceCreationExpression ex) throws RuleFailedException {
     IUMLTypeReference result = null; // output parameter
-    /* { ex.instance == null fail error "Invalid instance definition" source ex.instance } or { ex.instance != null !(ex.instance instanceof PrimitiveType) ex.parameters result = ex.instance.typeReference } */
+    /* { ex.instance == null fail error "Invalid instance definition" source ex.instance } or { ex.instance != null !(ex.instance instanceof PrimitiveType) result = ex.instance.typeReference } */
     {
       RuleFailedException previousFailure = null;
       try {
@@ -3267,7 +3393,6 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
         if (!_not) {
           sneakyThrowRuleFailedException("!(ex.instance instanceof PrimitiveType)");
         }
-        ex.getParameters();
         Classifier _instance_4 = ex.getInstance();
         IUMLTypeReference _typeReference = this.typeFactory.typeReference(_instance_4);
         result = _typeReference;

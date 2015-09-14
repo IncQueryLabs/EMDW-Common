@@ -22,6 +22,9 @@ public class OperationCandidateChecker {
 	ReducedAlfSystem typeSystem;
 	
 	public List<Operation> calculateBestCandidates(Set<Operation> candidates, Tuple parameters) {
+		if (candidates.size() <= 1) {
+			return Lists.newArrayList(candidates);
+		}
 		Set<Operation> remainingCandidates = Sets.newHashSet(candidates);
 
 		for (Operation op : candidates) {
@@ -51,7 +54,7 @@ public class OperationCandidateChecker {
 		}
 		Class opClass = op.getClass_();
 		Class redefinedClass = redefinedOp.getClass_();
-		if (!opClass.allParents().contains(redefinedClass)) {
+		if (opClass != null && redefinedClass != null && !opClass.allParents().contains(redefinedClass)) {
 			return false;			
 		}
 		return parametersMatch(op.getOwnedParameters(), redefinedOp.getOwnedParameters());
