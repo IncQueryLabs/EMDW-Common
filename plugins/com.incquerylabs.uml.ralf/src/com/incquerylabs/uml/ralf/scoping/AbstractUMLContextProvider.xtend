@@ -45,15 +45,23 @@ abstract class AbstractUMLContextProvider implements IUMLContextProvider {
         libraryModel
     }
 
+    def protected Package getStandardPackage() {
+        getLibraryModel()
+    }
+
+    def protected Package getCollectionsPackage() {
+        getLibraryModel().getOwnedMember("collections") as Package
+    }
+
     override getCollectionType(CollectionType typeDescriptor) {
         switch typeDescriptor {
-            case SET : getLibraryModel().getOwnedType("Set") as Classifier
+            case SET : getCollectionsPackage.getOwnedType("Set") as Classifier
             default: throw new UnsupportedOperationException
         }
     }
     
     override getGenericCollectionParameterType() {
-            (getLibraryModel().getOwnedType("Collection") as Classifier).ownedTemplateSignature.ownedParameters.get(0).ownedElements.get(0) as Classifier 
+            (getCollectionsPackage.getOwnedType("Collection") as Classifier).ownedTemplateSignature.ownedParameters.get(0).ownedElements.get(0) as Classifier 
     }
 
     override getPrimitiveType(String name) {

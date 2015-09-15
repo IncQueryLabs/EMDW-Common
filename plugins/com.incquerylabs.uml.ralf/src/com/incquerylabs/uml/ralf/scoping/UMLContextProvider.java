@@ -1,8 +1,11 @@
 package com.incquerylabs.uml.ralf.scoping;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.stream.Collectors;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -19,6 +22,7 @@ import org.eclipse.incquery.runtime.exception.IncQueryException;
 import org.eclipse.uml2.uml.Association;
 import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Classifier;
+import org.eclipse.uml2.uml.DataType;
 import org.eclipse.uml2.uml.OpaqueBehavior;
 import org.eclipse.uml2.uml.OpaqueExpression;
 import org.eclipse.uml2.uml.Operation;
@@ -30,9 +34,7 @@ import org.eclipse.uml2.uml.Type;
 import org.eclipse.uml2.uml.UMLPackage;
 import org.eclipse.uml2.uml.resource.UMLResource;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
-import com.google.common.collect.Iterators;
 import com.google.common.collect.Sets;
 import com.incquerylabs.emdw.umlintegration.queries.AncestorSignalMatcher;
 import com.incquerylabs.emdw.umlintegration.queries.AssociationsOfClassifierMatcher;
@@ -263,8 +265,13 @@ public abstract class UMLContextProvider extends AbstractUMLContextProvider {
 
 	@Override
 	public Iterable<Operation> getLibraryOperations() {
-		return ImmutableList.copyOf(
-				Iterators.filter(((Package)getLibraryModel().getOwnedMember("std")).eAllContents(), Operation.class));
+		EList<Type> stdTypes = getStandardPackage().getOwnedTypes();
+		return stdTypes.stream().
+				filter((it) -> it instanceof DataType).
+				map(it -> ((DataType)it).getOwnedOperations()).
+				flatMap(Collection::stream).
+//				filter(it -> it.isStatic()).
+				collect(Collectors.toList());	
 	}
 	
 	
