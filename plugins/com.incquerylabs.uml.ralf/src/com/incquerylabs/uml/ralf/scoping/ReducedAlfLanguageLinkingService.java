@@ -52,7 +52,11 @@ public class ReducedAlfLanguageLinkingService extends DefaultLinkingService {
 			} else if (context.eContainer() instanceof StaticFeatureInvocationExpression) {
 				StaticFeatureInvocationExpression staticFeatureInvocationExpression = (StaticFeatureInvocationExpression) context.eContainer();
 				parameters = staticFeatureInvocationExpression.getParameters();
-				contextType = op.getClass_();
+				if (op.getClass_() != null) {
+					contextType = op.getClass_();
+				} else if (op.getDatatype() != null){
+					contextType = op.getDatatype();
+				}
 			}
 			if (contextType != null && parameters != null) {
 				candidates = umlContext.getOperationCandidatesOfClass((Classifier) contextType, op.getName());

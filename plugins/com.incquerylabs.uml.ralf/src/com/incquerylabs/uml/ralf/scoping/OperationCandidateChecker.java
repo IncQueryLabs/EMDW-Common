@@ -31,7 +31,7 @@ public class OperationCandidateChecker {
 			Iterator<Operation> it = remainingCandidates.iterator();
 			while (it.hasNext()) {
 				Operation next = it.next();
-				if (operationRedefines(op, next)) {
+				if (!op.equals(next) && operationRedefines(op, next)) {
 					it.remove();
 				}
 			}
@@ -53,6 +53,9 @@ public class OperationCandidateChecker {
 			return true;
 		}
 		Class opClass = op.getClass_();
+		if (opClass == null) {
+			return false;
+		}
 		Class redefinedClass = redefinedOp.getClass_();
 		if (opClass != null && redefinedClass != null && !opClass.allParents().contains(redefinedClass)) {
 			return false;			
