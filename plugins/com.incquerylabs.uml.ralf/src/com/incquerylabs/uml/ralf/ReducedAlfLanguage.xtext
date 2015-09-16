@@ -453,13 +453,17 @@ MultiplicityIndicator :
 ;
 
 VariableDeclaration returns uml::NamedElement : 
-   {Variable} type = TypeDeclaration hasMultiplicity ?= MultiplicityIndicator? name = Name     
+   {Variable} type = TypeDeclaration name = Name     
+;
+
+CollectionVariableDeclaration returns Variable :
+    {CollectionVariable} collectionType = CollectionType '<' type = TypeDeclaration '>' name = Name
 ;
 
 /* LOCAL NAME DECLARATION STATEMENTS */
 LocalNameDeclarationStatement : 
     //TODO test optional initialization
-    variable = VariableDeclaration ('=' expression = Expression)?
+    variable = (VariableDeclaration | CollectionVariableDeclaration) ('=' expression = Expression)?
 ;
 
 InstanceInitializationExpression returns InstanceCreationExpression : 

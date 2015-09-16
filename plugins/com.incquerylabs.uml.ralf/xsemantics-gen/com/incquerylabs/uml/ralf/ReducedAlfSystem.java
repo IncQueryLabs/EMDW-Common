@@ -11,6 +11,7 @@ import com.incquerylabs.uml.ralf.reducedAlfLanguage.BooleanUnaryExpression;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.CastExpression;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.ClassExtentExpression;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.CollectionType;
+import com.incquerylabs.uml.ralf.reducedAlfLanguage.CollectionVariable;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.ConditionalLogicalExpression;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.ConditionalTestExpression;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.DoStatement;
@@ -119,6 +120,8 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
   public final static String TYPEDECLARATION = "com.incquerylabs.uml.ralf.TypeDeclaration";
   
   public final static String VARIABLEDECLARATION = "com.incquerylabs.uml.ralf.VariableDeclaration";
+  
+  public final static String COLLECTIONVARIABLEDECLARATION = "com.incquerylabs.uml.ralf.CollectionVariableDeclaration";
   
   public final static String LOOPVARIABLE = "com.incquerylabs.uml.ralf.LoopVariable";
   
@@ -1560,6 +1563,54 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
     return new Result<IUMLTypeReference>(result);
   }
   
+  protected Result<IUMLTypeReference> typeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final CollectionVariable variable) throws RuleFailedException {
+    try {
+    	final RuleApplicationTrace _subtrace_ = newTrace(_trace_);
+    	final Result<IUMLTypeReference> _result_ = applyRuleCollectionVariableDeclaration(G, _subtrace_, variable);
+    	addToTrace(_trace_, new Provider<Object>() {
+    		public Object get() {
+    			return ruleName("CollectionVariableDeclaration") + stringRepForEnv(G) + " |- " + stringRep(variable) + " : " + stringRep(_result_.getFirst());
+    		}
+    	});
+    	addAsSubtrace(_trace_, _subtrace_);
+    	return _result_;
+    } catch (Exception e_applyRuleCollectionVariableDeclaration) {
+    	typeThrowException(ruleName("CollectionVariableDeclaration") + stringRepForEnv(G) + " |- " + stringRep(variable) + " : " + "IUMLTypeReference",
+    		COLLECTIONVARIABLEDECLARATION,
+    		e_applyRuleCollectionVariableDeclaration, variable, new ErrorInformation[] {new ErrorInformation(variable)});
+    	return null;
+    }
+  }
+  
+  protected Result<IUMLTypeReference> applyRuleCollectionVariableDeclaration(final RuleEnvironment G, final RuleApplicationTrace _trace_, final CollectionVariable variable) throws RuleFailedException {
+    IUMLTypeReference result = null; // output parameter
+    CollectionTypeReference _switchResult = null;
+    CollectionType _collectionType = variable.getCollectionType();
+    if (_collectionType != null) {
+      switch (_collectionType) {
+        case BAG:
+          TypeDeclaration _type = variable.getType();
+          IUMLTypeReference _typeReference = this.typeReferenceInternal(_trace_, _type);
+          _switchResult = this.typeFactory.bagOf(_typeReference);
+          break;
+        case SET:
+          TypeDeclaration _type_1 = variable.getType();
+          IUMLTypeReference _typeReference_1 = this.typeReferenceInternal(_trace_, _type_1);
+          _switchResult = this.typeFactory.setOf(_typeReference_1);
+          break;
+        case SEQUENCE:
+          TypeDeclaration _type_2 = variable.getType();
+          IUMLTypeReference _typeReference_2 = this.typeReferenceInternal(_trace_, _type_2);
+          _switchResult = this.typeFactory.sequenceOf(_typeReference_2);
+          break;
+        default:
+          break;
+      }
+    }
+    result = _switchResult;
+    return new Result<IUMLTypeReference>(result);
+  }
+  
   protected Result<IUMLTypeReference> typeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final LoopVariable variable) throws RuleFailedException {
     try {
     	final RuleApplicationTrace _subtrace_ = newTrace(_trace_);
@@ -1855,12 +1906,10 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
     if (!_equals) {
       sneakyThrowRuleFailedException("left.type == right.type");
     }
+    /* G |- left.valueType <: right.valueType : context */
     IUMLTypeReference _valueType = left.getValueType();
     IUMLTypeReference _valueType_1 = right.getValueType();
-    /* left.valueType == right.valueType */
-    if (!Objects.equal(_valueType, _valueType_1)) {
-      sneakyThrowRuleFailedException("left.valueType == right.valueType");
-    }
+    subtypeReferenceInternal(G, _trace_, _valueType, _valueType_1, context);
     return new Result<Boolean>(true);
   }
   
@@ -3482,12 +3531,35 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
       TypeDeclaration _typeDeclaration_1 = ex.getTypeDeclaration();
       _xifexpression = this.typeReferenceInternal(_trace_, _typeDeclaration_1);
     } else {
-      _xifexpression = this.typeFactory.anyType();
+      IUMLTypeReference _xifexpression_1 = null;
+      ExpressionList _elements = ex.getElements();
+      EList<Expression> _expressions = _elements.getExpressions();
+      int _size = _expressions.size();
+      boolean _greaterThan = (_size > 0);
+      if (_greaterThan) {
+        IUMLTypeReference _xblockexpression = null;
+        {
+          /* G |- ex.elements.expressions.get(0) : var IUMLTypeReference inferredType */
+          ExpressionList _elements_1 = ex.getElements();
+          EList<Expression> _expressions_1 = _elements_1.getExpressions();
+          Expression _get = _expressions_1.get(0);
+          IUMLTypeReference inferredType = null;
+          Result<IUMLTypeReference> result_1 = typeInternal(G, _trace_, _get);
+          checkAssignableTo(result_1.getFirst(), IUMLTypeReference.class);
+          inferredType = (IUMLTypeReference) result_1.getFirst();
+          
+          _xblockexpression = (inferredType);
+        }
+        _xifexpression_1 = _xblockexpression;
+      } else {
+        _xifexpression_1 = this.typeFactory.anyType();
+      }
+      _xifexpression = _xifexpression_1;
     }
     final IUMLTypeReference valueType = _xifexpression;
-    ExpressionList _elements = ex.getElements();
-    EList<Expression> _expressions = _elements.getExpressions();
-    for (final Expression element : _expressions) {
+    ExpressionList _elements_1 = ex.getElements();
+    EList<Expression> _expressions_1 = _elements_1.getExpressions();
+    for (final Expression element : _expressions_1) {
       /* G |- element : var IUMLTypeReference elType */
       IUMLTypeReference elType = null;
       Result<IUMLTypeReference> result_1 = typeInternal(G, _trace_, element);

@@ -76,7 +76,15 @@ public class CollectionTypeReference implements IUMLTypeReference {
 	}
 	@Override
 	public String toString() {
-		return type.toString() + "<" + "UML type " + valueType.getUmlType().getQualifiedName() + ">";
+		String qualifiedName = null;
+		if (valueType instanceof AnyTypeReference) {
+			qualifiedName = "?";
+		} else if (valueType.getUmlType() != null) {
+			qualifiedName = valueType.getUmlType().getQualifiedName();
+		} else {
+			qualifiedName = "(undefined)";
+		}
+		return type.toString() + "<" + "UML type " + qualifiedName + ">";
 	}
 	
 	

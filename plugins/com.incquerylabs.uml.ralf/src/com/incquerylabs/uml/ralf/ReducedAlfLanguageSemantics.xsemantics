@@ -75,6 +75,7 @@ import org.eclipse.uml2.uml.Signal
 import org.eclipse.uml2.uml.Type
 import com.incquerylabs.uml.ralf.scoping.OperationCandidateChecker
 import java.util.Set
+import com.incquerylabs.uml.ralf.reducedAlfLanguage.CollectionVariable
 
 inject extension TypeFactory typeFactory
 inject extension UMLScopeHelper scopeHelper
@@ -172,6 +173,19 @@ from {
       result = variable.type.typeReference
 }
 
+rule CollectionVariableDeclaration
+    derives G |- CollectionVariable variable : IUMLTypeReference result
+from {
+    result = switch(variable.collectionType) {
+        case BAG:
+            variable.type.typeReference.bagOf
+        case SET:
+            variable.type.typeReference.setOf
+        case SEQUENCE:
+            variable.type.typeReference.sequenceOf
+    }
+}
+
 rule LoopVariable
     derives G |- LoopVariable variable : IUMLTypeReference result
 from {
@@ -238,7 +252,7 @@ rule CollectionSubtyping
     derives G |- CollectionTypeReference left <: CollectionTypeReference right : IUMLContextProvider context
 from {
     left.type == right.type
-    left.valueType == right.valueType
+    G |- left.valueType <:  right.valueType : context
 }
 
 rule GeneralSubtyping
@@ -589,6 +603,10 @@ rule CollectionConstructionExpression
 from {
     val valueType = if (ex.typeDeclaration != null) {
         ex.typeDeclaration.typeReference
+    } else if (ex.elements.expressions.size > 0) {
+        //TODO is required to calculate the common parent type here?
+        G |- ex.elements.expressions.get(0) : var IUMLTypeReference inferredType
+        inferredType
     } else {
         anyType
     }
