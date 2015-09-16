@@ -14,4 +14,19 @@
             genModel="profile/xumlrt.profile.genmodel"/>
    </extension>
 
+   <extension
+         point="org.eclipse.papyrus.uml.extensionpoints.UMLProfile">
+      <profile
+            name="xUMLRT"
+            path="platform:/plugin/hu.eltesoft.modelexecution.profile/profile/xumlrt.profile.uml">
+      </profile>
+   </extension>
+   <extension
+         point="org.eclipse.uml2.uml.generated_package">
+      <profile
+            location="platform:/plugin/hu.eltesoft.modelexecution.profile/profile/xumlrt.profile.uml#_HaqtUBDoEeWE3_d6VQejPQ"
+            uri="http://Papyrus/xUMLRTProfile">
+      </profile>
+   </extension>
+
 </plugin>
