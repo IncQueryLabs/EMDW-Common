@@ -1714,99 +1714,8 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
     if (!_not) {
       sneakyThrowRuleFailedException("!property.eIsProxy");
     }
-    /* { !property.multivalued result = property.type.typeReference } or { property.multivalued && property.ordered result = property.type.sequenceOf } or { property.multivalued && !property.ordered && property.unique result = property.type.setOf } or { property.multivalued && !property.ordered && !property.unique result = property.type.bagOf } */
-    {
-      RuleFailedException previousFailure = null;
-      try {
-        boolean _isMultivalued = property.isMultivalued();
-        boolean _not_1 = (!_isMultivalued);
-        /* !property.multivalued */
-        if (!_not_1) {
-          sneakyThrowRuleFailedException("!property.multivalued");
-        }
-        Type _type = property.getType();
-        IUMLTypeReference _typeReference = this.typeFactory.typeReference(_type);
-        result = _typeReference;
-      } catch (Exception e) {
-        previousFailure = extractRuleFailedException(e);
-        /* { property.multivalued && property.ordered result = property.type.sequenceOf } or { property.multivalued && !property.ordered && property.unique result = property.type.setOf } or { property.multivalued && !property.ordered && !property.unique result = property.type.bagOf } */
-        {
-          try {
-            boolean _and = false;
-            boolean _isMultivalued_1 = property.isMultivalued();
-            if (!_isMultivalued_1) {
-              _and = false;
-            } else {
-              boolean _isOrdered = property.isOrdered();
-              _and = _isOrdered;
-            }
-            /* property.multivalued && property.ordered */
-            if (!_and) {
-              sneakyThrowRuleFailedException("property.multivalued && property.ordered");
-            }
-            Type _type_1 = property.getType();
-            CollectionTypeReference _sequenceOf = this.typeFactory.sequenceOf(_type_1);
-            result = _sequenceOf;
-          } catch (Exception e_1) {
-            previousFailure = extractRuleFailedException(e_1);
-            /* { property.multivalued && !property.ordered && property.unique result = property.type.setOf } or { property.multivalued && !property.ordered && !property.unique result = property.type.bagOf } */
-            {
-              try {
-                boolean _and_1 = false;
-                boolean _and_2 = false;
-                boolean _isMultivalued_2 = property.isMultivalued();
-                if (!_isMultivalued_2) {
-                  _and_2 = false;
-                } else {
-                  boolean _isOrdered_1 = property.isOrdered();
-                  boolean _not_2 = (!_isOrdered_1);
-                  _and_2 = _not_2;
-                }
-                if (!_and_2) {
-                  _and_1 = false;
-                } else {
-                  boolean _isUnique = property.isUnique();
-                  _and_1 = _isUnique;
-                }
-                /* property.multivalued && !property.ordered && property.unique */
-                if (!_and_1) {
-                  sneakyThrowRuleFailedException("property.multivalued && !property.ordered && property.unique");
-                }
-                Type _type_2 = property.getType();
-                CollectionTypeReference _setOf = this.typeFactory.setOf(_type_2);
-                result = _setOf;
-              } catch (Exception e_2) {
-                previousFailure = extractRuleFailedException(e_2);
-                boolean _and_3 = false;
-                boolean _and_4 = false;
-                boolean _isMultivalued_3 = property.isMultivalued();
-                if (!_isMultivalued_3) {
-                  _and_4 = false;
-                } else {
-                  boolean _isOrdered_2 = property.isOrdered();
-                  boolean _not_3 = (!_isOrdered_2);
-                  _and_4 = _not_3;
-                }
-                if (!_and_4) {
-                  _and_3 = false;
-                } else {
-                  boolean _isUnique_1 = property.isUnique();
-                  boolean _not_4 = (!_isUnique_1);
-                  _and_3 = _not_4;
-                }
-                /* property.multivalued && !property.ordered && !property.unique */
-                if (!_and_3) {
-                  sneakyThrowRuleFailedException("property.multivalued && !property.ordered && !property.unique");
-                }
-                Type _type_3 = property.getType();
-                CollectionTypeReference _bagOf = this.typeFactory.bagOf(_type_3);
-                result = _bagOf;
-              }
-            }
-          }
-        }
-      }
-    }
+    IUMLTypeReference _typeOf = this.typeFactory.typeOf(property);
+    result = _typeOf;
     return new Result<IUMLTypeReference>(result);
   }
   
@@ -3498,9 +3407,8 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
       sneakyThrowRuleFailedException("!ex.association.eIsProxy");
     }
     Property _association_2 = ex.getAssociation();
-    Type _type = _association_2.getType();
-    IUMLTypeReference _typeReference = this.typeFactory.typeReference(_type);
-    result = _typeReference;
+    IUMLTypeReference _typeOf = this.typeFactory.typeOf(_association_2);
+    result = _typeOf;
     return new Result<IUMLTypeReference>(result);
   }
   

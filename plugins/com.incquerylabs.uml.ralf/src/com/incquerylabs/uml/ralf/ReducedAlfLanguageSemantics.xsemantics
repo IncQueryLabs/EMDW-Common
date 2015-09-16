@@ -207,20 +207,8 @@ from {
 rule Property
     derives G |- Property property : IUMLTypeReference result
 from {
-        !property.eIsProxy
-        {
-            !property.multivalued
-            result = property.type.typeReference
-        } or {
-            property.multivalued && property.ordered 
-            result = property.type.sequenceOf
-        } or {
-            property.multivalued && !property.ordered && property.unique
-            result = property.type.setOf
-        } or {
-            property.multivalued && !property.ordered && !property.unique
-            result = property.type.bagOf
-        }
+     !property.eIsProxy
+     result = property.typeOf
 }
 /**
  * Subtyping and assignability
@@ -582,7 +570,7 @@ from {
 //    val association = ex.eGet(ReducedAlfLanguagePackage.Literals.ASSOCIATION_ACCESS_EXPRESSION__ASSOCIATION, false) as EObject
     ex.association != null
     !ex.association.eIsProxy
-    result = ex.association.type.typeReference
+    result = ex.association.typeOf
 }
 
 rule LinkOperationExpression
