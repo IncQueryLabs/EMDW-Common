@@ -117,7 +117,6 @@ class ReducedAlfLanguageScopeProvider extends AbstractDeclarativeScopeProvider {
     private def IScope localScope(Iterable<? extends NamedElement> elements, String qualifiedName, IScope parentScope) {
         if (qualifiedName != null) {
             val packageRelativeElements = elements.filter[
-                !it.eIsProxy &&
                 it.qualifiedName != null &&
                 it.qualifiedName.startsWith(qualifiedName + "::") &&
                 it.qualifiedName != qualifiedName
@@ -131,7 +130,7 @@ class ReducedAlfLanguageScopeProvider extends AbstractDeclarativeScopeProvider {
     }
     
     private def IScope localAndQualifiedScopes(Iterable<? extends NamedElement> elements, IScope parentScope, IUMLContextProvider umlContext) {
-        val fqnScope = Scopes.scopeFor(elements.filter[it != null && !it.eIsProxy && !it.qualifiedName.nullOrEmpty], [NamedElement it|
+        val fqnScope = Scopes.scopeFor(elements.filter[it != null && !it.qualifiedName.nullOrEmpty], [NamedElement it|
             switch it {
             PrimitiveType : nameConverter.toQualifiedName(it.name)
             default: nameConverter.toQualifiedName(it.qualifiedName)
