@@ -96,16 +96,4 @@ class TypeFactory {
     def CollectionTypeReference sequenceOf(IUMLTypeReference valueType) {
         collectionOf(valueType, CollectionType.SEQUENCE)
     }
-    
-    def IUMLTypeReference typeOf(org.eclipse.uml2.uml.Property property) {
-        if (!property.multivalued) {
-            property.type.typeReference
-        } else if (property.multivalued && property.ordered) {
-            property.type.sequenceOf
-        } else if (property.multivalued && !property.ordered && property.unique) {
-            property.type.setOf
-        } else if (property.multivalued && !property.ordered && !property.unique) {
-            property.type.bagOf
-        }
-}
 }

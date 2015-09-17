@@ -221,8 +221,20 @@ from {
 rule Property
     derives G |- Property property : IUMLTypeReference result
 from {
-     !property.eIsProxy
-     result = property.typeOf
+        !property.eIsProxy
+        {
+            !property.multivalued
+            result = property.type.typeReference
+        } or {
+            property.multivalued && property.ordered 
+            result = property.type.sequenceOf
+        } or {
+            property.multivalued && !property.ordered && property.unique
+            result = property.type.setOf
+        } or {
+            property.multivalued && !property.ordered && !property.unique
+            result = property.type.bagOf
+        }
 }
 /**
  * Subtyping and assignability
@@ -584,7 +596,7 @@ from {
 //    val association = ex.eGet(ReducedAlfLanguagePackage.Literals.ASSOCIATION_ACCESS_EXPRESSION__ASSOCIATION, false) as EObject
     ex.association != null
     !ex.association.eIsProxy
-    result = ex.association.typeOf
+    result = ex.association.type.typeReference
 }
 
 rule LinkOperationExpression
@@ -779,10 +791,17 @@ from {
     if (!(signalType.umlType instanceof Signal)) {
         fail
         error "Invalid signal type " + signalType.umlType.name
+        source st.signal
     }
     if (!(targetType.umlType instanceof Class)) {
         fail
         error "Invalid signal target " + targetType.umlType.name
+        source st.target
+    } else if (st.target instanceof NameExpression && (st.target as NameExpression).reference instanceof Type) {
+        fail 
+        error "Invalid signal target " + targetType.umlType.name
+        source st.target
+        
     }
 }
 
