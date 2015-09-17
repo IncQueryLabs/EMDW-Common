@@ -15,16 +15,23 @@
    </extension>
 
    <extension
+         point="org.eclipse.emf.ecore.uri_mapping">
+      <mapping
+            source="pathmap://XUMLRT_PROFILE/"
+            target="platform:/plugin/hu.eltesoft.modelexecution.profile/profile/">
+      </mapping>
+   </extension>
+   <extension
          point="org.eclipse.papyrus.uml.extensionpoints.UMLProfile">
       <profile
             name="xUMLRT"
-            path="platform:/plugin/hu.eltesoft.modelexecution.profile/profile/xumlrt.profile.uml">
+            path="pathmap://XUMLRT_PROFILE/xumlrt.profile.uml">
       </profile>
    </extension>
    <extension
          point="org.eclipse.uml2.uml.generated_package">
       <profile
-            location="platform:/plugin/hu.eltesoft.modelexecution.profile/profile/xumlrt.profile.uml#_HaqtUBDoEeWE3_d6VQejPQ"
+            location="pathmap://XUMLRT_PROFILE/xumlrt.profile.uml#_HaqtUBDoEeWE3_d6VQejPQ"
             uri="http://Papyrus/xUMLRTProfile">
       </profile>
    </extension>
