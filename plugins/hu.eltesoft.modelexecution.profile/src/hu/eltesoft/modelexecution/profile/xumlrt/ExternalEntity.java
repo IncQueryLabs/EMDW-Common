@@ -122,7 +122,7 @@ public interface ExternalEntity extends EObject {
 	 * @return the value of the '<em>External Header Location</em>' attribute.
 	 * @see #setExternalHeaderLocation(String)
 	 * @see hu.eltesoft.modelexecution.profile.xumlrt.XUMLRTPackage#getExternalEntity_ExternalHeaderLocation()
-	 * @model dataType="org.eclipse.uml2.types.String" required="true" ordered="false"
+	 * @model dataType="org.eclipse.uml2.types.String" ordered="false"
 	 * @generated
 	 */
 	String getExternalHeaderLocation();
@@ -148,7 +148,7 @@ public interface ExternalEntity extends EObject {
 	 * @return the value of the '<em>External Namespace</em>' attribute.
 	 * @see #setExternalNamespace(String)
 	 * @see hu.eltesoft.modelexecution.profile.xumlrt.XUMLRTPackage#getExternalEntity_ExternalNamespace()
-	 * @model dataType="org.eclipse.uml2.types.String" required="true" ordered="false"
+	 * @model dataType="org.eclipse.uml2.types.String" ordered="false"
 	 * @generated
 	 */
 	String getExternalNamespace();

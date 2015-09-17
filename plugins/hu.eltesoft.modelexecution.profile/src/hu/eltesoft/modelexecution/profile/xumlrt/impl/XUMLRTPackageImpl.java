@@ -438,8 +438,8 @@ public class XUMLRTPackageImpl extends EPackageImpl implements XUMLRTPackage {
 		initEReference(getExternalEntity_Base_Class(), theUMLPackage.getClass_(), null, "base_Class", null, 1, 1, ExternalEntity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEAttribute(getExternalEntity_Class(), theTypesPackage.getString(), "class", null, 1, 1, ExternalEntity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEAttribute(getExternalEntity_Type(), this.getEntityType(), "type", "Stateless", 1, 1, ExternalEntity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEAttribute(getExternalEntity_ExternalHeaderLocation(), theTypesPackage.getString(), "externalHeaderLocation", null, 1, 1, ExternalEntity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEAttribute(getExternalEntity_ExternalNamespace(), theTypesPackage.getString(), "externalNamespace", null, 1, 1, ExternalEntity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getExternalEntity_ExternalHeaderLocation(), theTypesPackage.getString(), "externalHeaderLocation", null, 0, 1, ExternalEntity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getExternalEntity_ExternalNamespace(), theTypesPackage.getString(), "externalNamespace", null, 0, 1, ExternalEntity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
 		op = initEOperation(getExternalEntity__AllOperationsAreStatic__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "AllOperationsAreStatic", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostics", 0, 1, IS_UNIQUE, IS_ORDERED);
