@@ -839,22 +839,46 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
     Type _umlType = signalType.getUmlType();
     boolean _not = (!(_umlType instanceof Signal));
     if (_not) {
-      /* fail error "Invalid signal type " + signalType.umlType.name */
+      /* fail error "Invalid signal type " + signalType.umlType.name source st.signal */
       Type _umlType_1 = signalType.getUmlType();
       String _name = _umlType_1.getName();
       String _plus = ("Invalid signal type " + _name);
       String error = _plus;
-      throwForExplicitFail(error, new ErrorInformation(null, null));
+      Expression _signal_1 = st.getSignal();
+      EObject source = _signal_1;
+      throwForExplicitFail(error, new ErrorInformation(source, null));
     }
     Type _umlType_2 = targetType.getUmlType();
     boolean _not_1 = (!(_umlType_2 instanceof org.eclipse.uml2.uml.Class));
     if (_not_1) {
-      /* fail error "Invalid signal target " + targetType.umlType.name */
+      /* fail error "Invalid signal target " + targetType.umlType.name source st.target */
       Type _umlType_3 = targetType.getUmlType();
       String _name_1 = _umlType_3.getName();
       String _plus_1 = ("Invalid signal target " + _name_1);
       String error_1 = _plus_1;
-      throwForExplicitFail(error_1, new ErrorInformation(null, null));
+      Expression _target_1 = st.getTarget();
+      EObject source_1 = _target_1;
+      throwForExplicitFail(error_1, new ErrorInformation(source_1, null));
+    } else {
+      boolean _and = false;
+      Expression _target_2 = st.getTarget();
+      if (!(_target_2 instanceof NameExpression)) {
+        _and = false;
+      } else {
+        Expression _target_3 = st.getTarget();
+        NamedElement _reference = ((NameExpression) _target_3).getReference();
+        _and = (_reference instanceof Type);
+      }
+      if (_and) {
+        /* fail error "Invalid signal target " + targetType.umlType.name source st.target */
+        Type _umlType_4 = targetType.getUmlType();
+        String _name_2 = _umlType_4.getName();
+        String _plus_2 = ("Invalid signal target " + _name_2);
+        String error_2 = _plus_2;
+        Expression _target_4 = st.getTarget();
+        EObject source_2 = _target_4;
+        throwForExplicitFail(error_2, new ErrorInformation(source_2, null));
+      }
     }
     return new Result<Boolean>(true);
   }
