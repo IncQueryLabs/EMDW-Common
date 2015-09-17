@@ -281,7 +281,14 @@ pattern xtClassEventGeneralization(
 
 pattern typeDefinitionInPackage(umlPackage: Package, type : uml::Type) {
 	find typeDefinition(type);
+	find xtPackage(umlPackage);
 	Package.packagedElement(umlPackage, type);
+}
+
+pattern typeDefinitionInModel(umlModel: Model, type : uml::Type) {
+	find typeDefinition(type);
+	find model(umlModel);
+	Model.packagedElement(umlModel, type);
 }
 
 pattern typeDefinitionInComponent(umlComponent: Component, type : uml::Type) {
