@@ -74,6 +74,11 @@ public class CollectionTypeReference implements IUMLTypeReference {
 		}
 		return null;
 	}
+	
+	@Override
+	public Type getUmlValueType() {
+		return valueType.getUmlValueType();
+	}
 	@Override
 	public String toString() {
 		String qualifiedName = null;

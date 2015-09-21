@@ -582,7 +582,8 @@ rule AssociationAccessExpression
 from {
     ex.association != null
     !ex.association.eIsProxy
-    result = ex.association.typeOf
+    G |- ex.context : var IUMLTypeReference contextType
+    result = ex.association.collectionTypeOf(contextType)
 }
 
 rule LinkOperationExpression

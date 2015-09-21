@@ -1,11 +1,15 @@
 package com.incquerylabs.uml.ralf.scoping
 
 import org.eclipse.uml2.uml.Behavior
+import org.eclipse.uml2.uml.Class
 import org.eclipse.uml2.uml.Parameter
 import org.eclipse.uml2.uml.ParameterDirectionKind
 import org.eclipse.uml2.uml.Operation
 import org.eclipse.uml2.uml.Signal
 import org.eclipse.uml2.uml.UMLFactory
+import com.incquerylabs.uml.ralf.types.IUMLTypeReference
+import com.incquerylabs.uml.ralf.types.UMLTypeReference
+import com.incquerylabs.uml.ralf.types.CollectionTypeReference
 
 class UMLScopeHelper {
 
@@ -50,5 +54,24 @@ class UMLScopeHelper {
             ])
         ]
         operation
+    }
+    
+    
+    /**
+     * Returns an UML Class instance from a  
+     */
+    def Class getValueType(IUMLTypeReference typeRef) {
+        if (typeRef instanceof UMLTypeReference) {
+            val type = typeRef.umlType
+            if (type instanceof Class) {
+                type as Class
+            } else {
+                null
+            }
+        } else if (typeRef instanceof CollectionTypeReference) {
+            getValueType(typeRef.valueType)
+        } else {
+            null
+        }
     }
 }

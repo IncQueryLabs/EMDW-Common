@@ -10,6 +10,15 @@ public interface IUMLTypeReference {
 	 */
 	Type getUmlType();
 	
+	/**
+	 * Returns a corresponding UML type for the values this reference stores.
+	 * For single values this is the same as {@link #getUmlType()}, but for
+	 * composite types it returns the included types.
+	 * 
+	 * @return the corresponding UML type, or null if no such type exists
+	 */
+	Type getUmlValueType();
+	
 	public class AnyTypeReference implements IUMLTypeReference {
 		
 		private static AnyTypeReference INSTANCE = new AnyTypeReference();
@@ -22,6 +31,11 @@ public interface IUMLTypeReference {
 
 		@Override
 		public Type getUmlType() {
+			return null;
+		}
+
+		@Override
+		public Type getUmlValueType() {
 			return null;
 		}
 
@@ -51,6 +65,11 @@ public interface IUMLTypeReference {
 			return "NULL UML type";
 		}
 
+		@Override
+		public Type getUmlValueType() {
+			return null;
+		}
+
 	}
 	
 	public class VoidTypeReference implements IUMLTypeReference {
@@ -71,6 +90,11 @@ public interface IUMLTypeReference {
 		@Override
 		public String toString() {
 			return "VOID UML type";
+		}
+
+		@Override
+		public Type getUmlValueType() {
+			return null;
 		}
 		
 		

@@ -1,5 +1,6 @@
 package com.incquerylabs.uml.ralf.types
 
+import org.eclipse.uml2.uml.Property
 import org.eclipse.uml2.uml.Type
 import com.google.inject.Inject
 import com.incquerylabs.uml.ralf.scoping.IUMLContextProvider
@@ -97,7 +98,23 @@ class TypeFactory {
         collectionOf(valueType, CollectionType.SEQUENCE)
     }
     
-    def IUMLTypeReference typeOf(org.eclipse.uml2.uml.Property property) {
+    /**
+     * Calculates the corresponding collection type of the '->' operator.
+     * Result should be
+     * <ul>
+     *  <li>'set' iff source is set or single value and property is singlevalued or unique; </li>
+     *  <li>'sequence' iff source is ordered and property is single valued or ordered</li>
+     *  <li>'bag' otherwise</li>
+     * </ul> 
+     */
+    def IUMLTypeReference collectionTypeOf(Property property, IUMLTypeReference source) {
+        // FIXME temporary implementation
+        val reference = typeOf(property)
+        
+        reference.umlValueType.setOf
+    }
+    
+    def IUMLTypeReference typeOf(Property property) {
         if (!property.multivalued) {
             property.type.typeReference
         } else if (property.multivalued && property.ordered) {

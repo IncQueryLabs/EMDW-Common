@@ -3468,9 +3468,16 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
     if (!_not) {
       sneakyThrowRuleFailedException("!ex.association.eIsProxy");
     }
+    /* G |- ex.context : var IUMLTypeReference contextType */
+    Expression _context = ex.getContext();
+    IUMLTypeReference contextType = null;
+    Result<IUMLTypeReference> result_1 = typeInternal(G, _trace_, _context);
+    checkAssignableTo(result_1.getFirst(), IUMLTypeReference.class);
+    contextType = (IUMLTypeReference) result_1.getFirst();
+    
     Property _association_2 = ex.getAssociation();
-    IUMLTypeReference _typeOf = this.typeFactory.typeOf(_association_2);
-    result = _typeOf;
+    IUMLTypeReference _collectionTypeOf = this.typeFactory.collectionTypeOf(_association_2, contextType);
+    result = _collectionTypeOf;
     return new Result<IUMLTypeReference>(result);
   }
   
