@@ -104,7 +104,11 @@ class ReducedAlfLanguageValidator extends ReducedAlfSystemValidator {
 	
 	@Check
 	def checkFeatureInvocation(FeatureInvocationExpression ex) {
-	    if (ex.feature instanceof Operation && !ex.feature.eIsProxy) {
+	    if (ex.feature.eIsProxy) {
+	        //Unresolved feature should be reported elsewhere
+	        return;
+	    }
+	    if (ex.feature instanceof Operation) {
 	        if (ex.parameters == null) {
 	          error('''Missing parameter definitions for operation «ex.feature.getName»''', ex, ReducedAlfLanguagePackage.Literals.FEATURE_INVOCATION_EXPRESSION__FEATURE, CODE_INVALID_FEATURE)  
 	        }
@@ -113,7 +117,7 @@ class ReducedAlfLanguageValidator extends ReducedAlfSystemValidator {
 	                ReducedAlfLanguagePackage.Literals.FEATURE_INVOCATION_EXPRESSION__FEATURE, CODE_INVALID_FEATURE
 	            )
 	        }
-	    } else if (ex.feature instanceof Property && !ex.feature.eIsProxy) {
+	    } else if (ex.feature instanceof Property) {
 	        if (ex.parameters != null) {
               error('''Unexpected parameter definitions for property «ex.feature.getName»''', ex, ReducedAlfLanguagePackage.Literals.FEATURE_INVOCATION_EXPRESSION__PARAMETERS, CODE_INVALID_FEATURE)  
             }
