@@ -27,6 +27,10 @@ class UMLScopeHelper {
         return newArrayList
     }
     
+    def Iterable<Parameter> getParameters(Operation operation) {
+        operation.ownedParameters.filter[direction != ParameterDirectionKind.RETURN_LITERAL]
+    }
+    
     def Parameter getReturnParameter(Operation operation) {
         operation?.ownedParameters?.findFirst[direction == ParameterDirectionKind.RETURN_LITERAL]
     }

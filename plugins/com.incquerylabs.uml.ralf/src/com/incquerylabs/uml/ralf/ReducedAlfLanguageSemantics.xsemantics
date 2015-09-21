@@ -68,7 +68,6 @@ import org.eclipse.uml2.uml.Class
 import org.eclipse.uml2.uml.Classifier
 import org.eclipse.uml2.uml.Operation
 import org.eclipse.uml2.uml.Parameter
-import org.eclipse.uml2.uml.ParameterDirectionKind
 import org.eclipse.uml2.uml.PrimitiveType
 import org.eclipse.uml2.uml.Property
 import org.eclipse.uml2.uml.Signal
@@ -314,7 +313,7 @@ from {
 rule ParameterListTyping
     G |- Operation op <: ExpressionList params
 from {
-    val declaredParameters = op.ownedParameters.filter[direction != ParameterDirectionKind.RETURN_LITERAL]
+    val declaredParameters = op.parameters
     
     val opParamLength = declaredParameters.size
     val paramLength = params.expressions.size
@@ -330,7 +329,7 @@ rule NamedTupleTyping
     G |- Operation op <: NamedTuple params
 from {
     val exprMap = <String, Expression> newHashMap(params.expressions.map[it.name -> it.expression])
-    val paramMap = <String, Type> newHashMap(op.ownedParameters.filter[direction != ParameterDirectionKind.RETURN_LITERAL].map[
+    val paramMap = <String, Type> newHashMap(op.getParameters.map[
         it.name -> it.type
     ])
     val problematicValues = exprMap.filter[name, expr|
@@ -581,7 +580,6 @@ from {
 rule AssociationAccessExpression
     G |- AssociationAccessExpression ex : IUMLTypeReference result
 from {
-//    val association = ex.eGet(ReducedAlfLanguagePackage.Literals.ASSOCIATION_ACCESS_EXPRESSION__ASSOCIATION, false) as EObject
     ex.association != null
     !ex.association.eIsProxy
     result = ex.association.typeOf

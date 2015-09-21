@@ -83,7 +83,6 @@ import org.eclipse.uml2.uml.Feature;
 import org.eclipse.uml2.uml.NamedElement;
 import org.eclipse.uml2.uml.Operation;
 import org.eclipse.uml2.uml.Parameter;
-import org.eclipse.uml2.uml.ParameterDirectionKind;
 import org.eclipse.uml2.uml.PrimitiveType;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Signal;
@@ -2207,12 +2206,7 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
   }
   
   protected Result<Boolean> applyRuleParameterListTyping(final RuleEnvironment G, final RuleApplicationTrace _trace_, final Operation op, final ExpressionList params) throws RuleFailedException {
-    EList<Parameter> _ownedParameters = op.getOwnedParameters();
-    final Function1<Parameter, Boolean> _function = (Parameter it) -> {
-      ParameterDirectionKind _direction = it.getDirection();
-      return Boolean.valueOf((!Objects.equal(_direction, ParameterDirectionKind.RETURN_LITERAL)));
-    };
-    final Iterable<Parameter> declaredParameters = IterableExtensions.<Parameter>filter(_ownedParameters, _function);
+    final Iterable<Parameter> declaredParameters = this.scopeHelper.getParameters(op);
     final int opParamLength = IterableExtensions.size(declaredParameters);
     EList<Expression> _expressions = params.getExpressions();
     final int paramLength = _expressions.size();
@@ -2260,20 +2254,15 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
     };
     List<Pair<? extends String, ? extends Expression>> _map = ListExtensions.<NamedExpression, Pair<? extends String, ? extends Expression>>map(_expressions, _function);
     final HashMap<String, Expression> exprMap = CollectionLiterals.<String, Expression>newHashMap(((Pair<? extends String, ? extends Expression>[])Conversions.unwrapArray(_map, Pair.class)));
-    EList<Parameter> _ownedParameters = op.getOwnedParameters();
-    final Function1<Parameter, Boolean> _function_1 = (Parameter it) -> {
-      ParameterDirectionKind _direction = it.getDirection();
-      return Boolean.valueOf((!Objects.equal(_direction, ParameterDirectionKind.RETURN_LITERAL)));
-    };
-    Iterable<Parameter> _filter = IterableExtensions.<Parameter>filter(_ownedParameters, _function_1);
-    final Function1<Parameter, Pair<String, Type>> _function_2 = (Parameter it) -> {
+    Iterable<Parameter> _parameters = this.scopeHelper.getParameters(op);
+    final Function1<Parameter, Pair<String, Type>> _function_1 = (Parameter it) -> {
       String _name = it.getName();
       Type _type = it.getType();
       return Pair.<String, Type>of(_name, _type);
     };
-    Iterable<Pair<? extends String, ? extends Type>> _map_1 = IterableExtensions.<Parameter, Pair<? extends String, ? extends Type>>map(_filter, _function_2);
+    Iterable<Pair<? extends String, ? extends Type>> _map_1 = IterableExtensions.<Parameter, Pair<? extends String, ? extends Type>>map(_parameters, _function_1);
     final HashMap<String, Type> paramMap = CollectionLiterals.<String, Type>newHashMap(((Pair<? extends String, ? extends Type>[])Conversions.unwrapArray(_map_1, Pair.class)));
-    final Function2<String, Expression, Boolean> _function_3 = (String name, Expression expr) -> {
+    final Function2<String, Expression, Boolean> _function_2 = (String name, Expression expr) -> {
       boolean _xblockexpression = false;
       {
         final Type declaredType = paramMap.get(name);
@@ -2299,8 +2288,8 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
       }
       return Boolean.valueOf(_xblockexpression);
     };
-    final Map<String, Expression> problematicValues = MapExtensions.<String, Expression>filter(exprMap, _function_3);
-    final Function2<String, Type, Boolean> _function_4 = (String name, Type declaredType) -> {
+    final Map<String, Expression> problematicValues = MapExtensions.<String, Expression>filter(exprMap, _function_2);
+    final Function2<String, Type, Boolean> _function_3 = (String name, Type declaredType) -> {
       boolean _xblockexpression = false;
       {
         final Expression expr = exprMap.get(name);
@@ -2326,7 +2315,7 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
       }
       return Boolean.valueOf(_xblockexpression);
     };
-    final Map<String, Type> problematicDeclarations = MapExtensions.<String, Type>filter(paramMap, _function_4);
+    final Map<String, Type> problematicDeclarations = MapExtensions.<String, Type>filter(paramMap, _function_3);
     int _size = problematicValues.size();
     boolean _greaterThan = (_size > 0);
     if (_greaterThan) {
