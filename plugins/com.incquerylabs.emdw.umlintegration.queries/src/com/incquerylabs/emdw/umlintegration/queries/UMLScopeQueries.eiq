@@ -17,7 +17,7 @@ pattern umlTypesInNamespace(type : Type, namespace : Namespace, name) {
 
 pattern superClass(sub : Class, sup : Class) {
     find xtGeneralization(sub, gen);
-    Generalization.target(gen, sup);
+    Generalization.general(gen, sup);
 }
 
 pattern superSignal(sub : Signal, sup : Signal) {
