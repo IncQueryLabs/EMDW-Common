@@ -17,11 +17,11 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link hu.eltesoft.modelexecution.profile.xumlrt.ExternalEntity#getBase_Class <em>Base Class</em>}</li>
  *   <li>{@link hu.eltesoft.modelexecution.profile.xumlrt.ExternalEntity#getClass_ <em>Class</em>}</li>
  *   <li>{@link hu.eltesoft.modelexecution.profile.xumlrt.ExternalEntity#getType <em>Type</em>}</li>
  *   <li>{@link hu.eltesoft.modelexecution.profile.xumlrt.ExternalEntity#getExternalHeaderLocation <em>External Header Location</em>}</li>
  *   <li>{@link hu.eltesoft.modelexecution.profile.xumlrt.ExternalEntity#getExternalNamespace <em>External Namespace</em>}</li>
+ *   <li>{@link hu.eltesoft.modelexecution.profile.xumlrt.ExternalEntity#getBase_Class <em>Base Class</em>}</li>
  * </ul>
  *
  * @see hu.eltesoft.modelexecution.profile.xumlrt.XUMLRTPackage#getExternalEntity()
@@ -29,32 +29,6 @@ import org.eclipse.emf.ecore.EObject;
  * @generated
  */
 public interface ExternalEntity extends EObject {
-	/**
-	 * Returns the value of the '<em><b>Base Class</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Base Class</em>' reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Base Class</em>' reference.
-	 * @see #setBase_Class(org.eclipse.uml2.uml.Class)
-	 * @see hu.eltesoft.modelexecution.profile.xumlrt.XUMLRTPackage#getExternalEntity_Base_Class()
-	 * @model required="true" ordered="false"
-	 * @generated
-	 */
-	org.eclipse.uml2.uml.Class getBase_Class();
-
-	/**
-	 * Sets the value of the '{@link hu.eltesoft.modelexecution.profile.xumlrt.ExternalEntity#getBase_Class <em>Base Class</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Base Class</em>' reference.
-	 * @see #getBase_Class()
-	 * @generated
-	 */
-	void setBase_Class(org.eclipse.uml2.uml.Class value);
-
 	/**
 	 * Returns the value of the '<em><b>Class</b></em>' attribute.
 	 * <!-- begin-user-doc -->
@@ -164,6 +138,32 @@ public interface ExternalEntity extends EObject {
 	void setExternalNamespace(String value);
 
 	/**
+	 * Returns the value of the '<em><b>Base Class</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Base Class</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Base Class</em>' reference.
+	 * @see #setBase_Class(org.eclipse.uml2.uml.Class)
+	 * @see hu.eltesoft.modelexecution.profile.xumlrt.XUMLRTPackage#getExternalEntity_Base_Class()
+	 * @model required="true" ordered="false"
+	 * @generated
+	 */
+	org.eclipse.uml2.uml.Class getBase_Class();
+
+	/**
+	 * Sets the value of the '{@link hu.eltesoft.modelexecution.profile.xumlrt.ExternalEntity#getBase_Class <em>Base Class</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Base Class</em>' reference.
+	 * @see #getBase_Class()
+	 * @generated
+	 */
+	void setBase_Class(org.eclipse.uml2.uml.Class value);
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
@@ -220,45 +220,12 @@ public interface ExternalEntity extends EObject {
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
 	 * Tuple{
-	 *   status=base_Class.ownedOperation->forAll(op | op.name.matches('[\\p{L}_$][\\p{L}\\p{N}_$]*')),
-	 *   message='Name of an operation on an external entity must be a valid Java method name.',
-	 *   severity=-5
-	 * }.status
-	 * @param diagnostics The chain of diagnostics to which problems are to be appended.
-	 * @param context The cache of context-specific information.
-	 * <!-- end-model-doc -->
-	 * @model
-	 * @generated
-	 */
-	boolean OperationNamesAreValid(DiagnosticChain diagnostics, Map<Object, Object> context);
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 * Tuple{
-	 *   status=base_Class.ownedOperation->forAll(op | op.ownedParameter->size() <= 1),
-	 *   message='Operation on an external entity could only have at most one parameter.',
-	 *   severity=-5
-	 * }.status
-	 * @param diagnostics The chain of diagnostics to which problems are to be appended.
-	 * @param context The cache of context-specific information.
-	 * <!-- end-model-doc -->
-	 * @model
-	 * @generated
-	 */
-	boolean NumberOfParametersIsValid(DiagnosticChain diagnostics, Map<Object, Object> context);
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 * Tuple{
-	 *   status=base_Class.ownedOperation->forAll(op | op.ownedParameter->size() = 1 implies
-	 *       let param : Parameter = op.ownedParameter->first()
-	 *       in param.type.getAppliedStereotype('xUML-RT::Callable') <> null
+	 *   status=base_Class.ownedOperation->forAll(op |
+	 *   	op.ownedParameter->forAll(param |
+	 *       param.type.getAppliedStereotype('xUML-RT::Callable') <> null or
+	 *       param.type.oclIsTypeOf(PrimitiveType))
 	 *   ),
-	 *   message='Type of a parameter on an external entity operation must be a class with Callable stereotype applied.',
+	 *   message='Type of a parameter on an external entity operation must be a primitive type, or a class with Callable stereotype applied.',
 	 *   severity=-5
 	 * }.status
 	 * @param diagnostics The chain of diagnostics to which problems are to be appended.
@@ -267,18 +234,21 @@ public interface ExternalEntity extends EObject {
 	 * @model
 	 * @generated
 	 */
-	boolean ParameterIsCallable(DiagnosticChain diagnostics, Map<Object, Object> context);
+	boolean ParametersAreCallableOrPrimitive(DiagnosticChain diagnostics, Map<Object, Object> context);
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
 	 * Tuple{
-	 *   status=base_Class.ownedOperation->forAll(op | op.ownedParameter->size() = 1 implies
-	 *       let param : Parameter = op.ownedParameter->first()
-	 *       in param.direction = ParameterDirectionKind::_'in'
+	 *   status=base_Class.ownedOperation->forAll(op |
+	 *   	op.ownedParameter->forAll(param |
+	 *   		param.direction = ParameterDirectionKind::_'in' or
+	 *   		-- allow return parameters
+	 *   		param.direction = ParameterDirectionKind::_'return'
+	 *   	)
 	 *   ),
-	 *   message='Only an input parameter is accepted on an external entity operation.',
+	 *   message='Only input parameters are accepted on an external entity operation.',
 	 *   severity=-5
 	 * }.status
 	 * @param diagnostics The chain of diagnostics to which problems are to be appended.
@@ -287,16 +257,18 @@ public interface ExternalEntity extends EObject {
 	 * @model
 	 * @generated
 	 */
-	boolean ParameterDirectionIsIn(DiagnosticChain diagnostics, Map<Object, Object> context);
+	boolean ParameterDirectionsAreIn(DiagnosticChain diagnostics, Map<Object, Object> context);
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
 	 * Tuple{
-	 *   status=base_Class.ownedOperation->forAll(op | op.ownedParameter->size() = 1 implies
-	 *       let param : Parameter = op.ownedParameter->first()
-	 *       in param.name.matches('[\\p{L}_$][\\p{L}\\p{N}_$]*')
+	 *   status=base_Class.ownedOperation->forAll(op |
+	 *   	op.ownedParameter->forAll(param |
+	 *   		param.direction = ParameterDirectionKind::_'in' implies
+	 *   		param.name.matches('[\\p{L}_$][\\p{L}\\p{N}_$]*')
+	 *   	)
 	 *   ),
 	 *   message='Name of an operation parameter on an external entity must be a valid Java identifier.',
 	 *   severity=-5
@@ -307,16 +279,17 @@ public interface ExternalEntity extends EObject {
 	 * @model
 	 * @generated
 	 */
-	boolean ParameterNameIsValid(DiagnosticChain diagnostics, Map<Object, Object> context);
+	boolean ParameterNamesAreValid(DiagnosticChain diagnostics, Map<Object, Object> context);
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
 	 * Tuple{
-	 *   status=base_Class.ownedOperation->forAll(op | op.ownedParameter->size() = 1 implies
-	 *       let param : Parameter = op.ownedParameter->first()
-	 *       in param.lower = 1 and param.upper = 1
+	 *   status=base_Class.ownedOperation->forAll(op |
+	 *   	op.ownedParameter->forAll(param |
+	 *   		param.lower = 1 and param.upper = 1
+	 *   	)
 	 *   ),
 	 *   message='Multiplicity of an operation parameter on an external entity must be 1.',
 	 *   severity=-5
@@ -327,7 +300,7 @@ public interface ExternalEntity extends EObject {
 	 * @model
 	 * @generated
 	 */
-	boolean ParameterMultiplicityIsOne(DiagnosticChain diagnostics, Map<Object, Object> context);
+	boolean ParameterMultiplicitiesAreOne(DiagnosticChain diagnostics, Map<Object, Object> context);
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -363,5 +336,44 @@ public interface ExternalEntity extends EObject {
 	 * @generated
 	 */
 	boolean ClassNameIsValid(DiagnosticChain diagnostics, Map<Object, Object> context);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Tuple{
+	 *   status=base_Class.ownedOperation->forAll(op | op.name.matches('[\\p{L}_$][\\p{L}\\p{N}_$]*')),
+	 *   message='Name of an operation on an external entity must be a valid Java method name.',
+	 *   severity=-5
+	 * }.status
+	 * @param diagnostics The chain of diagnostics to which problems are to be appended.
+	 * @param context The cache of context-specific information.
+	 * <!-- end-model-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean OperationNamesAreValid(DiagnosticChain diagnostics, Map<Object, Object> context);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Tuple{
+	 *   status=base_Class.ownedOperation->forAll(op |
+	 *   	let param : Parameter = op.getReturnResult() in
+	 *   	param <> null implies (
+	 *   	param.type.oclIsTypeOf(PrimitiveType) and
+	 *   	param.lower = 1 and param.upper = 1)
+	 *   ),
+	 *   message='External entity operations must return nothing or a single primitive value.',
+	 *   severity=-5
+	 * }.status
+	 * @param diagnostics The chain of diagnostics to which problems are to be appended.
+	 * @param context The cache of context-specific information.
+	 * <!-- end-model-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean ReturnTypeIsValid(DiagnosticChain diagnostics, Map<Object, Object> context);
 
 } // ExternalEntity

@@ -176,17 +176,8 @@ public class XUMLRTPackageImpl extends EPackageImpl implements XUMLRTPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getExternalEntity_Base_Class() {
-		return (EReference)externalEntityEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EAttribute getExternalEntity_Class() {
-		return (EAttribute)externalEntityEClass.getEStructuralFeatures().get(1);
+		return (EAttribute)externalEntityEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -195,7 +186,7 @@ public class XUMLRTPackageImpl extends EPackageImpl implements XUMLRTPackage {
 	 * @generated
 	 */
 	public EAttribute getExternalEntity_Type() {
-		return (EAttribute)externalEntityEClass.getEStructuralFeatures().get(2);
+		return (EAttribute)externalEntityEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -204,7 +195,7 @@ public class XUMLRTPackageImpl extends EPackageImpl implements XUMLRTPackage {
 	 * @generated
 	 */
 	public EAttribute getExternalEntity_ExternalHeaderLocation() {
-		return (EAttribute)externalEntityEClass.getEStructuralFeatures().get(3);
+		return (EAttribute)externalEntityEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -213,7 +204,16 @@ public class XUMLRTPackageImpl extends EPackageImpl implements XUMLRTPackage {
 	 * @generated
 	 */
 	public EAttribute getExternalEntity_ExternalNamespace() {
-		return (EAttribute)externalEntityEClass.getEStructuralFeatures().get(4);
+		return (EAttribute)externalEntityEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getExternalEntity_Base_Class() {
+		return (EReference)externalEntityEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -248,7 +248,7 @@ public class XUMLRTPackageImpl extends EPackageImpl implements XUMLRTPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getExternalEntity__OperationNamesAreValid__DiagnosticChain_Map() {
+	public EOperation getExternalEntity__ParametersAreCallableOrPrimitive__DiagnosticChain_Map() {
 		return externalEntityEClass.getEOperations().get(3);
 	}
 
@@ -257,7 +257,7 @@ public class XUMLRTPackageImpl extends EPackageImpl implements XUMLRTPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getExternalEntity__NumberOfParametersIsValid__DiagnosticChain_Map() {
+	public EOperation getExternalEntity__ParameterDirectionsAreIn__DiagnosticChain_Map() {
 		return externalEntityEClass.getEOperations().get(4);
 	}
 
@@ -266,7 +266,7 @@ public class XUMLRTPackageImpl extends EPackageImpl implements XUMLRTPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getExternalEntity__ParameterIsCallable__DiagnosticChain_Map() {
+	public EOperation getExternalEntity__ParameterNamesAreValid__DiagnosticChain_Map() {
 		return externalEntityEClass.getEOperations().get(5);
 	}
 
@@ -275,7 +275,7 @@ public class XUMLRTPackageImpl extends EPackageImpl implements XUMLRTPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getExternalEntity__ParameterDirectionIsIn__DiagnosticChain_Map() {
+	public EOperation getExternalEntity__ParameterMultiplicitiesAreOne__DiagnosticChain_Map() {
 		return externalEntityEClass.getEOperations().get(6);
 	}
 
@@ -284,7 +284,7 @@ public class XUMLRTPackageImpl extends EPackageImpl implements XUMLRTPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getExternalEntity__ParameterNameIsValid__DiagnosticChain_Map() {
+	public EOperation getExternalEntity__ClassMustBeAbstract__DiagnosticChain_Map() {
 		return externalEntityEClass.getEOperations().get(7);
 	}
 
@@ -293,7 +293,7 @@ public class XUMLRTPackageImpl extends EPackageImpl implements XUMLRTPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getExternalEntity__ParameterMultiplicityIsOne__DiagnosticChain_Map() {
+	public EOperation getExternalEntity__ClassNameIsValid__DiagnosticChain_Map() {
 		return externalEntityEClass.getEOperations().get(8);
 	}
 
@@ -302,7 +302,7 @@ public class XUMLRTPackageImpl extends EPackageImpl implements XUMLRTPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getExternalEntity__ClassMustBeAbstract__DiagnosticChain_Map() {
+	public EOperation getExternalEntity__OperationNamesAreValid__DiagnosticChain_Map() {
 		return externalEntityEClass.getEOperations().get(9);
 	}
 
@@ -311,7 +311,7 @@ public class XUMLRTPackageImpl extends EPackageImpl implements XUMLRTPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getExternalEntity__ClassNameIsValid__DiagnosticChain_Map() {
+	public EOperation getExternalEntity__ReturnTypeIsValid__DiagnosticChain_Map() {
 		return externalEntityEClass.getEOperations().get(10);
 	}
 
@@ -358,22 +358,22 @@ public class XUMLRTPackageImpl extends EPackageImpl implements XUMLRTPackage {
 		createEOperation(callableEClass, CALLABLE___RECEPTION_NAMES_ARE_VALID__DIAGNOSTICCHAIN_MAP);
 
 		externalEntityEClass = createEClass(EXTERNAL_ENTITY);
-		createEReference(externalEntityEClass, EXTERNAL_ENTITY__BASE_CLASS);
 		createEAttribute(externalEntityEClass, EXTERNAL_ENTITY__CLASS);
 		createEAttribute(externalEntityEClass, EXTERNAL_ENTITY__TYPE);
 		createEAttribute(externalEntityEClass, EXTERNAL_ENTITY__EXTERNAL_HEADER_LOCATION);
 		createEAttribute(externalEntityEClass, EXTERNAL_ENTITY__EXTERNAL_NAMESPACE);
+		createEReference(externalEntityEClass, EXTERNAL_ENTITY__BASE_CLASS);
 		createEOperation(externalEntityEClass, EXTERNAL_ENTITY___ALL_OPERATIONS_ARE_STATIC__DIAGNOSTICCHAIN_MAP);
 		createEOperation(externalEntityEClass, EXTERNAL_ENTITY___HAS_NO_ATTRIBUTES__DIAGNOSTICCHAIN_MAP);
 		createEOperation(externalEntityEClass, EXTERNAL_ENTITY___REFERENCED_CLASS_NAME_IS_VALID__DIAGNOSTICCHAIN_MAP);
-		createEOperation(externalEntityEClass, EXTERNAL_ENTITY___OPERATION_NAMES_ARE_VALID__DIAGNOSTICCHAIN_MAP);
-		createEOperation(externalEntityEClass, EXTERNAL_ENTITY___NUMBER_OF_PARAMETERS_IS_VALID__DIAGNOSTICCHAIN_MAP);
-		createEOperation(externalEntityEClass, EXTERNAL_ENTITY___PARAMETER_IS_CALLABLE__DIAGNOSTICCHAIN_MAP);
-		createEOperation(externalEntityEClass, EXTERNAL_ENTITY___PARAMETER_DIRECTION_IS_IN__DIAGNOSTICCHAIN_MAP);
-		createEOperation(externalEntityEClass, EXTERNAL_ENTITY___PARAMETER_NAME_IS_VALID__DIAGNOSTICCHAIN_MAP);
-		createEOperation(externalEntityEClass, EXTERNAL_ENTITY___PARAMETER_MULTIPLICITY_IS_ONE__DIAGNOSTICCHAIN_MAP);
+		createEOperation(externalEntityEClass, EXTERNAL_ENTITY___PARAMETERS_ARE_CALLABLE_OR_PRIMITIVE__DIAGNOSTICCHAIN_MAP);
+		createEOperation(externalEntityEClass, EXTERNAL_ENTITY___PARAMETER_DIRECTIONS_ARE_IN__DIAGNOSTICCHAIN_MAP);
+		createEOperation(externalEntityEClass, EXTERNAL_ENTITY___PARAMETER_NAMES_ARE_VALID__DIAGNOSTICCHAIN_MAP);
+		createEOperation(externalEntityEClass, EXTERNAL_ENTITY___PARAMETER_MULTIPLICITIES_ARE_ONE__DIAGNOSTICCHAIN_MAP);
 		createEOperation(externalEntityEClass, EXTERNAL_ENTITY___CLASS_MUST_BE_ABSTRACT__DIAGNOSTICCHAIN_MAP);
 		createEOperation(externalEntityEClass, EXTERNAL_ENTITY___CLASS_NAME_IS_VALID__DIAGNOSTICCHAIN_MAP);
+		createEOperation(externalEntityEClass, EXTERNAL_ENTITY___OPERATION_NAMES_ARE_VALID__DIAGNOSTICCHAIN_MAP);
+		createEOperation(externalEntityEClass, EXTERNAL_ENTITY___RETURN_TYPE_IS_VALID__DIAGNOSTICCHAIN_MAP);
 
 		// Create enums
 		entityTypeEEnum = createEEnum(ENTITY_TYPE);
@@ -435,11 +435,11 @@ public class XUMLRTPackageImpl extends EPackageImpl implements XUMLRTPackage {
 		addEParameter(op, g1, "context", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(externalEntityEClass, ExternalEntity.class, "ExternalEntity", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getExternalEntity_Base_Class(), theUMLPackage.getClass_(), null, "base_Class", null, 1, 1, ExternalEntity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEAttribute(getExternalEntity_Class(), theTypesPackage.getString(), "class", null, 1, 1, ExternalEntity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEAttribute(getExternalEntity_Type(), this.getEntityType(), "type", "Stateless", 1, 1, ExternalEntity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEAttribute(getExternalEntity_ExternalHeaderLocation(), theTypesPackage.getString(), "externalHeaderLocation", null, 0, 1, ExternalEntity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEAttribute(getExternalEntity_ExternalNamespace(), theTypesPackage.getString(), "externalNamespace", null, 0, 1, ExternalEntity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getExternalEntity_Base_Class(), theUMLPackage.getClass_(), null, "base_Class", null, 1, 1, ExternalEntity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
 		op = initEOperation(getExternalEntity__AllOperationsAreStatic__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "AllOperationsAreStatic", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostics", 0, 1, IS_UNIQUE, IS_ORDERED);
@@ -468,7 +468,7 @@ public class XUMLRTPackageImpl extends EPackageImpl implements XUMLRTPackage {
 		g1.getETypeArguments().add(g2);
 		addEParameter(op, g1, "context", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getExternalEntity__OperationNamesAreValid__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "OperationNamesAreValid", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getExternalEntity__ParametersAreCallableOrPrimitive__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "ParametersAreCallableOrPrimitive", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostics", 0, 1, IS_UNIQUE, IS_ORDERED);
 		g1 = createEGenericType(ecorePackage.getEMap());
 		g2 = createEGenericType(ecorePackage.getEJavaObject());
@@ -477,7 +477,7 @@ public class XUMLRTPackageImpl extends EPackageImpl implements XUMLRTPackage {
 		g1.getETypeArguments().add(g2);
 		addEParameter(op, g1, "context", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getExternalEntity__NumberOfParametersIsValid__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "NumberOfParametersIsValid", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getExternalEntity__ParameterDirectionsAreIn__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "ParameterDirectionsAreIn", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostics", 0, 1, IS_UNIQUE, IS_ORDERED);
 		g1 = createEGenericType(ecorePackage.getEMap());
 		g2 = createEGenericType(ecorePackage.getEJavaObject());
@@ -486,7 +486,7 @@ public class XUMLRTPackageImpl extends EPackageImpl implements XUMLRTPackage {
 		g1.getETypeArguments().add(g2);
 		addEParameter(op, g1, "context", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getExternalEntity__ParameterIsCallable__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "ParameterIsCallable", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getExternalEntity__ParameterNamesAreValid__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "ParameterNamesAreValid", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostics", 0, 1, IS_UNIQUE, IS_ORDERED);
 		g1 = createEGenericType(ecorePackage.getEMap());
 		g2 = createEGenericType(ecorePackage.getEJavaObject());
@@ -495,25 +495,7 @@ public class XUMLRTPackageImpl extends EPackageImpl implements XUMLRTPackage {
 		g1.getETypeArguments().add(g2);
 		addEParameter(op, g1, "context", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getExternalEntity__ParameterDirectionIsIn__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "ParameterDirectionIsIn", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostics", 0, 1, IS_UNIQUE, IS_ORDERED);
-		g1 = createEGenericType(ecorePackage.getEMap());
-		g2 = createEGenericType(ecorePackage.getEJavaObject());
-		g1.getETypeArguments().add(g2);
-		g2 = createEGenericType(ecorePackage.getEJavaObject());
-		g1.getETypeArguments().add(g2);
-		addEParameter(op, g1, "context", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		op = initEOperation(getExternalEntity__ParameterNameIsValid__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "ParameterNameIsValid", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostics", 0, 1, IS_UNIQUE, IS_ORDERED);
-		g1 = createEGenericType(ecorePackage.getEMap());
-		g2 = createEGenericType(ecorePackage.getEJavaObject());
-		g1.getETypeArguments().add(g2);
-		g2 = createEGenericType(ecorePackage.getEJavaObject());
-		g1.getETypeArguments().add(g2);
-		addEParameter(op, g1, "context", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		op = initEOperation(getExternalEntity__ParameterMultiplicityIsOne__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "ParameterMultiplicityIsOne", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getExternalEntity__ParameterMultiplicitiesAreOne__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "ParameterMultiplicitiesAreOne", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostics", 0, 1, IS_UNIQUE, IS_ORDERED);
 		g1 = createEGenericType(ecorePackage.getEMap());
 		g2 = createEGenericType(ecorePackage.getEJavaObject());
@@ -532,6 +514,24 @@ public class XUMLRTPackageImpl extends EPackageImpl implements XUMLRTPackage {
 		addEParameter(op, g1, "context", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		op = initEOperation(getExternalEntity__ClassNameIsValid__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "ClassNameIsValid", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostics", 0, 1, IS_UNIQUE, IS_ORDERED);
+		g1 = createEGenericType(ecorePackage.getEMap());
+		g2 = createEGenericType(ecorePackage.getEJavaObject());
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType(ecorePackage.getEJavaObject());
+		g1.getETypeArguments().add(g2);
+		addEParameter(op, g1, "context", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = initEOperation(getExternalEntity__OperationNamesAreValid__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "OperationNamesAreValid", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostics", 0, 1, IS_UNIQUE, IS_ORDERED);
+		g1 = createEGenericType(ecorePackage.getEMap());
+		g2 = createEGenericType(ecorePackage.getEJavaObject());
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType(ecorePackage.getEJavaObject());
+		g1.getETypeArguments().add(g2);
+		addEParameter(op, g1, "context", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = initEOperation(getExternalEntity__ReturnTypeIsValid__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "ReturnTypeIsValid", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostics", 0, 1, IS_UNIQUE, IS_ORDERED);
 		g1 = createEGenericType(ecorePackage.getEMap());
 		g2 = createEGenericType(ecorePackage.getEJavaObject());

@@ -80,52 +80,36 @@ public class XUMLRTValidator extends EObjectValidator {
 	public static final int EXTERNAL_ENTITY__REFERENCED_CLASS_NAME_IS_VALID = 5;
 
 	/**
-	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Operation Names Are Valid' of 'External Entity'.
+	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Parameters Are Callable Or Primitive' of 'External Entity'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int EXTERNAL_ENTITY__OPERATION_NAMES_ARE_VALID = 6;
+	public static final int EXTERNAL_ENTITY__PARAMETERS_ARE_CALLABLE_OR_PRIMITIVE = 6;
 
 	/**
-	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Number Of Parameters Is Valid' of 'External Entity'.
+	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Parameter Directions Are In' of 'External Entity'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int EXTERNAL_ENTITY__NUMBER_OF_PARAMETERS_IS_VALID = 7;
+	public static final int EXTERNAL_ENTITY__PARAMETER_DIRECTIONS_ARE_IN = 7;
 
 	/**
-	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Parameter Is Callable' of 'External Entity'.
+	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Parameter Names Are Valid' of 'External Entity'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int EXTERNAL_ENTITY__PARAMETER_IS_CALLABLE = 8;
+	public static final int EXTERNAL_ENTITY__PARAMETER_NAMES_ARE_VALID = 8;
 
 	/**
-	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Parameter Direction Is In' of 'External Entity'.
+	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Parameter Multiplicities Are One' of 'External Entity'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int EXTERNAL_ENTITY__PARAMETER_DIRECTION_IS_IN = 9;
-
-	/**
-	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Parameter Name Is Valid' of 'External Entity'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public static final int EXTERNAL_ENTITY__PARAMETER_NAME_IS_VALID = 10;
-
-	/**
-	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Parameter Multiplicity Is One' of 'External Entity'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public static final int EXTERNAL_ENTITY__PARAMETER_MULTIPLICITY_IS_ONE = 11;
+	public static final int EXTERNAL_ENTITY__PARAMETER_MULTIPLICITIES_ARE_ONE = 9;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Class Must Be Abstract' of 'External Entity'.
@@ -133,7 +117,7 @@ public class XUMLRTValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int EXTERNAL_ENTITY__CLASS_MUST_BE_ABSTRACT = 12;
+	public static final int EXTERNAL_ENTITY__CLASS_MUST_BE_ABSTRACT = 10;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Class Name Is Valid' of 'External Entity'.
@@ -141,7 +125,23 @@ public class XUMLRTValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int EXTERNAL_ENTITY__CLASS_NAME_IS_VALID = 13;
+	public static final int EXTERNAL_ENTITY__CLASS_NAME_IS_VALID = 11;
+
+	/**
+	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Operation Names Are Valid' of 'External Entity'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public static final int EXTERNAL_ENTITY__OPERATION_NAMES_ARE_VALID = 12;
+
+	/**
+	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Return Type Is Valid' of 'External Entity'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public static final int EXTERNAL_ENTITY__RETURN_TYPE_IS_VALID = 13;
 
 	/**
 	 * A constant with a fixed name that can be used as the base value for additional hand written constants.
@@ -258,14 +258,14 @@ public class XUMLRTValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= validateExternalEntity_AllOperationsAreStatic(externalEntity, diagnostics, context);
 		if (result || diagnostics != null) result &= validateExternalEntity_HasNoAttributes(externalEntity, diagnostics, context);
 		if (result || diagnostics != null) result &= validateExternalEntity_ReferencedClassNameIsValid(externalEntity, diagnostics, context);
-		if (result || diagnostics != null) result &= validateExternalEntity_OperationNamesAreValid(externalEntity, diagnostics, context);
-		if (result || diagnostics != null) result &= validateExternalEntity_NumberOfParametersIsValid(externalEntity, diagnostics, context);
-		if (result || diagnostics != null) result &= validateExternalEntity_ParameterIsCallable(externalEntity, diagnostics, context);
-		if (result || diagnostics != null) result &= validateExternalEntity_ParameterDirectionIsIn(externalEntity, diagnostics, context);
-		if (result || diagnostics != null) result &= validateExternalEntity_ParameterNameIsValid(externalEntity, diagnostics, context);
-		if (result || diagnostics != null) result &= validateExternalEntity_ParameterMultiplicityIsOne(externalEntity, diagnostics, context);
+		if (result || diagnostics != null) result &= validateExternalEntity_ParametersAreCallableOrPrimitive(externalEntity, diagnostics, context);
+		if (result || diagnostics != null) result &= validateExternalEntity_ParameterDirectionsAreIn(externalEntity, diagnostics, context);
+		if (result || diagnostics != null) result &= validateExternalEntity_ParameterNamesAreValid(externalEntity, diagnostics, context);
+		if (result || diagnostics != null) result &= validateExternalEntity_ParameterMultiplicitiesAreOne(externalEntity, diagnostics, context);
 		if (result || diagnostics != null) result &= validateExternalEntity_ClassMustBeAbstract(externalEntity, diagnostics, context);
 		if (result || diagnostics != null) result &= validateExternalEntity_ClassNameIsValid(externalEntity, diagnostics, context);
+		if (result || diagnostics != null) result &= validateExternalEntity_OperationNamesAreValid(externalEntity, diagnostics, context);
+		if (result || diagnostics != null) result &= validateExternalEntity_ReturnTypeIsValid(externalEntity, diagnostics, context);
 		return result;
 	}
 
@@ -300,63 +300,43 @@ public class XUMLRTValidator extends EObjectValidator {
 	}
 
 	/**
-	 * Validates the OperationNamesAreValid constraint of '<em>External Entity</em>'.
+	 * Validates the ParametersAreCallableOrPrimitive constraint of '<em>External Entity</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean validateExternalEntity_OperationNamesAreValid(ExternalEntity externalEntity, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return externalEntity.OperationNamesAreValid(diagnostics, context);
+	public boolean validateExternalEntity_ParametersAreCallableOrPrimitive(ExternalEntity externalEntity, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return externalEntity.ParametersAreCallableOrPrimitive(diagnostics, context);
 	}
 
 	/**
-	 * Validates the NumberOfParametersIsValid constraint of '<em>External Entity</em>'.
+	 * Validates the ParameterDirectionsAreIn constraint of '<em>External Entity</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean validateExternalEntity_NumberOfParametersIsValid(ExternalEntity externalEntity, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return externalEntity.NumberOfParametersIsValid(diagnostics, context);
+	public boolean validateExternalEntity_ParameterDirectionsAreIn(ExternalEntity externalEntity, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return externalEntity.ParameterDirectionsAreIn(diagnostics, context);
 	}
 
 	/**
-	 * Validates the ParameterIsCallable constraint of '<em>External Entity</em>'.
+	 * Validates the ParameterNamesAreValid constraint of '<em>External Entity</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean validateExternalEntity_ParameterIsCallable(ExternalEntity externalEntity, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return externalEntity.ParameterIsCallable(diagnostics, context);
+	public boolean validateExternalEntity_ParameterNamesAreValid(ExternalEntity externalEntity, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return externalEntity.ParameterNamesAreValid(diagnostics, context);
 	}
 
 	/**
-	 * Validates the ParameterDirectionIsIn constraint of '<em>External Entity</em>'.
+	 * Validates the ParameterMultiplicitiesAreOne constraint of '<em>External Entity</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean validateExternalEntity_ParameterDirectionIsIn(ExternalEntity externalEntity, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return externalEntity.ParameterDirectionIsIn(diagnostics, context);
-	}
-
-	/**
-	 * Validates the ParameterNameIsValid constraint of '<em>External Entity</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean validateExternalEntity_ParameterNameIsValid(ExternalEntity externalEntity, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return externalEntity.ParameterNameIsValid(diagnostics, context);
-	}
-
-	/**
-	 * Validates the ParameterMultiplicityIsOne constraint of '<em>External Entity</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean validateExternalEntity_ParameterMultiplicityIsOne(ExternalEntity externalEntity, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return externalEntity.ParameterMultiplicityIsOne(diagnostics, context);
+	public boolean validateExternalEntity_ParameterMultiplicitiesAreOne(ExternalEntity externalEntity, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return externalEntity.ParameterMultiplicitiesAreOne(diagnostics, context);
 	}
 
 	/**
@@ -377,6 +357,26 @@ public class XUMLRTValidator extends EObjectValidator {
 	 */
 	public boolean validateExternalEntity_ClassNameIsValid(ExternalEntity externalEntity, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return externalEntity.ClassNameIsValid(diagnostics, context);
+	}
+
+	/**
+	 * Validates the OperationNamesAreValid constraint of '<em>External Entity</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateExternalEntity_OperationNamesAreValid(ExternalEntity externalEntity, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return externalEntity.OperationNamesAreValid(diagnostics, context);
+	}
+
+	/**
+	 * Validates the ReturnTypeIsValid constraint of '<em>External Entity</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateExternalEntity_ReturnTypeIsValid(ExternalEntity externalEntity, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return externalEntity.ReturnTypeIsValid(diagnostics, context);
 	}
 
 	/**

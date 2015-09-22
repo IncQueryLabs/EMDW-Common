@@ -104,9 +104,9 @@
         </eGenericType>
       </eParameters>
     </eOperations>
-    <eOperations name="OperationNamesAreValid" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+    <eOperations name="ParametersAreCallableOrPrimitive" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="Tuple{&#xD;&#xA;  status=base_Class.ownedOperation->forAll(op | op.name.matches('[\\p{L}_$][\\p{L}\\p{N}_$]*')),&#xD;&#xA;  message='Name of an operation on an external entity must be a valid Java method name.',&#xD;&#xA;  severity=-5&#xD;&#xA;}.status"/>
+        <details key="documentation" value="Tuple{&#xD;&#xA;  status=base_Class.ownedOperation->forAll(op |&#xD;&#xA;  &#x9;op.ownedParameter->forAll(param |&#xD;&#xA;      param.type.getAppliedStereotype('xUML-RT::Callable') &lt;> null or&#xD;&#xA;      param.type.oclIsTypeOf(PrimitiveType))&#xD;&#xA;  ),&#xD;&#xA;  message='Type of a parameter on an external entity operation must be a primitive type, or a class with Callable stereotype applied.',&#xD;&#xA;  severity=-5&#xD;&#xA;}.status"/>
       </eAnnotations>
       <eParameters name="diagnostics" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -123,9 +123,9 @@
         </eGenericType>
       </eParameters>
     </eOperations>
-    <eOperations name="NumberOfParametersIsValid" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+    <eOperations name="ParameterDirectionsAreIn" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="Tuple{&#xD;&#xA;  status=base_Class.ownedOperation->forAll(op | op.ownedParameter->size() &lt;= 1),&#xD;&#xA;  message='Operation on an external entity could only have at most one parameter.',&#xD;&#xA;  severity=-5&#xD;&#xA;}.status"/>
+        <details key="documentation" value="Tuple{&#xD;&#xA;  status=base_Class.ownedOperation->forAll(op |&#xD;&#xA;  &#x9;op.ownedParameter->forAll(param |&#xD;&#xA;  &#x9;&#x9;param.direction = ParameterDirectionKind::_'in' or&#xD;&#xA;  &#x9;&#x9;-- allow return parameters&#xD;&#xA;  &#x9;&#x9;param.direction = ParameterDirectionKind::_'return'&#xD;&#xA;  &#x9;)&#xD;&#xA;  ),&#xD;&#xA;  message='Only input parameters are accepted on an external entity operation.',&#xD;&#xA;  severity=-5&#xD;&#xA;}.status"/>
       </eAnnotations>
       <eParameters name="diagnostics" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -142,9 +142,9 @@
         </eGenericType>
       </eParameters>
     </eOperations>
-    <eOperations name="ParameterIsCallable" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+    <eOperations name="ParameterNamesAreValid" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="Tuple{&#xD;&#xA;  status=base_Class.ownedOperation->forAll(op | op.ownedParameter->size() = 1 implies&#xD;&#xA;      let param : Parameter = op.ownedParameter->first()&#xD;&#xA;      in param.type.getAppliedStereotype('xUML-RT::Callable') &lt;> null&#xD;&#xA;  ),&#xD;&#xA;  message='Type of a parameter on an external entity operation must be a class with Callable stereotype applied.',&#xD;&#xA;  severity=-5&#xD;&#xA;}.status"/>
+        <details key="documentation" value="Tuple{&#xD;&#xA;  status=base_Class.ownedOperation->forAll(op |&#xD;&#xA;  &#x9;op.ownedParameter->forAll(param |&#xD;&#xA;  &#x9;&#x9;param.direction = ParameterDirectionKind::_'in' implies&#xD;&#xA;  &#x9;&#x9;param.name.matches('[\\p{L}_$][\\p{L}\\p{N}_$]*')&#xD;&#xA;  &#x9;)&#xD;&#xA;  ),&#xD;&#xA;  message='Name of an operation parameter on an external entity must be a valid Java identifier.',&#xD;&#xA;  severity=-5&#xD;&#xA;}.status"/>
       </eAnnotations>
       <eParameters name="diagnostics" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -161,47 +161,9 @@
         </eGenericType>
       </eParameters>
     </eOperations>
-    <eOperations name="ParameterDirectionIsIn" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+    <eOperations name="ParameterMultiplicitiesAreOne" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="Tuple{&#xD;&#xA;  status=base_Class.ownedOperation->forAll(op | op.ownedParameter->size() = 1 implies&#xD;&#xA;      let param : Parameter = op.ownedParameter->first()&#xD;&#xA;      in param.direction = ParameterDirectionKind::_'in'&#xD;&#xA;  ),&#xD;&#xA;  message='Only an input parameter is accepted on an external entity operation.',&#xD;&#xA;  severity=-5&#xD;&#xA;}.status"/>
-      </eAnnotations>
-      <eParameters name="diagnostics" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain">
-        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="documentation" value="The chain of diagnostics to which problems are to be appended."/>
-        </eAnnotations>
-      </eParameters>
-      <eParameters name="context">
-        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="documentation" value="The cache of context-specific information."/>
-        </eAnnotations>
-        <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap">
-          <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
-          <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
-        </eGenericType>
-      </eParameters>
-    </eOperations>
-    <eOperations name="ParameterNameIsValid" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
-      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="Tuple{&#xD;&#xA;  status=base_Class.ownedOperation->forAll(op | op.ownedParameter->size() = 1 implies&#xD;&#xA;      let param : Parameter = op.ownedParameter->first()&#xD;&#xA;      in param.name.matches('[\\p{L}_$][\\p{L}\\p{N}_$]*')&#xD;&#xA;  ),&#xD;&#xA;  message='Name of an operation parameter on an external entity must be a valid Java identifier.',&#xD;&#xA;  severity=-5&#xD;&#xA;}.status"/>
-      </eAnnotations>
-      <eParameters name="diagnostics" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain">
-        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="documentation" value="The chain of diagnostics to which problems are to be appended."/>
-        </eAnnotations>
-      </eParameters>
-      <eParameters name="context">
-        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="documentation" value="The cache of context-specific information."/>
-        </eAnnotations>
-        <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap">
-          <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
-          <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
-        </eGenericType>
-      </eParameters>
-    </eOperations>
-    <eOperations name="ParameterMultiplicityIsOne" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
-      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="Tuple{&#xD;&#xA;  status=base_Class.ownedOperation->forAll(op | op.ownedParameter->size() = 1 implies&#xD;&#xA;      let param : Parameter = op.ownedParameter->first()&#xD;&#xA;      in param.lower = 1 and param.upper = 1&#xD;&#xA;  ),&#xD;&#xA;  message='Multiplicity of an operation parameter on an external entity must be 1.',&#xD;&#xA;  severity=-5&#xD;&#xA;}.status"/>
+        <details key="documentation" value="Tuple{&#xD;&#xA;  status=base_Class.ownedOperation->forAll(op |&#xD;&#xA;  &#x9;op.ownedParameter->forAll(param |&#xD;&#xA;  &#x9;&#x9;param.lower = 1 and param.upper = 1&#xD;&#xA;  &#x9;)&#xD;&#xA;  ),&#xD;&#xA;  message='Multiplicity of an operation parameter on an external entity must be 1.',&#xD;&#xA;  severity=-5&#xD;&#xA;}.status"/>
       </eAnnotations>
       <eParameters name="diagnostics" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -256,8 +218,44 @@
         </eGenericType>
       </eParameters>
     </eOperations>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="base_Class" ordered="false"
-        lowerBound="1" eType="ecore:EClass ../../org.eclipse.uml2.uml/model/UML.ecore#//Class"/>
+    <eOperations name="OperationNamesAreValid" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Tuple{&#xD;&#xA;  status=base_Class.ownedOperation->forAll(op | op.name.matches('[\\p{L}_$][\\p{L}\\p{N}_$]*')),&#xD;&#xA;  message='Name of an operation on an external entity must be a valid Java method name.',&#xD;&#xA;  severity=-5&#xD;&#xA;}.status"/>
+      </eAnnotations>
+      <eParameters name="diagnostics" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="The chain of diagnostics to which problems are to be appended."/>
+        </eAnnotations>
+      </eParameters>
+      <eParameters name="context">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="The cache of context-specific information."/>
+        </eAnnotations>
+        <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap">
+          <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+          <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+        </eGenericType>
+      </eParameters>
+    </eOperations>
+    <eOperations name="ReturnTypeIsValid" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Tuple{&#xD;&#xA;  status=base_Class.ownedOperation->forAll(op |&#xD;&#xA;  &#x9;let param : Parameter = op.getReturnResult() in&#xD;&#xA;  &#x9;param &lt;> null implies (&#xD;&#xA;  &#x9;param.type.oclIsTypeOf(PrimitiveType) and&#xD;&#xA;  &#x9;param.lower = 1 and param.upper = 1)&#xD;&#xA;  ),&#xD;&#xA;  message='External entity operations must return nothing or a single primitive value.',&#xD;&#xA;  severity=-5&#xD;&#xA;}.status"/>
+      </eAnnotations>
+      <eParameters name="diagnostics" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="The chain of diagnostics to which problems are to be appended."/>
+        </eAnnotations>
+      </eParameters>
+      <eParameters name="context">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="The cache of context-specific information."/>
+        </eAnnotations>
+        <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap">
+          <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+          <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+        </eGenericType>
+      </eParameters>
+    </eOperations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="class" ordered="false"
         lowerBound="1" eType="ecore:EDataType ../../org.eclipse.uml2.types/model/Types.ecore#//String"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" ordered="false" lowerBound="1"
@@ -266,6 +264,8 @@
         ordered="false" eType="ecore:EDataType ../../org.eclipse.uml2.types/model/Types.ecore#//String"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="externalNamespace" ordered="false"
         eType="ecore:EDataType ../../org.eclipse.uml2.types/model/Types.ecore#//String"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="base_Class" ordered="false"
+        lowerBound="1" eType="ecore:EClass ../../org.eclipse.uml2.uml/model/UML.ecore#//Class"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="EntityType">
     <eLiterals name="Stateless"/>

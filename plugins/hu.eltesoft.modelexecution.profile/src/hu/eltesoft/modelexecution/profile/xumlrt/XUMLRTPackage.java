@@ -125,22 +125,13 @@ public interface XUMLRTPackage extends EPackage {
 	int EXTERNAL_ENTITY = 1;
 
 	/**
-	 * The feature id for the '<em><b>Base Class</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EXTERNAL_ENTITY__BASE_CLASS = 0;
-
-	/**
 	 * The feature id for the '<em><b>Class</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int EXTERNAL_ENTITY__CLASS = 1;
+	int EXTERNAL_ENTITY__CLASS = 0;
 
 	/**
 	 * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -149,7 +140,7 @@ public interface XUMLRTPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EXTERNAL_ENTITY__TYPE = 2;
+	int EXTERNAL_ENTITY__TYPE = 1;
 
 	/**
 	 * The feature id for the '<em><b>External Header Location</b></em>' attribute.
@@ -158,7 +149,7 @@ public interface XUMLRTPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EXTERNAL_ENTITY__EXTERNAL_HEADER_LOCATION = 3;
+	int EXTERNAL_ENTITY__EXTERNAL_HEADER_LOCATION = 2;
 
 	/**
 	 * The feature id for the '<em><b>External Namespace</b></em>' attribute.
@@ -167,7 +158,16 @@ public interface XUMLRTPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EXTERNAL_ENTITY__EXTERNAL_NAMESPACE = 4;
+	int EXTERNAL_ENTITY__EXTERNAL_NAMESPACE = 3;
+
+	/**
+	 * The feature id for the '<em><b>Base Class</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXTERNAL_ENTITY__BASE_CLASS = 4;
 
 	/**
 	 * The number of structural features of the '<em>External Entity</em>' class.
@@ -206,58 +206,40 @@ public interface XUMLRTPackage extends EPackage {
 	int EXTERNAL_ENTITY___REFERENCED_CLASS_NAME_IS_VALID__DIAGNOSTICCHAIN_MAP = 2;
 
 	/**
-	 * The operation id for the '<em>Operation Names Are Valid</em>' operation.
+	 * The operation id for the '<em>Parameters Are Callable Or Primitive</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int EXTERNAL_ENTITY___OPERATION_NAMES_ARE_VALID__DIAGNOSTICCHAIN_MAP = 3;
+	int EXTERNAL_ENTITY___PARAMETERS_ARE_CALLABLE_OR_PRIMITIVE__DIAGNOSTICCHAIN_MAP = 3;
 
 	/**
-	 * The operation id for the '<em>Number Of Parameters Is Valid</em>' operation.
+	 * The operation id for the '<em>Parameter Directions Are In</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int EXTERNAL_ENTITY___NUMBER_OF_PARAMETERS_IS_VALID__DIAGNOSTICCHAIN_MAP = 4;
+	int EXTERNAL_ENTITY___PARAMETER_DIRECTIONS_ARE_IN__DIAGNOSTICCHAIN_MAP = 4;
 
 	/**
-	 * The operation id for the '<em>Parameter Is Callable</em>' operation.
+	 * The operation id for the '<em>Parameter Names Are Valid</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int EXTERNAL_ENTITY___PARAMETER_IS_CALLABLE__DIAGNOSTICCHAIN_MAP = 5;
+	int EXTERNAL_ENTITY___PARAMETER_NAMES_ARE_VALID__DIAGNOSTICCHAIN_MAP = 5;
 
 	/**
-	 * The operation id for the '<em>Parameter Direction Is In</em>' operation.
+	 * The operation id for the '<em>Parameter Multiplicities Are One</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int EXTERNAL_ENTITY___PARAMETER_DIRECTION_IS_IN__DIAGNOSTICCHAIN_MAP = 6;
-
-	/**
-	 * The operation id for the '<em>Parameter Name Is Valid</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EXTERNAL_ENTITY___PARAMETER_NAME_IS_VALID__DIAGNOSTICCHAIN_MAP = 7;
-
-	/**
-	 * The operation id for the '<em>Parameter Multiplicity Is One</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EXTERNAL_ENTITY___PARAMETER_MULTIPLICITY_IS_ONE__DIAGNOSTICCHAIN_MAP = 8;
+	int EXTERNAL_ENTITY___PARAMETER_MULTIPLICITIES_ARE_ONE__DIAGNOSTICCHAIN_MAP = 6;
 
 	/**
 	 * The operation id for the '<em>Class Must Be Abstract</em>' operation.
@@ -266,7 +248,7 @@ public interface XUMLRTPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EXTERNAL_ENTITY___CLASS_MUST_BE_ABSTRACT__DIAGNOSTICCHAIN_MAP = 9;
+	int EXTERNAL_ENTITY___CLASS_MUST_BE_ABSTRACT__DIAGNOSTICCHAIN_MAP = 7;
 
 	/**
 	 * The operation id for the '<em>Class Name Is Valid</em>' operation.
@@ -275,7 +257,25 @@ public interface XUMLRTPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EXTERNAL_ENTITY___CLASS_NAME_IS_VALID__DIAGNOSTICCHAIN_MAP = 10;
+	int EXTERNAL_ENTITY___CLASS_NAME_IS_VALID__DIAGNOSTICCHAIN_MAP = 8;
+
+	/**
+	 * The operation id for the '<em>Operation Names Are Valid</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXTERNAL_ENTITY___OPERATION_NAMES_ARE_VALID__DIAGNOSTICCHAIN_MAP = 9;
+
+	/**
+	 * The operation id for the '<em>Return Type Is Valid</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXTERNAL_ENTITY___RETURN_TYPE_IS_VALID__DIAGNOSTICCHAIN_MAP = 10;
 
 	/**
 	 * The number of operations of the '<em>External Entity</em>' class.
@@ -349,17 +349,6 @@ public interface XUMLRTPackage extends EPackage {
 	EClass getExternalEntity();
 
 	/**
-	 * Returns the meta object for the reference '{@link hu.eltesoft.modelexecution.profile.xumlrt.ExternalEntity#getBase_Class <em>Base Class</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Base Class</em>'.
-	 * @see hu.eltesoft.modelexecution.profile.xumlrt.ExternalEntity#getBase_Class()
-	 * @see #getExternalEntity()
-	 * @generated
-	 */
-	EReference getExternalEntity_Base_Class();
-
-	/**
 	 * Returns the meta object for the attribute '{@link hu.eltesoft.modelexecution.profile.xumlrt.ExternalEntity#getClass_ <em>Class</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -404,6 +393,17 @@ public interface XUMLRTPackage extends EPackage {
 	EAttribute getExternalEntity_ExternalNamespace();
 
 	/**
+	 * Returns the meta object for the reference '{@link hu.eltesoft.modelexecution.profile.xumlrt.ExternalEntity#getBase_Class <em>Base Class</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Base Class</em>'.
+	 * @see hu.eltesoft.modelexecution.profile.xumlrt.ExternalEntity#getBase_Class()
+	 * @see #getExternalEntity()
+	 * @generated
+	 */
+	EReference getExternalEntity_Base_Class();
+
+	/**
 	 * Returns the meta object for the '{@link hu.eltesoft.modelexecution.profile.xumlrt.ExternalEntity#AllOperationsAreStatic(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>All Operations Are Static</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -434,64 +434,44 @@ public interface XUMLRTPackage extends EPackage {
 	EOperation getExternalEntity__ReferencedClassNameIsValid__DiagnosticChain_Map();
 
 	/**
-	 * Returns the meta object for the '{@link hu.eltesoft.modelexecution.profile.xumlrt.ExternalEntity#OperationNamesAreValid(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Operation Names Are Valid</em>}' operation.
+	 * Returns the meta object for the '{@link hu.eltesoft.modelexecution.profile.xumlrt.ExternalEntity#ParametersAreCallableOrPrimitive(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Parameters Are Callable Or Primitive</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Operation Names Are Valid</em>' operation.
-	 * @see hu.eltesoft.modelexecution.profile.xumlrt.ExternalEntity#OperationNamesAreValid(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
+	 * @return the meta object for the '<em>Parameters Are Callable Or Primitive</em>' operation.
+	 * @see hu.eltesoft.modelexecution.profile.xumlrt.ExternalEntity#ParametersAreCallableOrPrimitive(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
 	 * @generated
 	 */
-	EOperation getExternalEntity__OperationNamesAreValid__DiagnosticChain_Map();
+	EOperation getExternalEntity__ParametersAreCallableOrPrimitive__DiagnosticChain_Map();
 
 	/**
-	 * Returns the meta object for the '{@link hu.eltesoft.modelexecution.profile.xumlrt.ExternalEntity#NumberOfParametersIsValid(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Number Of Parameters Is Valid</em>}' operation.
+	 * Returns the meta object for the '{@link hu.eltesoft.modelexecution.profile.xumlrt.ExternalEntity#ParameterDirectionsAreIn(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Parameter Directions Are In</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Number Of Parameters Is Valid</em>' operation.
-	 * @see hu.eltesoft.modelexecution.profile.xumlrt.ExternalEntity#NumberOfParametersIsValid(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
+	 * @return the meta object for the '<em>Parameter Directions Are In</em>' operation.
+	 * @see hu.eltesoft.modelexecution.profile.xumlrt.ExternalEntity#ParameterDirectionsAreIn(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
 	 * @generated
 	 */
-	EOperation getExternalEntity__NumberOfParametersIsValid__DiagnosticChain_Map();
+	EOperation getExternalEntity__ParameterDirectionsAreIn__DiagnosticChain_Map();
 
 	/**
-	 * Returns the meta object for the '{@link hu.eltesoft.modelexecution.profile.xumlrt.ExternalEntity#ParameterIsCallable(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Parameter Is Callable</em>}' operation.
+	 * Returns the meta object for the '{@link hu.eltesoft.modelexecution.profile.xumlrt.ExternalEntity#ParameterNamesAreValid(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Parameter Names Are Valid</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Parameter Is Callable</em>' operation.
-	 * @see hu.eltesoft.modelexecution.profile.xumlrt.ExternalEntity#ParameterIsCallable(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
+	 * @return the meta object for the '<em>Parameter Names Are Valid</em>' operation.
+	 * @see hu.eltesoft.modelexecution.profile.xumlrt.ExternalEntity#ParameterNamesAreValid(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
 	 * @generated
 	 */
-	EOperation getExternalEntity__ParameterIsCallable__DiagnosticChain_Map();
+	EOperation getExternalEntity__ParameterNamesAreValid__DiagnosticChain_Map();
 
 	/**
-	 * Returns the meta object for the '{@link hu.eltesoft.modelexecution.profile.xumlrt.ExternalEntity#ParameterDirectionIsIn(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Parameter Direction Is In</em>}' operation.
+	 * Returns the meta object for the '{@link hu.eltesoft.modelexecution.profile.xumlrt.ExternalEntity#ParameterMultiplicitiesAreOne(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Parameter Multiplicities Are One</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Parameter Direction Is In</em>' operation.
-	 * @see hu.eltesoft.modelexecution.profile.xumlrt.ExternalEntity#ParameterDirectionIsIn(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
+	 * @return the meta object for the '<em>Parameter Multiplicities Are One</em>' operation.
+	 * @see hu.eltesoft.modelexecution.profile.xumlrt.ExternalEntity#ParameterMultiplicitiesAreOne(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
 	 * @generated
 	 */
-	EOperation getExternalEntity__ParameterDirectionIsIn__DiagnosticChain_Map();
-
-	/**
-	 * Returns the meta object for the '{@link hu.eltesoft.modelexecution.profile.xumlrt.ExternalEntity#ParameterNameIsValid(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Parameter Name Is Valid</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Parameter Name Is Valid</em>' operation.
-	 * @see hu.eltesoft.modelexecution.profile.xumlrt.ExternalEntity#ParameterNameIsValid(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
-	 * @generated
-	 */
-	EOperation getExternalEntity__ParameterNameIsValid__DiagnosticChain_Map();
-
-	/**
-	 * Returns the meta object for the '{@link hu.eltesoft.modelexecution.profile.xumlrt.ExternalEntity#ParameterMultiplicityIsOne(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Parameter Multiplicity Is One</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Parameter Multiplicity Is One</em>' operation.
-	 * @see hu.eltesoft.modelexecution.profile.xumlrt.ExternalEntity#ParameterMultiplicityIsOne(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
-	 * @generated
-	 */
-	EOperation getExternalEntity__ParameterMultiplicityIsOne__DiagnosticChain_Map();
+	EOperation getExternalEntity__ParameterMultiplicitiesAreOne__DiagnosticChain_Map();
 
 	/**
 	 * Returns the meta object for the '{@link hu.eltesoft.modelexecution.profile.xumlrt.ExternalEntity#ClassMustBeAbstract(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Class Must Be Abstract</em>}' operation.
@@ -512,6 +492,26 @@ public interface XUMLRTPackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getExternalEntity__ClassNameIsValid__DiagnosticChain_Map();
+
+	/**
+	 * Returns the meta object for the '{@link hu.eltesoft.modelexecution.profile.xumlrt.ExternalEntity#OperationNamesAreValid(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Operation Names Are Valid</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Operation Names Are Valid</em>' operation.
+	 * @see hu.eltesoft.modelexecution.profile.xumlrt.ExternalEntity#OperationNamesAreValid(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
+	 * @generated
+	 */
+	EOperation getExternalEntity__OperationNamesAreValid__DiagnosticChain_Map();
+
+	/**
+	 * Returns the meta object for the '{@link hu.eltesoft.modelexecution.profile.xumlrt.ExternalEntity#ReturnTypeIsValid(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Return Type Is Valid</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Return Type Is Valid</em>' operation.
+	 * @see hu.eltesoft.modelexecution.profile.xumlrt.ExternalEntity#ReturnTypeIsValid(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
+	 * @generated
+	 */
+	EOperation getExternalEntity__ReturnTypeIsValid__DiagnosticChain_Map();
 
 	/**
 	 * Returns the meta object for enum '{@link hu.eltesoft.modelexecution.profile.xumlrt.EntityType <em>Entity Type</em>}'.
@@ -591,14 +591,6 @@ public interface XUMLRTPackage extends EPackage {
 		EClass EXTERNAL_ENTITY = eINSTANCE.getExternalEntity();
 
 		/**
-		 * The meta object literal for the '<em><b>Base Class</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference EXTERNAL_ENTITY__BASE_CLASS = eINSTANCE.getExternalEntity_Base_Class();
-
-		/**
 		 * The meta object literal for the '<em><b>Class</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -631,6 +623,14 @@ public interface XUMLRTPackage extends EPackage {
 		EAttribute EXTERNAL_ENTITY__EXTERNAL_NAMESPACE = eINSTANCE.getExternalEntity_ExternalNamespace();
 
 		/**
+		 * The meta object literal for the '<em><b>Base Class</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference EXTERNAL_ENTITY__BASE_CLASS = eINSTANCE.getExternalEntity_Base_Class();
+
+		/**
 		 * The meta object literal for the '<em><b>All Operations Are Static</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -655,52 +655,36 @@ public interface XUMLRTPackage extends EPackage {
 		EOperation EXTERNAL_ENTITY___REFERENCED_CLASS_NAME_IS_VALID__DIAGNOSTICCHAIN_MAP = eINSTANCE.getExternalEntity__ReferencedClassNameIsValid__DiagnosticChain_Map();
 
 		/**
-		 * The meta object literal for the '<em><b>Operation Names Are Valid</b></em>' operation.
+		 * The meta object literal for the '<em><b>Parameters Are Callable Or Primitive</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EOperation EXTERNAL_ENTITY___OPERATION_NAMES_ARE_VALID__DIAGNOSTICCHAIN_MAP = eINSTANCE.getExternalEntity__OperationNamesAreValid__DiagnosticChain_Map();
+		EOperation EXTERNAL_ENTITY___PARAMETERS_ARE_CALLABLE_OR_PRIMITIVE__DIAGNOSTICCHAIN_MAP = eINSTANCE.getExternalEntity__ParametersAreCallableOrPrimitive__DiagnosticChain_Map();
 
 		/**
-		 * The meta object literal for the '<em><b>Number Of Parameters Is Valid</b></em>' operation.
+		 * The meta object literal for the '<em><b>Parameter Directions Are In</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EOperation EXTERNAL_ENTITY___NUMBER_OF_PARAMETERS_IS_VALID__DIAGNOSTICCHAIN_MAP = eINSTANCE.getExternalEntity__NumberOfParametersIsValid__DiagnosticChain_Map();
+		EOperation EXTERNAL_ENTITY___PARAMETER_DIRECTIONS_ARE_IN__DIAGNOSTICCHAIN_MAP = eINSTANCE.getExternalEntity__ParameterDirectionsAreIn__DiagnosticChain_Map();
 
 		/**
-		 * The meta object literal for the '<em><b>Parameter Is Callable</b></em>' operation.
+		 * The meta object literal for the '<em><b>Parameter Names Are Valid</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EOperation EXTERNAL_ENTITY___PARAMETER_IS_CALLABLE__DIAGNOSTICCHAIN_MAP = eINSTANCE.getExternalEntity__ParameterIsCallable__DiagnosticChain_Map();
+		EOperation EXTERNAL_ENTITY___PARAMETER_NAMES_ARE_VALID__DIAGNOSTICCHAIN_MAP = eINSTANCE.getExternalEntity__ParameterNamesAreValid__DiagnosticChain_Map();
 
 		/**
-		 * The meta object literal for the '<em><b>Parameter Direction Is In</b></em>' operation.
+		 * The meta object literal for the '<em><b>Parameter Multiplicities Are One</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EOperation EXTERNAL_ENTITY___PARAMETER_DIRECTION_IS_IN__DIAGNOSTICCHAIN_MAP = eINSTANCE.getExternalEntity__ParameterDirectionIsIn__DiagnosticChain_Map();
-
-		/**
-		 * The meta object literal for the '<em><b>Parameter Name Is Valid</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation EXTERNAL_ENTITY___PARAMETER_NAME_IS_VALID__DIAGNOSTICCHAIN_MAP = eINSTANCE.getExternalEntity__ParameterNameIsValid__DiagnosticChain_Map();
-
-		/**
-		 * The meta object literal for the '<em><b>Parameter Multiplicity Is One</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation EXTERNAL_ENTITY___PARAMETER_MULTIPLICITY_IS_ONE__DIAGNOSTICCHAIN_MAP = eINSTANCE.getExternalEntity__ParameterMultiplicityIsOne__DiagnosticChain_Map();
+		EOperation EXTERNAL_ENTITY___PARAMETER_MULTIPLICITIES_ARE_ONE__DIAGNOSTICCHAIN_MAP = eINSTANCE.getExternalEntity__ParameterMultiplicitiesAreOne__DiagnosticChain_Map();
 
 		/**
 		 * The meta object literal for the '<em><b>Class Must Be Abstract</b></em>' operation.
@@ -717,6 +701,22 @@ public interface XUMLRTPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation EXTERNAL_ENTITY___CLASS_NAME_IS_VALID__DIAGNOSTICCHAIN_MAP = eINSTANCE.getExternalEntity__ClassNameIsValid__DiagnosticChain_Map();
+
+		/**
+		 * The meta object literal for the '<em><b>Operation Names Are Valid</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation EXTERNAL_ENTITY___OPERATION_NAMES_ARE_VALID__DIAGNOSTICCHAIN_MAP = eINSTANCE.getExternalEntity__OperationNamesAreValid__DiagnosticChain_Map();
+
+		/**
+		 * The meta object literal for the '<em><b>Return Type Is Valid</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation EXTERNAL_ENTITY___RETURN_TYPE_IS_VALID__DIAGNOSTICCHAIN_MAP = eINSTANCE.getExternalEntity__ReturnTypeIsValid__DiagnosticChain_Map();
 
 		/**
 		 * The meta object literal for the '{@link hu.eltesoft.modelexecution.profile.xumlrt.EntityType <em>Entity Type</em>}' enum.
