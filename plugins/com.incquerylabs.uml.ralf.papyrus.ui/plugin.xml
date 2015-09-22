@@ -10,6 +10,6 @@
     </DirectEditor>
   </extension>
   <extension point="org.eclipse.papyrus.uml.properties.languageEditor">
-    <editor editor="org.eclipse.papyrus.uml.properties.xtext.XtextLanguageEditor" language="rALF"/>
+    <editor editor="com.incquerylabs.uml.ralf.ui.ReducedAlfLanguageEditor" language="rALF"/>
   </extension>
 </plugin>
