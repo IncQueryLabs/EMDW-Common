@@ -55,7 +55,9 @@ abstract class AbstractUMLContextProvider implements IUMLContextProvider {
 
     override getCollectionType(CollectionType typeDescriptor) {
         switch typeDescriptor {
-            case SET : getCollectionsPackage.getOwnedType("Set") as Classifier
+            case SET : collectionsPackage.getOwnedType("Set") as Classifier
+            case BAG: collectionsPackage.getOwnedType("Bag") as Classifier
+            case SEQUENCE: collectionsPackage.getOwnedType("Sequence") as Classifier
             default: throw new UnsupportedOperationException
         }
     }

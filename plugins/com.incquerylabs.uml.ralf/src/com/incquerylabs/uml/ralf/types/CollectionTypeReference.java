@@ -69,8 +69,7 @@ public class CollectionTypeReference implements IUMLTypeReference {
 	@Override
 	public Type getUmlType() {
 		if (contextProvider != null) {
-			//TODO return the corresponding type instead of set
-			return contextProvider.getCollectionType(CollectionType.SET);
+			return contextProvider.getCollectionType(type);
 		}
 		return null;
 	}

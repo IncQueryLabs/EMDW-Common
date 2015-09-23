@@ -108,21 +108,54 @@ class TypeFactory {
      * </ul> 
      */
     def IUMLTypeReference collectionTypeOf(Property property, IUMLTypeReference source) {
-        // FIXME temporary implementation
         val reference = typeOf(property)
+        val isPropertySingleValued = !property.multivalued 
+        if (source instanceof UMLTypeReference) {
+            //Source is single type -> start of a chain
+            if (isPropertySingleValued) {
+                reference.umlValueType.setOf
+            } else {
+                property.typeOf
+            }
+        } else if (source instanceof CollectionTypeReference) {
+            if (isPropertySingleValued) {
+                property.type.collectionOf(source.type)
+            } else {
+                property.type.collectionOf(nextType(source.type, property))
+            }
+        }
+    }
+    
+    private def CollectionType nextType(CollectionType sourceType, Property property) {
+        val nextType = property.collectionType
         
-        reference.umlValueType.setOf
+        if (sourceType == nextType) {
+            sourceType
+        } else if (sourceType == CollectionType.SET && property.unique) {
+            CollectionType.SET
+        } else if (sourceType == CollectionType.SEQUENCE && property.ordered) {
+            CollectionType.SEQUENCE
+        } else {
+            CollectionType.BAG
+        }
+    }
+    
+    private def CollectionType collectionType(Property property) {
+        if (property.multivalued && property.ordered) {
+            CollectionType.SEQUENCE
+        } else if (property.multivalued && !property.ordered && property.unique) {
+            CollectionType.SET
+        } else if (property.multivalued && !property.ordered && !property.unique) {
+            CollectionType.BAG
+        }
     }
     
     def IUMLTypeReference typeOf(Property property) {
         if (!property.multivalued) {
             property.type.typeReference
-        } else if (property.multivalued && property.ordered) {
-            property.type.sequenceOf
-        } else if (property.multivalued && !property.ordered && property.unique) {
-            property.type.setOf
-        } else if (property.multivalued && !property.ordered && !property.unique) {
-            property.type.bagOf
+        } else {
+            property.type.collectionOf(property.collectionType)
         }
-}
+    }
+    
 }
