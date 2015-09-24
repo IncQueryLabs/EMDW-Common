@@ -28,6 +28,7 @@ import com.google.common.collect.Iterables
 import org.eclipse.uml2.uml.Class
 import org.eclipse.uml2.uml.PrimitiveType
 import com.incquerylabs.uml.ralf.resource.ReducedAlfLanguageResource
+import org.eclipse.emf.ecore.util.EcoreUtil
 
 /**
  * This class contains custom scoping description.
@@ -187,7 +188,8 @@ class ReducedAlfLanguageScopeProvider extends AbstractDeclarativeScopeProvider {
     }
      
     def IScope scope_FeatureInvocationExpression_feature(FeatureInvocationExpression ctx, EReference ref) {
-        if (ctx.context != null && !ctx.context.eIsProxy) {
+        if (ctx.context != null) {
+            EcoreUtil.resolveAll(ctx.context);
             scope_FeatureInvocationExpression_feature(ctx.context, ref)    
         } else {
             IScope.NULLSCOPE

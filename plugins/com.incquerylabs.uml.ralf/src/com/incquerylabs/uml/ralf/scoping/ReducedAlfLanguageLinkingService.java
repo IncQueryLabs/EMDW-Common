@@ -41,6 +41,7 @@ public class ReducedAlfLanguageLinkingService extends DefaultLinkingService {
 			Set<Operation> candidates = null;
 			Type contextType = null;
 			Tuple parameters = null;
+			EObject callContext = null;
 			if (context instanceof FeatureInvocationExpression) {
 				FeatureInvocationExpression featureInvocationExpression = (FeatureInvocationExpression) context;
 				Expression ctx = featureInvocationExpression.getContext();
@@ -49,6 +50,7 @@ public class ReducedAlfLanguageLinkingService extends DefaultLinkingService {
 				if (!type.failed()) {
 					contextType = type.getValue().getUmlType();
 				}
+				callContext = ((FeatureInvocationExpression)context).getContext();
 			} else if (context.eContainer() instanceof StaticFeatureInvocationExpression) {
 				StaticFeatureInvocationExpression staticFeatureInvocationExpression = (StaticFeatureInvocationExpression) context.eContainer();
 				parameters = staticFeatureInvocationExpression.getParameters();
@@ -57,11 +59,12 @@ public class ReducedAlfLanguageLinkingService extends DefaultLinkingService {
 				} else if (op.getDatatype() != null){
 					contextType = op.getDatatype();
 				}
+				callContext = context.eContainer();
 			}
 			if (contextType != null && parameters != null) {
 				candidates = umlContext.getOperationCandidatesOfClass((Classifier) contextType, op.getName());
 				if (candidates != null && candidates.size() > 1) {
-					linkedObjects = Lists.newArrayList(candidateChecker.calculateBestCandidates(candidates, parameters));
+					linkedObjects = Lists.newArrayList(candidateChecker.calculateBestCandidates(candidates, parameters, callContext));
 				}
 			}
 			

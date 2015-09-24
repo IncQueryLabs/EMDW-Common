@@ -56,5 +56,15 @@ public class ReducedAlfLanguageResource extends LazyLinkingResource {
 		}
 	}
 
+	@Override
+	public void setEagerLinking(boolean eagerLinking) {
+		//NOPping eager linking requests
+	}
+
+	@Override
+	public boolean isEagerLinking() {
+		return true;
+	}
+
 	
 }

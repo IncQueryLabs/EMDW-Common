@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Operation;
 import org.eclipse.uml2.uml.Parameter;
@@ -21,7 +22,7 @@ public class OperationCandidateChecker {
 	@Inject
 	ReducedAlfSystem typeSystem;
 	
-	public List<Operation> calculateBestCandidates(Set<Operation> candidates, Tuple parameters) {
+	public List<Operation> calculateBestCandidates(Set<Operation> candidates, Tuple parameters, EObject ctx) {
 		if (candidates.size() <= 1) {
 			return Lists.newArrayList(candidates);
 		}
@@ -40,7 +41,7 @@ public class OperationCandidateChecker {
 		Iterator<Operation> it = remainingCandidates.iterator();
 		while(it.hasNext()) {
 			Operation next = it.next();
-			if (!operationMatchesParameters(next, parameters)) {
+			if (!operationMatchesParameters(next, parameters, ctx)) {
 				it.remove();
 			}
 		}
@@ -63,8 +64,8 @@ public class OperationCandidateChecker {
 		return parametersMatch(op.getOwnedParameters(), redefinedOp.getOwnedParameters());
 	}
 	
-	private boolean operationMatchesParameters(Operation op, Tuple parameters) {
-		Result<Boolean> result = typeSystem.operationParametersType(op, parameters);
+	private boolean operationMatchesParameters(Operation op, Tuple parameters, EObject ctx) {
+		Result<Boolean> result = typeSystem.operationParametersType(op, parameters, ctx);
 		return !result.failed() && result.getValue();
 	}
 	

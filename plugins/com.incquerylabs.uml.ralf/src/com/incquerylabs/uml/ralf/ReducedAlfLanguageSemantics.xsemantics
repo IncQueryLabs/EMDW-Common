@@ -75,10 +75,15 @@ import org.eclipse.uml2.uml.Type
 import com.incquerylabs.uml.ralf.scoping.OperationCandidateChecker
 import java.util.Set
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.CollectionVariable
+import com.incquerylabs.uml.ralf.reducedAlfLanguage.ReducedAlfLanguagePackage
+import org.eclipse.uml2.uml.UMLPackage
+import it.xsemantics.runtime.RuleEnvironment
 
 inject extension TypeFactory typeFactory
 inject extension UMLScopeHelper scopeHelper
 inject extension OperationCandidateChecker candidateChecker
+val extension UMLPackage umlPackage = UMLPackage::eINSTANCE
+val extension ReducedAlfLanguagePackage ralfPackage = ReducedAlfLanguagePackage::eINSTANCE
 
 val REAL    = IUMLContextProvider.REAL_TYPE
 val INTEGER = IUMLContextProvider.INTEGER_TYPE
@@ -89,16 +94,17 @@ auxiliary {
     typeReference(TypeDeclaration decl) : IUMLTypeReference
     constructorOperationCandidates(Classifier cl, Tuple parameters) : Set<Operation>
     constructorOperation(Classifier cl, Tuple parameters) : Operation
+    replaceGenericTypeReference(RuleEnvironment G, IUMLTypeReference ref, EObject ctx) : IUMLTypeReference
 }
 
 judgments {
     type |- EObject expression : output IUMLTypeReference
         error "Cannot type " + stringRep(expression)
         source expression
-    operationParametersType |- Operation op <: Tuple params
+    operationParametersType |- Operation op <: Tuple params <: EObject ctx
         error "Invalid parameter types " + stringRep(op)
         source params
-    operationType |- Operation op <: Tuple params :> output IUMLTypeReference
+    operationType |- Operation op <: Tuple params <: EObject ctx :> output IUMLTypeReference
         error "Invalid parameter types " + stringRep(op)
         source op
     subtypeReference |- IUMLTypeReference left <: IUMLTypeReference right : IUMLContextProvider context
@@ -127,12 +133,21 @@ auxiliary constructorOperationCandidates(Signal sig, Tuple parameters) {
 }
 
 auxiliary constructorOperation(Classifier cl, Tuple parameters) {
-    val candidates = cl.constructorOperationCandidates(parameters).calculateBestCandidates(parameters)
+    val candidates = cl.constructorOperationCandidates(parameters).calculateBestCandidates(parameters, cl)
     
     if (candidates.size == 1) {
         return candidates.get(0)
     } else {
         return null
+    }
+}
+
+auxiliary replaceGenericTypeReference(RuleEnvironment G, IUMLTypeReference ref, EObject ctx) {
+    if (ref.umlType == ctx.umlContext.genericCollectionParameterType) {
+        G |- ctx : var CollectionTypeReference collType
+        collType.valueType
+    } else {
+        ref
     }
 }
 
@@ -300,18 +315,18 @@ from {
  * Operation typing
  */
 rule OperationTyping
-    G |- Operation op <: Tuple params
+    G |- Operation op <: Tuple params <: EObject ctx
 from {
     fail
 }
 rule OperationTypingWithResult
-    G |- Operation op <: Tuple params :> IUMLTypeReference result
+    G |- Operation op <: Tuple params <: EObject ctx :> IUMLTypeReference result
 from {
-    G |- op <: params
+    G |- op <: params <: ctx
     G |- op : result
 }
 rule ParameterListTyping
-    G |- Operation op <: ExpressionList params
+    derives G |- Operation op <: ExpressionList params <: EObject ctx
 from {
     val declaredParameters = op.parameters
     
@@ -320,17 +335,18 @@ from {
     opParamLength == paramLength
     
     for (var i = 0; i < paramLength; i++) {
-        val declaredType = declaredParameters.get(i).type.typeReference
+        val declaredType = replaceGenericTypeReference(G, declaredParameters.get(i).type.typeReference, ctx)
         G |- params.expressions.get(i) |> declaredType
     }
 }
 
 rule NamedTupleTyping
-    G |- Operation op <: NamedTuple params
+    derives G |- Operation op <: NamedTuple params <: EObject ctx
 from {
     val exprMap = <String, Expression> newHashMap(params.expressions.map[it.name -> it.expression])
     val paramMap = <String, Type> newHashMap(op.getParameters.map[
-        it.name -> it.type
+        
+        it.name -> replaceGenericTypeReference(G, it.type.typeReference, ctx).umlType
     ])
     val problematicValues = exprMap.filter[name, expr|
             val declaredType = paramMap.get(name)
@@ -624,20 +640,17 @@ from {
 rule FeatureInvocationExpression
     derives G |- FeatureInvocationExpression ex : IUMLTypeReference result
 from {
-//    (ex.eGet(ReducedAlfLanguagePackage.Literals.FEATURE_INVOCATION_EXPRESSION__FEATURE, false) as EObject).eIsProxy
+//    !(ex.eGet(featureInvocationExpression_Feature, true) as EObject).eIsProxy
     {
         ex.^feature instanceof Operation
-        G |- ex.^feature : var IUMLTypeReference opType
-        opType.umlType == ex.umlContext.genericCollectionParameterType
-        G |- ex.context : var CollectionTypeReference collType
-        result = collType.valueType
-    } or {
-        ex.^feature instanceof Operation
-        G |- ex.^feature : result
+        G |- ex.^feature : var IUMLTypeReference opType        
+        result = replaceGenericTypeReference(G, opType, ex.context)
     } or {
         ex.^feature instanceof Property
         val property = ex.^feature as Property
         G |- property : result
+    } or {
+        fail error previousFailure.message feature featureInvocationExpression_Feature
     }
 }
 
@@ -819,7 +832,7 @@ checkrule OperationParameters for
 from {
     {
         ex.^feature instanceof Operation
-        empty |- (ex.^feature as Operation) <: ex.parameters
+        empty |- (ex.^feature as Operation) <: ex.parameters <: ex.context
     } or {
     }
 }
@@ -831,7 +844,7 @@ from {
         ex.operation.reference.eIsProxy
     } or {
         ex.operation.reference instanceof Operation
-        empty |- (ex.operation.reference as Operation) <: ex.parameters
+        empty |- (ex.operation.reference as Operation) <: ex.parameters <: ex
     }
 }
 
@@ -839,7 +852,7 @@ checkrule InstanceCreationExpressionParameter for
     InstanceCreationExpression ex
 from {
     val candidates = ex.instance.constructorOperationCandidates(ex.parameters)
-    val filteredCandidates = candidates.calculateBestCandidates(ex.parameters)
+    val filteredCandidates = candidates.calculateBestCandidates(ex.parameters, ex)
     
     if (candidates.isEmpty) {
         if (!(ex.parameters instanceof ExpressionList) || !(ex.parameters as ExpressionList).expressions.isEmpty) {
@@ -852,7 +865,7 @@ from {
             error "No constructors match parameters"
            source ex.parameters
     } else if (filteredCandidates.size == 1) {
-        empty |- filteredCandidates.get(0) <: ex.parameters
+        empty |- filteredCandidates.get(0) <: ex.parameters <: ex
     } else {
         fail 
           error "Multiple constructor candidates match the parameters"
