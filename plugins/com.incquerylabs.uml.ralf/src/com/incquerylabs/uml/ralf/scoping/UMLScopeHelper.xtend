@@ -10,6 +10,7 @@ import org.eclipse.uml2.uml.UMLFactory
 import com.incquerylabs.uml.ralf.types.IUMLTypeReference
 import com.incquerylabs.uml.ralf.types.UMLTypeReference
 import com.incquerylabs.uml.ralf.types.CollectionTypeReference
+import org.eclipse.emf.ecore.util.EcoreUtil
 
 class UMLScopeHelper {
 
@@ -50,6 +51,10 @@ class UMLScopeHelper {
                 parameter.name = it.name
                 parameter.type = it.type
                 parameter.direction = ParameterDirectionKind.IN_LITERAL
+                parameter.lowerValue = it.lowerValue
+                parameter.upperValue = EcoreUtil.copy(it.upperValue)
+                parameter.isOrdered = it.ordered
+                parameter.isUnique = it.unique
                 parameter
             ])
         ]
