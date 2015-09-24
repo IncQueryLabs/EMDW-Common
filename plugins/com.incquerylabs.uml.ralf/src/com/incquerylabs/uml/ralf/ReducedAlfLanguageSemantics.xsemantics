@@ -205,7 +205,12 @@ rule LoopVariable
 from {
     if (variable.type != null) {
         result = variable.type.typeReference
-    } 
+    } else {
+        //These loop variables are expected to be in a foreach statement
+        val st = variable.eContainer as ForEachStatement
+        G |- st.expression : var CollectionTypeReference collectionType
+        result = collectionType.valueType
+    }
 }
 
 rule FilterVariable

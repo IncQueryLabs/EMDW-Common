@@ -1756,6 +1756,18 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
       TypeDeclaration _type_1 = variable.getType();
       IUMLTypeReference _typeReference = this.typeReferenceInternal(_trace_, _type_1);
       result = _typeReference;
+    } else {
+      EObject _eContainer = variable.eContainer();
+      final ForEachStatement st = ((ForEachStatement) _eContainer);
+      /* G |- st.expression : var CollectionTypeReference collectionType */
+      Expression _expression = st.getExpression();
+      CollectionTypeReference collectionType = null;
+      Result<IUMLTypeReference> result_1 = typeInternal(G, _trace_, _expression);
+      checkAssignableTo(result_1.getFirst(), CollectionTypeReference.class);
+      collectionType = (CollectionTypeReference) result_1.getFirst();
+      
+      IUMLTypeReference _valueType = collectionType.getValueType();
+      result = _valueType;
     }
     return new Result<IUMLTypeReference>(result);
   }
