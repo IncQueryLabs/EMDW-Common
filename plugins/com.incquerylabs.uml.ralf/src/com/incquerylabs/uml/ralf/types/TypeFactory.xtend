@@ -13,6 +13,8 @@ import com.incquerylabs.uml.ralf.types.IUMLTypeReference.VoidTypeReference
 import com.google.inject.Injector
 import org.eclipse.emf.ecore.EObject
 import com.incquerylabs.uml.ralf.resource.ReducedAlfLanguageResource
+import org.eclipse.uml2.uml.MultiplicityElement
+import org.eclipse.uml2.uml.Parameter
 
 class TypeFactory {
     
@@ -140,12 +142,12 @@ class TypeFactory {
         }
     }
     
-    private def CollectionType collectionType(Property property) {
-        if (property.multivalued && property.ordered) {
+    private def CollectionType collectionType(MultiplicityElement element) {
+        if (element.multivalued && element.ordered) {
             CollectionType.SEQUENCE
-        } else if (property.multivalued && !property.ordered && property.unique) {
+        } else if (element.multivalued && !element.ordered && element.unique) {
             CollectionType.SET
-        } else if (property.multivalued && !property.ordered && !property.unique) {
+        } else if (element.multivalued && !element.ordered && !element.unique) {
             CollectionType.BAG
         }
     }
@@ -155,6 +157,14 @@ class TypeFactory {
             property.type.typeReference
         } else {
             property.type.collectionOf(property.collectionType)
+        }
+    }
+    
+    def IUMLTypeReference typeOf(Parameter parameter) {
+        if (!parameter.multivalued) {
+            parameter.type.typeReference
+        } else {
+            parameter.type.collectionOf(parameter.collectionType)
         }
     }
     

@@ -223,7 +223,7 @@ from {
 rule Parameter
     derives G |- Parameter parameter : IUMLTypeReference result
 from {
-    result = parameter.type.typeReference
+    result = parameter.typeOf
 }
 
 rule Type

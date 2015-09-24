@@ -1823,9 +1823,8 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
   
   protected Result<IUMLTypeReference> applyRuleParameter(final RuleEnvironment G, final RuleApplicationTrace _trace_, final Parameter parameter) throws RuleFailedException {
     IUMLTypeReference result = null; // output parameter
-    Type _type = parameter.getType();
-    IUMLTypeReference _typeReference = this.typeFactory.typeReference(_type);
-    result = _typeReference;
+    IUMLTypeReference _typeOf = this.typeFactory.typeOf(parameter);
+    result = _typeOf;
     return new Result<IUMLTypeReference>(result);
   }
   
