@@ -88,6 +88,9 @@
   </packagedElement>
   <packagedElement xmi:type="uml:DataType" xmi:id="_Qa3X4FrpEeWYnMwCW6fOTA" name="int">
     <ownedOperation xmi:type="uml:Operation" xmi:id="_VA8LIFrpEeWYnMwCW6fOTA" name="toString" isStatic="true">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_UlqQAGLOEeWvWs595z-XDA" name="value">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+      </ownedParameter>
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_nBknIGLNEeWvWs595z-XDA" name="returns" direction="return">
         <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
       </ownedParameter>
@@ -95,6 +98,9 @@
   </packagedElement>
   <packagedElement xmi:type="uml:DataType" xmi:id="_TD52sFrpEeWYnMwCW6fOTA" name="boolean">
     <ownedOperation xmi:type="uml:Operation" xmi:id="_beJfIFrpEeWYnMwCW6fOTA" name="toString" isStatic="true">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_SgTtEGLOEeWvWs595z-XDA" name="value">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
+      </ownedParameter>
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_oqz10GLNEeWvWs595z-XDA" name="returns" direction="return">
         <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
       </ownedParameter>
@@ -102,6 +108,9 @@
   </packagedElement>
   <packagedElement xmi:type="uml:DataType" xmi:id="_PtiX0FrpEeWYnMwCW6fOTA" name="real">
     <ownedOperation xmi:type="uml:Operation" xmi:id="_cEd4QFrpEeWYnMwCW6fOTA" name="toString" isStatic="true">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_Prk7oGLOEeWvWs595z-XDA" name="value">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Real"/>
+      </ownedParameter>
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_savEMGLNEeWvWs595z-XDA" name="returns" direction="return">
         <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
       </ownedParameter>
