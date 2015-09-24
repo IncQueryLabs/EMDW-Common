@@ -72,6 +72,7 @@ import it.xsemantics.runtime.RuleApplicationTrace;
 import it.xsemantics.runtime.RuleEnvironment;
 import it.xsemantics.runtime.RuleFailedException;
 import it.xsemantics.runtime.XsemanticsRuntimeSystem;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -2349,35 +2350,32 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
     List<Pair<? extends String, ? extends Expression>> _map = ListExtensions.<NamedExpression, Pair<? extends String, ? extends Expression>>map(_expressions, _function);
     final HashMap<String, Expression> exprMap = CollectionLiterals.<String, Expression>newHashMap(((Pair<? extends String, ? extends Expression>[])Conversions.unwrapArray(_map, Pair.class)));
     Iterable<Parameter> _parameters = this.scopeHelper.getParameters(op);
-    final Function1<Parameter, Pair<String, Type>> _function_1 = (Parameter it) -> {
+    final Function1<Parameter, Pair<String, Parameter>> _function_1 = (Parameter it) -> {
       String _name = it.getName();
-      Type _type = it.getType();
-      IUMLTypeReference _typeReference = this.typeFactory.typeReference(_type);
-      IUMLTypeReference _replaceGenericTypeReference = this.replaceGenericTypeReferenceInternal(_trace_, G, _typeReference, ctx);
-      Type _umlType = _replaceGenericTypeReference.getUmlType();
-      return Pair.<String, Type>of(_name, _umlType);
+      return Pair.<String, Parameter>of(_name, it);
     };
-    Iterable<Pair<? extends String, ? extends Type>> _map_1 = IterableExtensions.<Parameter, Pair<? extends String, ? extends Type>>map(_parameters, _function_1);
-    final HashMap<String, Type> paramMap = CollectionLiterals.<String, Type>newHashMap(((Pair<? extends String, ? extends Type>[])Conversions.unwrapArray(_map_1, Pair.class)));
+    Iterable<Pair<? extends String, ? extends Parameter>> _map_1 = IterableExtensions.<Parameter, Pair<? extends String, ? extends Parameter>>map(_parameters, _function_1);
+    final HashMap<String, Parameter> paramMap = CollectionLiterals.<String, Parameter>newHashMap(((Pair<? extends String, ? extends Parameter>[])Conversions.unwrapArray(_map_1, Pair.class)));
     final Function2<String, Expression, Boolean> _function_2 = (String name, Expression expr) -> {
       boolean _xblockexpression = false;
       {
-        final Type declaredType = paramMap.get(name);
+        final Parameter parameter = paramMap.get(name);
         boolean _or = false;
         boolean _or_1 = false;
         boolean _equals = Objects.equal(expr, null);
         if (_equals) {
           _or_1 = true;
         } else {
-          boolean _equals_1 = Objects.equal(declaredType, null);
+          boolean _equals_1 = Objects.equal(parameter, null);
           _or_1 = _equals_1;
         }
         if (_or_1) {
           _or = true;
         } else {
-          /* G |- expr |> declaredType.typeReference */
-          IUMLTypeReference _typeReference = this.typeFactory.typeReference(declaredType);
-          boolean _ruleinvocation = assignableSucceeded(G, _trace_, expr, _typeReference);
+          /* G |- expr |> replaceGenericTypeReference(G, parameter.typeOf, ctx) */
+          IUMLTypeReference _typeOf = this.typeFactory.typeOf(parameter);
+          IUMLTypeReference _replaceGenericTypeReference = this.replaceGenericTypeReferenceInternal(_trace_, G, _typeOf, ctx);
+          boolean _ruleinvocation = assignableSucceeded(G, _trace_, expr, _replaceGenericTypeReference);
           boolean _not = (!_ruleinvocation);
           _or = _not;
         }
@@ -2386,13 +2384,13 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
       return Boolean.valueOf(_xblockexpression);
     };
     final Map<String, Expression> problematicValues = MapExtensions.<String, Expression>filter(exprMap, _function_2);
-    final Function2<String, Type, Boolean> _function_3 = (String name, Type declaredType) -> {
+    final Function2<String, Parameter, Boolean> _function_3 = (String name, Parameter parameter) -> {
       boolean _xblockexpression = false;
       {
         final Expression expr = exprMap.get(name);
         boolean _or = false;
         boolean _or_1 = false;
-        boolean _equals = Objects.equal(declaredType, null);
+        boolean _equals = Objects.equal(parameter, null);
         if (_equals) {
           _or_1 = true;
         } else {
@@ -2402,9 +2400,10 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
         if (_or_1) {
           _or = true;
         } else {
-          /* G |- expr |> declaredType.typeReference */
-          IUMLTypeReference _typeReference = this.typeFactory.typeReference(declaredType);
-          boolean _ruleinvocation = assignableSucceeded(G, _trace_, expr, _typeReference);
+          /* G |- expr |> replaceGenericTypeReference(G, parameter.typeOf, ctx) */
+          IUMLTypeReference _typeOf = this.typeFactory.typeOf(parameter);
+          IUMLTypeReference _replaceGenericTypeReference = this.replaceGenericTypeReferenceInternal(_trace_, G, _typeOf, ctx);
+          boolean _ruleinvocation = assignableSucceeded(G, _trace_, expr, _replaceGenericTypeReference);
           boolean _not = (!_ruleinvocation);
           _or = _not;
         }
@@ -2412,12 +2411,19 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
       }
       return Boolean.valueOf(_xblockexpression);
     };
-    final Map<String, Type> problematicDeclarations = MapExtensions.<String, Type>filter(paramMap, _function_3);
+    final Map<String, Parameter> problematicDeclarations = MapExtensions.<String, Parameter>filter(paramMap, _function_3);
     int _size = problematicValues.size();
     boolean _greaterThan = (_size > 0);
     if (_greaterThan) {
-      /* fail */
-      throwForExplicitFail();
+      Collection<Expression> _values = problematicValues.values();
+      final Function1<Expression, Boolean> _function_4 = (Expression it) -> {
+        return Boolean.valueOf(true);
+      };
+      final Expression param = IterableExtensions.<Expression>findFirst(_values, _function_4);
+      /* fail error "Invalid parameter" source param */
+      String error = "Invalid parameter";
+      EObject source = param;
+      throwForExplicitFail(error, new ErrorInformation(source, null));
     }
     int _size_1 = problematicDeclarations.size();
     boolean _greaterThan_1 = (_size_1 > 0);

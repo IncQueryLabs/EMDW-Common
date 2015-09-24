@@ -344,24 +344,24 @@ rule NamedTupleTyping
     derives G |- Operation op <: NamedTuple params <: EObject ctx
 from {
     val exprMap = <String, Expression> newHashMap(params.expressions.map[it.name -> it.expression])
-    val paramMap = <String, Type> newHashMap(op.getParameters.map[
-        
-        it.name -> replaceGenericTypeReference(G, it.type.typeReference, ctx).umlType
+    val paramMap = <String, Parameter> newHashMap(op.getParameters.map[
+        it.name -> it 
     ])
     val problematicValues = exprMap.filter[name, expr|
-            val declaredType = paramMap.get(name)
+            val parameter = paramMap.get(name)
             expr == null ||
-            declaredType == null ||
-            !{G |- expr |> declaredType.typeReference}
+            parameter == null ||
+            !{G |- expr |> replaceGenericTypeReference(G, parameter.typeOf, ctx)}
         ]
-    val problematicDeclarations = paramMap.filter[name, declaredType|
+    val problematicDeclarations = paramMap.filter[name, parameter|
             val expr = exprMap.get(name)
-            declaredType == null ||
+            parameter == null ||
             expr == null ||
-            !{G |- expr |> declaredType.typeReference}
+            !{G |- expr |> replaceGenericTypeReference(G, parameter.typeOf, ctx)}
         ]
     if(problematicValues.size > 0) {
-        fail 
+        val param = problematicValues.values.findFirst[true]
+        fail error "Invalid parameter" source param
     }
     if (problematicDeclarations.size > 0) {
         fail
