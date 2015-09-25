@@ -302,7 +302,7 @@
     </children>
     <styles xmi:type="notation:FontStyle" xmi:id="_gVL0EWHPEeW57rLVBMFybg"/>
     <element xmi:type="uml:Generalization" href="collections.uml#_gU3rAGHPEeW57rLVBMFybg"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_gVL0EmHPEeW57rLVBMFybg" points="[63, 0, 284, 52]$[63, -20, 284, 32]$[-231, -20, -10, 32]$[-231, -52, -10, 0]"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_gVL0EmHPEeW57rLVBMFybg" points="[71, 0, 268, 52]$[71, -20, 268, 32]$[-207, -20, -10, 32]$[-207, -52, -10, 0]"/>
     <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_gWZVAGHPEeW57rLVBMFybg" id="(0.4896551724137931,0.0)"/>
     <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_gWZ8EGHPEeW57rLVBMFybg" id="(0.5489130434782609,1.0)"/>
   </edges>

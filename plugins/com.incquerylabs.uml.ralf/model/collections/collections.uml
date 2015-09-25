@@ -52,15 +52,9 @@
           <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
         </ownedParameter>
         <ownedParameter xmi:type="uml:Parameter" xmi:id="_J8yZQGHQEeW57rLVBMFybg" name="element" type="_7lvMEEHOEeW93rsP3e6yLw"/>
-        <ownedParameter xmi:type="uml:Parameter" xmi:id="_rWjcsGIEEeW57rLVBMFybg" name="return" direction="return">
-          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
-        </ownedParameter>
       </ownedOperation>
       <ownedOperation xmi:type="uml:Operation" xmi:id="_T1Ga0GHTEeW57rLVBMFybg" name="add">
         <ownedParameter xmi:type="uml:Parameter" xmi:id="_WSQZwGHTEeW57rLVBMFybg" name="element" type="_7lvMEEHOEeW93rsP3e6yLw"/>
-        <ownedParameter xmi:type="uml:Parameter" xmi:id="_uofHgGIEEeW57rLVBMFybg" name="return" direction="return">
-          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
-        </ownedParameter>
       </ownedOperation>
     </packagedElement>
   </packagedElement>
