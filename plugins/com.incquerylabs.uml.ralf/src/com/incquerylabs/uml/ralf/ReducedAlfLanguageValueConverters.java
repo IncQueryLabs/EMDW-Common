@@ -1,18 +1,11 @@
 package com.incquerylabs.uml.ralf;
 
-import org.antlr.runtime.ANTLRStringStream;
-import org.antlr.runtime.MismatchedTokenException;
-import org.eclipse.xtext.GrammarUtil;
 import org.eclipse.xtext.common.services.DefaultTerminalConverters;
 import org.eclipse.xtext.conversion.IValueConverter;
 import org.eclipse.xtext.conversion.ValueConverter;
 import org.eclipse.xtext.conversion.ValueConverterException;
 import org.eclipse.xtext.conversion.impl.AbstractValueConverter;
 import org.eclipse.xtext.nodemodel.INode;
-import org.eclipse.xtext.parser.antlr.Lexer;
-
-import com.google.inject.Inject;
-import com.incquerylabs.uml.ralf.parser.antlr.internal.InternalReducedAlfLanguageLexer;
 
 public class ReducedAlfLanguageValueConverters extends DefaultTerminalConverters {
 	
