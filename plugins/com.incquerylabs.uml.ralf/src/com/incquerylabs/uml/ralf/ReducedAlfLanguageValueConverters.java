@@ -1,14 +1,21 @@
 package com.incquerylabs.uml.ralf;
 
+import org.antlr.runtime.ANTLRStringStream;
+import org.antlr.runtime.MismatchedTokenException;
+import org.eclipse.xtext.GrammarUtil;
 import org.eclipse.xtext.common.services.DefaultTerminalConverters;
 import org.eclipse.xtext.conversion.IValueConverter;
 import org.eclipse.xtext.conversion.ValueConverter;
 import org.eclipse.xtext.conversion.ValueConverterException;
 import org.eclipse.xtext.conversion.impl.AbstractValueConverter;
 import org.eclipse.xtext.nodemodel.INode;
+import org.eclipse.xtext.parser.antlr.Lexer;
+
+import com.google.inject.Inject;
+import com.incquerylabs.uml.ralf.parser.antlr.internal.InternalReducedAlfLanguageLexer;
 
 public class ReducedAlfLanguageValueConverters extends DefaultTerminalConverters {
-
+	
 	AbstractValueConverter<String> stringConverter = new AbstractValueConverter<String>() {
 
 		@Override
@@ -22,8 +29,12 @@ public class ReducedAlfLanguageValueConverters extends DefaultTerminalConverters
 
 		@Override
 		public String toString(String value) throws ValueConverterException {
-			//TODO decide whether its a good idea to serialize in apost–rophes
-			return "'" + value + "'";
+			// terminal ID : ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')* ;
+			if (value.matches("[a-zA-Z_][a-zA-Z_0-9]*")) {
+				return value;
+			} else {
+				return "'" + value + "'";
+			}
 		}
 		
 		
