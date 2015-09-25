@@ -15,6 +15,13 @@ pattern umlTypesInNamespace(type : Type, namespace : Namespace, name) {
     Namespace.member(namespace, type);
 }
 
+
+pattern superSignal(sub : Signal, sup : Signal) {
+    Generalization.specific(gen, sub);
+    Generalization.general(gen, sup);
+}
+
+
 pattern ancestorSignal(sub : Signal, ancestor : Signal) {
     find superSignal+(sub, ancestor);
 }

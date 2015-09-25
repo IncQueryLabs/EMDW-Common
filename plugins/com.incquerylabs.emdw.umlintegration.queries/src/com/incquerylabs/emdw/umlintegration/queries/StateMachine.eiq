@@ -247,6 +247,11 @@ pattern triggerSignal(trigger: Trigger, signal: Signal){
 	SignalEvent.signal(event, signal);
 }
 
+pattern superClass(sub : Class, sup : Class) {
+    find xtGeneralization(sub, gen);
+    Generalization.general(gen, sup);
+}
+
 pattern signalWithReceptionInClass(signal: Signal, reception: Reception, umlClass: Class) {
 	Class.ownedReception(umlClass, reception);
 	Reception.signal(reception, signal);

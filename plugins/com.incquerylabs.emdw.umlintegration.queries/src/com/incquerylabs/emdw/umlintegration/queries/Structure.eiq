@@ -258,18 +258,6 @@ pattern xtGeneralization(subClass: Class, generalization: Generalization) {
 	find xtClass(subClass);
 	Class.generalization(subClass, generalization);
 }
-
-
-pattern superClass(sub : Class, sup : Class) {
-    find xtGeneralization(sub, gen);
-    Generalization.general(gen, sup);
-}
-
-pattern superSignal(sub : Signal, sup : Signal) {
-    Generalization.specific(gen, sub);
-    Generalization.general(gen, sup);
-}
-
 // Events
 
 pattern xtClassEvent(umlClass: Class, signal: Signal) {
