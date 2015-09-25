@@ -250,6 +250,10 @@ pattern triggerSignal(trigger: Trigger, signal: Signal){
 pattern signalWithReceptionInClass(signal: Signal, reception: Reception, umlClass: Class) {
 	Class.ownedReception(umlClass, reception);
 	Reception.signal(reception, signal);
+} or {
+    find superClass+(umlClass, superClass);
+    Class.ownedReception(superClass, reception);
+    Reception.signal(reception, signal);
 }
 
 // Transition children
