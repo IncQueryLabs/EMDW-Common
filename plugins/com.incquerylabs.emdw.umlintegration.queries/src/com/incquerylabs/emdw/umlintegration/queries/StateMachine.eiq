@@ -248,7 +248,9 @@ pattern triggerSignal(trigger: Trigger, signal: Signal){
 }
 
 pattern superClass(sub : Class, sup : Class) {
-    find xtGeneralization(sub, gen);
+    //TODO workaround for incquery builder issue
+    //find xtGeneralization(sub, gen);
+    Class.generalization(sub, gen);
     Generalization.general(gen, sup);
 }
 
