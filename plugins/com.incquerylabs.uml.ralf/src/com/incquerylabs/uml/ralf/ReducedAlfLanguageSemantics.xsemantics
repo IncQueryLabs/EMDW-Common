@@ -611,8 +611,10 @@ rule LinkOperationExpression
     G |- LinkOperationExpression ex : IUMLTypeReference result
 from {
     {
+        !ex.association.reference.eIsProxy()
+        ex.association.reference instanceof Association 
         ex.linkOperation == LinkOperation.LINK
-        result = (ex.association as Association).typeReference
+        result = (ex.association.reference as Association).typeReference
     }  or {
         result = null
     } 

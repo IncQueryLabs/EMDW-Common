@@ -3617,18 +3617,33 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
   
   protected Result<IUMLTypeReference> applyRuleLinkOperationExpression(final RuleEnvironment G, final RuleApplicationTrace _trace_, final LinkOperationExpression ex) throws RuleFailedException {
     IUMLTypeReference result = null; // output parameter
-    /* { ex.linkOperation == LinkOperation.LINK result = (ex.association as Association).typeReference } or { result = null } */
+    /* { !ex.association.reference.eIsProxy() ex.association.reference instanceof Association ex.linkOperation == LinkOperation.LINK result = (ex.association.reference as Association).typeReference } or { result = null } */
     {
       RuleFailedException previousFailure = null;
       try {
+        NameExpression _association = ex.getAssociation();
+        NamedElement _reference = _association.getReference();
+        boolean _eIsProxy = _reference.eIsProxy();
+        boolean _not = (!_eIsProxy);
+        /* !ex.association.reference.eIsProxy() */
+        if (!_not) {
+          sneakyThrowRuleFailedException("!ex.association.reference.eIsProxy()");
+        }
+        NameExpression _association_1 = ex.getAssociation();
+        NamedElement _reference_1 = _association_1.getReference();
+        /* ex.association.reference instanceof Association */
+        if (!(_reference_1 instanceof Association)) {
+          sneakyThrowRuleFailedException("ex.association.reference instanceof Association");
+        }
         LinkOperation _linkOperation = ex.getLinkOperation();
         boolean _equals = Objects.equal(_linkOperation, LinkOperation.LINK);
         /* ex.linkOperation == LinkOperation.LINK */
         if (!_equals) {
           sneakyThrowRuleFailedException("ex.linkOperation == LinkOperation.LINK");
         }
-        NameExpression _association = ex.getAssociation();
-        IUMLTypeReference _typeReference = this.typeFactory.typeReference(((Association) _association));
+        NameExpression _association_2 = ex.getAssociation();
+        NamedElement _reference_2 = _association_2.getReference();
+        IUMLTypeReference _typeReference = this.typeFactory.typeReference(((Association) _reference_2));
         result = _typeReference;
       } catch (Exception e) {
         previousFailure = extractRuleFailedException(e);
