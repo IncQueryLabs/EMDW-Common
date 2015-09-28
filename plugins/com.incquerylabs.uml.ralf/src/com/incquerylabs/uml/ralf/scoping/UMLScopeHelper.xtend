@@ -51,7 +51,7 @@ class UMLScopeHelper {
                 parameter.name = it.name
                 parameter.type = it.type
                 parameter.direction = ParameterDirectionKind.IN_LITERAL
-                parameter.lowerValue = it.lowerValue
+                parameter.lowerValue = EcoreUtil.copy(it.lowerValue)
                 parameter.upperValue = EcoreUtil.copy(it.upperValue)
                 parameter.isOrdered = it.ordered
                 parameter.isUnique = it.unique
