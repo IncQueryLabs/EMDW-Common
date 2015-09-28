@@ -29,9 +29,7 @@ import org.eclipse.xtext.naming.QualifiedName
 import org.eclipse.xtext.validation.Check
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.ThisExpression
 import com.incquerylabs.uml.ralf.resource.ReducedAlfLanguageResource
-
-//import org.eclipse.xtext.validation.Check
-
+import com.incquerylabs.uml.ralf.reducedAlfLanguage.FilterVariable
 
 /**
  * This class contains custom validation rules. 
@@ -67,6 +65,13 @@ class ReducedAlfLanguageValidator extends ReducedAlfSystemValidator {
 	    if (isDuplicateInScope(decl.eContainer, decl.name)) {
 	        error("Duplicate local variable " + decl.name, UMLPackage.Literals.NAMED_ELEMENT__NAME)
 	    }
+	}
+	
+	//@Check Disabled until https://github.com/IncQueryLabs/EMDW-Common/issues/70 is fixed.
+	def duplicateFilterVariable(FilterVariable decl) {
+	   if (isDuplicateInScope(decl.eContainer, decl.name)) {
+	       error("Duplicate filter variable " + decl.name, UMLPackage.Literals.NAMED_ELEMENT__NAME)
+	   }    
 	}
 	
     private def isDuplicateInScope (EObject context, String name) {
