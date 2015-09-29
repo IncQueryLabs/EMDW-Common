@@ -3857,7 +3857,7 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
   
   protected Result<IUMLTypeReference> applyRuleOperation(final RuleEnvironment G, final RuleApplicationTrace _trace_, final Operation op) throws RuleFailedException {
     IUMLTypeReference result = null; // output parameter
-    /* { op.getType == null result = voidType } or { result = op.getType.typeReference } */
+    /* { op.getType == null result = voidType } or { result = op.returnParameter.typeOf } */
     {
       RuleFailedException previousFailure = null;
       try {
@@ -3871,9 +3871,9 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
         result = _voidType;
       } catch (Exception e) {
         previousFailure = extractRuleFailedException(e);
-        Type _type_1 = op.getType();
-        IUMLTypeReference _typeReference = this.typeFactory.typeReference(_type_1);
-        result = _typeReference;
+        Parameter _returnParameter = this.scopeHelper.getReturnParameter(op);
+        IUMLTypeReference _typeOf = this.typeFactory.typeOf(_returnParameter);
+        result = _typeOf;
       }
     }
     return new Result<IUMLTypeReference>(result);

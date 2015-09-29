@@ -674,7 +674,7 @@ from {
         op.getType == null
         result = voidType 
     } or {
-        result = op.getType.typeReference
+        result = op.returnParameter.typeOf
     }
 }
 
