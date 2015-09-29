@@ -30,6 +30,9 @@ import org.eclipse.xtext.validation.Check
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.ThisExpression
 import com.incquerylabs.uml.ralf.resource.ReducedAlfLanguageResource
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.FilterVariable
+import org.eclipse.xtext.nodemodel.util.NodeModelUtils
+import org.eclipse.xtext.naming.IQualifiedNameConverter
+import org.eclipse.uml2.uml.NamedElement
 
 /**
  * This class contains custom validation rules. 
@@ -40,11 +43,14 @@ class ReducedAlfLanguageValidator extends ReducedAlfSystemValidator {
 
     @Inject
     ReducedAlfLanguageScopeProvider scopeProvider
+    @Inject
+    IQualifiedNameConverter nameConverter
     
     public static val CODE_INVALID_ASSOCIATION = "invalid_association"
     public static val CODE_INVALID_FEATURE = "invalid_feature"
     public static val CODE_INVALID_LHS = "invalid_lhs"
     public static val CODE_THIS_IN_STATIC = "this_in_static"
+    public static val CODE_AMBIGUOUS_REFERENCE = "ambigous_reference"
 
 	@Check
 	def duplicateLocalVariables(LocalNameDeclarationStatement st) {
@@ -78,6 +84,49 @@ class ReducedAlfLanguageValidator extends ReducedAlfSystemValidator {
         val variableScope = scopeProvider.scope_NamedElement(context)
         return (variableScope.getSingleElement(QualifiedName.create(name)) != null);
     }
+    
+	@Check
+	def ambiguousNameReference(NameExpression ex) {
+	    if (ex.reference == null || ex.reference.eIsProxy) {
+	        return
+	    }
+	    
+	    val node = NodeModelUtils.getNode(ex)
+	    val nodeText = NodeModelUtils.getTokenText(node)
+	    val referenceScope = scopeProvider.scope_NamedElement(ex)
+	    val element = referenceScope.getSingleElement(nameConverter.toQualifiedName(nodeText))
+	    
+	    val descriptions = newHashSet(element)
+	    var candidatePrefix = nameConverter.toQualifiedName((ex.reference.qualifiedName))
+	    while (candidatePrefix.segmentCount > 1) {
+	        candidatePrefix = candidatePrefix.skipLast(1)
+	        val candidateName = candidatePrefix.append(nodeText)
+	        val candidate = referenceScope.getSingleElement(candidateName)
+	        if (candidate != null) {
+	            descriptions.add(candidate)
+	        }
+	    }
+	    
+	    val names = descriptions.filter[!EObjectOrProxy.eIsProxy].map[
+	        val obj = EObjectOrProxy
+	        val name = if (obj instanceof NamedElement) {
+                    obj.qualifiedName
+                } else {
+                    "<Unknown>" + obj.toString
+                }
+                return EClass.name + " " + name
+	    ].toSet
+	    
+	    if (names.size > 1) {
+	        error(
+	            '''Ambiguous reference: «FOR el : names SEPARATOR "; "»«el»«ENDFOR». Use fully qualified names instead.''',
+	            ReducedAlfLanguagePackage.Literals.NAME_EXPRESSION__REFERENCE,
+	            CODE_AMBIGUOUS_REFERENCE,
+	            names
+	        )
+	    }
+	}
+	
 	@Check
 	def invalidBreak(BreakStatement st) {
 		var invalid = true;
