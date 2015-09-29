@@ -107,7 +107,7 @@ class ReducedAlfLanguageValidator extends ReducedAlfSystemValidator {
 	        }
 	    }
 	    
-	    val names = descriptions.filter[!EObjectOrProxy.eIsProxy].map[
+	    val names = descriptions.filterNull.filter[!EObjectOrProxy.eIsProxy].map[
 	        val obj = EObjectOrProxy
 	        val name = if (obj instanceof NamedElement) {
                     obj.qualifiedName
