@@ -13,13 +13,10 @@ int main(int , char **) {
 
 	Client* client = new Client();
 	Server* server = new Server();
-	Component* comp = new Component();
+	Component* comp = Component::get_instance();
 
 	client->R1_server = server;
 	server->R1_client = client;
-
-	client->_comp = comp;
-	server->_comp = comp;
 
 	client->perform_initialization();
 	server->perform_initialization();
@@ -34,5 +31,4 @@ int main(int , char **) {
 
 	delete client;
 	delete server;
-	delete comp;
 }

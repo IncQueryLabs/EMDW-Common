@@ -13,13 +13,11 @@ int main(int , char **) {
 
     Ping* pi = new Ping();
     Pong* po = new Pong();
-    Component* comp = new Component();
+    Component* comp = Component::get_instance();
 
     pi->R1_pong = po;
     po->R1_ping = pi;
 
-    pi->_comp = comp;
-    po->_comp = comp;
 
     pi->perform_initialization();
     po->perform_initialization();
@@ -30,5 +28,4 @@ int main(int , char **) {
 
     delete pi;
     delete po;
-    delete comp;
 }

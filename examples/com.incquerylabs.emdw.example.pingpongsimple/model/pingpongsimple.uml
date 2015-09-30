@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_ZvNCEBmjEeWkDIIs2OLK7g" name="PingPongSimple">
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_ZvNCEBmjEeWkDIIs2OLK7g" name="PingPongSimple">
   <packagedElement xmi:type="uml:Component" xmi:id="_U_BbIBmkEeWkDIIs2OLK7g" name="Component" isActive="true">
     <nestedClassifier xmi:type="uml:Class" xmi:id="_LbgdgBmkEeWkDIIs2OLK7g" name="Pong" classifierBehavior="_a8SY4BmmEeWkDIIs2OLK7g">
       <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_a8SY4BmmEeWkDIIs2OLK7g" name="Pong_SM">
@@ -10,16 +10,16 @@
           </transition>
           <transition xmi:type="uml:Transition" xmi:id="_kKvFcBmmEeWkDIIs2OLK7g" name="e2" source="_d8s14BmmEeWkDIIs2OLK7g" target="_cUor4BmmEeWkDIIs2OLK7g">
             <effect xmi:type="uml:OpaqueBehavior" xmi:id="_MmBIkBpDEeWJmP2mki6rxQ" name="sendPong">
-              <language>C++</language>
-              <body>R1_ping->generate_event(new Ping::pong_s_event(false));</body>
+              <language>rALF</language>
+              <body>send new PingPongSimple::Component::Ping::pong_s() to this->ping.one();</body>
             </effect>
             <trigger xmi:type="uml:Trigger" xmi:id="_f6aKYBpDEeWgOeVNG9guWg" name="ping_t" event="_iBpxsBmpEeW8avfFxjlgXw"/>
           </transition>
           <subvertex xmi:type="uml:State" xmi:id="_cUor4BmmEeWkDIIs2OLK7g" name="s1"/>
           <subvertex xmi:type="uml:State" xmi:id="_d8s14BmmEeWkDIIs2OLK7g" name="s2">
             <entry xmi:type="uml:OpaqueBehavior" xmi:id="_Dxv2kBpDEeWJmP2mki6rxQ" name="sendPong">
-              <language>C++</language>
-              <body>R1_ping->generate_event(new Ping::pong_s_event(false));</body>
+              <language>rALF</language>
+              <body>send new PingPongSimple::Component::Ping::pong_s() to this->ping.one();</body>
             </entry>
           </subvertex>
           <subvertex xmi:type="uml:Pseudostate" xmi:id="_faJEQBmmEeWkDIIs2OLK7g" name="initial"/>
@@ -40,14 +40,14 @@
           </transition>
           <subvertex xmi:type="uml:State" xmi:id="_oUtdcBmkEeWkDIIs2OLK7g" name="s1">
             <entry xmi:type="uml:OpaqueBehavior" xmi:id="_hi5noBpCEeWFcpFo2w2ToQ" name="sendPing">
-              <language>C++</language>
-              <body>R1_pong->generate_event(new Pong::ping_s_event(false));</body>
+              <language>rALF</language>
+              <body>send new PingPongSimple::Component::Pong::ping_s() to this->pong.one();</body>
             </entry>
           </subvertex>
           <subvertex xmi:type="uml:State" xmi:id="_oolbsBmkEeWkDIIs2OLK7g" name="s2">
             <entry xmi:type="uml:OpaqueBehavior" xmi:id="_AiVCkBmmEeWkDIIs2OLK7g" name="sendPing">
-              <language>C++</language>
-              <body>R1_pong->generate_event(new Pong::ping_s_event(false));</body>
+              <language>rALF</language>
+              <body>send new PingPongSimple::Component::Pong::ping_s() to this->pong.one();</body>
             </entry>
           </subvertex>
           <subvertex xmi:type="uml:Pseudostate" xmi:id="_rax2gBmkEeWkDIIs2OLK7g" name="initial"/>
@@ -69,10 +69,4 @@
   </packagedElement>
   <packagedElement xmi:type="uml:SignalEvent" xmi:id="_iBpxsBmpEeW8avfFxjlgXw" name="ping_se" signal="_6nat4BmmEeWkDIIs2OLK7g"/>
   <packagedElement xmi:type="uml:SignalEvent" xmi:id="_mfmjsBmpEeW8avfFxjlgXw" name="pong_se" signal="_7HLzEBmmEeWkDIIs2OLK7g"/>
-  <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_ocG7YBmjEeWkDIIs2OLK7g">
-    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_ocQsYBmjEeWkDIIs2OLK7g" source="http://www.eclipse.org/uml2/2.0.0/UML">
-      <references xmi:type="ecore:EPackage" href="pathmap://PAPYRUS_ACTIONLANGUAGE_PROFILE/ActionLanguage-Profile.profile.uml#_sYse0YZLEeKyw49uR6nx3g"/>
-    </eAnnotations>
-    <appliedProfile xmi:type="uml:Profile" href="pathmap://PAPYRUS_ACTIONLANGUAGE_PROFILE/ActionLanguage-Profile.profile.uml#ActionLanguage"/>
-  </profileApplication>
 </uml:Model>
