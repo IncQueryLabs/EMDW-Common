@@ -72,11 +72,16 @@ public class ReducedAlfParser implements IReducedAlfParser {
 		return result;
 	}
 	
+	@Override
+	public ParsingResults emptyResult() {
+		return new ParsingResults(createInjector(new SimpleUMLContextProvider()));
+	}
 	
 	@Override
 	public ParsingResults parse(String behavior) {
 		return parse(behavior, new SimpleUMLContextProvider());
 	}
+	
 	
 	@Override
 	public ParsingResults parse(String behavior, IUMLContextProvider contextProvider) {

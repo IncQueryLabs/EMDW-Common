@@ -12,6 +12,12 @@ public interface IReducedAlfParser {
 	static final String LANGUAGE_NAME = "rALF";
 
 	/**
+	 * Creates an empty ParsingResult instance.
+	 * @return
+	 */
+	ParsingResults emptyResult();
+	
+	/**
 	 * Creates a rALF AST based on the specified rALF code. This AST cannot
 	 * refer to UML types except the primitive types.
 	 * 
