@@ -63,7 +63,11 @@ abstract class AbstractUMLContextProvider implements IUMLContextProvider {
     }
     
     override getGenericCollectionParameterType() {
-            (getCollectionsPackage.getOwnedType("Collection") as Classifier).ownedTemplateSignature.ownedParameters.get(0).ownedElements.get(0) as Classifier 
+        if (collectionsPackage == null) {
+            null
+        } else {
+            (collectionsPackage.getOwnedType("Collection") as Classifier).ownedTemplateSignature.ownedParameters.get(0).ownedElements.get(0) as Classifier
+        } 
     }
 
     override getPrimitiveType(String name) {

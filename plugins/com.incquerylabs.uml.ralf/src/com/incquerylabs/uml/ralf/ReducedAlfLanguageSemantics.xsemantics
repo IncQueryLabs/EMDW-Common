@@ -143,7 +143,7 @@ auxiliary constructorOperation(Classifier cl, Tuple parameters) {
 }
 
 auxiliary replaceGenericTypeReference(RuleEnvironment G, IUMLTypeReference ref, EObject ctx) {
-    if (ref.umlType == ctx.umlContext.genericCollectionParameterType) {
+    if (ref.umlType != null && ref.umlType == ctx.umlContext.genericCollectionParameterType) {
         G |- ctx : var CollectionTypeReference collType
         collType.valueType
     } else {
@@ -614,10 +614,9 @@ from {
         !ex.association.reference.eIsProxy()
         ex.association.reference instanceof Association 
         ex.linkOperation == LinkOperation.LINK
-        result = (ex.association.reference as Association).typeReference
     }  or {
-        result = null
     } 
+    result = BOOLEAN.primitiveTypeReference(umlContext(ex))
 }
 
 rule CollectionConstructionExpression

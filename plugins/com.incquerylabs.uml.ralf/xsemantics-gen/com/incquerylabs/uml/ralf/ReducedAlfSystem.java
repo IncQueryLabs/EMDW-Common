@@ -1457,11 +1457,19 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
   
   protected IUMLTypeReference applyAuxFunReplaceGenericTypeReference(final RuleApplicationTrace _trace_, final RuleEnvironment G, final IUMLTypeReference ref, final EObject ctx) throws RuleFailedException {
     IUMLTypeReference _xifexpression = null;
+    boolean _and = false;
     Type _umlType = ref.getUmlType();
-    IUMLContextProvider _umlContext = this.typeFactory.umlContext(ctx);
-    Classifier _genericCollectionParameterType = _umlContext.getGenericCollectionParameterType();
-    boolean _equals = Objects.equal(_umlType, _genericCollectionParameterType);
-    if (_equals) {
+    boolean _notEquals = (!Objects.equal(_umlType, null));
+    if (!_notEquals) {
+      _and = false;
+    } else {
+      Type _umlType_1 = ref.getUmlType();
+      IUMLContextProvider _umlContext = this.typeFactory.umlContext(ctx);
+      Classifier _genericCollectionParameterType = _umlContext.getGenericCollectionParameterType();
+      boolean _equals = Objects.equal(_umlType_1, _genericCollectionParameterType);
+      _and = _equals;
+    }
+    if (_and) {
       IUMLTypeReference _xblockexpression = null;
       {
         /* G |- ctx : var CollectionTypeReference collType */
@@ -3617,7 +3625,7 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
   
   protected Result<IUMLTypeReference> applyRuleLinkOperationExpression(final RuleEnvironment G, final RuleApplicationTrace _trace_, final LinkOperationExpression ex) throws RuleFailedException {
     IUMLTypeReference result = null; // output parameter
-    /* { !ex.association.reference.eIsProxy() ex.association.reference instanceof Association ex.linkOperation == LinkOperation.LINK result = (ex.association.reference as Association).typeReference } or { result = null } */
+    /* { !ex.association.reference.eIsProxy() ex.association.reference instanceof Association ex.linkOperation == LinkOperation.LINK } or { } */
     {
       RuleFailedException previousFailure = null;
       try {
@@ -3636,20 +3644,17 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
           sneakyThrowRuleFailedException("ex.association.reference instanceof Association");
         }
         LinkOperation _linkOperation = ex.getLinkOperation();
-        boolean _equals = Objects.equal(_linkOperation, LinkOperation.LINK);
         /* ex.linkOperation == LinkOperation.LINK */
-        if (!_equals) {
+        if (!Objects.equal(_linkOperation, LinkOperation.LINK)) {
           sneakyThrowRuleFailedException("ex.linkOperation == LinkOperation.LINK");
         }
-        NameExpression _association_2 = ex.getAssociation();
-        NamedElement _reference_2 = _association_2.getReference();
-        IUMLTypeReference _typeReference = this.typeFactory.typeReference(((Association) _reference_2));
-        result = _typeReference;
       } catch (Exception e) {
         previousFailure = extractRuleFailedException(e);
-        result = null;
       }
     }
+    IUMLContextProvider _umlContext = this.typeFactory.umlContext(ex);
+    PrimitiveTypeReference _primitiveTypeReference = this.typeFactory.primitiveTypeReference(this.BOOLEAN, _umlContext);
+    result = _primitiveTypeReference;
     return new Result<IUMLTypeReference>(result);
   }
   
