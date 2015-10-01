@@ -1458,9 +1458,15 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
   protected IUMLTypeReference applyAuxFunReplaceGenericTypeReference(final RuleApplicationTrace _trace_, final RuleEnvironment G, final IUMLTypeReference ref, final EObject ctx) throws RuleFailedException {
     IUMLTypeReference _xifexpression = null;
     boolean _and = false;
-    Type _umlType = ref.getUmlType();
-    boolean _notEquals = (!Objects.equal(_umlType, null));
-    if (!_notEquals) {
+    boolean _and_1 = false;
+    if (!(ref instanceof UMLTypeReference)) {
+      _and_1 = false;
+    } else {
+      Type _umlType = ref.getUmlType();
+      boolean _notEquals = (!Objects.equal(_umlType, null));
+      _and_1 = _notEquals;
+    }
+    if (!_and_1) {
       _and = false;
     } else {
       Type _umlType_1 = ref.getUmlType();
