@@ -3,6 +3,7 @@
  */
 package com.incquerylabs.uml.ralf.scoping
 
+import com.google.common.collect.Iterables
 import com.google.inject.Inject
 import com.incquerylabs.uml.ralf.ReducedAlfSystem
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.AssociationAccessExpression
@@ -16,19 +17,18 @@ import com.incquerylabs.uml.ralf.reducedAlfLanguage.Statement
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.Statements
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.StaticFeatureInvocationExpression
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.Variable
+import com.incquerylabs.uml.ralf.resource.ReducedAlfLanguageResource
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference
+import org.eclipse.emf.ecore.util.EcoreUtil
+import org.eclipse.uml2.uml.Class
 import org.eclipse.uml2.uml.Classifier
+import org.eclipse.uml2.uml.NamedElement
+import org.eclipse.uml2.uml.PrimitiveType
 import org.eclipse.xtext.naming.IQualifiedNameConverter
 import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.Scopes
 import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider
-import org.eclipse.uml2.uml.NamedElement
-import com.google.common.collect.Iterables
-import org.eclipse.uml2.uml.Class
-import org.eclipse.uml2.uml.PrimitiveType
-import com.incquerylabs.uml.ralf.resource.ReducedAlfLanguageResource
-import org.eclipse.emf.ecore.util.EcoreUtil
 
 /**
  * This class contains custom scoping description.
@@ -117,9 +117,10 @@ class ReducedAlfLanguageScopeProvider extends AbstractDeclarativeScopeProvider {
     private def IScope localScope(Iterable<? extends NamedElement> elements, String qualifiedName, IScope parentScope) {
         if (qualifiedName != null) {
             val packageRelativeElements = elements.filter[
-                it.qualifiedName != null &&
-                it.qualifiedName.startsWith(qualifiedName + "::") &&
-                it.qualifiedName != qualifiedName
+                val name = it.qualifiedName
+                name != null &&
+                name.startsWith(qualifiedName + "::") &&
+                name != qualifiedName
             ]
             Scopes.scopeFor(packageRelativeElements, [NamedElement it |
                 nameConverter.toQualifiedName(it.qualifiedName.substring(qualifiedName.length + 2)) //+2 '::'
