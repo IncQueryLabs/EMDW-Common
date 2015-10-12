@@ -1,5 +1,7 @@
 package com.incquerylabs.uml.papyrus;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -23,7 +25,8 @@ import com.google.common.collect.Maps;
 public class IncQueryEngineService implements IService {
 
 	public static final String PATHMAP_SCHEME = "pathmap";
-	private static final String UML_LIBRARIES_AUTHORITY = "UML_LIBRARIES";
+	private static final List<String> INDEXED_AUTHORITIES = Arrays.asList("UML_LIBRARIES", "RALF",
+			"XUMLRT_PROFILE");
 
 	private Map<ModelSet, IncQueryEngine> engines = Maps.newHashMap();
 
@@ -41,14 +44,16 @@ public class IncQueryEngineService implements IService {
 		serviceRegistry.startServicesByClassKeys(IncQueryEngineService.class);
 		return serviceRegistry.getService(IncQueryEngineService.class);
 	}
-	
+
 	public static IncQueryEngine getOrCreateEngineCheckingService(ModelSet resourceSet) throws IncQueryException {
 		try {
 			return getOrStartServiceInternal(resourceSet).getOrCreateEngine(resourceSet);
 		} catch (ServiceException e) {
 			try {
-				// add service by hand instead of registering it when extensions are not supported
-				ServicesRegistry serviceRegistry = ServiceUtilsForResourceSet.getInstance().getServiceRegistry(resourceSet);
+				// add service by hand instead of registering it when extensions
+				// are not supported
+				ServicesRegistry serviceRegistry = ServiceUtilsForResourceSet.getInstance()
+						.getServiceRegistry(resourceSet);
 				IncQueryEngineService service = new IncQueryEngineService();
 				serviceRegistry.add(IncQueryEngineService.class, 1, service);
 				return service.getOrCreateEngine(resourceSet);
@@ -57,7 +62,7 @@ public class IncQueryEngineService implements IService {
 			}
 		}
 	}
-	
+
 	public static IncQueryEngine getOrCreateEngineEvenIfModelIsClosed(ModelSet resourceSet) throws IncQueryException {
 		try {
 			return getOrStartServiceInternal(resourceSet).getOrCreateEngine(resourceSet);
@@ -83,18 +88,17 @@ public class IncQueryEngineService implements IService {
 	}
 
 	public IncQueryEngine initializeEngine(ModelSet set) throws IncQueryException {
-		Preconditions.checkArgument(!engines.containsKey(set),
-				"IncQueryEngine already initialized for model " + set);
+		Preconditions.checkArgument(!engines.containsKey(set), "IncQueryEngine already initialized for model " + set);
 		BaseIndexOptions options = new BaseIndexOptions()
 				.withResourceFilterConfiguration(new IBaseIndexResourceFilter() {
 
 					@Override
 					public boolean isResourceFiltered(Resource resource) {
 						URI uri = resource.getURI();
-						if (uri.toString().contains("RALF")) {
+						if (INDEXED_AUTHORITIES.contains(uri.authority())) {
 							return false;
 						}
-						return PATHMAP_SCHEME.equals(uri.scheme()) && !uri.authority().equals(UML_LIBRARIES_AUTHORITY);
+						return PATHMAP_SCHEME.equals(uri.scheme());
 					}
 
 				});
