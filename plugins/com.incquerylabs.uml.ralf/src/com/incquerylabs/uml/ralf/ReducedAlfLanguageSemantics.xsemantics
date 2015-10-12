@@ -98,7 +98,7 @@ auxiliary {
 }
 
 judgments {
-    type |- EObject expression : output IUMLTypeReference cached
+    type |- EObject expression : output IUMLTypeReference
         error "Cannot type " + stringRep(expression)
         source expression
     operationParametersType |- Operation op <: Tuple params <: EObject ctx
@@ -109,7 +109,7 @@ judgments {
         source op
     subtypeReference |- IUMLTypeReference left <: IUMLTypeReference right : IUMLContextProvider context
         error stringRep(left) + " is not a subtype of  " + stringRep(right)
-    subtypeOrEqual |- Type left <~ Type right : IUMLContextProvider context cached
+    subtypeOrEqual |- Type left <~ Type right : IUMLContextProvider context
         error stringRep(left) + " is not a subtype of  " + stringRep(right)
     assignable |- Expression expression |> IUMLTypeReference target
         error stringRep(expression) + " is not assignable for type " + stringRep(target)

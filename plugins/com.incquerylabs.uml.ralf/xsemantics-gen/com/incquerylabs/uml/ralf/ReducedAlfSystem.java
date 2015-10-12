@@ -71,7 +71,6 @@ import it.xsemantics.runtime.Result;
 import it.xsemantics.runtime.RuleApplicationTrace;
 import it.xsemantics.runtime.RuleEnvironment;
 import it.xsemantics.runtime.RuleFailedException;
-import it.xsemantics.runtime.XsemanticsProvider;
 import it.xsemantics.runtime.XsemanticsRuntimeSystem;
 import java.util.Collection;
 import java.util.HashMap;
@@ -400,16 +399,11 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
   }
   
   public Result<IUMLTypeReference> type(final RuleEnvironment _environment_, final RuleApplicationTrace _trace_, final EObject expression) {
-    return getFromCache("type", _environment_, _trace_,
-    	new XsemanticsProvider<Result<IUMLTypeReference>>(_environment_, _trace_) {
-    		public Result<IUMLTypeReference> doGet() {
-    			try {
-    				return typeInternal(_environment_, _trace_, expression);
-    			} catch (Exception _e_type) {
-    				return resultForFailure(_e_type);
-    			}
-    		}
-    	}, expression);
+    try {
+    	return typeInternal(_environment_, _trace_, expression);
+    } catch (Exception _e_type) {
+    	return resultForFailure(_e_type);
+    }
   }
   
   public Result<Boolean> operationParametersType(final Operation op, final Tuple params, final EObject ctx) {
@@ -503,16 +497,11 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
   }
   
   public Result<Boolean> subtypeOrEqual(final RuleEnvironment _environment_, final RuleApplicationTrace _trace_, final Type left, final Type right, final IUMLContextProvider context) {
-    return getFromCache("subtypeOrEqual", _environment_, _trace_,
-    	new XsemanticsProvider<Result<Boolean>>(_environment_, _trace_) {
-    		public Result<Boolean> doGet() {
-    			try {
-    				return subtypeOrEqualInternal(_environment_, _trace_, left, right, context);
-    			} catch (Exception _e_subtypeOrEqual) {
-    				return resultForFailure(_e_subtypeOrEqual);
-    			}
-    		}
-    	}, left, right, context);
+    try {
+    	return subtypeOrEqualInternal(_environment_, _trace_, left, right, context);
+    } catch (Exception _e_subtypeOrEqual) {
+    	return resultForFailure(_e_subtypeOrEqual);
+    }
   }
   
   public Boolean subtypeOrEqualSucceeded(final Type left, final Type right, final IUMLContextProvider context) {
@@ -1219,18 +1208,13 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
   }
   
   protected Result<IUMLTypeReference> typeInternal(final RuleEnvironment _environment_, final RuleApplicationTrace _trace_, final EObject expression) {
-    return getFromCache("typeInternal", _environment_, _trace_,
-    	new XsemanticsProvider<Result<IUMLTypeReference>>(_environment_, _trace_) {
-    		public Result<IUMLTypeReference> doGet() {
-    			try {
-    				checkParamsNotNull(expression);
-    				return typeDispatcher.invoke(_environment_, _trace_, expression);
-    			} catch (Exception _e_type) {
-    				sneakyThrowRuleFailedException(_e_type);
-    				return null;
-    			}
-    		}
-    	}, expression);
+    try {
+    	checkParamsNotNull(expression);
+    	return typeDispatcher.invoke(_environment_, _trace_, expression);
+    } catch (Exception _e_type) {
+    	sneakyThrowRuleFailedException(_e_type);
+    	return null;
+    }
   }
   
   protected void typeThrowException(final String _error, final String _issue, final Exception _ex, final EObject expression, final ErrorInformation[] _errorInformations) throws RuleFailedException {
@@ -1301,18 +1285,13 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
   }
   
   protected Result<Boolean> subtypeOrEqualInternal(final RuleEnvironment _environment_, final RuleApplicationTrace _trace_, final Type left, final Type right, final IUMLContextProvider context) {
-    return getFromCache("subtypeOrEqualInternal", _environment_, _trace_,
-    	new XsemanticsProvider<Result<Boolean>>(_environment_, _trace_) {
-    		public Result<Boolean> doGet() {
-    			try {
-    				checkParamsNotNull(left, right, context);
-    				return subtypeOrEqualDispatcher.invoke(_environment_, _trace_, left, right, context);
-    			} catch (Exception _e_subtypeOrEqual) {
-    				sneakyThrowRuleFailedException(_e_subtypeOrEqual);
-    				return null;
-    			}
-    		}
-    	}, left, right, context);
+    try {
+    	checkParamsNotNull(left, right, context);
+    	return subtypeOrEqualDispatcher.invoke(_environment_, _trace_, left, right, context);
+    } catch (Exception _e_subtypeOrEqual) {
+    	sneakyThrowRuleFailedException(_e_subtypeOrEqual);
+    	return null;
+    }
   }
   
   protected void subtypeOrEqualThrowException(final String _error, final String _issue, final Exception _ex, final Type left, final Type right, final IUMLContextProvider context, final ErrorInformation[] _errorInformations) throws RuleFailedException {
