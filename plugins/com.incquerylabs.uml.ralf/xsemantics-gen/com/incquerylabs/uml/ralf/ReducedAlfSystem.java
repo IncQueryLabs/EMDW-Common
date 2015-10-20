@@ -933,7 +933,7 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
   
   protected Result<Boolean> returnStatementInternal(final RuleApplicationTrace _trace_, final ReturnStatement st) throws RuleFailedException {
     IUMLContextProvider _umlContext = this.typeFactory.umlContext(st);
-    Operation _definedOperation = _umlContext.getDefinedOperation();
+    Operation _definedOperation = _umlContext.getDefinedOperation(st);
     Parameter _returnParameter = null;
     if (_definedOperation!=null) {
       _returnParameter=this.scopeHelper.getReturnParameter(_definedOperation);
@@ -3507,14 +3507,14 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
   protected Result<IUMLTypeReference> applyRuleThisExpression(final RuleEnvironment G, final RuleApplicationTrace _trace_, final ThisExpression ex) throws RuleFailedException {
     IUMLTypeReference result = null; // output parameter
     IUMLContextProvider _umlContext = this.typeFactory.umlContext(ex);
-    org.eclipse.uml2.uml.Class _thisType = _umlContext.getThisType();
+    org.eclipse.uml2.uml.Class _thisType = _umlContext.getThisType(ex);
     boolean _equals = Objects.equal(_thisType, null);
     if (_equals) {
       IUMLTypeReference.AnyTypeReference _anyType = this.typeFactory.anyType();
       result = _anyType;
     } else {
       IUMLContextProvider _umlContext_1 = this.typeFactory.umlContext(ex);
-      org.eclipse.uml2.uml.Class _thisType_1 = _umlContext_1.getThisType();
+      org.eclipse.uml2.uml.Class _thisType_1 = _umlContext_1.getThisType(ex);
       IUMLTypeReference _typeReference = this.typeFactory.typeReference(_thisType_1);
       result = _typeReference;
     }
@@ -3543,7 +3543,7 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
   protected Result<IUMLTypeReference> applyRuleSignalDataExpression(final RuleEnvironment G, final RuleApplicationTrace _trace_, final SignalDataExpression ex) throws RuleFailedException {
     IUMLTypeReference result = null; // output parameter
     IUMLContextProvider _umlContext = this.typeFactory.umlContext(ex);
-    final Signal signalType = _umlContext.getIncomingSignalType();
+    final Signal signalType = _umlContext.getIncomingSignalType(ex);
     boolean _or = false;
     boolean _equals = Objects.equal(signalType, null);
     if (_equals) {

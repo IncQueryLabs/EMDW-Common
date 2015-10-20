@@ -88,7 +88,7 @@ abstract class AbstractUMLContextProvider implements IUMLContextProvider {
         candidate as Class
     }
 
-    override getThisType() {
+    override getThisType(EObject _context) {
         val ctx = contextObject
         switch ctx {
             OpaqueBehavior: getOwnerClass(ctx)
@@ -98,7 +98,7 @@ abstract class AbstractUMLContextProvider implements IUMLContextProvider {
         }
     }
 
-    override getDefinedOperation() {
+    override getDefinedOperation(EObject _context) {
         val ctx = contextObject
         switch ctx {
             OpaqueBehavior: {
@@ -114,7 +114,7 @@ abstract class AbstractUMLContextProvider implements IUMLContextProvider {
         }
     }
 
-    override getIncomingSignalType() {
+    override getIncomingSignalType(EObject _context) {
         return null
     }
 }

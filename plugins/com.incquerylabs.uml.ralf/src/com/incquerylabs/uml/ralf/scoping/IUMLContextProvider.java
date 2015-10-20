@@ -2,6 +2,7 @@ package com.incquerylabs.uml.ralf.scoping;
 
 import java.util.Set;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.uml2.uml.Association;
 import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Classifier;
@@ -45,18 +46,18 @@ public interface IUMLContextProvider {
 	 * 
 	 * @return
 	 */
-	Class getThisType();
+	Class getThisType(EObject context);
 	
 	/**
 	 * Returns the operation whose specification is currently defined. If the parsed text does not correspond to any operations, the returned value is null.
 	 * @return
 	 */
-	Operation getDefinedOperation();
+	Operation getDefinedOperation(EObject context);
 	
 	/**
 	 * Returns the incoming signal type. Its value can be accessed via the sigdata expression. If no incoming signal can be added, the returned value is null.
 	 * @return
 	 */
-	Signal getIncomingSignalType();
+	Signal getIncomingSignalType(EObject context);
 	
 }

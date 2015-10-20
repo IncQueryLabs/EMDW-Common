@@ -580,17 +580,17 @@ from {
 rule ThisExpression
     G |- ThisExpression ex : IUMLTypeReference result
 from {
-    if (ex.umlContext.thisType == null) {
+    if (ex.umlContext.getThisType(ex) == null) {
         result = anyType
     } else {
-        result = ex.umlContext.thisType.typeReference
+        result = ex.umlContext.getThisType(ex).typeReference
     }
 }
 
 rule SignalDataExpression
 derives G |- SignalDataExpression ex : IUMLTypeReference result
 from {
-    val signalType = ex.umlContext.incomingSignalType
+    val signalType = ex.umlContext.getIncomingSignalType(ex)
     if (signalType == null || signalType.eIsProxy) {
         fail "No incoming signal available in current context"
     } else {
@@ -814,7 +814,7 @@ from {
 checkrule ReturnStatement for
     ReturnStatement st
 from {
-    val returnValue = st.umlContext.definedOperation?.returnParameter
+    val returnValue = st.umlContext.getDefinedOperation(st)?.returnParameter
     {
         returnValue == null    
         st.expression == null

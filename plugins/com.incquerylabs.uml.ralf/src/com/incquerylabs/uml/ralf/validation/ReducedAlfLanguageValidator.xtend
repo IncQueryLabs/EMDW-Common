@@ -197,7 +197,7 @@ class ReducedAlfLanguageValidator extends ReducedAlfSystemValidator {
 	
 	@Check
 	def checkThisExpression(ThisExpression ex) {
-	    val op = (ex.eResource as ReducedAlfLanguageResource).umlContextProvider.definedOperation
+	    val op = (ex.eResource as ReducedAlfLanguageResource).umlContextProvider.getDefinedOperation(ex)
 	    
 	    if (op != null && op.static) {
 	        error('''Cannot use this in static operation «op.name»''', ex, null, CODE_THIS_IN_STATIC)

@@ -202,14 +202,14 @@ public abstract class UMLContextProvider extends AbstractUMLContextProvider {
 	}
 
 	@Override
-	public Signal getIncomingSignalType() {
+	public Signal getIncomingSignalType(EObject _context) {
 		try {
 			EObject ctx = getContextObject();
 			if (ctx instanceof OpaqueBehavior || ctx instanceof OpaqueExpression) {
 				TriggerSignalOfBehaviorMatcher matcher = TriggerSignalOfBehaviorMatcher.on(getEngine());
 				Set<Signal> signalTypes = matcher.getAllValuesOfsignal((PackageableElement)ctx);
 				if (signalTypes.isEmpty()) {
-					return super.getIncomingSignalType();
+					return super.getIncomingSignalType(_context);
 				} else if (signalTypes.size() == 1) {
 					return signalTypes.iterator().next();
 				} else {
@@ -225,7 +225,7 @@ public abstract class UMLContextProvider extends AbstractUMLContextProvider {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return super.getIncomingSignalType();
+		return super.getIncomingSignalType(_context);
 	}
 	
 	private Signal getLowestCommonAncestor(Signal signal1, Signal signal2) throws IncQueryException, IncQueryBaseException {

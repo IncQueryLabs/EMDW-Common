@@ -129,7 +129,7 @@ public class ReducedAlfDirectEditorConfiguration extends DefaultXtextDirectEdito
 		}
 
         @Override
-		public Operation getDefinedOperation() {
+		public Operation getDefinedOperation(EObject _ctx) {
         	if (getObjectToEdit() instanceof Behavior) {
         		 BehavioralFeature specification = ((Behavior) getObjectToEdit()).getSpecification();
         		 if (specification instanceof Operation) {

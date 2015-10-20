@@ -14,6 +14,7 @@ import org.eclipse.uml2.uml.Type
 import org.eclipse.uml2.uml.UMLPackage
 import org.eclipse.uml2.uml.resource.UMLResource
 import org.eclipse.uml2.uml.resources.util.UMLResourcesUtil
+import org.eclipse.emf.ecore.EObject
 
 /**
  * Simplified UML context, where only primitive types are available from UML model.
@@ -70,7 +71,7 @@ class SimpleUMLContextProvider extends AbstractUMLContextProvider {
         null
     }
     
-    override getDefinedOperation() {
+    override getDefinedOperation(EObject _context) {
         null
     }
     
