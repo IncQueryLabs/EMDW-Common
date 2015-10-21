@@ -15,12 +15,17 @@ import org.eclipse.emf.ecore.EObject
 import com.incquerylabs.uml.ralf.resource.ReducedAlfLanguageResource
 import org.eclipse.uml2.uml.MultiplicityElement
 import org.eclipse.uml2.uml.Parameter
+import com.incquerylabs.uml.ralf.scoping.context.IUMLContextProviderAccess
 
 class TypeFactory {
     
     @Inject var Injector injector
     Map<String, PrimitiveTypeReference> primitiveTypeMap = newHashMap()
     
+    /**
+     * @deprecated use {@link IUMLContextProviderAccess#umlContextProviderFor(EObject)} instead
+     */
+    @Deprecated
     def IUMLContextProvider umlContext(EObject obj) {
         val resource = obj.eResource
         if (resource instanceof ReducedAlfLanguageResource) {

@@ -9,6 +9,7 @@ import com.incquerylabs.uml.ralf.reducedAlfLanguage.BooleanLiteralExpression
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.BooleanUnaryExpression
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.CastExpression
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.ClassExtentExpression
+import com.incquerylabs.uml.ralf.reducedAlfLanguage.CollectionVariable
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.ConditionalLogicalExpression
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.ConditionalTestExpression
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.DoStatement
@@ -38,6 +39,7 @@ import com.incquerylabs.uml.ralf.reducedAlfLanguage.NumericUnaryExpression
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.PostfixExpression
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.PrefixExpression
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.RealLiteralExpression
+import com.incquerylabs.uml.ralf.reducedAlfLanguage.ReducedAlfLanguagePackage
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.RelationalExpression
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.ReturnStatement
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.SendSignalStatement
@@ -53,7 +55,9 @@ import com.incquerylabs.uml.ralf.reducedAlfLanguage.TypeDeclaration
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.Variable
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.WhileStatement
 import com.incquerylabs.uml.ralf.scoping.IUMLContextProvider
+import com.incquerylabs.uml.ralf.scoping.OperationCandidateChecker
 import com.incquerylabs.uml.ralf.scoping.UMLScopeHelper
+import com.incquerylabs.uml.ralf.scoping.context.IUMLContextProviderAccess
 import com.incquerylabs.uml.ralf.types.AbstractTypeReference
 import com.incquerylabs.uml.ralf.types.CollectionTypeReference
 import com.incquerylabs.uml.ralf.types.IUMLTypeReference
@@ -62,6 +66,8 @@ import com.incquerylabs.uml.ralf.types.IUMLTypeReference.NullTypeReference
 import com.incquerylabs.uml.ralf.types.TypeFactory
 import com.incquerylabs.uml.ralf.types.UMLTypeReference
 import com.incquerylabs.uml.ralf.validation.AbstractReducedAlfLanguageValidator
+import it.xsemantics.runtime.RuleEnvironment
+import java.util.Set
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.uml2.uml.Association
 import org.eclipse.uml2.uml.Class
@@ -72,16 +78,12 @@ import org.eclipse.uml2.uml.PrimitiveType
 import org.eclipse.uml2.uml.Property
 import org.eclipse.uml2.uml.Signal
 import org.eclipse.uml2.uml.Type
-import com.incquerylabs.uml.ralf.scoping.OperationCandidateChecker
-import java.util.Set
-import com.incquerylabs.uml.ralf.reducedAlfLanguage.CollectionVariable
-import com.incquerylabs.uml.ralf.reducedAlfLanguage.ReducedAlfLanguagePackage
 import org.eclipse.uml2.uml.UMLPackage
-import it.xsemantics.runtime.RuleEnvironment
 
 inject extension TypeFactory typeFactory
 inject extension UMLScopeHelper scopeHelper
 inject extension OperationCandidateChecker candidateChecker
+inject extension IUMLContextProviderAccess contextAccess
 val extension UMLPackage umlPackage = UMLPackage::eINSTANCE
 val extension ReducedAlfLanguagePackage ralfPackage = ReducedAlfLanguagePackage::eINSTANCE
 
@@ -125,7 +127,7 @@ auxiliary typeReference(TypeDeclaration decl) {
 }
 
 auxiliary constructorOperationCandidates(Class cl, Tuple parameters) {
-    umlContext(parameters).getConstructorsOfClass(cl)
+    parameters.umlContextProviderFor.getConstructorsOfClass(cl)
 }
 
 auxiliary constructorOperationCandidates(Signal sig, Tuple parameters) {
@@ -143,7 +145,7 @@ auxiliary constructorOperation(Classifier cl, Tuple parameters) {
 }
 
 auxiliary replaceGenericTypeReference(RuleEnvironment G, IUMLTypeReference ref, EObject ctx) {
-    if (ref instanceof UMLTypeReference && ref.umlType != null && ref.umlType == ctx.umlContext.genericCollectionParameterType) {
+    if (ref instanceof UMLTypeReference && ref.umlType != null && ref.umlType == ctx.umlContextProviderFor.genericCollectionParameterType) {
         G |- ctx : var CollectionTypeReference collType
         collType.valueType
     } else {
@@ -153,19 +155,19 @@ auxiliary replaceGenericTypeReference(RuleEnvironment G, IUMLTypeReference ref, 
 
 axiom BooleanLiteral
     G |- BooleanLiteralExpression bool :
-        BOOLEAN.primitiveTypeReference(bool.umlContext)
+        BOOLEAN.primitiveTypeReference(bool.umlContextProviderFor)
         
 axiom NaturalLiteral
     G |- NaturalLiteralExpression natural :
-        INTEGER.primitiveTypeReference(natural.umlContext)
+        INTEGER.primitiveTypeReference(natural.umlContextProviderFor)
         
 axiom RealLiteral
     G |- RealLiteralExpression real :
-        REAL.primitiveTypeReference(real.umlContext)
+        REAL.primitiveTypeReference(real.umlContextProviderFor)
         
 axiom StringLiteral
     G |- StringLiteralExpression string :
-        STRING.primitiveTypeReference(string.umlContext)
+        STRING.primitiveTypeReference(string.umlContextProviderFor)
 
 axiom NullLiteral
     G |- NullExpression ex : nullType
@@ -313,7 +315,7 @@ rule ExpressionAssignableToType
     G |- Expression ex |> IUMLTypeReference target
 from {
     G |- ex : var IUMLTypeReference expressionType
-    G |- expressionType <: target : ex.umlContext 
+    G |- expressionType <: target : ex.umlContextProviderFor 
 }
 
 /**
@@ -379,50 +381,52 @@ from {
 rule NumericUnaryExpression
     G |- NumericUnaryExpression ex : IUMLTypeReference result
 from {
+    val umlContextProvider = ex.umlContextProviderFor
     {
-        ex.operand.type.value == INTEGER.primitiveTypeReference(ex.umlContext)
-        result = INTEGER.primitiveTypeReference(ex.umlContext)
+        ex.operand.type.value == INTEGER.primitiveTypeReference(umlContextProvider)
+        result = INTEGER.primitiveTypeReference(umlContextProvider)
     } or {
-        ex.operand.type.value == REAL.primitiveTypeReference(ex.umlContext)
-        result = REAL.primitiveTypeReference(ex.umlContext)
+        ex.operand.type.value == REAL.primitiveTypeReference(umlContextProvider)
+        result = REAL.primitiveTypeReference(umlContextProvider)
     }
 }
 
 rule ArithmeticExpression
     G |- ArithmeticExpression ex : IUMLTypeReference result
 from {
+   val umlContextProvider = ex.umlContextProviderFor
    G |- ex.operand1 : var IUMLTypeReference type1
    G |- ex.operand2 : var IUMLTypeReference type2  
    { 
        ex.operator == "+"
-       type1 == STRING.primitiveTypeReference(ex.umlContext)
-       type2 == STRING.primitiveTypeReference(ex.umlContext)
-       result = STRING.primitiveTypeReference(ex.umlContext)
+       type1 == STRING.primitiveTypeReference(umlContextProvider)
+       type2 == STRING.primitiveTypeReference(umlContextProvider)
+       result = STRING.primitiveTypeReference(umlContextProvider)
    } or {
        ex.operator == "+"
-       type1 == REAL.primitiveTypeReference(ex.umlContext)
-       type2 == REAL.primitiveTypeReference(ex.umlContext) || type2 == INTEGER.primitiveTypeReference(ex.umlContext)
-       result = REAL.primitiveTypeReference(ex.umlContext)
+       type1 == REAL.primitiveTypeReference(umlContextProvider)
+       type2 == REAL.primitiveTypeReference(umlContextProvider) || type2 == INTEGER.primitiveTypeReference(umlContextProvider)
+       result = REAL.primitiveTypeReference(umlContextProvider)
    } or {
        ex.operator == "+"
-       type1 == REAL.primitiveTypeReference(ex.umlContext) || type1 == INTEGER.primitiveTypeReference(ex.umlContext)
-       type2 == REAL.primitiveTypeReference(ex.umlContext)
-       result = REAL.primitiveTypeReference(ex.umlContext)
+       type1 == REAL.primitiveTypeReference(umlContextProvider) || type1 == INTEGER.primitiveTypeReference(umlContextProvider)
+       type2 == REAL.primitiveTypeReference(umlContextProvider)
+       result = REAL.primitiveTypeReference(umlContextProvider)
    } or {
        ex.operator != "%"
-       type1 == REAL.primitiveTypeReference(ex.umlContext)
-       type2 == INTEGER.primitiveTypeReference(ex.umlContext) || type2 == REAL.primitiveTypeReference(ex.umlContext)
-       result = REAL.primitiveTypeReference(ex.umlContext)
+       type1 == REAL.primitiveTypeReference(umlContextProvider)
+       type2 == INTEGER.primitiveTypeReference(umlContextProvider) || type2 == REAL.primitiveTypeReference(umlContextProvider)
+       result = REAL.primitiveTypeReference(umlContextProvider)
    } or {
        ex.operator != "%"
-       type1 == INTEGER.primitiveTypeReference(ex.umlContext) || type1 == REAL.primitiveTypeReference(ex.umlContext)
-       type2 == REAL.primitiveTypeReference(ex.umlContext)
-       result = REAL.primitiveTypeReference(ex.umlContext)
+       type1 == INTEGER.primitiveTypeReference(umlContextProvider) || type1 == REAL.primitiveTypeReference(umlContextProvider)
+       type2 == REAL.primitiveTypeReference(umlContextProvider)
+       result = REAL.primitiveTypeReference(umlContextProvider)
    } or {
        //All operations
-       type1 == INTEGER.primitiveTypeReference(ex.umlContext)
-       type2 == INTEGER.primitiveTypeReference(ex.umlContext)
-       result = INTEGER.primitiveTypeReference(ex.umlContext)
+       type1 == INTEGER.primitiveTypeReference(umlContextProvider)
+       type2 == INTEGER.primitiveTypeReference(umlContextProvider)
+       result = INTEGER.primitiveTypeReference(umlContextProvider)
    }
 } 
 
@@ -440,8 +444,8 @@ from {
     G |- ex.expression : var IUMLTypeReference expType
     G |- ex.context : var CollectionTypeReference contextType
     
-	G |- contextType.valueType <: declarationType : ex.umlContext
-    expType == BOOLEAN.primitiveTypeReference(ex.umlContext)
+	G |- contextType.valueType <: declarationType : ex.umlContextProviderFor
+    expType == BOOLEAN.primitiveTypeReference(ex.umlContextProviderFor)
     result = contextType
 }
 
@@ -450,7 +454,7 @@ rule AssignmentExpression
 from {
     G |- ex.leftHandSide : var IUMLTypeReference leftType
     G |- ex.rightHandSide : var IUMLTypeReference rightType
-    G |- leftType <: rightType : ex.umlContext
+    G |- leftType <: rightType : ex.umlContextProviderFor
     result = rightType
 }
 
@@ -458,16 +462,18 @@ rule PrefixExpression
     G |- PrefixExpression ex : IUMLTypeReference result
 from {
     G |- ex.operand : var IUMLTypeReference opType
-    opType == INTEGER.primitiveTypeReference(ex.umlContext)
-    result = INTEGER.primitiveTypeReference(ex.umlContext)
+    val umlContextProvider = ex.umlContextProviderFor
+    opType == INTEGER.primitiveTypeReference(umlContextProvider)
+    result = INTEGER.primitiveTypeReference(umlContextProvider)
 }
 
 rule PostfixExpression
     G |- PostfixExpression ex : IUMLTypeReference result
 from {
     G |- ex.operand : var IUMLTypeReference opType
-    opType == INTEGER.primitiveTypeReference(ex.umlContext)
-    result = INTEGER.primitiveTypeReference(ex.umlContext)
+    val umlContextProvider = ex.umlContextProviderFor
+    opType == INTEGER.primitiveTypeReference(umlContextProvider)
+    result = INTEGER.primitiveTypeReference(umlContextProvider)
 }
 
 rule ShiftExpression
@@ -475,9 +481,10 @@ rule ShiftExpression
 from {
    G |- ex.operand1 : var IUMLTypeReference op1Type 
    G |- ex.operand2 : var IUMLTypeReference op2Type
-   op1Type == INTEGER.primitiveTypeReference(ex.umlContext)
-   op2Type == INTEGER.primitiveTypeReference(ex.umlContext)
-   result   = INTEGER.primitiveTypeReference(ex.umlContext)
+   val umlContextProvider = ex.umlContextProviderFor
+   op1Type == INTEGER.primitiveTypeReference(umlContextProvider)
+   op2Type == INTEGER.primitiveTypeReference(umlContextProvider)
+   result   = INTEGER.primitiveTypeReference(umlContextProvider)
 }
 
 rule EqualityExpression
@@ -485,12 +492,13 @@ rule EqualityExpression
 from {
     G |- ex.operand1 : var IUMLTypeReference op1Type 
     G |- ex.operand2 : var IUMLTypeReference op2Type
+    val umlContextProvider = ex.umlContextProviderFor
     {
-        G |- op1Type <: op2Type : ex.umlContext
+        G |- op1Type <: op2Type : umlContextProvider
         or
-        G |- op2Type <: op1Type : ex.umlContext
+        G |- op2Type <: op1Type : umlContextProvider
     } 
-    result = BOOLEAN.primitiveTypeReference(ex.umlContext)
+    result = BOOLEAN.primitiveTypeReference(umlContextProvider)
 }
 
 rule RelationalExpression
@@ -498,17 +506,19 @@ rule RelationalExpression
 from {
     G |- ex.operand1 : var IUMLTypeReference op1Type 
     G |- ex.operand2 : var IUMLTypeReference op2Type
-    op1Type == INTEGER.primitiveTypeReference(ex.umlContext) || op1Type == REAL.primitiveTypeReference(ex.umlContext) 
-    op2Type == INTEGER.primitiveTypeReference(ex.umlContext) || op2Type == REAL.primitiveTypeReference(ex.umlContext)
-    result = BOOLEAN.primitiveTypeReference(ex.umlContext)
+    val umlContextProvider = ex.umlContextProviderFor
+    op1Type == INTEGER.primitiveTypeReference(umlContextProvider) || op1Type == REAL.primitiveTypeReference(umlContextProvider) 
+    op2Type == INTEGER.primitiveTypeReference(umlContextProvider) || op2Type == REAL.primitiveTypeReference(umlContextProvider)
+    result = BOOLEAN.primitiveTypeReference(umlContextProvider)
 }
 
 rule LogicalUnaryExpression
     G |- BooleanUnaryExpression ex : IUMLTypeReference result
 from {
     G |- ex.operand : var IUMLTypeReference opType
-    opType == BOOLEAN.primitiveTypeReference(ex.umlContext)
-    result = BOOLEAN.primitiveTypeReference(ex.umlContext)
+    val umlContextProvider = ex.umlContextProviderFor
+    opType == BOOLEAN.primitiveTypeReference(umlContextProvider)
+    result = BOOLEAN.primitiveTypeReference(umlContextProvider)
 }
 
 rule LogicalExpression
@@ -516,14 +526,15 @@ rule LogicalExpression
 from {
     G |- ex.operand1 : var IUMLTypeReference op1Type 
     G |- ex.operand2 : var IUMLTypeReference op2Type
+    val umlContextProvider = ex.umlContextProviderFor
     {
-        op1Type == BOOLEAN.primitiveTypeReference(ex.umlContext)
-        op2Type == BOOLEAN.primitiveTypeReference(ex.umlContext)
-        result = BOOLEAN.primitiveTypeReference(ex.umlContext)
+        op1Type == BOOLEAN.primitiveTypeReference(umlContextProvider)
+        op2Type == BOOLEAN.primitiveTypeReference(umlContextProvider)
+        result = BOOLEAN.primitiveTypeReference(umlContextProvider)
     } or {
-        op1Type == INTEGER.primitiveTypeReference(ex.umlContext)
-        op2Type == INTEGER.primitiveTypeReference(ex.umlContext)
-        result = INTEGER.primitiveTypeReference(ex.umlContext)
+        op1Type == INTEGER.primitiveTypeReference(umlContextProvider)
+        op2Type == INTEGER.primitiveTypeReference(umlContextProvider)
+        result = INTEGER.primitiveTypeReference(umlContextProvider)
     }
 }
 
@@ -532,19 +543,21 @@ rule ConditionalLogicalExpression
 from {
     G |- ex.operand1 : var IUMLTypeReference op1Type 
     G |- ex.operand2 : var IUMLTypeReference op2Type
-    op1Type == BOOLEAN.primitiveTypeReference(ex.umlContext)
-    op2Type == BOOLEAN.primitiveTypeReference(ex.umlContext)
-    result = BOOLEAN.primitiveTypeReference(ex.umlContext)
+    val umlContextProvider = ex.umlContextProviderFor
+    op1Type == BOOLEAN.primitiveTypeReference(umlContextProvider)
+    op2Type == BOOLEAN.primitiveTypeReference(umlContextProvider)
+    result = BOOLEAN.primitiveTypeReference(umlContextProvider)
 }
 
 rule ConditionalTestExpression
     G |- ConditionalTestExpression ex : IUMLTypeReference result
 from {
+    val umlContextProvider = ex.umlContextProviderFor
     G |- ex.operand1 : var IUMLTypeReference condType
     G |- ex.operand2 : var IUMLTypeReference trueType
     G |- ex.operand3 : var IUMLTypeReference falseType
-    G |- trueType <: falseType : ex.umlContext 
-    condType == BOOLEAN.primitiveTypeReference(ex.umlContext)
+    G |- trueType <: falseType : umlContextProvider 
+    condType == BOOLEAN.primitiveTypeReference(umlContextProvider)
     result = trueType
 }
 
@@ -580,17 +593,18 @@ from {
 rule ThisExpression
     G |- ThisExpression ex : IUMLTypeReference result
 from {
-    if (ex.umlContext.getThisType(ex) == null) {
+    val umlContextProvider = ex.umlContextProviderFor
+    if ((umlContextProvider).getThisType(ex) == null) {
         result = anyType
     } else {
-        result = ex.umlContext.getThisType(ex).typeReference
+        result = umlContextProvider.getThisType(ex).typeReference
     }
 }
 
 rule SignalDataExpression
 derives G |- SignalDataExpression ex : IUMLTypeReference result
 from {
-    val signalType = ex.umlContext.getIncomingSignalType(ex)
+    val signalType = ex.umlContextProviderFor.getIncomingSignalType(ex)
     if (signalType == null || signalType.eIsProxy) {
         fail "No incoming signal available in current context"
     } else {
@@ -616,7 +630,7 @@ from {
         ex.linkOperation == LinkOperation.LINK
     }  or {
     } 
-    result = BOOLEAN.primitiveTypeReference(umlContext(ex))
+    result = BOOLEAN.primitiveTypeReference(ex.umlContextProviderFor)
 }
 
 rule CollectionConstructionExpression
@@ -634,7 +648,7 @@ from {
     
     for (element : ex.elements.expressions) {
         G |- element : var IUMLTypeReference elType
-        G |- valueType <: elType : ex.umlContext
+        G |- valueType <: elType : ex.umlContextProviderFor
     }
     if (ex.collectionType != null) {
         result = valueType.collectionOf(ex.collectionType)
@@ -723,7 +737,7 @@ from {
     empty |- st.variable : var IUMLTypeReference varType
     if(st.expression != null){
     	empty |- st.expression : var IUMLTypeReference valueType
-    	empty |- varType <: valueType : st.umlContext
+    	empty |- varType <: valueType : st.umlContextProviderFor
     }
        
 }
@@ -732,14 +746,16 @@ checkrule IfClause for
     IfClause cl
 from {
     empty |- cl.^condition : var IUMLTypeReference condType
-    empty |- condType <: BOOLEAN.primitiveTypeReference(cl.umlContext) : cl.umlContext
+    val umlContextProvider = cl.umlContextProviderFor
+    empty |- condType <: BOOLEAN.primitiveTypeReference(umlContextProvider) : umlContextProvider
 }
 
 checkrule ForStatement for
     ForStatement st
 from {
     empty |- st.^condition : var IUMLTypeReference condType
-    empty |- condType <: BOOLEAN.primitiveTypeReference(st.umlContext) : st.umlContext
+    val umlContextProvider = st.umlContextProviderFor
+    empty |- condType <: BOOLEAN.primitiveTypeReference(umlContextProvider) : umlContextProvider
 }
 
 checkrule ForEachStatement for
@@ -748,7 +764,7 @@ from {
     empty |- st.expression  : var IUMLTypeReference exType
 	empty |- st.variableDefinition  : var IUMLTypeReference defType
 	if(exType instanceof CollectionTypeReference){
-		empty |- exType.valueType <: defType : st.umlContext
+		empty |- exType.valueType <: defType : st.umlContextProviderFor
 	}else{
 		fail
         error "Invalid collection type "
@@ -759,14 +775,16 @@ checkrule WhileStatement for
     WhileStatement st
 from {
     empty |- st.^condition : var IUMLTypeReference condType
-    empty |- condType <: BOOLEAN.primitiveTypeReference(st.umlContext) : st.umlContext
+    val umlContextProvider = st.umlContextProviderFor
+    empty |- condType <: BOOLEAN.primitiveTypeReference(umlContextProvider) : umlContextProvider
 }
 
 checkrule DoStatement for
     DoStatement st
 from {
     empty |- st.^condition : var IUMLTypeReference condType
-    empty |- condType <: BOOLEAN.primitiveTypeReference(st.umlContext) : st.umlContext
+    val umlContextProvider = st.umlContextProviderFor
+    empty |- condType <: BOOLEAN.primitiveTypeReference(umlContextProvider) : umlContextProvider
 }
 
 checkrule SwitchStatement_ for
@@ -774,10 +792,11 @@ checkrule SwitchStatement_ for
 from {
     //Proper type
     empty |- st.expression : var IUMLTypeReference eType
+    val umlContextProvider = st.umlContextProviderFor
     {
-        INTEGER.primitiveTypeReference(st.umlContext) == eType
+        INTEGER.primitiveTypeReference(umlContextProvider) == eType
     } or {
-        STRING.primitiveTypeReference(st.umlContext) == eType
+        STRING.primitiveTypeReference(umlContextProvider) == eType
     }
     //cases match the type
     for(SwitchClause cl : st.nonDefaultClause){
@@ -814,7 +833,8 @@ from {
 checkrule ReturnStatement for
     ReturnStatement st
 from {
-    val returnValue = st.umlContext.getDefinedOperation(st)?.returnParameter
+    val umlContextProvider = st.umlContextProviderFor
+    val returnValue = umlContextProvider.getDefinedOperation(st)?.returnParameter
     {
         returnValue == null    
         st.expression == null
@@ -823,7 +843,7 @@ from {
         st.expression != null
         empty |- st.expression : var IUMLTypeReference exprType
         val returnType = returnValue.type.typeReference
-        empty |- returnType <: exprType : st.umlContext
+        empty |- returnType <: exprType : umlContextProvider
     } or {
         returnValue == null    
         st.expression != null

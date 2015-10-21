@@ -13,6 +13,8 @@ import com.incquerylabs.uml.ralf.resource.ReducedAlfLanguageResource;
 import com.incquerylabs.uml.ralf.scoping.ReducedAlfLanguageLinkingService;
 import com.incquerylabs.uml.ralf.scoping.ReducedAlfLanguageQualifiedNameConverter;
 import com.incquerylabs.uml.ralf.scoping.ReducedAlfLanguageResourceDescriptionStrategy;
+import com.incquerylabs.uml.ralf.scoping.context.IUMLContextProviderAccess;
+import com.incquerylabs.uml.ralf.scoping.context.ResourceBasedUMLContextProviderAccess;
 
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
@@ -42,4 +44,7 @@ public class ReducedAlfLanguageRuntimeModule extends com.incquerylabs.uml.ralf.A
 		return ReducedAlfLanguageLinkingService.class;
 	}
     
+	public Class<? extends IUMLContextProviderAccess> bindIUMLContextProviderAccess() {
+		return ResourceBasedUMLContextProviderAccess.class;
+	}
 }
