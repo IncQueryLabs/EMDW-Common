@@ -44,7 +44,7 @@
       </eParameters>
     </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="base_Class" ordered="false"
-        lowerBound="1" eType="ecore:EClass ../../org.eclipse.uml2.uml/model/UML.ecore#//Class"/>
+        lowerBound="1" eType="ecore:EClass http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ExternalEntity">
     <eOperations name="AllOperationsAreStatic" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
@@ -257,15 +257,15 @@
       </eParameters>
     </eOperations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="class" ordered="false"
-        lowerBound="1" eType="ecore:EDataType ../../org.eclipse.uml2.types/model/Types.ecore#//String"/>
+        lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/uml2/5.0.0/Types#//String"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" ordered="false" lowerBound="1"
         eType="#//EntityType" defaultValueLiteral="Stateless"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="externalHeaderLocation"
-        ordered="false" eType="ecore:EDataType ../../org.eclipse.uml2.types/model/Types.ecore#//String"/>
+        ordered="false" eType="ecore:EDataType http://www.eclipse.org/uml2/5.0.0/Types#//String"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="externalNamespace" ordered="false"
-        eType="ecore:EDataType ../../org.eclipse.uml2.types/model/Types.ecore#//String"/>
+        eType="ecore:EDataType http://www.eclipse.org/uml2/5.0.0/Types#//String"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="base_Class" ordered="false"
-        lowerBound="1" eType="ecore:EClass ../../org.eclipse.uml2.uml/model/UML.ecore#//Class"/>
+        lowerBound="1" eType="ecore:EClass http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="EntityType">
     <eLiterals name="Stateless"/>
