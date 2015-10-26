@@ -15,7 +15,7 @@ import com.incquerylabs.uml.ralf.scoping.IUMLContextProvider;
 
 public class ReducedAlfLanguageResource extends LazyLinkingResource {
 
-	@Inject
+	@Inject(optional = true)
 	private IUMLContextProvider umlContextProvider;
 
 	public IUMLContextProvider getUmlContextProvider() {
