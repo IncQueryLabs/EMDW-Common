@@ -5,7 +5,6 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.incquerylabs.emdw</groupId>
 	<artifactId>com.incquerylabs.emdw.common</artifactId>
-	<name>EMDW-Common</name>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 

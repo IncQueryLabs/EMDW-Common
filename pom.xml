@@ -5,6 +5,7 @@
 
 	<groupId>com.incquerylabs.emdw</groupId>
 	<artifactId>com.incquerylabs.emdw.common.root</artifactId>
+	<name>EMDW-Common</name>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
