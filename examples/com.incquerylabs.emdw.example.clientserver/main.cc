@@ -21,9 +21,9 @@ int main(int , char **) {
 	client->perform_initialization();
 	server->perform_initialization();
 
-	::ClientServer::Component::Server::Response_event* start_event = new ::ClientServer::Component::Server::Response_event(false);
+	::ClientServer::Component::Server::Response_event* start_event = new ::ClientServer::Component::Server::Response_event();
 	start_event->id = 1;
-	client->generate_event(start_event);
+	client->generate_internal_event(start_event);
 
 	for (int i = 0; i < 50; ++i) {
 	    comp->process();
