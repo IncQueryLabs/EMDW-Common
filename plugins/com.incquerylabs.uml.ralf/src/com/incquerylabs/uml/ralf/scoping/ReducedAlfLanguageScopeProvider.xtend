@@ -33,6 +33,7 @@ import com.google.common.base.Function
 import org.eclipse.xtext.naming.QualifiedName
 import org.eclipse.xtext.scoping.impl.MapBasedScope
 import com.incquerylabs.uml.ralf.scoping.context.IUMLContextProviderAccess
+import com.incquerylabs.uml.ralf.reducedAlfLanguage.ReducedAlfLanguagePackage
 
 /**
  * This class contains custom scoping description.
@@ -108,7 +109,7 @@ class ReducedAlfLanguageScopeProvider extends AbstractDeclarativeScopeProvider {
     
     def IScope scope_NamedElement(EObject block, IScope externalScope) {
         var parentBlock = block.eContainer
-        if (parentBlock == null) {
+        if (parentBlock == null || parentBlock.eClass.EPackage.nsURI != ReducedAlfLanguagePackage.eNS_URI) {
             getParametersScope(externalScope, block.umlContextProviderFor, block)
         } else {
             val parentScope = scope_NamedElement(parentBlock, externalScope)
@@ -161,7 +162,7 @@ class ReducedAlfLanguageScopeProvider extends AbstractDeclarativeScopeProvider {
         localAndQualifiedScopes(elements, IScope.NULLSCOPE, _context, umlContext)
     }
     
-    private def IScope getParametersScope(IScope parentScope, IUMLContextProvider umlContext, EObject _context) {
+    protected def IScope getParametersScope(IScope parentScope, IUMLContextProvider umlContext, EObject _context) {
         var IScope returnScope = parentScope
         val operation = umlContext.getDefinedOperation(_context)
         if (operation == null) {

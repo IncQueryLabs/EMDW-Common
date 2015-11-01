@@ -12,7 +12,6 @@ import java.util.Map
 import com.incquerylabs.uml.ralf.types.IUMLTypeReference.VoidTypeReference
 import com.google.inject.Injector
 import org.eclipse.emf.ecore.EObject
-import com.incquerylabs.uml.ralf.resource.ReducedAlfLanguageResource
 import org.eclipse.uml2.uml.MultiplicityElement
 import org.eclipse.uml2.uml.Parameter
 import com.incquerylabs.uml.ralf.scoping.context.IUMLContextProviderAccess
@@ -21,18 +20,14 @@ class TypeFactory {
     
     @Inject var Injector injector
     Map<String, PrimitiveTypeReference> primitiveTypeMap = newHashMap()
+    @Inject IUMLContextProviderAccess access
     
     /**
      * @deprecated use {@link IUMLContextProviderAccess#umlContextProviderFor(EObject)} instead
      */
     @Deprecated
     def IUMLContextProvider umlContext(EObject obj) {
-        val resource = obj.eResource
-        if (resource instanceof ReducedAlfLanguageResource) {
-            (resource as ReducedAlfLanguageResource).umlContextProvider
-        } else {
-            throw new IllegalArgumentException('''EObject «obj» is not contained in an rAlf Resource.''')
-        }
+        access.getUmlContextProviderFor(obj)
         
     }
     

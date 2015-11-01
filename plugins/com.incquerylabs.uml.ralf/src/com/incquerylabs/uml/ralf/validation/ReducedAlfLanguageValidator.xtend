@@ -28,11 +28,11 @@ import org.eclipse.uml2.uml.UMLPackage
 import org.eclipse.xtext.naming.QualifiedName
 import org.eclipse.xtext.validation.Check
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.ThisExpression
-import com.incquerylabs.uml.ralf.resource.ReducedAlfLanguageResource
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.FilterVariable
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 import org.eclipse.xtext.naming.IQualifiedNameConverter
 import org.eclipse.uml2.uml.NamedElement
+import com.incquerylabs.uml.ralf.scoping.context.IUMLContextProviderAccess
 
 /**
  * This class contains custom validation rules. 
@@ -45,6 +45,8 @@ class ReducedAlfLanguageValidator extends ReducedAlfSystemValidator {
     ReducedAlfLanguageScopeProvider scopeProvider
     @Inject
     IQualifiedNameConverter nameConverter
+    @Inject
+    IUMLContextProviderAccess access
     
     public static val CODE_INVALID_ASSOCIATION = "invalid_association"
     public static val CODE_INVALID_FEATURE = "invalid_feature"
@@ -197,7 +199,7 @@ class ReducedAlfLanguageValidator extends ReducedAlfSystemValidator {
 	
 	@Check
 	def checkThisExpression(ThisExpression ex) {
-	    val op = (ex.eResource as ReducedAlfLanguageResource).umlContextProvider.getDefinedOperation(ex)
+	    val op = access.getUmlContextProviderFor(ex)?.getDefinedOperation(ex)
 	    
 	    if (op != null && op.static) {
 	        error('''Cannot use this in static operation «op.name»''', ex, null, CODE_THIS_IN_STATIC)

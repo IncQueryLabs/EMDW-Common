@@ -339,19 +339,19 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
     return this.ralfPackage;
   }
   
-  public Object getREAL() {
+  public String getREAL() {
     return this.REAL;
   }
   
-  public Object getINTEGER() {
+  public String getINTEGER() {
     return this.INTEGER;
   }
   
-  public Object getBOOLEAN() {
+  public String getBOOLEAN() {
     return this.BOOLEAN;
   }
   
-  public Object getSTRING() {
+  public String getSTRING() {
     return this.STRING;
   }
   

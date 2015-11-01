@@ -20,6 +20,7 @@ import com.incquerylabs.uml.ralf.reducedAlfLanguage.FeatureInvocationExpression;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.StaticFeatureInvocationExpression;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.Tuple;
 import com.incquerylabs.uml.ralf.resource.ReducedAlfLanguageResource;
+import com.incquerylabs.uml.ralf.scoping.context.IUMLContextProviderAccess;
 import com.incquerylabs.uml.ralf.types.IUMLTypeReference;
 
 import it.xsemantics.runtime.Result;
@@ -30,6 +31,8 @@ public class ReducedAlfLanguageLinkingService extends DefaultLinkingService {
 	ReducedAlfSystem typeSystem;
 	@Inject
 	OperationCandidateChecker candidateChecker;
+	@Inject
+	IUMLContextProviderAccess access;
 	
 	@Override
 	public List<EObject> getLinkedObjects(EObject context, EReference ref, INode node) throws IllegalNodeException {
@@ -37,7 +40,7 @@ public class ReducedAlfLanguageLinkingService extends DefaultLinkingService {
 		//If the linked object is an operation, search for possible alternates
 		if (linkedObjects.size() == 1 && linkedObjects.get(0) instanceof Operation) {
 			Operation op = (Operation) linkedObjects.get(0);
-			IUMLContextProvider umlContext = ((ReducedAlfLanguageResource)context.eResource()).getUmlContextProvider();
+			IUMLContextProvider umlContext = access.getUmlContextProviderFor(context);
 			Set<Operation> candidates = null;
 			Type contextType = null;
 			Tuple parameters = null;
