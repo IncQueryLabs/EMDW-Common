@@ -53,7 +53,6 @@
 		<sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
 		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
 		<sonar.jacoco.reportPath>${jacoco.targetdir}/jacoco.exec</sonar.jacoco.reportPath>
-		<sonar.sources>pom.xml,src,src-gen,xsemantics-gen,xtend-gen</sonar.sources>
 	</properties>
 
 	<repositories>
