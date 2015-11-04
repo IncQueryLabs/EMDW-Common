@@ -8,6 +8,7 @@ import com.google.inject.Inject
 import com.incquerylabs.uml.ralf.ReducedAlfSystem
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.AssociationAccessExpression
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.Block
+import com.incquerylabs.uml.ralf.reducedAlfLanguage.EnumLiteralAccessExpression
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.Expression
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.FeatureInvocationExpression
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.FilterExpression
@@ -26,6 +27,7 @@ import org.eclipse.uml2.uml.Classifier
 import org.eclipse.uml2.uml.NamedElement
 import org.eclipse.uml2.uml.PrimitiveType
 import org.eclipse.xtext.naming.IQualifiedNameConverter
+import org.eclipse.xtext.naming.QualifiedName
 import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.Scopes
 import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider
@@ -78,7 +80,7 @@ class ReducedAlfLanguageScopeProvider extends AbstractDeclarativeScopeProvider {
     
     def IScope scope_Classifier(EObject context, EReference reference) {
         val uml = context.umlContextProviderFor
-        localAndQualifiedScopes(Iterables.<NamedElement>concat(uml.knownClasses, uml.knownSignals), context, uml)
+        localAndQualifiedScopes(Iterables.<NamedElement>concat(uml.knownClasses, uml.knownSignals, uml.knownEnums), context, uml)
     }
     
     def IScope scope_Class(EObject context, EReference reference) {
@@ -91,6 +93,10 @@ class ReducedAlfLanguageScopeProvider extends AbstractDeclarativeScopeProvider {
         
     def IScope scope_Association(EObject ctx, EReference ref) {
         scopeFor(ctx.umlContextProviderFor.knownAssociations)
+    }
+    
+    def IScope scope_Enumeration(EObject ctx, EReference ref) {
+        scopeFor(ctx.umlContextProviderFor.knownEnums)
     }
     
     def scope_NamedElement(Expression context, EReference reference) {
@@ -265,5 +271,10 @@ class ReducedAlfLanguageScopeProvider extends AbstractDeclarativeScopeProvider {
         } 
         return IScope.NULLSCOPE
     }
+    
+    def IScope scope_EnumLiteralAccessExpression_literal(EnumLiteralAccessExpression ctx, EReference ref) {
+         scopeFor(ctx.context.ownedLiterals)
+    }
+    
 
 }

@@ -23,6 +23,7 @@ import org.eclipse.uml2.uml.Association;
 import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.DataType;
+import org.eclipse.uml2.uml.Enumeration;
 import org.eclipse.uml2.uml.OpaqueBehavior;
 import org.eclipse.uml2.uml.OpaqueExpression;
 import org.eclipse.uml2.uml.Operation;
@@ -41,6 +42,7 @@ import com.incquerylabs.emdw.umlintegration.queries.AssociationsOfClassifierMatc
 import com.incquerylabs.emdw.umlintegration.queries.AttributesOfClassifierMatcher;
 import com.incquerylabs.emdw.umlintegration.queries.CommonAncestorSignalMatcher;
 import com.incquerylabs.emdw.umlintegration.queries.ConstructorByNameMatcher;
+import com.incquerylabs.emdw.umlintegration.queries.EnumsMatcher;
 import com.incquerylabs.emdw.umlintegration.queries.OperationsOfClassByNameMatcher;
 import com.incquerylabs.emdw.umlintegration.queries.OperationsOfClassMatcher;
 import com.incquerylabs.emdw.umlintegration.queries.SignalsMatcher;
@@ -110,7 +112,8 @@ public abstract class UMLContextProvider extends AbstractUMLContextProvider {
 		
 		return Sets.<Type>union(getPrimitiveTypes(),
 				Sets.<Type>union(getKnownClassesSet(),
-				 Sets.<Type>union(getKnownSignals(), getKnownAssociations())));
+				 Sets.<Type>union(getKnownSignals(), 
+				   Sets.<Type>union(getKnownEnums(), getKnownAssociations()))));
 	}
 	
 	@Override
@@ -124,6 +127,20 @@ public abstract class UMLContextProvider extends AbstractUMLContextProvider {
 		}
 		return Sets.newHashSet();
 	}
+	
+	@Override
+	public Set<Enumeration> getKnownEnums() {
+	    try {
+            EnumsMatcher matcher = EnumsMatcher.on(getEngine());
+            return matcher.getAllValuesOfenum();
+        } catch (IncQueryException | IncQueryBaseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return Sets.newHashSet();
+	};
+	
+	
 	
     @Override
 	public Set<Association> getKnownAssociations() {
@@ -273,6 +290,6 @@ public abstract class UMLContextProvider extends AbstractUMLContextProvider {
 //				filter(it -> it.isStatic()).
 				collect(Collectors.toList());	
 	}
-	
+
 	
 }

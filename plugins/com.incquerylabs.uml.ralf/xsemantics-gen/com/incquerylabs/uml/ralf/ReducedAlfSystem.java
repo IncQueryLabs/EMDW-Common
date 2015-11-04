@@ -16,6 +16,7 @@ import com.incquerylabs.uml.ralf.reducedAlfLanguage.ConditionalLogicalExpression
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.ConditionalTestExpression;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.DoStatement;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.ElementCollectionExpression;
+import com.incquerylabs.uml.ralf.reducedAlfLanguage.EnumLiteralAccessExpression;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.EqualityExpression;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.Expression;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.ExpressionList;
@@ -84,6 +85,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.uml2.uml.Association;
 import org.eclipse.uml2.uml.Classifier;
+import org.eclipse.uml2.uml.Enumeration;
 import org.eclipse.uml2.uml.Feature;
 import org.eclipse.uml2.uml.NamedElement;
 import org.eclipse.uml2.uml.Operation;
@@ -201,6 +203,8 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
   public final static String INSTANCEDELETIONEXPRESSION = "com.incquerylabs.uml.ralf.InstanceDeletionExpression";
   
   public final static String THISEXPRESSION = "com.incquerylabs.uml.ralf.ThisExpression";
+  
+  public final static String ENUMLITERALACCESSEXPRESSION = "com.incquerylabs.uml.ralf.EnumLiteralAccessExpression";
   
   public final static String SIGNALDATAEXPRESSION = "com.incquerylabs.uml.ralf.SignalDataExpression";
   
@@ -881,8 +885,7 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
     targetType = (UMLTypeReference) result_1.getFirst();
     
     Type _umlType = signalType.getUmlType();
-    boolean _not = (!(_umlType instanceof Signal));
-    if (_not) {
+    if ((!(_umlType instanceof Signal))) {
       /* fail error "Invalid signal type " + signalType.umlType.name source st.signal */
       Type _umlType_1 = signalType.getUmlType();
       String _name = _umlType_1.getName();
@@ -893,8 +896,7 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
       throwForExplicitFail(error, new ErrorInformation(source, null));
     }
     Type _umlType_2 = targetType.getUmlType();
-    boolean _not_1 = (!(_umlType_2 instanceof org.eclipse.uml2.uml.Class));
-    if (_not_1) {
+    if ((!(_umlType_2 instanceof org.eclipse.uml2.uml.Class))) {
       /* fail error "Invalid signal target " + targetType.umlType.name source st.target */
       Type _umlType_3 = targetType.getUmlType();
       String _name_1 = _umlType_3.getName();
@@ -1112,22 +1114,20 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
     boolean _isEmpty = candidates.isEmpty();
     if (_isEmpty) {
       boolean _or = false;
-      Tuple _parameters_2 = ex.getParameters();
-      boolean _not = (!(_parameters_2 instanceof ExpressionList));
-      if (_not) {
+      if ((!(ex.getParameters() instanceof ExpressionList))) {
         _or = true;
       } else {
-        Tuple _parameters_3 = ex.getParameters();
-        EList<Expression> _expressions = ((ExpressionList) _parameters_3).getExpressions();
+        Tuple _parameters_2 = ex.getParameters();
+        EList<Expression> _expressions = ((ExpressionList) _parameters_2).getExpressions();
         boolean _isEmpty_1 = _expressions.isEmpty();
-        boolean _not_1 = (!_isEmpty_1);
-        _or = _not_1;
+        boolean _not = (!_isEmpty_1);
+        _or = _not;
       }
       if (_or) {
         /* fail error "Default constructor cannot have parameters" source ex.parameters */
         String error = "Default constructor cannot have parameters";
-        Tuple _parameters_4 = ex.getParameters();
-        EObject source = _parameters_4;
+        Tuple _parameters_3 = ex.getParameters();
+        EObject source = _parameters_3;
         throwForExplicitFail(error, new ErrorInformation(source, null));
       }
     } else {
@@ -1135,8 +1135,8 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
       if (_isEmpty_2) {
         /* fail error "No constructors match parameters" source ex.parameters */
         String error_1 = "No constructors match parameters";
-        Tuple _parameters_5 = ex.getParameters();
-        EObject source_1 = _parameters_5;
+        Tuple _parameters_4 = ex.getParameters();
+        EObject source_1 = _parameters_4;
         throwForExplicitFail(error_1, new ErrorInformation(source_1, null));
       } else {
         int _size = filteredCandidates.size();
@@ -1144,13 +1144,13 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
         if (_equals) {
           /* empty |- filteredCandidates.get(0) <: ex.parameters <: ex */
           Operation _get = filteredCandidates.get(0);
-          Tuple _parameters_6 = ex.getParameters();
-          operationParametersTypeInternal(emptyEnvironment(), _trace_, _get, _parameters_6, ex);
+          Tuple _parameters_5 = ex.getParameters();
+          operationParametersTypeInternal(emptyEnvironment(), _trace_, _get, _parameters_5, ex);
         } else {
           /* fail error "Multiple constructor candidates match the parameters" source ex.parameters */
           String error_2 = "Multiple constructor candidates match the parameters";
-          Tuple _parameters_7 = ex.getParameters();
-          EObject source_2 = _parameters_7;
+          Tuple _parameters_6 = ex.getParameters();
+          EObject source_2 = _parameters_6;
           throwForExplicitFail(error_2, new ErrorInformation(source_2, null));
         }
       }
@@ -3397,9 +3397,8 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
           sneakyThrowRuleFailedException("ex.instance != null");
         }
         Classifier _instance_3 = ex.getInstance();
-        boolean _not = (!(_instance_3 instanceof PrimitiveType));
         /* !(ex.instance instanceof PrimitiveType) */
-        if (!_not) {
+        if (!(!(_instance_3 instanceof PrimitiveType))) {
           sneakyThrowRuleFailedException("!(ex.instance instanceof PrimitiveType)");
         }
         Classifier _instance_4 = ex.getInstance();
@@ -3439,9 +3438,8 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
     refType = (UMLTypeReference) result_1.getFirst();
     
     Type _umlType = refType.getUmlType();
-    boolean _not = (!(_umlType instanceof PrimitiveType));
     /* !(refType.umlType instanceof PrimitiveType) */
-    if (!_not) {
+    if (!(!(_umlType instanceof PrimitiveType))) {
       sneakyThrowRuleFailedException("!(refType.umlType instanceof PrimitiveType)");
     }
     IUMLTypeReference.VoidTypeReference _voidType = this.typeFactory.voidType();
@@ -3481,6 +3479,38 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
       IUMLTypeReference _typeReference = this.typeFactory.typeReference(_thisType_1);
       result = _typeReference;
     }
+    return new Result<IUMLTypeReference>(result);
+  }
+  
+  protected Result<IUMLTypeReference> typeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final EnumLiteralAccessExpression ex) throws RuleFailedException {
+    try {
+    	final RuleApplicationTrace _subtrace_ = newTrace(_trace_);
+    	final Result<IUMLTypeReference> _result_ = applyRuleEnumLiteralAccessExpression(G, _subtrace_, ex);
+    	addToTrace(_trace_, new Provider<Object>() {
+    		public Object get() {
+    			return ruleName("EnumLiteralAccessExpression") + stringRepForEnv(G) + " |- " + stringRep(ex) + " : " + stringRep(_result_.getFirst());
+    		}
+    	});
+    	addAsSubtrace(_trace_, _subtrace_);
+    	return _result_;
+    } catch (Exception e_applyRuleEnumLiteralAccessExpression) {
+    	typeThrowException(ruleName("EnumLiteralAccessExpression") + stringRepForEnv(G) + " |- " + stringRep(ex) + " : " + "IUMLTypeReference",
+    		ENUMLITERALACCESSEXPRESSION,
+    		e_applyRuleEnumLiteralAccessExpression, ex, new ErrorInformation[] {new ErrorInformation(ex)});
+    	return null;
+    }
+  }
+  
+  protected Result<IUMLTypeReference> applyRuleEnumLiteralAccessExpression(final RuleEnvironment G, final RuleApplicationTrace _trace_, final EnumLiteralAccessExpression ex) throws RuleFailedException {
+    IUMLTypeReference result = null; // output parameter
+    /* G |- ex.context : var IUMLTypeReference contextType */
+    Enumeration _context = ex.getContext();
+    IUMLTypeReference contextType = null;
+    Result<IUMLTypeReference> result_1 = typeInternal(G, _trace_, _context);
+    checkAssignableTo(result_1.getFirst(), IUMLTypeReference.class);
+    contextType = (IUMLTypeReference) result_1.getFirst();
+    
+    result = contextType;
     return new Result<IUMLTypeReference>(result);
   }
   

@@ -84,7 +84,8 @@ BaseExpression returns Expression :
     FeatureExpression |
     NullExpression |
     NameExpression | 
-    ParenthesizedExpression 
+    ParenthesizedExpression | 
+    EnumLiteralAccessExpression
 ;
 
 /* LITERAL EXPRESSIONS */
@@ -94,6 +95,9 @@ LiteralExpression returns LiteralExpression :
     RealLiteralExpression |
     StringLiteralExpression
 ;
+
+
+
 
 BooleanLiteralExpression :
     value = BOOLEAN_VALUE
@@ -195,6 +199,10 @@ FeatureExpression :
         {StaticFeatureInvocationExpression.operation=current}
         parameters = Tuple
     )
+;
+
+EnumLiteralAccessExpression :
+	context = [uml::Enumeration|QualifiedName]  '-->' literal = [uml::EnumerationLiteral|QualifiedName] 
 ;
 
 enum LinkOperation :

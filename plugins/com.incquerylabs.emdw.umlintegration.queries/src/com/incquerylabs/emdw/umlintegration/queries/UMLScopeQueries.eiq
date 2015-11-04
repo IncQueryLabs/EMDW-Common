@@ -6,6 +6,10 @@ pattern signals(sig : Signal) {
     Signal(sig);
 }
 
+pattern enums(enum : Enumeration) {
+    Enumeration(enum);
+}
+
 pattern umlTypes(type : Type) {
     Type(type);
 }

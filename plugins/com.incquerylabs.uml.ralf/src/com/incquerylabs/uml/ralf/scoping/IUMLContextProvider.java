@@ -6,6 +6,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.uml2.uml.Association;
 import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Classifier;
+import org.eclipse.uml2.uml.Enumeration;
 import org.eclipse.uml2.uml.Operation;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Signal;
@@ -28,6 +29,7 @@ public interface IUMLContextProvider {
 	Iterable<Class> getKnownClasses();
 	Iterable<Signal> getKnownSignals();
 	Iterable<Association> getKnownAssociations();
+	Iterable<Enumeration> getKnownEnums();
 
 	Type getPrimitiveType(String name);
 	Classifier getCollectionType(CollectionType typeDescriptor);

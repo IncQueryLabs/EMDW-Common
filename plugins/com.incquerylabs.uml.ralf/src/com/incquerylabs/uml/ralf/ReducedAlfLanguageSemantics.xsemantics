@@ -79,6 +79,7 @@ import org.eclipse.uml2.uml.Property
 import org.eclipse.uml2.uml.Signal
 import org.eclipse.uml2.uml.Type
 import org.eclipse.uml2.uml.UMLPackage
+import com.incquerylabs.uml.ralf.reducedAlfLanguage.EnumLiteralAccessExpression
 
 inject extension TypeFactory typeFactory
 inject extension UMLScopeHelper scopeHelper
@@ -599,6 +600,13 @@ from {
     } else {
         result = umlContextProvider.getThisType(ex).typeReference
     }
+}
+
+rule EnumLiteralAccessExpression
+	G |- EnumLiteralAccessExpression ex : IUMLTypeReference result
+from {
+    G |- ex.context : var IUMLTypeReference contextType
+    result = contextType
 }
 
 rule SignalDataExpression
