@@ -8,7 +8,6 @@ import com.google.inject.Inject
 import com.incquerylabs.uml.ralf.ReducedAlfSystem
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.AssociationAccessExpression
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.Block
-import com.incquerylabs.uml.ralf.reducedAlfLanguage.EnumLiteralAccessExpression
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.Expression
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.FeatureInvocationExpression
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.FilterExpression
@@ -130,7 +129,8 @@ class ReducedAlfLanguageScopeProvider extends AbstractDeclarativeScopeProvider {
     
     private def IScope scopeOfTypes(EObject _context, IUMLContextProvider umlContext) {
         val knownTypes = umlContext.knownTypes
-        localAndQualifiedScopes(knownTypes, _context, umlContext)
+        val knownLiterals = umlContext.knownEnumLiterals
+        localAndQualifiedScopes(knownTypes + knownLiterals, _context, umlContext)
     }
     
     private def IScope localScope(Iterable<? extends NamedElement> elements, String qualifiedName, IScope parentScope) {
@@ -271,10 +271,5 @@ class ReducedAlfLanguageScopeProvider extends AbstractDeclarativeScopeProvider {
         } 
         return IScope.NULLSCOPE
     }
-    
-    def IScope scope_EnumLiteralAccessExpression_literal(EnumLiteralAccessExpression ctx, EReference ref) {
-         scopeFor(ctx.context.ownedLiterals)
-    }
-    
 
 }

@@ -79,7 +79,7 @@ import org.eclipse.uml2.uml.Property
 import org.eclipse.uml2.uml.Signal
 import org.eclipse.uml2.uml.Type
 import org.eclipse.uml2.uml.UMLPackage
-import com.incquerylabs.uml.ralf.reducedAlfLanguage.EnumLiteralAccessExpression
+import org.eclipse.uml2.uml.EnumerationLiteral
 
 inject extension TypeFactory typeFactory
 inject extension UMLScopeHelper scopeHelper
@@ -245,6 +245,12 @@ rule Property
 from {
      !property.eIsProxy
      result = property.typeOf
+}
+
+rule EnumerationLiteral
+    derives G |- EnumerationLiteral literal : IUMLTypeReference result
+from {
+    result = literal.enumeration.typeReference
 }
 /**
  * Subtyping and assignability
@@ -600,13 +606,6 @@ from {
     } else {
         result = umlContextProvider.getThisType(ex).typeReference
     }
-}
-
-rule EnumLiteralAccessExpression
-	G |- EnumLiteralAccessExpression ex : IUMLTypeReference result
-from {
-    G |- ex.context : var IUMLTypeReference contextType
-    result = contextType
 }
 
 rule SignalDataExpression

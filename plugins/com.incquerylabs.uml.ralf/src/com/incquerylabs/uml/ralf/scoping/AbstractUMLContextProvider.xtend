@@ -114,6 +114,10 @@ abstract class AbstractUMLContextProvider implements IUMLContextProvider {
         }
     }
 
+    override getKnownEnumLiterals() {
+        knownEnums.map[it.ownedLiterals].flatten.toSet
+    }
+
     override getIncomingSignalType(EObject _context) {
         return null
     }
