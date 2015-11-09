@@ -629,7 +629,7 @@ public class ReducedAlfSystem extends XsemanticsRuntimeSystem {
   
   protected Result<Boolean> localNameDeclarationStatementTypeInternal(final RuleApplicationTrace _trace_, final LocalNameDeclarationStatement st) throws RuleFailedException {
     /* empty |- st.variable : var IUMLTypeReference varType */
-    Variable _variable = st.getVariable();
+    NamedElement _variable = st.getVariable();
     IUMLTypeReference varType = null;
     Result<IUMLTypeReference> result = typeInternal(emptyEnvironment(), _trace_, _variable);
     checkAssignableTo(result.getFirst(), IUMLTypeReference.class);
