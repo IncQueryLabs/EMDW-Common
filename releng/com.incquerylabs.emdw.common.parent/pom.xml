@@ -82,17 +82,17 @@
 		<repository>
 			<id>xtext</id>
 			<layout>p2</layout>
-			<url>${xtext.repository.url}</url>
+			<url>${xtext.repo.url}</url>
 		</repository>
 		<repository>
 			<id>orbit</id>
 			<layout>p2</layout>
-			<url>${orbit.repository.url}</url>
+			<url>${orbit.repo.url}</url>
 		</repository>
 		<repository>
 			<id>xsemantics</id>
 			<layout>p2</layout>
-			<url>${xsemantics.repository.url}</url>
+			<url>${xsemantics.repo.url}</url>
 		</repository>
 	</repositories>
 	<pluginRepositories>
