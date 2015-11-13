@@ -12,9 +12,6 @@
    <feature url="features/com.incquerylabs.uml.ralf.feature_1.0.0.qualifier.jar" id="com.incquerylabs.uml.ralf.feature" version="1.0.0.qualifier">
       <category name="com.incquerylabs.emdw.update"/>
    </feature>
-   <feature url="features/it.xsemantics.feature_1.8.0.v20150331-0735.jar" id="it.xsemantics.feature" version="1.8.0.v20150331-0735">
-      <category name="com.incquerylabs.emdw.update.developer"/>
-   </feature>
    <feature url="features/org.eclipse.incquery.sdk.feature_1.0.1.201508191609.jar" id="org.eclipse.incquery.sdk.feature" version="1.0.1.201508191609">
       <category name="com.incquerylabs.emdw.update.developer"/>
    </feature>
@@ -26,6 +23,9 @@
    </feature>
    <feature url="features/org.eclipse.papyrus.sdk.feature_1.1.0.201506191540.jar" id="org.eclipse.papyrus.sdk.feature" version="1.1.0.201506191540">
       <category name="com.incquerylabs.emdw.update"/>
+   </feature>
+   <feature url="features/it.xsemantics.sdk_1.8.1.v20151009-0657.jar" id="it.xsemantics.sdk" version="1.8.1.v20151009-0657">
+      <category name="com.incquerylabs.emdw.update.developer"/>
    </feature>
    <category-def name="com.incquerylabs.emdw.update" label="xUML-RT Model Compiler"/>
    <category-def name="com.incquerylabs.emdw.update.developer" label="xUML-RT Model Compiler Developer Features"/>
