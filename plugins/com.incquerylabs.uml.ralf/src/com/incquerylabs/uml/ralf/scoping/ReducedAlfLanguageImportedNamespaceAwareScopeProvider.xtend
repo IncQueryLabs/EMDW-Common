@@ -25,9 +25,9 @@ class ReducedAlfLanguageImportedNamespaceAwareScopeProvider extends ImportedName
         return getLocalElementsScope(result, context, reference);
     }
 
-    override getImplicitImports(boolean ignoreCase) {
-        newArrayList(createImportedNamespaceResolver("PrimitiveTypes", ignoreCase))
-    }
+//    override getImplicitImports(boolean ignoreCase) {
+//        newArrayList()
+//    }
 
     override List<ImportNormalizer> internalGetImportedNamespaceResolvers(EObject context, boolean ignoreCase) {
         val importedNamespaceResolvers = Lists.newArrayList();
@@ -41,6 +41,7 @@ class ReducedAlfLanguageImportedNamespaceAwareScopeProvider extends ImportedName
                 qualifiedName = qualifiedName.skipLast(1)
             }
         }
+        importedNamespaceResolvers += doCreateImportNormalizer(nameConverter.toQualifiedName("PrimitiveTypes"), true, ignoreCase)
         return importedNamespaceResolvers;
     }
 

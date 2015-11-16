@@ -11,27 +11,44 @@ import org.eclipse.uml2.uml.UMLPackage.Literals
 import com.incquerylabs.uml.ralf.scoping.context.IUMLContextProviderAccess
 import org.eclipse.xtext.scoping.Scopes
 import org.eclipse.xtext.naming.IQualifiedNameConverter
-import com.google.common.collect.Iterables
 import org.eclipse.xtext.naming.QualifiedName
 import org.eclipse.uml2.uml.NamedElement
 import com.google.common.base.Function
+import org.eclipse.xtext.util.IResourceScopeCache
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.xtext.scoping.impl.MapBasedScope
 
 class ReducedAlfLanguageGlobalScopeProvider extends DefaultGlobalScopeProvider {
     
     @Inject
-    IUMLContextProviderAccess contextProviderAccess
+    private IUMLContextProviderAccess contextProviderAccess
     @Inject
-    IQualifiedNameConverter nameConverter
+    private IQualifiedNameConverter nameConverter
+    @Inject
+    private IResourceScopeCache cache
     
-    Function<NamedElement, QualifiedName> nameCalculation = [
-                nameConverter.toQualifiedName(it.qualifiedName)
-            ]
+    private def Function<NamedElement, QualifiedName> nameCalculation(IUMLContextProvider contextProvider) {
+        [
+            nameConverter.toQualifiedName(contextProvider.getQualifiedName(it))
+        ]
+    }
     
+    private def <T extends EObject> IScope scopeFor(Iterable<? extends T> elements,
+            Function<T, QualifiedName> nameComputation, IScope outer) {
+//        Scopes.scopeFor(elements, nameComputation, outer)
+        MapBasedScope.createScope(outer, Scopes.scopedElementsFor(elements, nameComputation))
+    }
     
     override protected IScope getScope(IScope parent, Resource context, boolean ignoreCase, EClass type,
         Predicate<IEObjectDescription> filter) {
-        val contextProvider = contextProviderAccess.getUmlContextProviderFor(context)
+        cache.get(type, context) [
+            internalGetScope(parent, context, ignoreCase, type, filter)
+        ]        
+    }
 
+    protected def IScope internalGetScope(IScope parent, Resource context, boolean ignoreCase, EClass type,
+        Predicate<IEObjectDescription> filter) {
+        val contextProvider = contextProviderAccess.getUmlContextProviderFor(context)
         
         if (Literals.CLASS.isSuperTypeOf(type)) {
             return classScope(contextProvider, parent)
@@ -56,37 +73,37 @@ class ReducedAlfLanguageGlobalScopeProvider extends DefaultGlobalScopeProvider {
     }
 
     protected def IScope classScope(IUMLContextProvider contextProvider, IScope parent) {
-        return Scopes.scopeFor(contextProvider.knownClasses, nameCalculation, parent)
+        return scopeFor(contextProvider.knownClasses.toSet, contextProvider.nameCalculation, parent)
     }
     
     protected def IScope signalScope(IUMLContextProvider contextProvider, IScope parent) {
-        return Scopes.scopeFor(contextProvider.knownSignals, nameCalculation, parent)
+        return scopeFor(contextProvider.knownSignals.toSet, contextProvider.nameCalculation, parent)
     }
     
     protected def IScope associationScope(IUMLContextProvider contextProvider, IScope parent) {
-        return Scopes.scopeFor(contextProvider.knownAssociations, nameCalculation, parent)
+        return scopeFor(contextProvider.knownAssociations.toSet, contextProvider.nameCalculation, parent)
     }
     
     protected def IScope enumerationScope(IUMLContextProvider contextProvider, IScope parent) {
-        return Scopes.scopeFor(contextProvider.knownEnums, nameCalculation, parent)
+        return scopeFor(contextProvider.knownEnums.toSet, contextProvider.nameCalculation, parent)
     }
     
     protected def IScope enumerationLiteralScope(IUMLContextProvider contextProvider, IScope parent) {
-        return Scopes.scopeFor(contextProvider.knownEnumLiterals, nameCalculation, parent)
+        return scopeFor(contextProvider.knownEnumLiterals.toSet, contextProvider.nameCalculation, parent)
     }
     
     protected def IScope operationScope(IUMLContextProvider contextProvider, IScope parent) {
-        val libraryScope = Scopes.scopeFor(contextProvider.libraryOperations, nameCalculation, parent)
+        val libraryScope = scopeFor(contextProvider.libraryOperations.toSet, contextProvider.nameCalculation, parent)
             
-        return Scopes.scopeFor(contextProvider.staticOperations, nameCalculation, libraryScope)
+        return scopeFor(contextProvider.staticOperations.toSet, contextProvider.nameCalculation, libraryScope)
     }
     
     protected def IScope classifierScope(IUMLContextProvider contextProvider, IScope parent) {
-        return Scopes.scopeFor(contextProvider.knownClassifiers, nameCalculation, parent)
+        return scopeFor(contextProvider.knownClassifiers.toSet, contextProvider.nameCalculation, parent)
     }
     
     protected def IScope typeScope(IUMLContextProvider contextProvider, IScope parent) {
-        return Scopes.scopeFor(contextProvider.knownTypes)
+        return Scopes.scopeFor(contextProvider.knownTypes.toSet, contextProvider.nameCalculation, parent)
     }
         
     protected def IScope namedElementScope(IUMLContextProvider contextProvider, IScope parent) {
