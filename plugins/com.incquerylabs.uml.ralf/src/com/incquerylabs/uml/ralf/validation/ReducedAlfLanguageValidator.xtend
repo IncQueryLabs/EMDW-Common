@@ -33,6 +33,7 @@ import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 import org.eclipse.xtext.naming.IQualifiedNameConverter
 import org.eclipse.uml2.uml.NamedElement
 import com.incquerylabs.uml.ralf.scoping.context.IUMLContextProviderAccess
+import com.incquerylabs.uml.ralf.reducedAlfLanguage.InstanceCreationExpression
 
 /**
  * This class contains custom validation rules. 
@@ -53,6 +54,7 @@ class ReducedAlfLanguageValidator extends ReducedAlfSystemValidator {
     public static val CODE_INVALID_LHS = "invalid_lhs"
     public static val CODE_THIS_IN_STATIC = "this_in_static"
     public static val CODE_AMBIGUOUS_REFERENCE = "ambigous_reference"
+    public static val CODE_ABTRACT_INSTANTIATION = "abstract_instantiation"
 
 	@Check
 	def duplicateLocalVariables(LocalNameDeclarationStatement st) {
@@ -204,6 +206,17 @@ class ReducedAlfLanguageValidator extends ReducedAlfSystemValidator {
 	    if (op != null && op.static) {
 	        error('''Cannot use this in static operation «op.name»''', ex, null, CODE_THIS_IN_STATIC)
 	    }
+	}
+	
+	@Check
+	def checkAbstractInstantiation(InstanceCreationExpression ex) {
+		val classifier = ex.instance
+		if(classifier.eIsProxy) {
+			return
+		}
+		if(classifier.abstract) {
+			error('''Cannot instantiate an abstract class''', ex, null, CODE_ABTRACT_INSTANTIATION)
+		}
 	}
 
 }
