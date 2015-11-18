@@ -9,6 +9,7 @@ import org.eclipse.uml2.uml.BodyOwner;
 import org.eclipse.uml2.uml.OpaqueBehavior;
 import org.eclipse.uml2.uml.OpaqueExpression;
 
+import com.google.inject.Binder;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
@@ -17,6 +18,7 @@ import com.incquerylabs.uml.ralf.api.IReducedAlfParser;
 import com.incquerylabs.uml.ralf.scoping.IUMLContextProvider;
 import com.incquerylabs.uml.ralf.scoping.SimpleUMLContextProvider;
 import com.incquerylabs.uml.ralf.scoping.UMLContextProvider;
+import com.incquerylabs.uml.ralf.types.TypeFactory;
 
 public class ReducedAlfParser implements IReducedAlfParser {
 
@@ -44,13 +46,20 @@ public class ReducedAlfParser implements IReducedAlfParser {
 	}
 	
 	private Injector createInjector(final IUMLContextProvider umlContext) {
-		return createInjector(umlContext, new ReducedAlfLanguageRuntimeModule());
+		return Guice.createInjector(new ReducedAlfLanguageRuntimeModule() {
+
+			@Override
+			public void configure(Binder binder) {
+				super.configure(binder);
+				binder.bind(IUMLContextProvider.class).toInstance(umlContext);
+			}
+			
+		});
 	}
 	
 	private Injector createInjector(final IUMLContextProvider umlContext, final Module module) {
         Module customizations = binder -> {
 		    binder.bind(IUMLContextProvider.class).toInstance(umlContext);
-		    binder.bind(IReducedAlfParser.class).toInstance(this);
 		};
         return Guice.createInjector(module, customizations);
     }

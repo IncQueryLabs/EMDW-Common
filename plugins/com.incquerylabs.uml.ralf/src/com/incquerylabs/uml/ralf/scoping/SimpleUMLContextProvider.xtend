@@ -16,6 +16,7 @@ import org.eclipse.uml2.uml.Type
 import org.eclipse.uml2.uml.UMLPackage
 import org.eclipse.uml2.uml.resource.UMLResource
 import org.eclipse.uml2.uml.resources.util.UMLResourcesUtil
+import org.eclipse.uml2.uml.Model
 
 /**
  * Simplified UML context, where only primitive types are available from UML model.
@@ -24,11 +25,14 @@ import org.eclipse.uml2.uml.resources.util.UMLResourcesUtil
 class SimpleUMLContextProvider extends AbstractUMLContextProvider {
 
     val Resource containerResource
+    val Model libraryModel
     
     new() {
         val set = new ResourceSetImpl()
         UMLResourcesUtil.init(set)
         containerResource = set.getResource(URI.createURI(UMLResource.UML_PRIMITIVE_TYPES_LIBRARY_URI), true)
+        val libraryPackage = set.getResource(URI.createURI(LIBRARY_URI), true);
+        libraryModel = libraryPackage.contents.get(0) as Model
     }
 
     override getPrimitivePackage() {
@@ -86,6 +90,10 @@ class SimpleUMLContextProvider extends AbstractUMLContextProvider {
     
     override getConstructorsOfClass(Class cl) {
         newHashSet()
+    }
+    
+    override def getLibraryModel() {
+        libraryModel
     }
     
     override getLibraryOperations() {

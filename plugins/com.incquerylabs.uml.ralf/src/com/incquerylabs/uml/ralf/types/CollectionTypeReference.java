@@ -2,24 +2,18 @@ package com.incquerylabs.uml.ralf.types;
 
 import org.eclipse.uml2.uml.Type;
 
-import com.google.inject.Inject;
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.CollectionType;
-import com.incquerylabs.uml.ralf.scoping.IUMLContextProvider;
 
 public class CollectionTypeReference implements IUMLTypeReference {
 	
 	CollectionType type;
 	Type umlType;
 	IUMLTypeReference valueType;
-	@Inject
-	IUMLContextProvider contextProvider;
 	
-	CollectionTypeReference(IUMLTypeReference valueType) {
-		this(null, valueType);
-	}
-	CollectionTypeReference(CollectionType type, IUMLTypeReference valueType) {
+	CollectionTypeReference(CollectionType type, Type collectionType, IUMLTypeReference valueType) {
 		super();
 		this.type = type;
+		this.umlType = collectionType;
 		this.valueType = valueType;
 	}
 
@@ -68,10 +62,7 @@ public class CollectionTypeReference implements IUMLTypeReference {
 	}
 	@Override
 	public Type getUmlType() {
-		if (contextProvider != null) {
-			return contextProvider.getCollectionType(type);
-		}
-		return null;
+		return umlType;
 	}
 	
 	@Override
