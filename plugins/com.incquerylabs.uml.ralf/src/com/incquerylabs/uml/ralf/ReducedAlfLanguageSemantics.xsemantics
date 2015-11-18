@@ -101,9 +101,12 @@ auxiliary {
 }
 
 judgments {
-    type |- EObject expression : output IUMLTypeReference
+    type |- Expression expression : output IUMLTypeReference
         error "Cannot type " + stringRep(expression)
         source expression
+    objectType |- EObject obj : EObject ctx : output IUMLTypeReference
+        error "Cannot type " + stringRep(obj)
+        source obj
     operationParametersType |- Operation op <: Tuple params <: EObject ctx
         error "Invalid parameter types " + stringRep(op)
         source params
@@ -147,7 +150,7 @@ auxiliary constructorOperation(Classifier cl, Tuple parameters) {
 
 auxiliary replaceGenericTypeReference(RuleEnvironment G, IUMLTypeReference ref, EObject ctx) {
     if (ref instanceof UMLTypeReference && ref.umlType != null && ref.umlType == ctx.umlContextProviderFor.genericCollectionParameterType) {
-        G |- ctx : var CollectionTypeReference collType
+        G |- ctx : ctx : var CollectionTypeReference collType
         collType.valueType
     } else {
         ref
@@ -177,7 +180,7 @@ axiom NullLiteral
  * Variable declarations
  */
 rule TypeDeclaration
-    G |- TypeDeclaration typeDecl: IUMLTypeReference result
+    G |- TypeDeclaration typeDecl : EObject ctx : IUMLTypeReference result
         
 from {
     result = typeDecl.typeReference
@@ -185,26 +188,26 @@ from {
 
 
 rule VariableDeclaration
-    derives G |- Variable variable : IUMLTypeReference result
+    derives G |- Variable variable : EObject ctx :  IUMLTypeReference result
 from {
       result = variable.type.typeReference
 }
 
 rule CollectionVariableDeclaration
-    derives G |- CollectionVariable variable : IUMLTypeReference result
+    derives G |- CollectionVariable variable : EObject ctx : IUMLTypeReference result
 from {
     result = switch(variable.collectionType) {
         case BAG:
-            variable.type.typeReference.bagOf
+            variable.type.typeReference.bagOf(variable)
         case SET:
-            variable.type.typeReference.setOf
+            variable.type.typeReference.setOf(variable)
         case SEQUENCE:
-            variable.type.typeReference.sequenceOf
+            variable.type.typeReference.sequenceOf(variable)
     }
 }
 
 rule LoopVariable
-    derives G |- LoopVariable variable : IUMLTypeReference result
+    derives G |- LoopVariable variable : EObject ctx : IUMLTypeReference result
 from {
     if (variable.type != null) {
         result = variable.type.typeReference
@@ -217,7 +220,7 @@ from {
 }
 
 rule FilterVariable
-    derives G |- FilterVariable variable : IUMLTypeReference result
+    derives G |- FilterVariable variable : EObject ctx : IUMLTypeReference result
 from {
     if (variable.type != null) {
         result = variable.type.typeReference
@@ -229,26 +232,26 @@ from {
 }
 
 rule Parameter
-    derives G |- Parameter parameter : IUMLTypeReference result
+    derives G |- Parameter parameter : EObject ctx : IUMLTypeReference result
 from {
-    result = parameter.typeOf
+    result = parameter.typeOf(ctx)
 }
 
 rule Type
-    derives G |- Type type : IUMLTypeReference result
+    derives G |- Type type : EObject ctx : IUMLTypeReference result
 from {
     result = type.typeReference
 }
 
 rule Property
-    derives G |- Property property : IUMLTypeReference result
+    derives G |- Property property : EObject ctx : IUMLTypeReference result
 from {
      !property.eIsProxy
-     result = property.typeOf
+     result = property.typeOf(ctx)
 }
 
 rule EnumerationLiteral
-    derives G |- EnumerationLiteral literal : IUMLTypeReference result
+    derives G |- EnumerationLiteral literal : EObject ctx : IUMLTypeReference result
 from {
     result = literal.enumeration.typeReference
 }
@@ -337,7 +340,7 @@ rule OperationTypingWithResult
     G |- Operation op <: Tuple params <: EObject ctx :> IUMLTypeReference result
 from {
     G |- op <: params <: ctx
-    G |- op : result
+    G |- op : ctx : result
 }
 rule ParameterListTyping
     derives G |- Operation op <: ExpressionList params <: EObject ctx
@@ -365,13 +368,13 @@ from {
             val parameter = paramMap.get(name)
             expr == null ||
             parameter == null ||
-            !{G |- expr |> replaceGenericTypeReference(G, parameter.typeOf, ctx)}
+            !{G |- expr |> replaceGenericTypeReference(G, parameter.typeOf(ctx), ctx)}
         ]
     val problematicDeclarations = paramMap.filter[name, parameter|
             val expr = exprMap.get(name)
             parameter == null ||
             expr == null ||
-            !{G |- expr |> replaceGenericTypeReference(G, parameter.typeOf, ctx)}
+            !{G |- expr |> replaceGenericTypeReference(G, parameter.typeOf(ctx), ctx)}
         ]
     if(problematicValues.size > 0) {
         val param = problematicValues.values.findFirst[true]
@@ -385,6 +388,13 @@ from {
 /**
  * Expression typing
  */  
+rule ExpressionObjectType
+derives G |- Expression ex : EObject ctx : IUMLTypeReference result
+from {
+    G |- ex : var IUMLTypeReference calc
+    result = calc
+} 
+ 
 rule NumericUnaryExpression
     G |- NumericUnaryExpression ex : IUMLTypeReference result
 from {
@@ -440,14 +450,14 @@ from {
 rule NameExpression
     G |- NameExpression ex : IUMLTypeReference result
 from {
-    G |- ex.reference : var IUMLTypeReference varType
+    G |- ex.reference : ex : var IUMLTypeReference varType
     result = varType
 } 
 
 rule FilterExpression
     G |- FilterExpression ex : IUMLTypeReference result
 from {
-	G |- ex.declaration : var IUMLTypeReference declarationType
+	G |- ex.declaration : ex : var IUMLTypeReference declarationType
     G |- ex.expression : var IUMLTypeReference expType
     G |- ex.context : var CollectionTypeReference contextType
     
@@ -468,7 +478,7 @@ from {
 rule PrefixExpression
     G |- PrefixExpression ex : IUMLTypeReference result
 from {
-    G |- ex.operand : var IUMLTypeReference opType
+    G |- ex.operand : ex : var IUMLTypeReference opType
     val umlContextProvider = ex.umlContextProviderFor
     opType == INTEGER.primitiveTypeReference(umlContextProvider)
     result = INTEGER.primitiveTypeReference(umlContextProvider)
@@ -477,7 +487,7 @@ from {
 rule PostfixExpression
     G |- PostfixExpression ex : IUMLTypeReference result
 from {
-    G |- ex.operand : var IUMLTypeReference opType
+    G |- ex.operand : ex : var IUMLTypeReference opType
     val umlContextProvider = ex.umlContextProviderFor
     opType == INTEGER.primitiveTypeReference(umlContextProvider)
     result = INTEGER.primitiveTypeReference(umlContextProvider)
@@ -625,7 +635,7 @@ from {
     ex.association != null
     !ex.association.eIsProxy
     G |- ex.context : var IUMLTypeReference contextType
-    result = ex.association.collectionTypeOf(contextType)
+    result = ex.association.collectionTypeOf(contextType, ex)
 }
 
 rule LinkOperationExpression
@@ -658,9 +668,9 @@ from {
         G |- valueType <: elType : ex.umlContextProviderFor
     }
     if (ex.collectionType != null) {
-        result = valueType.collectionOf(ex.collectionType)
+        result = valueType.collectionOf(ex.collectionType, ex.umlContextProviderFor.getCollectionType(ex.collectionType))
     } else {
-        result = valueType.sequenceOf   
+        result = valueType.sequenceOf(ex)
     }
 }
 
@@ -670,12 +680,12 @@ from {
 //    !(ex.eGet(featureInvocationExpression_Feature, true) as EObject).eIsProxy
     {
         ex.^feature instanceof Operation
-        G |- ex.^feature : var IUMLTypeReference opType        
+        G |- ex.^feature : ex : var IUMLTypeReference opType        
         result = replaceGenericTypeReference(G, opType, ex.context)
     } or {
         ex.^feature instanceof Property
         val property = ex.^feature as Property
-        G |- property : result
+        G |- property : ex : result
     } or {
         fail error previousFailure.message feature featureInvocationExpression_Feature
     }
@@ -688,13 +698,13 @@ from {
 }
 
 rule Operation
-    derives G |- Operation op : IUMLTypeReference result
+    derives G |- Operation op : EObject ctx : IUMLTypeReference result
 from {
     {
         op.getType == null
         result = voidType 
     } or {
-        result = op.returnParameter.typeOf
+        result = op.returnParameter.typeOf(ctx)
     }
 }
 
@@ -702,20 +712,20 @@ rule ClassExtentExpression
     derives G |- ClassExtentExpression ex : IUMLTypeReference result
 from {
     G |- ex.class_ : var IUMLTypeReference classType
-    result = setOf(classType)
+    result = setOf(classType, ex)
 }
 
 rule CastExpression
     derives G |- CastExpression ex : IUMLTypeReference result
 from {
-    G |- ex.type : var IUMLTypeReference castType
+    G |- ex.type : ex : var IUMLTypeReference castType
     result = castType
 }
 
 //Non-expression types
 
 rule FeatureLeftHandSide
-    G |- LeftHandSide lhs : IUMLTypeReference result
+    G |- LeftHandSide lhs : EObject ctx : IUMLTypeReference result
 from {
     G |- lhs.expression : var IUMLTypeReference exType
     result = exType
@@ -735,13 +745,13 @@ from {
 checkrule VariableType for
     Variable ^var
 from {
-    empty |- ^var : var IUMLTypeReference type
+    empty |- ^var : ^var : var IUMLTypeReference type
 }
 
 checkrule LocalNameDeclarationStatementType for
     LocalNameDeclarationStatement st
 from {
-    empty |- st.variable : var IUMLTypeReference varType
+    empty |- st.variable : st : var IUMLTypeReference varType
     if(st.expression != null){
     	empty |- st.expression : var IUMLTypeReference valueType
     	empty |- varType <: valueType : st.umlContextProviderFor
@@ -769,7 +779,7 @@ checkrule ForEachStatement for
     ForEachStatement st
 from {
     empty |- st.expression  : var IUMLTypeReference exType
-	empty |- st.variableDefinition  : var IUMLTypeReference defType
+	empty |- st.variableDefinition : st : var IUMLTypeReference defType
 	if(exType instanceof CollectionTypeReference){
 		empty |- exType.valueType <: defType : st.umlContextProviderFor
 	}else{

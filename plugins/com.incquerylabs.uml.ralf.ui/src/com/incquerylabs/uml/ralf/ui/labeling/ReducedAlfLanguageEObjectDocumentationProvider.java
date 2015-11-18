@@ -23,7 +23,7 @@ public class ReducedAlfLanguageEObjectDocumentationProvider extends MultiLineCom
 			documentation.append(superDocumentation);
 		}
 		if (object instanceof Expression) {
-			Result<IUMLTypeReference> typeResult = system.type(object);
+			Result<IUMLTypeReference> typeResult = system.type((Expression)object);
 			if (!typeResult.failed()) {
 				documentation.append(typeResult.getValue().toString());
 			}

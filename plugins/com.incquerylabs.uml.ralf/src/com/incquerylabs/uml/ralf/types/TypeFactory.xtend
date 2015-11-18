@@ -10,7 +10,6 @@ import com.incquerylabs.uml.ralf.reducedAlfLanguage.CollectionType
 import org.eclipse.uml2.uml.PrimitiveType
 import java.util.Map
 import com.incquerylabs.uml.ralf.types.IUMLTypeReference.VoidTypeReference
-import com.google.inject.Injector
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.uml2.uml.MultiplicityElement
 import org.eclipse.uml2.uml.Parameter
@@ -18,7 +17,6 @@ import com.incquerylabs.uml.ralf.scoping.context.IUMLContextProviderAccess
 
 class TypeFactory {
     
-    @Inject var Injector injector
     Map<String, PrimitiveTypeReference> primitiveTypeMap = newHashMap()
     @Inject IUMLContextProviderAccess access
     
@@ -66,38 +64,53 @@ class TypeFactory {
         return VoidTypeReference.instance
     }
     
-    def CollectionTypeReference collectionOf(Type valueType, CollectionType collectionType) {
-        collectionOf(typeReference(valueType), collectionType)
+    def Type umlType(CollectionType collectionType, EObject ctx) {
+        return access.getUmlContextProviderFor(ctx).getCollectionType(collectionType)
     }
     
-    def CollectionTypeReference collectionOf(IUMLTypeReference valueType, CollectionType collectionType) {
-        val ref = new CollectionTypeReference(collectionType, valueType)
-        injector.injectMembers(ref)
-        ref
+    def CollectionTypeReference collectionOf(Type valueType, CollectionType collectionType, EObject ctx) {
+        collectionOf(typeReference(valueType), collectionType, collectionType.umlType(ctx))
     }
     
-    def CollectionTypeReference setOf(Type valueType) {
-        collectionOf(typeReference(valueType), CollectionType.SET)
+    def CollectionTypeReference collectionOf(IUMLTypeReference valueType, CollectionType collectionType, EObject ctx) {
+        collectionOf(valueType, collectionType, collectionType.umlType(ctx))
     }
     
-    def CollectionTypeReference setOf(IUMLTypeReference valueType) {
-        collectionOf(valueType, CollectionType.SET)
+    def CollectionTypeReference collectionOf(IUMLTypeReference valueType, Type collectionType) {
+           val typeEnum = switch (collectionType.name) {
+               case "Bag" : CollectionType.BAG
+               case "Set" : CollectionType.SET
+               case "Sequence" : CollectionType.SEQUENCE  
+           }
+           collectionOf(valueType, typeEnum, collectionType)
     }
     
-    def CollectionTypeReference bagOf(Type valueType) {
-        collectionOf(typeReference(valueType), CollectionType.BAG)
+    def CollectionTypeReference collectionOf(IUMLTypeReference valueType, CollectionType typeEnum, Type collectionType) {
+        new CollectionTypeReference(typeEnum, collectionType, valueType)
     }
     
-    def CollectionTypeReference bagOf(IUMLTypeReference valueType) {
-        collectionOf(valueType, CollectionType.BAG)
+    def CollectionTypeReference setOf(Type valueType, EObject ctx) {
+        collectionOf(valueType, CollectionType.SET, ctx)
     }
     
-    def CollectionTypeReference sequenceOf(Type valueType) {
-        collectionOf(typeReference(valueType), CollectionType.SEQUENCE)
+    def CollectionTypeReference setOf(IUMLTypeReference valueType, EObject ctx) {
+        collectionOf(valueType, CollectionType.SET, ctx)
     }
     
-    def CollectionTypeReference sequenceOf(IUMLTypeReference valueType) {
-        collectionOf(valueType, CollectionType.SEQUENCE)
+    def CollectionTypeReference bagOf(Type valueType, EObject ctx) {
+        collectionOf(valueType, CollectionType.BAG, ctx)
+    }
+    
+    def CollectionTypeReference bagOf(IUMLTypeReference valueType, EObject ctx) {
+        collectionOf(valueType, CollectionType.BAG, ctx)
+    }
+    
+    def CollectionTypeReference sequenceOf(Type valueType, EObject ctx) {
+        collectionOf(valueType, CollectionType.SEQUENCE, ctx)
+    }
+    
+    def CollectionTypeReference sequenceOf(IUMLTypeReference valueType, EObject ctx) {
+        collectionOf(valueType, CollectionType.SEQUENCE, ctx)
     }
     
     /**
@@ -109,21 +122,21 @@ class TypeFactory {
      *  <li>'bag' otherwise</li>
      * </ul> 
      */
-    def IUMLTypeReference collectionTypeOf(Property property, IUMLTypeReference source) {
-        val reference = typeOf(property)
+    def IUMLTypeReference collectionTypeOf(Property property, IUMLTypeReference source, EObject ctx) {
+        val reference = typeOf(property, ctx)
         val isPropertySingleValued = !property.multivalued 
         if (source instanceof UMLTypeReference) {
             //Source is single type -> start of a chain
             if (isPropertySingleValued) {
-                reference.umlValueType.setOf
+                reference.umlValueType.setOf(ctx)
             } else {
-                property.typeOf
+                property.typeOf(ctx)
             }
         } else if (source instanceof CollectionTypeReference) {
             if (isPropertySingleValued) {
-                property.type.collectionOf(source.type)
+                property.type.collectionOf(source.type, ctx)
             } else {
-                property.type.collectionOf(nextType(source.type, property))
+                property.type.collectionOf(nextType(source.type, property), ctx)
             }
         }
     }
@@ -152,19 +165,19 @@ class TypeFactory {
         }
     }
     
-    def IUMLTypeReference typeOf(Property property) {
+    def IUMLTypeReference typeOf(Property property, EObject ctx) {
         if (!property.multivalued) {
             property.type.typeReference
         } else {
-            property.type.collectionOf(property.collectionType)
+            property.type.collectionOf(property.collectionType(), ctx)
         }
     }
     
-    def IUMLTypeReference typeOf(Parameter parameter) {
+    def IUMLTypeReference typeOf(Parameter parameter, EObject ctx) {
         if (!parameter.multivalued) {
             parameter.type.typeReference
         } else {
-            parameter.type.collectionOf(parameter.collectionType)
+            parameter.type.collectionOf(parameter.collectionType, ctx)
         }
     }
     
