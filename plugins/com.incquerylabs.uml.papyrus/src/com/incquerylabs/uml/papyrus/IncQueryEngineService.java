@@ -26,7 +26,7 @@ public class IncQueryEngineService implements IService {
 
 	public static final String PATHMAP_SCHEME = "pathmap";
 	private static final List<String> INDEXED_AUTHORITIES = Arrays.asList("UML_LIBRARIES", "RALF",
-			"XUMLRT_PROFILE");
+			"XUMLRT_PROFILE", "EMDW");
 
 	private Map<ModelSet, IncQueryEngine> engines = Maps.newHashMap();
 
