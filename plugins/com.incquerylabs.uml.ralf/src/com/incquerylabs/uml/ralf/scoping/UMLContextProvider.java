@@ -19,11 +19,13 @@ import org.eclipse.incquery.runtime.base.api.NavigationHelper;
 import org.eclipse.incquery.runtime.base.exception.IncQueryBaseException;
 import org.eclipse.incquery.runtime.emf.EMFScope;
 import org.eclipse.incquery.runtime.exception.IncQueryException;
+import org.eclipse.incquery.uml.derivedfeatures.NamedElementQualifiedNameMatcher;
 import org.eclipse.uml2.uml.Association;
 import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.DataType;
 import org.eclipse.uml2.uml.Enumeration;
+import org.eclipse.uml2.uml.NamedElement;
 import org.eclipse.uml2.uml.OpaqueBehavior;
 import org.eclipse.uml2.uml.OpaqueExpression;
 import org.eclipse.uml2.uml.Operation;
@@ -43,8 +45,10 @@ import com.incquerylabs.emdw.umlintegration.queries.AttributesOfClassifierMatche
 import com.incquerylabs.emdw.umlintegration.queries.CommonAncestorSignalMatcher;
 import com.incquerylabs.emdw.umlintegration.queries.ConstructorByNameMatcher;
 import com.incquerylabs.emdw.umlintegration.queries.EnumsMatcher;
+import com.incquerylabs.emdw.umlintegration.queries.NamedElementNamespaceMatcher;
 import com.incquerylabs.emdw.umlintegration.queries.OperationsOfClassByNameMatcher;
 import com.incquerylabs.emdw.umlintegration.queries.OperationsOfClassMatcher;
+import com.incquerylabs.emdw.umlintegration.queries.QualifiedNameMatcher;
 import com.incquerylabs.emdw.umlintegration.queries.SignalsMatcher;
 import com.incquerylabs.emdw.umlintegration.queries.StaticOperationsMatcher;
 import com.incquerylabs.emdw.umlintegration.queries.SuperSignalMatcher;
@@ -70,7 +74,8 @@ public abstract class UMLContextProvider extends AbstractUMLContextProvider {
 					StaticOperationsMatcher.querySpecification(),
 					TriggerSignalOfBehaviorMatcher.querySpecification(),
 					CommonAncestorSignalMatcher.querySpecification(),
-					ConstructorByNameMatcher.querySpecification()
+					ConstructorByNameMatcher.querySpecification()//,
+//					QualifiedNameMatcher.querySpecification()
 					);
 			queries.prepare(engine);			
 //		}
@@ -289,6 +294,21 @@ public abstract class UMLContextProvider extends AbstractUMLContextProvider {
 				flatMap(Collection::stream).
 //				filter(it -> it.isStatic()).
 				collect(Collectors.toList());	
+	}
+
+	@Override
+	public String getQualifiedName(NamedElement ne) {
+//		try {
+//			QualifiedNameMatcher matcher = QualifiedNameMatcher.on(getEngine());
+//			Set<Object> names = matcher.getAllValuesOfqualifiedName(ne);
+//			if (!names.isEmpty()) {
+//				return names.iterator().next().toString();
+//			}
+//		} catch (IncQueryException | IncQueryBaseException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		return ne.getQualifiedName();
 	}
 
 	

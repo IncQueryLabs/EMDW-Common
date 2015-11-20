@@ -14,6 +14,7 @@ import com.incquerylabs.uml.ralf.reducedAlfLanguage.CollectionType
 import org.eclipse.uml2.uml.Model
 import org.eclipse.uml2.uml.Classifier
 import org.eclipse.uml2.uml.Type
+import com.google.common.collect.Iterables
 
 abstract class AbstractUMLContextProvider implements IUMLContextProvider {
 
@@ -112,6 +113,10 @@ abstract class AbstractUMLContextProvider implements IUMLContextProvider {
             default:
                 null
         }
+    }
+
+    override getKnownClassifiers() {
+        Iterables.concat(getKnownClasses(), getKnownSignals(), getKnownEnums())
     }
 
     override getKnownEnumLiterals() {
