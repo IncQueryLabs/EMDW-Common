@@ -17,7 +17,6 @@ import org.eclipse.uml2.uml.UMLPackage
 import org.eclipse.uml2.uml.resource.UMLResource
 import org.eclipse.uml2.uml.resources.util.UMLResourcesUtil
 import org.eclipse.uml2.uml.Model
-import org.eclipse.uml2.uml.NamedElement
 
 /**
  * Simplified UML context, where only primitive types are available from UML model.
@@ -99,10 +98,6 @@ class SimpleUMLContextProvider extends AbstractUMLContextProvider {
     
     override getLibraryOperations() {
         newArrayList()
-    }
-    
-    override getQualifiedName(NamedElement ne) {
-        ne.qualifiedName
     }
 								
 }

@@ -34,7 +34,6 @@ import org.eclipse.xtext.naming.IQualifiedNameConverter
 import org.eclipse.uml2.uml.NamedElement
 import com.incquerylabs.uml.ralf.scoping.context.IUMLContextProviderAccess
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.InstanceCreationExpression
-import org.eclipse.xtext.scoping.IScope
 
 /**
  * This class contains custom validation rules. 
@@ -86,7 +85,7 @@ class ReducedAlfLanguageValidator extends ReducedAlfSystemValidator {
 	}
 	
     private def isDuplicateInScope (EObject context, String name) {
-        val variableScope = scopeProvider.scope_NamedElement(context, IScope.NULLSCOPE)
+        val variableScope = scopeProvider.scope_NamedElement(context)
         return (variableScope.getSingleElement(QualifiedName.create(name)) != null);
     }
     
@@ -98,7 +97,7 @@ class ReducedAlfLanguageValidator extends ReducedAlfSystemValidator {
 	    
 	    val node = NodeModelUtils.getNode(ex)
 	    val nodeText = NodeModelUtils.getTokenText(node)
-	    val referenceScope = scopeProvider.scope_NamedElement(ex, ReducedAlfLanguagePackage.Literals.NAME_EXPRESSION__REFERENCE)
+	    val referenceScope = scopeProvider.scope_NamedElement(ex)
 	    val element = referenceScope.getSingleElement(nameConverter.toQualifiedName(nodeText))
 	    
 	    val descriptions = newHashSet(element)

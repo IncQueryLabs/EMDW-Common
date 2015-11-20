@@ -14,22 +14,10 @@ pattern umlTypes(type : Type) {
     Type(type);
 }
 
-// This is copied from org.eclipse.incquery.uml.derivedfeatures.DerivedFeatures to fix namespace bug [479023]
-pattern namedElementNamespace(source: NamedElement, target: Namespace) {
-    Namespace.ownedMember(target, source);
- }
- 
-pattern qualifiedName(namedElement: NamedElement, qualifiedName) {
-    neg find namedElementNamespace(namedElement, _);
-    NamedElement.name(namedElement, qualifiedName);
-} or {
-    find namedElementNamespace(namedElement, namespace);
-    NamedElement.name(namedElement, name);
-    find qualifiedName(namespace, namespaceQualifiedName);
-    qualifiedName == eval(namespaceQualifiedName + "::" + name); // XXX is separator always this?
+pattern umlTypesInNamespace(type : Type, namespace : Namespace, name) {
+    Type.qualifiedName(type, name);
+    Namespace.member(namespace, type);
 }
-// End of copied patterns
-
 
 
 pattern superSignal(sub : Signal, sup : Signal) {
