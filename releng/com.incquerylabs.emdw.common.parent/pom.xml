@@ -52,7 +52,7 @@
 		<jacoco.targetdir>${project.basedir}/../../target</jacoco.targetdir>
 		<org.eclipse.papyrusrt.version>1.0.0-SNAPSHOT</org.eclipse.papyrusrt.version>
 		<incquery.version>1.1.0-SNAPSHOT</incquery.version>
-		<xtext.compiler.version>2.9.0.rc1</xtext.compiler.version>
+		<xtext.compiler.version>2.9.0.rc2</xtext.compiler.version>
 		<!-- Sonar -->
 		<sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
 		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
