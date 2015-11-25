@@ -41,6 +41,17 @@
         An example to demonstrate the event dispatching between statemachines and the use of event generalization in entry and exit actions.
      </description>
   </wizard>
+  <wizard
+        category="org.eclipse.ui.Examples/com.incquerylabs.emdw.ui.examples"
+        class="org.eclipse.emf.common.ui.wizard.ExampleInstallerWizard"
+        icon="icons/genproject.gif"
+        id="com.incquerylabs.emdw.project.examples.phonex"
+        name="PhoneX example model"
+        project="true">
+     <description>
+        Contains a simplified telecommunication system component.
+     </description>
+  </wizard>
 	</extension>
 	
 	 <extension
@@ -70,6 +81,15 @@
                contentURI="contents/com.incquerylabs.emdw.example.clientserver.zip"
                description="An example for client-server communication and the use of event generalization in entry and exit actions."
                name="com.incquerylabs.emdw.example.clientserver">
+         </projectDescriptor>
+      </example>
+      <example
+            pageImage="icons/genproject.gif"
+            wizardID="com.incquerylabs.emdw.project.examples.phonex">
+         <projectDescriptor
+               contentURI="contents/com.incquerylabs.emdw.example.phonex.zip"
+               description="A model of a simplified telecommunication system component, which is responsible for the registration and unregistration of users and managing calls between the registered users."
+               name="com.incquerylabs.emdw.example.phonex">
          </projectDescriptor>
       </example>
    </extension>
