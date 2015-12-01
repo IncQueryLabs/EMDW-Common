@@ -4232,7 +4232,7 @@ delete this;</body>
               <region xmi:type="uml:Region" xmi:id="_OJC5AZHNEeWgtJmFnQKWjw" name="DefaultRegion">
                 <transition xmi:type="uml:Transition" xmi:id="_OJDgE5HNEeWgtJmFnQKWjw" name="tr_init" source="_OJC5A5HNEeWgtJmFnQKWjw" target="_OJDgEZHNEeWgtJmFnQKWjw"/>
                 <transition xmi:type="uml:Transition" xmi:id="_OJEuMJHNEeWgtJmFnQKWjw" name="UnknownNumber" source="_OJDgEZHNEeWgtJmFnQKWjw" target="_OJDgEZHNEeWgtJmFnQKWjw">
-                  <effect xmi:type="uml:OpaqueBehavior" xmi:id="_OJFVQJHNEeWgtJmFnQKWjw" name="UnknownNumber$method$1" specification="_OJEHIJHNEeWgtJmFnQKWjw">
+                  <effect xmi:type="uml:OpaqueBehavior" xmi:id="_OJFVQJHNEeWgtJmFnQKWjw" name="UnknownNumber$method$1">
                     <ownedParameter xmi:type="uml:Parameter" xmi:id="_OJF8VZHNEeWgtJmFnQKWjw" name="UserID">
                       <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
                       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_OJGjYJHNEeWgtJmFnQKWjw" value="1"/>
@@ -4248,7 +4248,7 @@ delete this;</body>
                   <trigger xmi:type="uml:Trigger" xmi:id="_OJEuMpHNEeWgtJmFnQKWjw" name="UnknownNumber_trigger" event="_OJEHJJHNEeWgtJmFnQKWjw"/>
                 </transition>
                 <transition xmi:type="uml:Transition" xmi:id="_OJHxgZHNEeWgtJmFnQKWjw" name="LineIsBusy" source="_OJDgEZHNEeWgtJmFnQKWjw" target="_OJDgEZHNEeWgtJmFnQKWjw">
-                  <effect xmi:type="uml:OpaqueBehavior" xmi:id="_OJIYkZHNEeWgtJmFnQKWjw" name="LineIsBusy$method$1" specification="_OJGjY5HNEeWgtJmFnQKWjw">
+                  <effect xmi:type="uml:OpaqueBehavior" xmi:id="_OJIYkZHNEeWgtJmFnQKWjw" name="LineIsBusy$method$1">
                     <ownedParameter xmi:type="uml:Parameter" xmi:id="_OJJms5HNEeWgtJmFnQKWjw" name="UserID">
                       <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
                       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_OJJmtJHNEeWgtJmFnQKWjw" value="1"/>
@@ -4264,7 +4264,7 @@ delete this;</body>
                   <trigger xmi:type="uml:Trigger" xmi:id="_OJHxg5HNEeWgtJmFnQKWjw" name="LineIsBusy_trigger" event="_OJHxgJHNEeWgtJmFnQKWjw"/>
                 </transition>
                 <transition xmi:type="uml:Transition" xmi:id="_OJK00pHNEeWgtJmFnQKWjw" name="CalledBy" source="_OJDgEZHNEeWgtJmFnQKWjw" target="_OJDgEZHNEeWgtJmFnQKWjw">
-                  <effect xmi:type="uml:OpaqueBehavior" xmi:id="_OJLb45HNEeWgtJmFnQKWjw" name="CalledBy$method$1" specification="_OJKNwZHNEeWgtJmFnQKWjw">
+                  <effect xmi:type="uml:OpaqueBehavior" xmi:id="_OJLb45HNEeWgtJmFnQKWjw" name="CalledBy$method$1">
                     <ownedParameter xmi:type="uml:Parameter" xmi:id="_OJMqApHNEeWgtJmFnQKWjw" name="CallerID">
                       <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
                       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_OJMqA5HNEeWgtJmFnQKWjw" value="1"/>
@@ -4290,7 +4290,7 @@ delete this;</body>
                   <trigger xmi:type="uml:Trigger" xmi:id="_OJLb4JHNEeWgtJmFnQKWjw" name="CalledBy_trigger" event="_OJK00ZHNEeWgtJmFnQKWjw"/>
                 </transition>
                 <transition xmi:type="uml:Transition" xmi:id="_OJQUYpHNEeWgtJmFnQKWjw" name="InitiateCall" source="_OJDgEZHNEeWgtJmFnQKWjw" target="_OJDgEZHNEeWgtJmFnQKWjw">
-                  <effect xmi:type="uml:OpaqueBehavior" xmi:id="_OJQ7cpHNEeWgtJmFnQKWjw" name="InitiateCall$method$1" specification="_OJPtUZHNEeWgtJmFnQKWjw">
+                  <effect xmi:type="uml:OpaqueBehavior" xmi:id="_OJQ7cpHNEeWgtJmFnQKWjw" name="InitiateCall$method$1">
                     <ownedParameter xmi:type="uml:Parameter" xmi:id="_OJSJkpHNEeWgtJmFnQKWjw" name="UserID">
                       <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
                       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_OJSJk5HNEeWgtJmFnQKWjw" value="1"/>
@@ -4311,7 +4311,7 @@ delete this;</body>
                   <trigger xmi:type="uml:Trigger" xmi:id="_OJQUZJHNEeWgtJmFnQKWjw" name="InitiateCall_trigger" event="_OJQUYZHNEeWgtJmFnQKWjw"/>
                 </transition>
                 <transition xmi:type="uml:Transition" xmi:id="_OJUl0pHNEeWgtJmFnQKWjw" name="TerminateCall" source="_OJDgEZHNEeWgtJmFnQKWjw" target="_OJDgEZHNEeWgtJmFnQKWjw">
-                  <effect xmi:type="uml:OpaqueBehavior" xmi:id="_OJVM4pHNEeWgtJmFnQKWjw" name="TerminateCall$method$1" specification="_OJT-wpHNEeWgtJmFnQKWjw">
+                  <effect xmi:type="uml:OpaqueBehavior" xmi:id="_OJVM4pHNEeWgtJmFnQKWjw" name="TerminateCall$method$1">
                     <ownedParameter xmi:type="uml:Parameter" xmi:id="_OJWbAZHNEeWgtJmFnQKWjw" name="UserID">
                       <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
                       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_OJWbApHNEeWgtJmFnQKWjw" value="1"/>
@@ -4327,7 +4327,7 @@ delete this;</body>
                   <trigger xmi:type="uml:Trigger" xmi:id="_OJUl1JHNEeWgtJmFnQKWjw" name="TerminateCall_trigger" event="_OJUl0ZHNEeWgtJmFnQKWjw"/>
                 </transition>
                 <transition xmi:type="uml:Transition" xmi:id="_OJXCFJHNEeWgtJmFnQKWjw" name="RegistrationResult" source="_OJDgEZHNEeWgtJmFnQKWjw" target="_OJDgEZHNEeWgtJmFnQKWjw">
-                  <effect xmi:type="uml:OpaqueBehavior" xmi:id="_OJYQMZHNEeWgtJmFnQKWjw" name="RegistrationResult$method$1" specification="_OJWbBZHNEeWgtJmFnQKWjw">
+                  <effect xmi:type="uml:OpaqueBehavior" xmi:id="_OJYQMZHNEeWgtJmFnQKWjw" name="RegistrationResult$method$1">
                     <ownedParameter xmi:type="uml:Parameter" xmi:id="_OJZeUZHNEeWgtJmFnQKWjw" name="UserID">
                       <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
                       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_OJZeUpHNEeWgtJmFnQKWjw" value="1"/>
@@ -4348,7 +4348,7 @@ delete this;</body>
                   <trigger xmi:type="uml:Trigger" xmi:id="_OJXpIZHNEeWgtJmFnQKWjw" name="RegistrationResult_trigger" event="_OJXCE5HNEeWgtJmFnQKWjw"/>
                 </transition>
                 <transition xmi:type="uml:Transition" xmi:id="_OJb6lJHNEeWgtJmFnQKWjw" name="UnregistrationResult" source="_OJDgEZHNEeWgtJmFnQKWjw" target="_OJDgEZHNEeWgtJmFnQKWjw">
-                  <effect xmi:type="uml:OpaqueBehavior" xmi:id="_OJcho5HNEeWgtJmFnQKWjw" name="UnregistrationResult$method$1" specification="_OJbThJHNEeWgtJmFnQKWjw">
+                  <effect xmi:type="uml:OpaqueBehavior" xmi:id="_OJcho5HNEeWgtJmFnQKWjw" name="UnregistrationResult$method$1">
                     <ownedParameter xmi:type="uml:Parameter" xmi:id="_OJdvw5HNEeWgtJmFnQKWjw" name="UserID">
                       <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
                       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_OJdvxJHNEeWgtJmFnQKWjw" value="1"/>
@@ -4365,14 +4365,14 @@ delete this;</body>
                   <trigger xmi:type="uml:Trigger" xmi:id="_OJchoJHNEeWgtJmFnQKWjw" name="UnregistrationResult_trigger" event="_OJb6k5HNEeWgtJmFnQKWjw"/>
                 </transition>
                 <transition xmi:type="uml:Transition" xmi:id="_OJgMAJHNEeWgtJmFnQKWjw" name="AllUserUnregistered" source="_OJDgEZHNEeWgtJmFnQKWjw" target="_OJDgEZHNEeWgtJmFnQKWjw">
-                  <effect xmi:type="uml:OpaqueBehavior" xmi:id="_OJgzEJHNEeWgtJmFnQKWjw" name="AllUserUnregistered$method$1" specification="_OJfk8ZHNEeWgtJmFnQKWjw">
+                  <effect xmi:type="uml:OpaqueBehavior" xmi:id="_OJgzEJHNEeWgtJmFnQKWjw" name="AllUserUnregistered$method$1">
                     <language>rALF</language>
                     <body>;</body>
                   </effect>
                   <trigger xmi:type="uml:Trigger" xmi:id="_OJgMApHNEeWgtJmFnQKWjw" name="AllUserUnregistered_trigger" event="_OJfk9ZHNEeWgtJmFnQKWjw"/>
                 </transition>
                 <transition xmi:type="uml:Transition" xmi:id="_OJiBMZHNEeWgtJmFnQKWjw" name="AcceptCall" source="_OJDgEZHNEeWgtJmFnQKWjw" target="_OJDgEZHNEeWgtJmFnQKWjw">
-                  <effect xmi:type="uml:OpaqueBehavior" xmi:id="_OJioQZHNEeWgtJmFnQKWjw" name="AcceptCall$method$1" specification="_OJhaIJHNEeWgtJmFnQKWjw">
+                  <effect xmi:type="uml:OpaqueBehavior" xmi:id="_OJioQZHNEeWgtJmFnQKWjw" name="AcceptCall$method$1">
                     <ownedParameter xmi:type="uml:Parameter" xmi:id="_OJj2YJHNEeWgtJmFnQKWjw" name="UserID">
                       <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
                       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_OJj2YZHNEeWgtJmFnQKWjw" value="1"/>
@@ -4403,7 +4403,7 @@ delete this;</body>
                   <trigger xmi:type="uml:Trigger" xmi:id="_OJiBM5HNEeWgtJmFnQKWjw" name="AcceptCall_trigger" event="_OJiBMJHNEeWgtJmFnQKWjw"/>
                 </transition>
                 <transition xmi:type="uml:Transition" xmi:id="_OJlrlJHNEeWgtJmFnQKWjw" name="EndCall" source="_OJDgEZHNEeWgtJmFnQKWjw" target="_OJDgEZHNEeWgtJmFnQKWjw">
-                  <effect xmi:type="uml:OpaqueBehavior" xmi:id="_OJmSoZHNEeWgtJmFnQKWjw" name="EndCall$method$1" specification="_OJlEg5HNEeWgtJmFnQKWjw">
+                  <effect xmi:type="uml:OpaqueBehavior" xmi:id="_OJmSoZHNEeWgtJmFnQKWjw" name="EndCall$method$1">
                     <ownedParameter xmi:type="uml:Parameter" xmi:id="_OJm5tJHNEeWgtJmFnQKWjw" name="UserID">
                       <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
                       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_OJm5tZHNEeWgtJmFnQKWjw" value="1"/>
@@ -4448,7 +4448,7 @@ delete this;</body>
                   <trigger xmi:type="uml:Trigger" xmi:id="_OJlrlpHNEeWgtJmFnQKWjw" name="EndCall_trigger" event="_OJlrk5HNEeWgtJmFnQKWjw"/>
                 </transition>
                 <transition xmi:type="uml:Transition" xmi:id="_OJoH1pHNEeWgtJmFnQKWjw" name="CallSignal" source="_OJDgEZHNEeWgtJmFnQKWjw" target="_OJDgEZHNEeWgtJmFnQKWjw">
-                  <effect xmi:type="uml:OpaqueBehavior" xmi:id="_OJou5JHNEeWgtJmFnQKWjw" name="CallSignal$method$1" specification="_OJoH0ZHNEeWgtJmFnQKWjw">
+                  <effect xmi:type="uml:OpaqueBehavior" xmi:id="_OJou5JHNEeWgtJmFnQKWjw" name="CallSignal$method$1">
                     <ownedParameter xmi:type="uml:Parameter" xmi:id="_OJp9AJHNEeWgtJmFnQKWjw" name="CallerID">
                       <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
                       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_OJp9AZHNEeWgtJmFnQKWjw" value="1"/>
@@ -4472,7 +4472,7 @@ delete this;</body>
                   <trigger xmi:type="uml:Trigger" xmi:id="_OJou4ZHNEeWgtJmFnQKWjw" name="CallSignal_trigger" event="_OJoH1ZHNEeWgtJmFnQKWjw"/>
                 </transition>
                 <transition xmi:type="uml:Transition" xmi:id="_OJsZRJHNEeWgtJmFnQKWjw" name="RegisterUser" source="_OJDgEZHNEeWgtJmFnQKWjw" target="_OJDgEZHNEeWgtJmFnQKWjw">
-                  <effect xmi:type="uml:OpaqueBehavior" xmi:id="_OJtAU5HNEeWgtJmFnQKWjw" name="RegisterUser$method$1" specification="_OJryNZHNEeWgtJmFnQKWjw">
+                  <effect xmi:type="uml:OpaqueBehavior" xmi:id="_OJtAU5HNEeWgtJmFnQKWjw" name="RegisterUser$method$1">
                     <ownedParameter xmi:type="uml:Parameter" xmi:id="_OJtnZZHNEeWgtJmFnQKWjw" name="UserID">
                       <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
                       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_OJuOcJHNEeWgtJmFnQKWjw" value="1"/>
@@ -4491,7 +4491,7 @@ delete this;</body>
                   <trigger xmi:type="uml:Trigger" xmi:id="_OJtAUJHNEeWgtJmFnQKWjw" name="RegisterUser_trigger" event="_OJsZQ5HNEeWgtJmFnQKWjw"/>
                 </transition>
                 <transition xmi:type="uml:Transition" xmi:id="_OJwDopHNEeWgtJmFnQKWjw" name="UnregisterUser" source="_OJDgEZHNEeWgtJmFnQKWjw" target="_OJDgEZHNEeWgtJmFnQKWjw">
-                  <effect xmi:type="uml:OpaqueBehavior" xmi:id="_OJwqsZHNEeWgtJmFnQKWjw" name="UnregisterUser$method$1" specification="_OJvck5HNEeWgtJmFnQKWjw">
+                  <effect xmi:type="uml:OpaqueBehavior" xmi:id="_OJwqsZHNEeWgtJmFnQKWjw" name="UnregisterUser$method$1">
                     <ownedParameter xmi:type="uml:Parameter" xmi:id="_OJyf4ZHNEeWgtJmFnQKWjw" name="UserID">
                       <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
                       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_OJyf4pHNEeWgtJmFnQKWjw" value="1"/>
@@ -4510,7 +4510,7 @@ delete this;</body>
                   <trigger xmi:type="uml:Trigger" xmi:id="_OJwDpJHNEeWgtJmFnQKWjw" name="UnregisterUser_trigger" event="_OJwDoZHNEeWgtJmFnQKWjw"/>
                 </transition>
                 <transition xmi:type="uml:Transition" xmi:id="_OJ08IJHNEeWgtJmFnQKWjw" name="EndAllCall" source="_OJDgEZHNEeWgtJmFnQKWjw" target="_OJDgEZHNEeWgtJmFnQKWjw">
-                  <effect xmi:type="uml:OpaqueBehavior" xmi:id="_OJ4mgJHNEeWgtJmFnQKWjw" name="EndAllCall$method$1" specification="_OJ0VEZHNEeWgtJmFnQKWjw">
+                  <effect xmi:type="uml:OpaqueBehavior" xmi:id="_OJ4mgJHNEeWgtJmFnQKWjw" name="EndAllCall$method$1">
                     <language>rALF</language>
                     <body>;</body>
                   </effect>
@@ -4661,21 +4661,21 @@ delete this;</body>
               </ownedAttribute>
             </nestedClassifier>
             <nestedClassifier xmi:type="uml:Signal" xmi:id="_OJ0VE5HNEeWgtJmFnQKWjw" name="EndAllCall"/>
-            <ownedReception xmi:type="uml:Reception" xmi:id="_OJEHIJHNEeWgtJmFnQKWjw" name="UnknownNumber" method="_OJFVQJHNEeWgtJmFnQKWjw" signal="_OJEHIpHNEeWgtJmFnQKWjw">
+            <ownedReception xmi:type="uml:Reception" xmi:id="_OJEHIJHNEeWgtJmFnQKWjw" name="UnknownNumber" signal="_OJEHIpHNEeWgtJmFnQKWjw">
               <ownedParameter xmi:type="uml:Parameter" xmi:id="_OJFVQpHNEeWgtJmFnQKWjw" name="UserID">
                 <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
                 <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_OJFVQ5HNEeWgtJmFnQKWjw" value="1"/>
                 <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_OJFVRJHNEeWgtJmFnQKWjw" value="1"/>
               </ownedParameter>
             </ownedReception>
-            <ownedReception xmi:type="uml:Reception" xmi:id="_OJGjY5HNEeWgtJmFnQKWjw" name="LineIsBusy" method="_OJIYkZHNEeWgtJmFnQKWjw" signal="_OJHKcZHNEeWgtJmFnQKWjw">
+            <ownedReception xmi:type="uml:Reception" xmi:id="_OJGjY5HNEeWgtJmFnQKWjw" name="LineIsBusy" signal="_OJHKcZHNEeWgtJmFnQKWjw">
               <ownedParameter xmi:type="uml:Parameter" xmi:id="_OJI_oZHNEeWgtJmFnQKWjw" name="UserID">
                 <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
                 <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_OJI_opHNEeWgtJmFnQKWjw" value="1"/>
                 <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_OJI_o5HNEeWgtJmFnQKWjw" value="1"/>
               </ownedParameter>
             </ownedReception>
-            <ownedReception xmi:type="uml:Reception" xmi:id="_OJKNwZHNEeWgtJmFnQKWjw" name="CalledBy" method="_OJLb45HNEeWgtJmFnQKWjw" signal="_OJKNw5HNEeWgtJmFnQKWjw">
+            <ownedReception xmi:type="uml:Reception" xmi:id="_OJKNwZHNEeWgtJmFnQKWjw" name="CalledBy" signal="_OJKNw5HNEeWgtJmFnQKWjw">
               <ownedParameter xmi:type="uml:Parameter" xmi:id="_OJMC8ZHNEeWgtJmFnQKWjw" name="CallerID">
                 <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
                 <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_OJMC8pHNEeWgtJmFnQKWjw" value="1"/>
@@ -4692,7 +4692,7 @@ delete this;</body>
                 <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_OJOfM5HNEeWgtJmFnQKWjw" value="1"/>
               </ownedParameter>
             </ownedReception>
-            <ownedReception xmi:type="uml:Reception" xmi:id="_OJPtUZHNEeWgtJmFnQKWjw" name="InitiateCall" method="_OJQ7cpHNEeWgtJmFnQKWjw" signal="_OJPtU5HNEeWgtJmFnQKWjw">
+            <ownedReception xmi:type="uml:Reception" xmi:id="_OJPtUZHNEeWgtJmFnQKWjw" name="InitiateCall" signal="_OJPtU5HNEeWgtJmFnQKWjw">
               <ownedParameter xmi:type="uml:Parameter" xmi:id="_OJRigZHNEeWgtJmFnQKWjw" name="UserID">
                 <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
                 <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_OJRigpHNEeWgtJmFnQKWjw" value="1"/>
@@ -4704,14 +4704,14 @@ delete this;</body>
                 <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_OJSwo5HNEeWgtJmFnQKWjw" value="1"/>
               </ownedParameter>
             </ownedReception>
-            <ownedReception xmi:type="uml:Reception" xmi:id="_OJT-wpHNEeWgtJmFnQKWjw" name="TerminateCall" method="_OJVM4pHNEeWgtJmFnQKWjw" signal="_OJT-xJHNEeWgtJmFnQKWjw">
+            <ownedReception xmi:type="uml:Reception" xmi:id="_OJT-wpHNEeWgtJmFnQKWjw" name="TerminateCall" signal="_OJT-xJHNEeWgtJmFnQKWjw">
               <ownedParameter xmi:type="uml:Parameter" xmi:id="_OJVz8JHNEeWgtJmFnQKWjw" name="UserID">
                 <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
                 <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_OJVz8ZHNEeWgtJmFnQKWjw" value="1"/>
                 <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_OJVz8pHNEeWgtJmFnQKWjw" value="1"/>
               </ownedParameter>
             </ownedReception>
-            <ownedReception xmi:type="uml:Reception" xmi:id="_OJWbBZHNEeWgtJmFnQKWjw" name="RegistrationResult" method="_OJYQMZHNEeWgtJmFnQKWjw" signal="_OJXCEZHNEeWgtJmFnQKWjw">
+            <ownedReception xmi:type="uml:Reception" xmi:id="_OJWbBZHNEeWgtJmFnQKWjw" name="RegistrationResult" signal="_OJXCEZHNEeWgtJmFnQKWjw">
               <ownedParameter xmi:type="uml:Parameter" xmi:id="_OJYQM5HNEeWgtJmFnQKWjw" name="UserID">
                 <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
                 <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_OJYQNJHNEeWgtJmFnQKWjw" value="1"/>
@@ -4723,7 +4723,7 @@ delete this;</body>
                 <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_OJaFY5HNEeWgtJmFnQKWjw" value="1"/>
               </ownedParameter>
             </ownedReception>
-            <ownedReception xmi:type="uml:Reception" xmi:id="_OJbThJHNEeWgtJmFnQKWjw" name="UnregistrationResult" method="_OJcho5HNEeWgtJmFnQKWjw" signal="_OJb6kZHNEeWgtJmFnQKWjw">
+            <ownedReception xmi:type="uml:Reception" xmi:id="_OJbThJHNEeWgtJmFnQKWjw" name="UnregistrationResult" signal="_OJb6kZHNEeWgtJmFnQKWjw">
               <ownedParameter xmi:type="uml:Parameter" xmi:id="_OJdIsZHNEeWgtJmFnQKWjw" name="UserID">
                 <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
                 <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_OJdIspHNEeWgtJmFnQKWjw" value="1"/>
@@ -4735,8 +4735,8 @@ delete this;</body>
                 <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_OJeW05HNEeWgtJmFnQKWjw" value="1"/>
               </ownedParameter>
             </ownedReception>
-            <ownedReception xmi:type="uml:Reception" xmi:id="_OJfk8ZHNEeWgtJmFnQKWjw" name="AllUserUnregistered" method="_OJgzEJHNEeWgtJmFnQKWjw" signal="_OJfk85HNEeWgtJmFnQKWjw"/>
-            <ownedReception xmi:type="uml:Reception" xmi:id="_OJhaIJHNEeWgtJmFnQKWjw" name="AcceptCall" method="_OJioQZHNEeWgtJmFnQKWjw" signal="_OJhaIpHNEeWgtJmFnQKWjw">
+            <ownedReception xmi:type="uml:Reception" xmi:id="_OJfk8ZHNEeWgtJmFnQKWjw" name="AllUserUnregistered" signal="_OJfk85HNEeWgtJmFnQKWjw"/>
+            <ownedReception xmi:type="uml:Reception" xmi:id="_OJhaIJHNEeWgtJmFnQKWjw" name="AcceptCall" signal="_OJhaIpHNEeWgtJmFnQKWjw">
               <ownedParameter xmi:type="uml:Parameter" xmi:id="_OJioQ5HNEeWgtJmFnQKWjw" name="UserID">
                 <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
                 <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_OJioRJHNEeWgtJmFnQKWjw" value="1"/>
@@ -4748,7 +4748,7 @@ delete this;</body>
                 <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_OJj2ZpHNEeWgtJmFnQKWjw" value="1"/>
               </ownedParameter>
             </ownedReception>
-            <ownedReception xmi:type="uml:Reception" xmi:id="_OJlEg5HNEeWgtJmFnQKWjw" name="EndCall" method="_OJmSoZHNEeWgtJmFnQKWjw" signal="_OJlrkZHNEeWgtJmFnQKWjw">
+            <ownedReception xmi:type="uml:Reception" xmi:id="_OJlEg5HNEeWgtJmFnQKWjw" name="EndCall" signal="_OJlrkZHNEeWgtJmFnQKWjw">
               <ownedParameter xmi:type="uml:Parameter" xmi:id="_OJmSo5HNEeWgtJmFnQKWjw" name="UserID">
                 <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
                 <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_OJmSpJHNEeWgtJmFnQKWjw" value="1"/>
@@ -4760,7 +4760,7 @@ delete this;</body>
                 <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_OJngwZHNEeWgtJmFnQKWjw" value="1"/>
               </ownedParameter>
             </ownedReception>
-            <ownedReception xmi:type="uml:Reception" xmi:id="_OJoH0ZHNEeWgtJmFnQKWjw" name="CallSignal" method="_OJou5JHNEeWgtJmFnQKWjw" signal="_OJoH05HNEeWgtJmFnQKWjw">
+            <ownedReception xmi:type="uml:Reception" xmi:id="_OJoH0ZHNEeWgtJmFnQKWjw" name="CallSignal" signal="_OJoH05HNEeWgtJmFnQKWjw">
               <ownedParameter xmi:type="uml:Parameter" xmi:id="_OJpV8JHNEeWgtJmFnQKWjw" name="CallerID">
                 <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
                 <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_OJpV8ZHNEeWgtJmFnQKWjw" value="1"/>
@@ -4777,7 +4777,7 @@ delete this;</body>
                 <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_OJrLIpHNEeWgtJmFnQKWjw" value="1"/>
               </ownedParameter>
             </ownedReception>
-            <ownedReception xmi:type="uml:Reception" xmi:id="_OJryNZHNEeWgtJmFnQKWjw" name="RegisterUser" method="_OJtAU5HNEeWgtJmFnQKWjw" signal="_OJsZQZHNEeWgtJmFnQKWjw">
+            <ownedReception xmi:type="uml:Reception" xmi:id="_OJryNZHNEeWgtJmFnQKWjw" name="RegisterUser" signal="_OJsZQZHNEeWgtJmFnQKWjw">
               <ownedParameter xmi:type="uml:Parameter" xmi:id="_OJtAVZHNEeWgtJmFnQKWjw" name="UserID">
                 <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
                 <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_OJtAVpHNEeWgtJmFnQKWjw" value="1"/>
@@ -4789,7 +4789,7 @@ delete this;</body>
                 <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_OJuOdZHNEeWgtJmFnQKWjw" value="1"/>
               </ownedParameter>
             </ownedReception>
-            <ownedReception xmi:type="uml:Reception" xmi:id="_OJvck5HNEeWgtJmFnQKWjw" name="UnregisterUser" method="_OJwqsZHNEeWgtJmFnQKWjw" signal="_OJvclZHNEeWgtJmFnQKWjw">
+            <ownedReception xmi:type="uml:Reception" xmi:id="_OJvck5HNEeWgtJmFnQKWjw" name="UnregisterUser" signal="_OJvclZHNEeWgtJmFnQKWjw">
               <ownedParameter xmi:type="uml:Parameter" xmi:id="_OJxRwZHNEeWgtJmFnQKWjw" name="UserID">
                 <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
                 <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_OJxRwpHNEeWgtJmFnQKWjw" value="1"/>
@@ -4801,7 +4801,7 @@ delete this;</body>
                 <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_OJzG8ZHNEeWgtJmFnQKWjw" value="1"/>
               </ownedParameter>
             </ownedReception>
-            <ownedReception xmi:type="uml:Reception" xmi:id="_OJ0VEZHNEeWgtJmFnQKWjw" name="EndAllCall" method="_OJ4mgJHNEeWgtJmFnQKWjw" signal="_OJ0VE5HNEeWgtJmFnQKWjw"/>
+            <ownedReception xmi:type="uml:Reception" xmi:id="_OJ0VEZHNEeWgtJmFnQKWjw" name="EndAllCall" signal="_OJ0VE5HNEeWgtJmFnQKWjw"/>
           </packagedElement>
         </packagedElement>
       </packagedElement>
