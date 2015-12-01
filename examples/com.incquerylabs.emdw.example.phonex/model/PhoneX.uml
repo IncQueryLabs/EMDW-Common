@@ -191,7 +191,7 @@
   send new Call::CallRcvd() to call;
 </body>
             </ownedBehavior>
-            <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_OLkokpHNEeWgtJmFnQKWjw" name="CallStateMachine" isReentrant="false">
+            <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_OLkokpHNEeWgtJmFnQKWjw" name="CallStateMachine" isReentrant="true">
               <region xmi:type="uml:Region" xmi:id="_OLkolJHNEeWgtJmFnQKWjw" name="DefaultRegion">
                 <transition xmi:type="uml:Transition" xmi:id="_OLw10ZHNEeWgtJmFnQKWjw" name="tr_init" source="_OLvntJHNEeWgtJmFnQKWjw" target="_OLwOwZHNEeWgtJmFnQKWjw"/>
                 <transition xmi:type="uml:Transition" xmi:id="_ONnP8JHNEeWgtJmFnQKWjw" name="TXN_3_Call8_6" source="_OLlPoZHNEeWgtJmFnQKWjw" target="_OLmdwJHNEeWgtJmFnQKWjw">
@@ -446,7 +446,7 @@ delete this;</body>
           </packagedElement>
           <packagedElement xmi:type="uml:Class" xmi:id="_OC2KYZHNEeWgtJmFnQKWjw" name="Called" classifierBehavior="_OL2VYJHNEeWgtJmFnQKWjw" isActive="true">
             <generalization xmi:type="uml:Generalization" xmi:id="_OE1HY5HNEeWgtJmFnQKWjw" general="_OC8RAJHNEeWgtJmFnQKWjw"/>
-            <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_OL2VYJHNEeWgtJmFnQKWjw" name="CalledStateMachine" isReentrant="false">
+            <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_OL2VYJHNEeWgtJmFnQKWjw" name="CalledStateMachine" isReentrant="true">
               <region xmi:type="uml:Region" xmi:id="_OL2VYpHNEeWgtJmFnQKWjw" name="DefaultRegion">
                 <transition xmi:type="uml:Transition" xmi:id="_OL28dJHNEeWgtJmFnQKWjw" name="tr_init" source="_OL28cJHNEeWgtJmFnQKWjw" target="_OL28cpHNEeWgtJmFnQKWjw"/>
                 <transition xmi:type="uml:Transition" xmi:id="_ONtWkpHNEeWgtJmFnQKWjw" name="TXN_1_Subscriber1_2" source="_OL28dpHNEeWgtJmFnQKWjw" target="_OL3jg5HNEeWgtJmFnQKWjw">
@@ -581,7 +581,7 @@ delete this;</body>
           </packagedElement>
           <packagedElement xmi:type="uml:Class" xmi:id="_OC3YgZHNEeWgtJmFnQKWjw" name="Caller" classifierBehavior="_OMHbI5HNEeWgtJmFnQKWjw" isActive="true">
             <generalization xmi:type="uml:Generalization" xmi:id="_OE1ucZHNEeWgtJmFnQKWjw" general="_OC8RAJHNEeWgtJmFnQKWjw"/>
-            <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_OMHbI5HNEeWgtJmFnQKWjw" name="CallerStateMachine" isReentrant="false">
+            <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_OMHbI5HNEeWgtJmFnQKWjw" name="CallerStateMachine" isReentrant="true">
               <region xmi:type="uml:Region" xmi:id="_OMICMZHNEeWgtJmFnQKWjw" name="DefaultRegion">
                 <transition xmi:type="uml:Transition" xmi:id="_OMIpQpHNEeWgtJmFnQKWjw" name="tr_init" source="_OMICM5HNEeWgtJmFnQKWjw" target="_OMIpQJHNEeWgtJmFnQKWjw"/>
                 <transition xmi:type="uml:Transition" xmi:id="_ONy2I5HNEeWgtJmFnQKWjw" name="TXN_1_Subscriber9_1" source="_OMIpRJHNEeWgtJmFnQKWjw" target="_OMIpRJHNEeWgtJmFnQKWjw">
@@ -718,7 +718,7 @@ delete this;</body>
           </packagedElement>
           <packagedElement xmi:type="uml:Class" xmi:id="_OC4moZHNEeWgtJmFnQKWjw" name="RegisteredSubscriber" classifierBehavior="_OMUPcZHNEeWgtJmFnQKWjw" isActive="true">
             <generalization xmi:type="uml:Generalization" xmi:id="_OE1uc5HNEeWgtJmFnQKWjw" general="_OC8RAJHNEeWgtJmFnQKWjw"/>
-            <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_OMUPcZHNEeWgtJmFnQKWjw" name="RegisteredSubscriberStateMachine" isReentrant="false">
+            <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_OMUPcZHNEeWgtJmFnQKWjw" name="RegisteredSubscriberStateMachine" isReentrant="true">
               <region xmi:type="uml:Region" xmi:id="_OMUPc5HNEeWgtJmFnQKWjw" name="DefaultRegion">
                 <transition xmi:type="uml:Transition" xmi:id="_OMZvAZHNEeWgtJmFnQKWjw" name="tr_init" source="_OMU2gJHNEeWgtJmFnQKWjw" target="_OMU2gpHNEeWgtJmFnQKWjw"/>
                 <transition xmi:type="uml:Transition" xmi:id="_ON4VtZHNEeWgtJmFnQKWjw" name="TXN_1_RegisteredSubscriber1_1" source="_OMU2gpHNEeWgtJmFnQKWjw" target="_OMU2gpHNEeWgtJmFnQKWjw">
@@ -768,7 +768,7 @@ delete this;</body>
   send new RegistrationProcess::RegistrationRequestRcvd() to regprocess;
 </body>
             </ownedBehavior>
-            <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_OMZvA5HNEeWgtJmFnQKWjw" name="RegistrationProcessStateMachine" isReentrant="false">
+            <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_OMZvA5HNEeWgtJmFnQKWjw" name="RegistrationProcessStateMachine" isReentrant="true">
               <region xmi:type="uml:Region" xmi:id="_OMaWEJHNEeWgtJmFnQKWjw" name="DefaultRegion">
                 <transition xmi:type="uml:Transition" xmi:id="_OMbkM5HNEeWgtJmFnQKWjw" name="tr_init" source="_OMa9IZHNEeWgtJmFnQKWjw" target="_OMbkMZHNEeWgtJmFnQKWjw"/>
                 <transition xmi:type="uml:Transition" xmi:id="_ON48wpHNEeWgtJmFnQKWjw" name="TXN_1_RegistrationProcess2_2" source="_OMcLQJHNEeWgtJmFnQKWjw" target="_OMeAcZHNEeWgtJmFnQKWjw">
@@ -1577,7 +1577,7 @@ delete this;</body>
   delete this;
 </body>
             </ownedBehavior>
-            <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_OKylcZHNEeWgtJmFnQKWjw" name="SEQ_BUCKETStateMachine" isReentrant="false">
+            <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_OKylcZHNEeWgtJmFnQKWjw" name="SEQ_BUCKETStateMachine" isReentrant="true">
               <region xmi:type="uml:Region" xmi:id="_OKylc5HNEeWgtJmFnQKWjw" name="DefaultRegion">
                 <transition xmi:type="uml:Transition" xmi:id="_OKzMg5HNEeWgtJmFnQKWjw" name="tr_init" source="_OKyldZHNEeWgtJmFnQKWjw" target="_OKzMgZHNEeWgtJmFnQKWjw"/>
                 <transition xmi:type="uml:Transition" xmi:id="_ONO1cpHNEeWgtJmFnQKWjw" name="TXN_1_SEQ_BUCKET1_1" source="_OKzMgZHNEeWgtJmFnQKWjw" target="_OKzMgZHNEeWgtJmFnQKWjw">
@@ -2275,7 +2275,7 @@ delete this;</body>
               <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_ODfqopHNEeWgtJmFnQKWjw" value="1"/>
               <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_ODgRsJHNEeWgtJmFnQKWjw" value="1"/>
             </ownedAttribute>
-            <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_OLAA0ZHNEeWgtJmFnQKWjw" name="NormalCallStateMachine" isReentrant="false">
+            <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_OLAA0ZHNEeWgtJmFnQKWjw" name="NormalCallStateMachine" isReentrant="true">
               <region xmi:type="uml:Region" xmi:id="_OLESQZHNEeWgtJmFnQKWjw" name="DefaultRegion">
                 <transition xmi:type="uml:Transition" xmi:id="_OLK_8pHNEeWgtJmFnQKWjw" name="tr_init" source="_OLKY4JHNEeWgtJmFnQKWjw" target="_OLK_8JHNEeWgtJmFnQKWjw"/>
                 <transition xmi:type="uml:Transition" xmi:id="_ONZ0lZHNEeWgtJmFnQKWjw" name="TXN_1_TB_TESTCASE2_2" source="_OLE5UJHNEeWgtJmFnQKWjw" target="_OLGHcJHNEeWgtJmFnQKWjw">
@@ -3626,7 +3626,7 @@ delete this;</body>
             </ownedReception>
           </packagedElement>
           <packagedElement xmi:type="uml:Class" xmi:id="_OIp3cJHNEeWgtJmFnQKWjw" name="DBPort" classifierBehavior="_OIqegZHNEeWgtJmFnQKWjw" isActive="true">
-            <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_OIqegZHNEeWgtJmFnQKWjw" name="DBPortStateMachine" isReentrant="false">
+            <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_OIqegZHNEeWgtJmFnQKWjw" name="DBPortStateMachine" isReentrant="true">
               <region xmi:type="uml:Region" xmi:id="_OIrFkJHNEeWgtJmFnQKWjw" name="DefaultRegion">
                 <transition xmi:type="uml:Transition" xmi:id="_OIrsoZHNEeWgtJmFnQKWjw" name="tr_init" source="_OIrFkpHNEeWgtJmFnQKWjw" target="_OIrFlJHNEeWgtJmFnQKWjw"/>
                 <transition xmi:type="uml:Transition" xmi:id="_OIs6wZHNEeWgtJmFnQKWjw" name="AddUserIfNotExist" source="_OIrFlJHNEeWgtJmFnQKWjw" target="_OIrFlJHNEeWgtJmFnQKWjw">
@@ -4228,7 +4228,7 @@ delete this;</body>
             </ownedReception>
           </packagedElement>
           <packagedElement xmi:type="uml:Class" xmi:id="_OJBq4JHNEeWgtJmFnQKWjw" name="PhoneXPort" classifierBehavior="_OJCR8ZHNEeWgtJmFnQKWjw" isActive="true">
-            <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_OJCR8ZHNEeWgtJmFnQKWjw" name="PhoneXPortStateMachine" isReentrant="false">
+            <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_OJCR8ZHNEeWgtJmFnQKWjw" name="PhoneXPortStateMachine" isReentrant="true">
               <region xmi:type="uml:Region" xmi:id="_OJC5AZHNEeWgtJmFnQKWjw" name="DefaultRegion">
                 <transition xmi:type="uml:Transition" xmi:id="_OJDgE5HNEeWgtJmFnQKWjw" name="tr_init" source="_OJC5A5HNEeWgtJmFnQKWjw" target="_OJDgEZHNEeWgtJmFnQKWjw"/>
                 <transition xmi:type="uml:Transition" xmi:id="_OJEuMJHNEeWgtJmFnQKWjw" name="UnknownNumber" source="_OJDgEZHNEeWgtJmFnQKWjw" target="_OJDgEZHNEeWgtJmFnQKWjw">
