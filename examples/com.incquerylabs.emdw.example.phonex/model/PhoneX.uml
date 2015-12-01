@@ -969,7 +969,7 @@ delete this;</body>
           </packagedElement>
           <packagedElement xmi:type="uml:Class" xmi:id="_OC84EZHNEeWgtJmFnQKWjw" name="UnregisteredSubscriber" classifierBehavior="_OMiR45HNEeWgtJmFnQKWjw" isActive="true">
             <generalization xmi:type="uml:Generalization" xmi:id="_OE2VgJHNEeWgtJmFnQKWjw" general="_OC8RAJHNEeWgtJmFnQKWjw"/>
-            <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_OMiR45HNEeWgtJmFnQKWjw" name="UnregisteredSubscriberStateMachine" isReentrant="false">
+            <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_OMiR45HNEeWgtJmFnQKWjw" name="UnregisteredSubscriberStateMachine" isReentrant="true">
               <region xmi:type="uml:Region" xmi:id="_OMi48ZHNEeWgtJmFnQKWjw" name="DefaultRegion">
                 <transition xmi:type="uml:Transition" xmi:id="_OMjgApHNEeWgtJmFnQKWjw" name="tr_init" source="_OMi485HNEeWgtJmFnQKWjw" target="_OMjgAJHNEeWgtJmFnQKWjw"/>
                 <transition xmi:type="uml:Transition" xmi:id="_ON7ZBZHNEeWgtJmFnQKWjw" name="TXN_1_UnregisteredSubscriber1_1" source="_OMjgAJHNEeWgtJmFnQKWjw" target="_OMjgAJHNEeWgtJmFnQKWjw">
@@ -1014,7 +1014,7 @@ delete this;</body>
   send new UnregistrationProcess::UnregistrationRequestRcvd() to unregprocess;
 </body>
             </ownedBehavior>
-            <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_OMjgBJHNEeWgtJmFnQKWjw" name="UnregistrationProcessStateMachine" isReentrant="false">
+            <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_OMjgBJHNEeWgtJmFnQKWjw" name="UnregistrationProcessStateMachine" isReentrant="true">
               <region xmi:type="uml:Region" xmi:id="_OMkHEZHNEeWgtJmFnQKWjw" name="DefaultRegion">
                 <transition xmi:type="uml:Transition" xmi:id="_OMlVMpHNEeWgtJmFnQKWjw" name="tr_init" source="_OMkuIZHNEeWgtJmFnQKWjw" target="_OMlVMJHNEeWgtJmFnQKWjw"/>
                 <transition xmi:type="uml:Transition" xmi:id="_ON8AEpHNEeWgtJmFnQKWjw" name="TXN_1_UnregistrationProcess2_2" source="_OMlVNJHNEeWgtJmFnQKWjw" target="_OMl8QpHNEeWgtJmFnQKWjw">
@@ -1987,7 +1987,7 @@ delete this;</body>
   }
 </body>
             </ownedBehavior>
-            <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_OK4FAZHNEeWgtJmFnQKWjw" name="SEQ_TESTCASEStateMachine" isReentrant="false">
+            <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_OK4FAZHNEeWgtJmFnQKWjw" name="SEQ_TESTCASEStateMachine" isReentrant="true">
               <region xmi:type="uml:Region" xmi:id="_OK4sEZHNEeWgtJmFnQKWjw" name="DefaultRegion">
                 <transition xmi:type="uml:Transition" xmi:id="_OK5TI5HNEeWgtJmFnQKWjw" name="tr_init" source="_OK4sE5HNEeWgtJmFnQKWjw" target="_OK5TIZHNEeWgtJmFnQKWjw"/>
                 <transition xmi:type="uml:Transition" xmi:id="_ONWxQpHNEeWgtJmFnQKWjw" name="TXN_1_SEQ_TESTCASE2_2" source="_OK56MJHNEeWgtJmFnQKWjw" target="_OK6hQZHNEeWgtJmFnQKWjw">
@@ -2550,7 +2550,7 @@ delete this;</body>
               <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_ODg4wZHNEeWgtJmFnQKWjw" value="1"/>
               <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_ODhf0JHNEeWgtJmFnQKWjw" value="1"/>
             </ownedAttribute>
-            <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_OLK_9JHNEeWgtJmFnQKWjw" name="SuccessfullRegistrationStateMachine" isReentrant="false">
+            <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_OLK_9JHNEeWgtJmFnQKWjw" name="SuccessfullRegistrationStateMachine" isReentrant="true">
               <region xmi:type="uml:Region" xmi:id="_OLLnAZHNEeWgtJmFnQKWjw" name="DefaultRegion">
                 <transition xmi:type="uml:Transition" xmi:id="_OLRGkJHNEeWgtJmFnQKWjw" name="tr_init" source="_OLP4cZHNEeWgtJmFnQKWjw" target="_OLP4c5HNEeWgtJmFnQKWjw"/>
                 <transition xmi:type="uml:Transition" xmi:id="_ONetEZHNEeWgtJmFnQKWjw" name="TXN_1_TB_TESTCASE2_2" source="_OLLnA5HNEeWgtJmFnQKWjw" target="_OLM1IJHNEeWgtJmFnQKWjw">
@@ -2650,7 +2650,7 @@ delete this;</body>
               <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_ODit8ZHNEeWgtJmFnQKWjw" value="1"/>
               <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_ODit8pHNEeWgtJmFnQKWjw" value="1"/>
             </ownedAttribute>
-            <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_OLRGkpHNEeWgtJmFnQKWjw" name="UnSuccessfullRegistrationStateMachine" isReentrant="false">
+            <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_OLRGkpHNEeWgtJmFnQKWjw" name="UnSuccessfullRegistrationStateMachine" isReentrant="true">
               <region xmi:type="uml:Region" xmi:id="_OLRtoJHNEeWgtJmFnQKWjw" name="DefaultRegion">
                 <transition xmi:type="uml:Transition" xmi:id="_OLX0QZHNEeWgtJmFnQKWjw" name="tr_init" source="_OLV_EJHNEeWgtJmFnQKWjw" target="_OLXNMZHNEeWgtJmFnQKWjw"/>
                 <transition xmi:type="uml:Transition" xmi:id="_ONgiRJHNEeWgtJmFnQKWjw" name="TXN_1_TB_TESTCASE2_2" source="_OLSUsZHNEeWgtJmFnQKWjw" target="_OLS7wZHNEeWgtJmFnQKWjw">
@@ -2749,7 +2749,7 @@ delete this;</body>
           </packagedElement>
           <packagedElement xmi:type="uml:Class" xmi:id="_OCvcsJHNEeWgtJmFnQKWjw" name="UnknownNumber" classifierBehavior="_OLX0Q5HNEeWgtJmFnQKWjw" isActive="true">
             <generalization xmi:type="uml:Generalization" xmi:id="_OE0gU5HNEeWgtJmFnQKWjw" general="_OCzuIJHNEeWgtJmFnQKWjw"/>
-            <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_OLX0Q5HNEeWgtJmFnQKWjw" name="UnknownNumberStateMachine" isReentrant="false">
+            <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_OLX0Q5HNEeWgtJmFnQKWjw" name="UnknownNumberStateMachine" isReentrant="true">
               <region xmi:type="uml:Region" xmi:id="_OLYbUZHNEeWgtJmFnQKWjw" name="DefaultRegion">
                 <transition xmi:type="uml:Transition" xmi:id="_OLd64JHNEeWgtJmFnQKWjw" name="tr_init" source="_OLcswZHNEeWgtJmFnQKWjw" target="_OLdT0JHNEeWgtJmFnQKWjw"/>
                 <transition xmi:type="uml:Transition" xmi:id="_ONi-gpHNEeWgtJmFnQKWjw" name="TXN_1_TB_TESTCASE2_2" source="_OLYbU5HNEeWgtJmFnQKWjw" target="_OLZpcJHNEeWgtJmFnQKWjw">
@@ -2858,7 +2858,7 @@ delete this;</body>
           </packagedElement>
           <packagedElement xmi:type="uml:Class" xmi:id="_OCxR4JHNEeWgtJmFnQKWjw" name="UserBusy" classifierBehavior="_OLd64pHNEeWgtJmFnQKWjw" isActive="true">
             <generalization xmi:type="uml:Generalization" xmi:id="_OE1HYZHNEeWgtJmFnQKWjw" general="_OCzuIJHNEeWgtJmFnQKWjw"/>
-            <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_OLd64pHNEeWgtJmFnQKWjw" name="UserBusyStateMachine" isReentrant="false">
+            <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_OLd64pHNEeWgtJmFnQKWjw" name="UserBusyStateMachine" isReentrant="true">
               <region xmi:type="uml:Region" xmi:id="_OLeh8JHNEeWgtJmFnQKWjw" name="DefaultRegion">
                 <transition xmi:type="uml:Transition" xmi:id="_OLkokJHNEeWgtJmFnQKWjw" name="tr_init" source="_OLkBgJHNEeWgtJmFnQKWjw" target="_OLkBgpHNEeWgtJmFnQKWjw"/>
                 <transition xmi:type="uml:Transition" xmi:id="_ONkztJHNEeWgtJmFnQKWjw" name="TXN_1_TB_TESTCASE2_2" source="_OLeh8pHNEeWgtJmFnQKWjw" target="_OLgXIJHNEeWgtJmFnQKWjw">
@@ -3279,7 +3279,7 @@ delete this;</body>
             <ownedOperation xmi:type="uml:Operation" xmi:id="_OKUrYZHNEeWgtJmFnQKWjw" name="init" isStatic="true" method="_OKVScJHNEeWgtJmFnQKWjw"/>
           </packagedElement>
           <packagedElement xmi:type="uml:Class" xmi:id="_OH6QkZHNEeWgtJmFnQKWjw" name="SEQ" classifierBehavior="_OH8s0JHNEeWgtJmFnQKWjw" isActive="true">
-            <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_OH8s0JHNEeWgtJmFnQKWjw" name="SEQStateMachine" isReentrant="false">
+            <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_OH8s0JHNEeWgtJmFnQKWjw" name="SEQStateMachine" isReentrant="true">
               <region xmi:type="uml:Region" xmi:id="_OH_wIJHNEeWgtJmFnQKWjw" name="DefaultRegion">
                 <transition xmi:type="uml:Transition" xmi:id="_OIHr8JHNEeWgtJmFnQKWjw" name="tr_init" source="_OICMYJHNEeWgtJmFnQKWjw" target="_OIFPsJHNEeWgtJmFnQKWjw"/>
                 <transition xmi:type="uml:Transition" xmi:id="_OIKvQZHNEeWgtJmFnQKWjw" name="register" source="_OIFPsJHNEeWgtJmFnQKWjw" target="_OIFPsJHNEeWgtJmFnQKWjw">
