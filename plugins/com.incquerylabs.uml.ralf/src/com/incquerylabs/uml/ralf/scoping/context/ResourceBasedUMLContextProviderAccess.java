@@ -11,13 +11,17 @@ public class ResourceBasedUMLContextProviderAccess implements IUMLContextProvide
 	@Override
 	public IUMLContextProvider getUmlContextProviderFor(EObject context) {
 		Resource resource = context.eResource();
+		return getUmlContextProviderFor(resource);
+	}
+
+	@Override
+	public IUMLContextProvider getUmlContextProviderFor(Resource resource) {
 		if (resource instanceof ReducedAlfLanguageResource) {
 			return ((ReducedAlfLanguageResource) resource).getUmlContextProvider();
 		} else {
 			throw new IllegalArgumentException(
-					"EObject " + context.toString() + " is not contained in an rAlf Resource.");
+					"Resource " + resource.getURI() + " is not an rAlf Resource.");
 		}
-
 	}
 
 }
