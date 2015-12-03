@@ -5,6 +5,7 @@ import org.eclipse.xtext.XtextStandaloneSetup;
 import org.eclipse.xtext.generator.Generator;
 import org.eclipse.xtext.xtext.ecoreInference.IXtext2EcorePostProcessor;
 
+import com.google.inject.Binder;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
@@ -19,8 +20,8 @@ public class RAlfLanguageGenerator extends Generator {
 				return Guice.createInjector(new XtextRuntimeModule() {
 
 					@Override
-					public Class<? extends IXtext2EcorePostProcessor> bindIXtext2EcorePostProcessor() {
-						return RAlfEcorePostprocessor.class;
+					public void configureIXtext2EcorePostProcessor(Binder binder) {
+					    binder.bind(IXtext2EcorePostProcessor.class).to(RAlfEcorePostprocessor.class);
 					}
 					
 				});

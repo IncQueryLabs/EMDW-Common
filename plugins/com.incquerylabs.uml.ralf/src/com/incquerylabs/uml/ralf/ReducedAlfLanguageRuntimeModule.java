@@ -8,8 +8,14 @@ import org.eclipse.xtext.linking.ILinkingService;
 import org.eclipse.xtext.naming.IQualifiedNameConverter;
 import org.eclipse.xtext.resource.IDefaultResourceDescriptionStrategy;
 import org.eclipse.xtext.resource.XtextResource;
+import org.eclipse.xtext.scoping.IGlobalScopeProvider;
+import org.eclipse.xtext.scoping.IScopeProvider;
+import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider;
 
+import com.google.inject.name.Names;
 import com.incquerylabs.uml.ralf.resource.ReducedAlfLanguageResource;
+import com.incquerylabs.uml.ralf.scoping.ReducedAlfLanguageGlobalScopeProvider;
+import com.incquerylabs.uml.ralf.scoping.ReducedAlfLanguageImportedNamespaceAwareScopeProvider;
 import com.incquerylabs.uml.ralf.scoping.ReducedAlfLanguageLinkingService;
 import com.incquerylabs.uml.ralf.scoping.ReducedAlfLanguageQualifiedNameConverter;
 import com.incquerylabs.uml.ralf.scoping.ReducedAlfLanguageResourceDescriptionStrategy;
@@ -19,7 +25,7 @@ import com.incquerylabs.uml.ralf.scoping.context.ResourceBasedUMLContextProvider
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
  */
-public class ReducedAlfLanguageRuntimeModule extends com.incquerylabs.uml.ralf.AbstractReducedAlfLanguageRuntimeModule {
+public class ReducedAlfLanguageRuntimeModule extends AbstractReducedAlfLanguageRuntimeModule {
 	
     public Class<? extends IDefaultResourceDescriptionStrategy> bindIDefaultResourceDescriptionStrategy() {
         return ReducedAlfLanguageResourceDescriptionStrategy.class;
@@ -46,5 +52,17 @@ public class ReducedAlfLanguageRuntimeModule extends com.incquerylabs.uml.ralf.A
     
 	public Class<? extends IUMLContextProviderAccess> bindIUMLContextProviderAccess() {
 		return ResourceBasedUMLContextProviderAccess.class;
+	}
+	
+	@Override
+	public Class<? extends IGlobalScopeProvider> bindIGlobalScopeProvider() {
+		return ReducedAlfLanguageGlobalScopeProvider.class;
+	}
+	
+	@Override
+	public void configureIScopeProviderDelegate(com.google.inject.Binder binder) {
+		binder.bind(IScopeProvider.class).
+			annotatedWith(Names.named(AbstractDeclarativeScopeProvider.NAMED_DELEGATE)).
+			to(ReducedAlfLanguageImportedNamespaceAwareScopeProvider.class);
 	}
 }
