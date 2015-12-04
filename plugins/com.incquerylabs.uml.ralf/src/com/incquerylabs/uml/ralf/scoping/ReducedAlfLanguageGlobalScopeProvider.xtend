@@ -1,22 +1,22 @@
 package com.incquerylabs.uml.ralf.scoping
 
-import org.eclipse.emf.ecore.EClass
-import org.eclipse.emf.ecore.resource.Resource
-import org.eclipse.xtext.resource.IEObjectDescription
-import org.eclipse.xtext.scoping.IScope
-import org.eclipse.xtext.scoping.impl.DefaultGlobalScopeProvider
+import com.google.common.base.Function
 import com.google.common.base.Predicate
 import com.google.inject.Inject
-import org.eclipse.uml2.uml.UMLPackage.Literals
 import com.incquerylabs.uml.ralf.scoping.context.IUMLContextProviderAccess
-import org.eclipse.xtext.scoping.Scopes
+import org.eclipse.emf.ecore.EClass
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.resource.Resource
+import org.eclipse.uml2.uml.NamedElement
+import org.eclipse.uml2.uml.UMLPackage.Literals
 import org.eclipse.xtext.naming.IQualifiedNameConverter
 import org.eclipse.xtext.naming.QualifiedName
-import org.eclipse.uml2.uml.NamedElement
-import com.google.common.base.Function
-import org.eclipse.xtext.util.IResourceScopeCache
-import org.eclipse.emf.ecore.EObject
+import org.eclipse.xtext.resource.IEObjectDescription
+import org.eclipse.xtext.scoping.IScope
+import org.eclipse.xtext.scoping.Scopes
+import org.eclipse.xtext.scoping.impl.DefaultGlobalScopeProvider
 import org.eclipse.xtext.scoping.impl.MapBasedScope
+import org.eclipse.xtext.util.IResourceScopeCache
 
 class ReducedAlfLanguageGlobalScopeProvider extends DefaultGlobalScopeProvider {
     
@@ -29,7 +29,8 @@ class ReducedAlfLanguageGlobalScopeProvider extends DefaultGlobalScopeProvider {
     
     private def Function<NamedElement, QualifiedName> nameCalculation(IUMLContextProvider contextProvider) {
         [
-            nameConverter.toQualifiedName(contextProvider.getQualifiedName(it))
+            val fqn = contextProvider.getQualifiedName(it)
+			if (fqn != null) nameConverter.toQualifiedName(fqn) else null
         ]
     }
     
