@@ -35,6 +35,7 @@ import org.eclipse.uml2.uml.NamedElement
 import com.incquerylabs.uml.ralf.scoping.context.IUMLContextProviderAccess
 import com.incquerylabs.uml.ralf.reducedAlfLanguage.InstanceCreationExpression
 import org.eclipse.xtext.scoping.IScope
+import org.eclipse.xtext.resource.IEObjectDescription
 
 /**
  * This class contains custom validation rules. 
@@ -99,36 +100,24 @@ class ReducedAlfLanguageValidator extends ReducedAlfSystemValidator {
 	    val node = NodeModelUtils.getNode(ex)
 	    val nodeText = NodeModelUtils.getTokenText(node)
 	    val referenceScope = scopeProvider.scope_NamedElement(ex, ReducedAlfLanguagePackage.Literals.NAME_EXPRESSION__REFERENCE)
-	    val element = referenceScope.getSingleElement(nameConverter.toQualifiedName(nodeText))
-	    
-	    val descriptions = newHashSet(element)
-	    var candidatePrefix = nameConverter.toQualifiedName((ex.reference.qualifiedName))
-	    while (candidatePrefix.segmentCount > 1) {
-	        candidatePrefix = candidatePrefix.skipLast(1)
-	        val candidateName = candidatePrefix.append(nodeText)
-	        val candidate = referenceScope.getSingleElement(candidateName)
-	        if (candidate != null) {
-	            descriptions.add(candidate)
-	        }
-	    }
-	    
-	    val names = descriptions.filterNull.filter[!EObjectOrProxy.eIsProxy].map[
-	        val obj = EObjectOrProxy
-	        val name = if (obj instanceof NamedElement) {
-                    obj.qualifiedName
-                } else {
-                    "<Unknown>" + obj.toString
-                }
-                return EClass.name + " " + name
-	    ].toSet
-	    
-	    if (names.size > 1) {
+	    val elements = referenceScope.getElements(nameConverter.toQualifiedName(nodeText))
+
+	    if (elements.size > 1) {
 	        error(
-	            '''Ambiguous reference: «FOR el : names SEPARATOR "; "»«el»«ENDFOR». Use fully qualified names instead.''',
+	            '''Ambiguous reference: «FOR el : elements SEPARATOR "; "»«el.namedElementReferenceName»«ENDFOR». Use fully qualified names instead.''',
 	            ReducedAlfLanguagePackage.Literals.NAME_EXPRESSION__REFERENCE,
 	            CODE_AMBIGUOUS_REFERENCE,
-	            names
+	            elements.map[qualifiedName.toString]
 	        )
+	    }
+	}
+	
+	private def String namedElementReferenceName(IEObjectDescription desc) {
+	    val obj = desc.EObjectOrProxy
+	    if (!obj.eIsProxy && obj instanceof NamedElement) {
+	        (obj as NamedElement).qualifiedName
+	    } else {
+	        nameConverter.toString(desc.qualifiedName)
 	    }
 	}
 	
