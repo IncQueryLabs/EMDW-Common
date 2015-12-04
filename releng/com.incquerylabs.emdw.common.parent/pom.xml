@@ -9,34 +9,48 @@
 	<packaging>pom</packaging>
 
 	<modules>
-		
-		<!-- Papyrus integration -->
-		<module>../../plugins/com.incquerylabs.uml.papyrus</module>
 		<module>../../plugins/com.incquerylabs.emdw.umlintegration.queries</module>
-		
+
 		<!-- xUML-RT profile -->
 		<module>../../plugins/hu.eltesoft.modelexecution.profile</module>
-		
-		<!-- Project nature -->
-		<module>../../plugins/com.incquerylabs.emdw.common.nature</module>
 
-		<!-- Examples -->
-		<module>../../examples/com.incquerylabs.emdw.examples</module>
-		
 		<!-- rALF Language -->
 		<module>../../plugins/com.incquerylabs.uml.ralf</module>
-		<module>../../plugins/com.incquerylabs.uml.ralf.languagegenerator</module>
-		<module>../../plugins/com.incquerylabs.uml.ralf.papyrus.ui</module>
-		<module>../../plugins/com.incquerylabs.uml.ralf.ui</module>
-		
-		<!-- Releng -->
-		<module>../com.incquerylabs.uml.ralf.feature</module>
-		<module>../com.incquerylabs.emdw.common.project.feature</module>
-		<module>../com.incquerylabs.emdw.examples.feature</module>
-		<module>../com.incquerylabs.uml.papyrus.feature</module>		
-		<module>../com.incquerylabs.emdw.common.update</module>
-
 	</modules>
+	
+	<profiles>
+		<profile>
+			<id>complete</id>
+			<activation>
+				<property>
+					<name>!maven.metamodel.artifacts</name>
+				</property>
+			</activation>
+			<modules>
+				<!-- Project nature -->
+				<module>../../plugins/com.incquerylabs.emdw.common.nature</module>
+		
+				<!-- Papyrus integration -->
+				<module>../../plugins/com.incquerylabs.uml.papyrus</module>
+
+				<!-- Examples -->
+				<module>../../examples/com.incquerylabs.emdw.examples</module>
+				
+				<!-- rALF Language -->
+				<module>../../plugins/com.incquerylabs.uml.ralf.languagegenerator</module>
+				<module>../../plugins/com.incquerylabs.uml.ralf.papyrus.ui</module>
+				<module>../../plugins/com.incquerylabs.uml.ralf.ui</module>
+				
+				<!-- Releng -->
+				<module>../com.incquerylabs.uml.ralf.feature</module>
+				<module>../com.incquerylabs.emdw.common.project.feature</module>
+				<module>../com.incquerylabs.emdw.examples.feature</module>
+				<module>../com.incquerylabs.uml.papyrus.feature</module>		
+				<module>../com.incquerylabs.emdw.common.update</module>
+			</modules>
+		</profile>
+	</profiles>
+	
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -106,7 +120,19 @@
 			<url>https://build.inf.mit.bme.hu/nexus/content/repositories/emdw-p2-mirrors/</url>
 		</pluginRepository>
 	</pluginRepositories>
-
+	<distributionManagement>
+		<repository>
+			<id>nexus-emdw-snapshots</id>
+			<name>EMDW Project Repository - Releases</name>
+			<url>https://build.inf.mit.bme.hu/nexus/content/repositories/emdw-releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>nexus-emdw-snapshots</id>
+			<name>EMDW Project Repository - Snapshots</name>
+			<url>https://build.inf.mit.bme.hu/nexus/content/repositories/emdw-snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+	
 	<build>
 		<plugins>
 			<plugin>
