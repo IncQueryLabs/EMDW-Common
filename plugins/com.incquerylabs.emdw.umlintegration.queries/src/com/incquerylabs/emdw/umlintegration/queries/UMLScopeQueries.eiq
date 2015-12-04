@@ -74,13 +74,13 @@ pattern associationsOfClassifier(cl : Classifier, association : Property) {
 }
 
 pattern operationsOfClass(cl : Classifier, op : Operation) {
-    find operation(cl, op);
+    find regularOperation(cl, op);
 } or {
     DataType(cl);    
     DataType.ownedOperation(cl, op);
 } or {
     find superClass+(cl, sup);
-    find operation(sup, op);
+    find regularOperation(sup, op);
 } or {
     find superDataType+(cl, sup);
     DataType.ownedOperation(sup, op);
@@ -92,7 +92,7 @@ pattern operationsOfClassByName(cl : Classifier, op : Operation, name) {
 }
 
 pattern staticOperations(op : Operation) {
-    find operation(_, op);
+    find regularOperation(_, op);
     Operation.isStatic(op, true);
 }
 
