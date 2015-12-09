@@ -89,6 +89,14 @@
 								</outputConfiguration>
 							</outputConfigurations>
 						</language>
+						<language>
+							<setup>org.eclipse.xtend.core.XtendStandaloneSetup</setup>
+							<outputConfigurations>
+								<outputConfiguration>
+									<outputDirectory>xtend-gen</outputDirectory>
+								</outputConfiguration>
+							</outputConfigurations>
+						</language>
 					</languages>
 				</configuration>
 				<dependencies>
@@ -97,11 +105,12 @@
 						<artifactId>it.xsemantics.dsl</artifactId>
 						<version>${xsemantics.maven.version}</version>
 					</dependency>
+					<dependency>
+                        <groupId>org.eclipse.xtend</groupId>
+                        <artifactId>xtend-maven-plugin</artifactId>
+                        <version>${xtext.compiler.version}</version>
+					</dependency>
 				</dependencies>
-			</plugin>
-			<plugin>
-				<groupId>org.eclipse.xtend</groupId>
-				<artifactId>xtend-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
 		<resources>
