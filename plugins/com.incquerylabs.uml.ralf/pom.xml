@@ -30,12 +30,12 @@
 								<exclude>.gitignore</exclude>
 							</excludes>
 						</fileset>
-						<!-- <fileset>
+						<fileset>
 							<directory>xsemantics-gen</directory>
 							<excludes>
 								<exclude>.gitignore</exclude>
 							</excludes>
-						</fileset>  -->
+						</fileset>
 						<fileset>
 							<directory>model/generated</directory>
 							<excludes>
@@ -68,10 +68,10 @@
 					</execution>
 				</executions>
 			</plugin>
-			<!--   plugin>
+			<plugin>
 				<groupId>org.eclipse.xtext</groupId>
 				<artifactId>xtext-maven-plugin</artifactId>
-				<version>2.8.3</version>
+				<version>${xtext.compiler.version}</version>
 				<executions>
 					<execution>
 						<goals>
@@ -89,19 +89,28 @@
 								</outputConfiguration>
 							</outputConfigurations>
 						</language>
+						<language>
+							<setup>org.eclipse.xtend.core.XtendStandaloneSetup</setup>
+							<outputConfigurations>
+								<outputConfiguration>
+									<outputDirectory>xtend-gen</outputDirectory>
+								</outputConfiguration>
+							</outputConfigurations>
+						</language>
 					</languages>
 				</configuration>
 				<dependencies>
 					<dependency>
-						<groupId>com.incquerylabs</groupId>
+						<groupId>net.sf.xsemantics</groupId>
 						<artifactId>it.xsemantics.dsl</artifactId>
-						<version>1.8.0.v20150331-0735</version>
+						<version>${xsemantics.maven.version}</version>
+					</dependency>
+					<dependency>
+                        <groupId>org.eclipse.xtend</groupId>
+                        <artifactId>xtend-maven-plugin</artifactId>
+                        <version>${xtext.compiler.version}</version>
 					</dependency>
 				</dependencies>
-			</plugin> -->
-			<plugin>
-				<groupId>org.eclipse.xtend</groupId>
-				<artifactId>xtend-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
 		<resources>
