@@ -67,6 +67,7 @@
 		<org.eclipse.papyrusrt.version>1.0.0-SNAPSHOT</org.eclipse.papyrusrt.version>
 		<incquery.version>1.1.0</incquery.version>
 		<xtext.compiler.version>2.9.0</xtext.compiler.version>
+		<xsemantics.maven.version>1.9.0</xsemantics.maven.version>
 		<!-- Sonar -->
 		<sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
 		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>

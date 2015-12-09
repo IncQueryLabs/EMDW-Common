@@ -93,9 +93,9 @@
 				</configuration>
 				<dependencies>
 					<dependency>
-						<groupId>com.incquerylabs</groupId>
+						<groupId>net.sf.xsemantics</groupId>
 						<artifactId>it.xsemantics.dsl</artifactId>
-						<version>1.9.0</version>
+						<version>${xsemantics.maven.version}</version>
 					</dependency>
 				</dependencies>
 			</plugin>
