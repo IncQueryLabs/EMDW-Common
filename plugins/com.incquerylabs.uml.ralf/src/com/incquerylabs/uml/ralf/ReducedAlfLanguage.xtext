@@ -9,6 +9,7 @@
  *
  * Contributors:
  *  IJI - Initial implementation
+ *  Akos Horvath, Abel Hegedus, Zoltan Ujhelyi, Peter Lunk - Modified implementation
  * 
  *****************************************************************************/
 grammar com.incquerylabs.uml.ralf.ReducedAlfLanguage hidden (WS, ML_COMMENT, SL_COMMENT)
