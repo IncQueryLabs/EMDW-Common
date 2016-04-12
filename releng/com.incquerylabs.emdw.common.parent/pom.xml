@@ -67,7 +67,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<tycho.version>0.21.0</tycho.version>
 		<mars.repo.url>http://download.eclipse.org/releases/mars</mars.repo.url>
-		<viatra.repository.url>http://download.eclipse.org/viatra2/emf/updates/release/0.8.0</viatra.repository.url>
+		<viatra.repository.url>http://download.eclipse.org/viatra/updates/release/0.8.0</viatra.repository.url>
 		<incquery.repository.url>http://download.eclipse.org/incquery/updates-extra/release</incquery.repository.url>
 		<papyrus.repo.url>http://download.eclipse.org/modeling/mdt/papyrus/updates/releases/mars</papyrus.repo.url>
 		<xtext.repo.url>http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/</xtext.repo.url>
